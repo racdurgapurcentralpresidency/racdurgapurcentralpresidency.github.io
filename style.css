@@ -2052,10 +2052,17 @@ body.lightbox-open {
    EVENTS MOBILE
    ========================================================= */
 
-@media (max-width: 700px) {
+@media screen and (max-width: 700px) {
 
-    .events-grid {
-        grid-template-columns: 1fr;
+    .events-section .events-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100%;
+    }
+
+    .events-section .event-card {
+        width: 100%;
+        min-width: 0;
     }
 
 }
