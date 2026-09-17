@@ -830,52 +830,67 @@ button {
     background: var(--white);
 }
 
-.event-list {
-    max-width: 900px;
+.events-grid {
+    display: grid;
 
-    margin: 0 auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 25px;
 }
 
 .event-card {
-    display: grid;
+    background: var(--white);
 
-    grid-template-columns: 100px 1fr auto;
+    border: 1px solid var(--border);
 
-    gap: 30px;
+    border-radius: 18px;
 
-    align-items: center;
+    overflow: hidden;
 
-    padding: 25px;
+    display: flex;
 
-    border-top: 1px solid var(--border);
-
-    transition: background 0.25s ease;
-}
-
-.event-card:last-child {
-    border-bottom: 1px solid var(--border);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 .event-card:hover {
-    background: var(--light);
+    transform: translateY(-7px);
+
+    box-shadow: var(--shadow);
 }
 
+
+/* =========================================================
+   EVENT DATE
+   ========================================================= */
+
 .event-date {
+    width: 125px;
+
+    flex-shrink: 0;
+
+    background: var(--navy);
+
+    color: var(--white);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 25px 15px;
+
     text-align: center;
-
-    background: var(--light);
-
-    padding: 14px;
-
-    border-radius: 12px;
 }
 
 .event-day {
     display: block;
 
-    color: var(--navy);
-
-    font-size: 2rem;
+    font-size: 3rem;
 
     font-weight: 800;
 
@@ -885,47 +900,160 @@ button {
 .event-month {
     display: block;
 
-    color: var(--blue);
+    margin-top: 6px;
+
+    font-size: 0.8rem;
+
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+}
+
+.event-year {
+    display: block;
+
+    margin-top: 3px;
 
     font-size: 0.7rem;
 
-    font-weight: 700;
-
-    margin-top: 5px;
-
-    letter-spacing: 0.12em;
+    opacity: 0.75;
 }
 
-.event-category {
+
+/* =========================================================
+   EVENT CONTENT
+   ========================================================= */
+
+.event-content {
+    padding: 28px;
+
+    flex: 1;
+}
+
+.event-status {
+    display: inline-block;
+
     color: var(--blue);
 
-    font-size: 0.68rem;
+    font-size: 0.65rem;
 
-    font-weight: 700;
+    font-weight: 800;
 
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
+
+    margin-bottom: 10px;
 }
 
-.event-details h3 {
+.event-content h3 {
     color: var(--navy);
 
     font-size: 1.35rem;
 
-    margin: 4px 0;
+    line-height: 1.25;
+
+    margin-bottom: 14px;
 }
 
-.event-details p:last-child {
+.event-location,
+.event-time {
+    color: var(--navy);
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+}
+
+.event-content > p:not(.event-location):not(.event-time) {
     color: var(--muted);
 
-    font-size: 0.85rem;
+    font-size: 0.88rem;
+
+    line-height: 1.65;
+
+    margin: 16px 0 18px;
 }
 
-.event-arrow {
-    font-size: 1.5rem;
+.event-organised {
+    color: var(--muted);
+
+    font-size: 0.78rem;
+
+    line-height: 1.6;
+
+    margin-top: 12px;
+}
+
+.event-organised strong {
+    color: var(--navy);
+}
+
+
+/* =========================================================
+   EVENT LINK
+   ========================================================= */
+
+.event-link {
+    display: inline-block;
 
     color: var(--blue);
+
+    font-size: 0.75rem;
+
+    font-weight: 800;
+
+    text-decoration: none;
+
+    letter-spacing: 0.06em;
+
+    margin-top: 4px;
 }
 
+.event-link:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   EVENT PLACEHOLDER
+   ========================================================= */
+
+.event-placeholder {
+    padding: 35px;
+
+    align-items: center;
+
+    gap: 25px;
+
+    background: var(--light);
+}
+
+.placeholder-icon {
+    width: 65px;
+
+    height: 65px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: var(--blue);
+
+    font-size: 2rem;
+
+    font-weight: 300;
+}
 
 /* =========================================================
    13. GALLERY
