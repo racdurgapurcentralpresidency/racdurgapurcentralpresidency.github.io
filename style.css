@@ -151,27 +151,39 @@ button {
 }
 
 .brand {
-    color: var(--navy);
-
     display: flex;
     align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--navy);
+    min-width: 0;
+}
 
-    font-weight: 800;
+.brand-logo {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.brand-text {
+    display: flex;
+    align-items: center;
 }
 
 .brand-short {
-    font-size: 1.4rem;
-    letter-spacing: -0.03em;
+    display: none;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
 }
 
 .brand-full {
-    margin-left: 12px;
-
-    font-size: 0.78rem;
-    color: var(--muted);
-
-    max-width: 230px;
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
     line-height: 1.2;
+    max-width: 260px;
 }
 
 .nav-menu {
