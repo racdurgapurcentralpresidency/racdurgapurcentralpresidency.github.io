@@ -136,7 +136,7 @@ counters.forEach(function (counter) {
 // =========================================================
 
 const revealElements = document.querySelectorAll(
-    ".board-card, .project-card, .achievement-card, " +
+    ".project-card, .achievement-card, " +
     ".contact-card, .event-card, .publication-card"
 );
 
