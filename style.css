@@ -1897,13 +1897,38 @@ body.lightbox-open {
 }
 
 .publication-link {
-    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 13px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--white);
+    color: var(--blue);
 
     font-size: 0.62rem;
     font-weight: 800;
     letter-spacing: 0.07em;
 
+    text-decoration: none;
     white-space: nowrap;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.publication-link:hover {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+
+    transform: translateY(-2px);
 }
 
 
