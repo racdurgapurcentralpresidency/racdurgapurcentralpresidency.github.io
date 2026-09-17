@@ -1489,65 +1489,287 @@ body.lightbox-open {
 }
 
 /* =========================================================
-   14. ACHIEVEMENTS
-   ========================================================= */
+   ACHIEVEMENTS
+========================================================= */
 
 .achievements-section {
-    background: var(--light);
+    background: var(--white);
 }
+
+.achievements-section .section-heading {
+    margin-bottom: 60px;
+}
+
+
+/* =========================================================
+   YEAR BLOCK
+========================================================= */
+
+.achievement-year {
+    margin-bottom: 75px;
+}
+
+.achievement-year:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   YEAR HEADING
+========================================================= */
+
+.achievement-year-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.achievement-year-heading h3 {
+    color: var(--navy);
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+}
+
+.year-line {
+    width: 70px;
+    height: 1px;
+    background: var(--border);
+}
+
+
+/* =========================================================
+   ACHIEVEMENT GRID
+========================================================= */
 
 .achievement-grid {
     display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 25px;
 }
 
+
+/* =========================================================
+   ACHIEVEMENT CARD
+========================================================= */
+
 .achievement-card {
     background: var(--white);
-
     border: 1px solid var(--border);
-
-    padding: 40px 30px;
-
     border-radius: 18px;
+    overflow: hidden;
 
-    text-align: center;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
-.achievement-icon {
-    width: 60px;
-    height: 60px;
+.achievement-card:hover {
+    transform: translateY(-7px);
+    box-shadow: var(--shadow);
+}
 
-    display: flex;
 
-    align-items: center;
-    justify-content: center;
+/* =========================================================
+   ACHIEVEMENT IMAGE
+========================================================= */
 
-    margin: 0 auto 20px;
+.achievement-image {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #e9eef3;
+}
 
-    border-radius: 50%;
+.achievement-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 
-    background: var(--light-blue);
+    transition: transform 0.5s ease;
+}
+
+.achievement-card:hover .achievement-image img {
+    transform: scale(1.04);
+}
+
+
+/* =========================================================
+   ACHIEVEMENT CONTENT
+========================================================= */
+
+.achievement-content {
+    padding: 24px;
+}
+
+.achievement-type {
+    display: inline-block;
 
     color: var(--blue);
 
-    font-size: 1.5rem;
-}
-
-.achievement-card h3 {
-    color: var(--navy);
+    font-size: 0.63rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
 
     margin-bottom: 10px;
 }
 
-.achievement-card p {
-    color: var(--muted);
+.achievement-content h4 {
+    color: var(--navy);
 
-    font-size: 0.9rem;
+    font-size: 1.12rem;
+    line-height: 1.3;
+
+    margin-bottom: 8px;
 }
 
+.achievement-content p {
+    color: var(--muted);
+
+    font-size: 0.82rem;
+    line-height: 1.5;
+
+    margin: 0;
+}
+
+
+/* =========================================================
+   LEGACY ACHIEVEMENTS — RY 2023–24
+========================================================= */
+
+.achievement-grid-legacy {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.legacy-card {
+    min-height: 185px;
+    display: flex;
+    flex-direction: column;
+}
+
+.legacy-icon {
+    width: 54px;
+    height: 54px;
+
+    margin: 24px 24px 0;
+
+    border-radius: 50%;
+
+    background: #eef4ff;
+    color: var(--blue);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.legacy-card .achievement-content {
+    padding-top: 18px;
+}
+
+.legacy-featured {
+    grid-column: span 2;
+}
+
+.legacy-featured .achievement-image {
+    aspect-ratio: 16 / 8;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .achievement-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .achievement-grid-legacy {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .legacy-featured {
+        grid-column: span 2;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .achievements-section .section-heading {
+        margin-bottom: 45px;
+    }
+
+    .achievement-year {
+        margin-bottom: 55px;
+    }
+
+    .achievement-year-heading {
+        gap: 12px;
+        margin-bottom: 22px;
+    }
+
+    .achievement-year-heading h3 {
+        font-size: 0.95rem;
+    }
+
+    .year-line {
+        width: 35px;
+    }
+
+    .achievement-grid,
+    .achievement-grid-legacy {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .legacy-featured {
+        grid-column: span 1;
+    }
+
+    .achievement-content {
+        padding: 21px;
+    }
+
+    .achievement-content h4 {
+        font-size: 1.05rem;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .achievement-year-heading {
+        gap: 9px;
+    }
+
+    .year-line {
+        width: 25px;
+    }
+
+    .achievement-year-heading h3 {
+        font-size: 0.88rem;
+    }
+
+}
 
 /* =========================================================
    15. PUBLICATIONS
