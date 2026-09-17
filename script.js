@@ -235,3 +235,366 @@ window.addEventListener("scroll", function () {
     }
 
 });
+
+// =========================================================
+// 6. GALLERY FILTERS
+// =========================================================
+
+const galleryFilters =
+    document.querySelectorAll(".gallery-filter");
+
+const galleryItems =
+    document.querySelectorAll(".gallery-item");
+
+
+galleryFilters.forEach(function (filterButton) {
+
+    filterButton.addEventListener("click", function () {
+
+        const filter =
+            filterButton.getAttribute("data-filter");
+
+
+        // Update active button
+
+        galleryFilters.forEach(function (button) {
+
+            button.classList.remove("active");
+
+        });
+
+        filterButton.classList.add("active");
+
+
+        // Filter gallery items
+
+        galleryItems.forEach(function (item) {
+
+            if (
+                filter === "all" ||
+                item.classList.contains(filter)
+            ) {
+
+                item.classList.remove("hidden");
+
+            } else {
+
+                item.classList.add("hidden");
+
+            }
+
+        });
+
+    });
+
+});
+
+
+// =========================================================
+// 7. GALLERY LIGHTBOX
+// =========================================================
+
+const lightbox =
+    document.createElement("div");
+
+lightbox.className =
+    "gallery-lightbox";
+
+
+lightbox.innerHTML = `
+    <button class="lightbox-close" aria-label="Close">
+        &times;
+    </button>
+
+    <button class="lightbox-prev" aria-label="Previous">
+        &#10094;
+    </button>
+
+    <div class="lightbox-content">
+        <img src="" alt="">
+    </div>
+
+    <button class="lightbox-next" aria-label="Next">
+        &#10095;
+    </button>
+`;
+
+
+document.body.appendChild(lightbox);
+
+
+const lightboxImage =
+    lightbox.querySelector(".lightbox-content img");
+
+const lightboxClose =
+    lightbox.querySelector(".lightbox-close");
+
+const lightboxPrev =
+    lightbox.querySelector(".lightbox-prev");
+
+const lightboxNext =
+    lightbox.querySelector(".lightbox-next");
+
+
+let currentGalleryIndex = 0;
+
+
+// =========================================================
+// GET VISIBLE GALLERY ITEMS
+// =========================================================
+
+function getVisibleGalleryItems() {
+
+    return Array.from(galleryItems).filter(
+        function (item) {
+
+            return !item.classList.contains("hidden");
+
+        }
+    );
+
+}
+
+
+// =========================================================
+// UPDATE LIGHTBOX IMAGE
+// =========================================================
+
+function updateLightboxImage() {
+
+    const visibleItems =
+        getVisibleGalleryItems();
+
+
+    if (!visibleItems.length) {
+        return;
+    }
+
+
+    const image =
+        visibleItems[currentGalleryIndex]
+            .querySelector("img");
+
+
+    lightboxImage.src =
+        image.src;
+
+    lightboxImage.alt =
+        image.alt;
+
+}
+
+
+// =========================================================
+// OPEN LIGHTBOX
+// =========================================================
+
+function openLightbox(index) {
+
+    const visibleItems =
+        getVisibleGalleryItems();
+
+
+    if (!visibleItems.length) {
+        return;
+    }
+
+
+    currentGalleryIndex =
+        index;
+
+
+    updateLightboxImage();
+
+
+    lightbox.classList.add("active");
+
+    document.body.classList.add(
+        "lightbox-open"
+    );
+
+}
+
+
+// =========================================================
+// CLOSE LIGHTBOX
+// =========================================================
+
+function closeLightbox() {
+
+    lightbox.classList.remove("active");
+
+    document.body.classList.remove(
+        "lightbox-open"
+    );
+
+}
+
+
+// =========================================================
+// PREVIOUS IMAGE
+// =========================================================
+
+function showPreviousImage() {
+
+    const visibleItems =
+        getVisibleGalleryItems();
+
+
+    if (!visibleItems.length) {
+        return;
+    }
+
+
+    currentGalleryIndex =
+        (
+            currentGalleryIndex -
+            1 +
+            visibleItems.length
+        ) %
+        visibleItems.length;
+
+
+    updateLightboxImage();
+
+}
+
+
+// =========================================================
+// NEXT IMAGE
+// =========================================================
+
+function showNextImage() {
+
+    const visibleItems =
+        getVisibleGalleryItems();
+
+
+    if (!visibleItems.length) {
+        return;
+    }
+
+
+    currentGalleryIndex =
+        (
+            currentGalleryIndex +
+            1
+        ) %
+        visibleItems.length;
+
+
+    updateLightboxImage();
+
+}
+
+
+// =========================================================
+// OPEN IMAGE ON CLICK
+// =========================================================
+
+galleryItems.forEach(function (item) {
+
+    item.addEventListener("click", function () {
+
+        const visibleItems =
+            getVisibleGalleryItems();
+
+
+        const index =
+            visibleItems.indexOf(item);
+
+
+        if (index !== -1) {
+
+            openLightbox(index);
+
+        }
+
+    });
+
+});
+
+
+// =========================================================
+// LIGHTBOX CONTROLS
+// =========================================================
+
+lightboxClose.addEventListener(
+    "click",
+    closeLightbox
+);
+
+
+lightboxPrev.addEventListener(
+    "click",
+    showPreviousImage
+);
+
+
+lightboxNext.addEventListener(
+    "click",
+    showNextImage
+);
+
+
+// =========================================================
+// CLOSE WHEN CLICKING OUTSIDE IMAGE
+// =========================================================
+
+lightbox.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target === lightbox ||
+            event.target ===
+            lightbox.querySelector(
+                ".lightbox-content"
+            )
+        ) {
+
+            closeLightbox();
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// KEYBOARD CONTROLS
+// =========================================================
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            !lightbox.classList.contains("active")
+        ) {
+            return;
+        }
+
+
+        if (event.key === "Escape") {
+
+            closeLightbox();
+
+        }
+
+
+        if (event.key === "ArrowLeft") {
+
+            showPreviousImage();
+
+        }
+
+
+        if (event.key === "ArrowRight") {
+
+            showNextImage();
+
+        }
+
+    }
+);
