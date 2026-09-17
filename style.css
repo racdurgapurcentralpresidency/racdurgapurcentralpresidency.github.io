@@ -2056,13 +2056,48 @@ body.lightbox-open {
 
     .events-section .events-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) !important;
-        width: 100%;
+        grid-template-columns: 1fr !important;
+        gap: 20px;
     }
 
+
     .events-section .event-card {
+        display: flex;
+        flex-direction: column;
         width: 100%;
         min-width: 0;
+    }
+
+
+    /* Upcoming event poster */
+
+    .events-section .event-poster {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+
+
+    .events-section .event-poster img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
+    /* Event content */
+
+    .events-section .event-content {
+        padding: 24px;
+    }
+
+
+    /* More events placeholder */
+
+    .events-section .event-placeholder {
+        flex-direction: row;
+        align-items: center;
+        padding: 28px 24px;
     }
 
 }
