@@ -294,19 +294,16 @@ galleryFilters.forEach(function (filterButton) {
 // 7. GALLERY LIGHTBOX
 // =========================================================
 
-const lightbox =
-    document.createElement("div");
+const lightbox = document.createElement("div");
 
-lightbox.className =
-    "gallery-lightbox";
-
+lightbox.className = "gallery-lightbox";
 
 lightbox.innerHTML = `
-    <button class="lightbox-close" aria-label="Close">
+    <button class="lightbox-close" type="button" aria-label="Close">
         &times;
     </button>
 
-    <button class="lightbox-prev" aria-label="Previous">
+    <button class="lightbox-prev" type="button" aria-label="Previous">
         &#10094;
     </button>
 
@@ -314,11 +311,10 @@ lightbox.innerHTML = `
         <img src="" alt="">
     </div>
 
-    <button class="lightbox-next" aria-label="Next">
+    <button class="lightbox-next" type="button" aria-label="Next">
         &#10095;
     </button>
 `;
-
 
 document.body.appendChild(lightbox);
 
@@ -345,42 +341,38 @@ let currentGalleryIndex = 0;
 
 function getVisibleGalleryItems() {
 
-    return Array.from(galleryItems).filter(
-        function (item) {
-
-            return !item.classList.contains("hidden");
-
-        }
+    return Array.from(
+        document.querySelectorAll(".gallery-item:not(.hidden)")
     );
 
 }
 
 
 // =========================================================
-// UPDATE LIGHTBOX IMAGE
+// SHOW IMAGE
 // =========================================================
 
-function updateLightboxImage() {
+function showLightboxImage(index) {
 
     const visibleItems =
         getVisibleGalleryItems();
-
 
     if (!visibleItems.length) {
         return;
     }
 
+    currentGalleryIndex = index;
 
     const image =
         visibleItems[currentGalleryIndex]
             .querySelector("img");
 
+    if (!image) {
+        return;
+    }
 
-    lightboxImage.src =
-        image.src;
-
-    lightboxImage.alt =
-        image.alt;
+    lightboxImage.src = image.src;
+    lightboxImage.alt = image.alt;
 
 }
 
@@ -391,27 +383,11 @@ function updateLightboxImage() {
 
 function openLightbox(index) {
 
-    const visibleItems =
-        getVisibleGalleryItems();
-
-
-    if (!visibleItems.length) {
-        return;
-    }
-
-
-    currentGalleryIndex =
-        index;
-
-
-    updateLightboxImage();
-
+    showLightboxImage(index);
 
     lightbox.classList.add("active");
 
-    document.body.classList.add(
-        "lightbox-open"
-    );
+    document.body.classList.add("lightbox-open");
 
 }
 
@@ -424,9 +400,7 @@ function closeLightbox() {
 
     lightbox.classList.remove("active");
 
-    document.body.classList.remove(
-        "lightbox-open"
-    );
+    document.body.classList.remove("lightbox-open");
 
 }
 
@@ -440,11 +414,9 @@ function showPreviousImage() {
     const visibleItems =
         getVisibleGalleryItems();
 
-
     if (!visibleItems.length) {
         return;
     }
-
 
     currentGalleryIndex =
         (
@@ -454,8 +426,7 @@ function showPreviousImage() {
         ) %
         visibleItems.length;
 
-
-    updateLightboxImage();
+    showLightboxImage(currentGalleryIndex);
 
 }
 
@@ -469,11 +440,9 @@ function showNextImage() {
     const visibleItems =
         getVisibleGalleryItems();
 
-
     if (!visibleItems.length) {
         return;
     }
-
 
     currentGalleryIndex =
         (
@@ -482,76 +451,87 @@ function showNextImage() {
         ) %
         visibleItems.length;
 
-
-    updateLightboxImage();
+    showLightboxImage(currentGalleryIndex);
 
 }
 
 
 // =========================================================
-// OPEN IMAGE ON CLICK
+// CLICK GALLERY IMAGE
 // =========================================================
 
-galleryItems.forEach(function (item) {
+document.querySelectorAll(".gallery-item").forEach(
+    function (item, index) {
 
-    item.addEventListener("click", function () {
+        item.addEventListener("click", function () {
 
-        const visibleItems =
-            getVisibleGalleryItems();
+            const visibleItems =
+                getVisibleGalleryItems();
 
+            const visibleIndex =
+                visibleItems.indexOf(item);
 
-        const index =
-            visibleItems.indexOf(item);
+            if (visibleIndex !== -1) {
 
+                openLightbox(visibleIndex);
 
-        if (index !== -1) {
+            }
 
-            openLightbox(index);
+        });
 
-        }
-
-    });
-
-});
+    }
+);
 
 
 // =========================================================
-// LIGHTBOX CONTROLS
+// BUTTON CONTROLS
 // =========================================================
 
 lightboxClose.addEventListener(
     "click",
-    closeLightbox
+    function (event) {
+
+        event.stopPropagation();
+
+        closeLightbox();
+
+    }
 );
 
 
 lightboxPrev.addEventListener(
     "click",
-    showPreviousImage
+    function (event) {
+
+        event.stopPropagation();
+
+        showPreviousImage();
+
+    }
 );
 
 
 lightboxNext.addEventListener(
     "click",
-    showNextImage
+    function (event) {
+
+        event.stopPropagation();
+
+        showNextImage();
+
+    }
 );
 
 
 // =========================================================
-// CLOSE WHEN CLICKING OUTSIDE IMAGE
+// CLICK BACKGROUND TO CLOSE
 // =========================================================
 
 lightbox.addEventListener(
     "click",
     function (event) {
 
-        if (
-            event.target === lightbox ||
-            event.target ===
-            lightbox.querySelector(
-                ".lightbox-content"
-            )
-        ) {
+        if (event.target === lightbox) {
 
             closeLightbox();
 
@@ -569,12 +549,9 @@ document.addEventListener(
     "keydown",
     function (event) {
 
-        if (
-            !lightbox.classList.contains("active")
-        ) {
+        if (!lightbox.classList.contains("active")) {
             return;
         }
-
 
         if (event.key === "Escape") {
 
@@ -582,13 +559,11 @@ document.addEventListener(
 
         }
 
-
         if (event.key === "ArrowLeft") {
 
             showPreviousImage();
 
         }
-
 
         if (event.key === "ArrowRight") {
 
