@@ -573,3 +573,132 @@ document.addEventListener(
 
     }
 );
+// =========================================================
+// 8. ACHIEVEMENT LIGHTBOX
+// =========================================================
+
+const achievementImages =
+    document.querySelectorAll(".achievement-image img");
+
+
+const achievementLightbox =
+    document.createElement("div");
+
+achievementLightbox.className =
+    "achievement-lightbox";
+
+
+achievementLightbox.innerHTML = `
+    <button
+        class="achievement-lightbox-close"
+        type="button"
+        aria-label="Close">
+        &times;
+    </button>
+
+    <div class="achievement-lightbox-content">
+        <img src="" alt="">
+    </div>
+`;
+
+
+document.body.appendChild(achievementLightbox);
+
+
+const achievementLightboxImage =
+    achievementLightbox.querySelector(
+        ".achievement-lightbox-content img"
+    );
+
+
+const achievementLightboxClose =
+    achievementLightbox.querySelector(
+        ".achievement-lightbox-close"
+    );
+
+
+// =========================================================
+// OPEN ACHIEVEMENT LIGHTBOX
+// =========================================================
+
+achievementImages.forEach(function (image) {
+
+    image.addEventListener("click", function () {
+
+        achievementLightboxImage.src =
+            image.src;
+
+        achievementLightboxImage.alt =
+            image.alt;
+
+        achievementLightbox.classList.add("active");
+
+        document.body.classList.add("lightbox-open");
+
+    });
+
+});
+
+
+// =========================================================
+// CLOSE
+// =========================================================
+
+achievementLightboxClose.addEventListener(
+    "click",
+    function (event) {
+
+        event.stopPropagation();
+
+        achievementLightbox.classList.remove("active");
+
+        document.body.classList.remove("lightbox-open");
+
+    }
+);
+
+
+// =========================================================
+// CLICK BACKGROUND TO CLOSE
+// =========================================================
+
+achievementLightbox.addEventListener(
+    "click",
+    function (event) {
+
+        if (event.target === achievementLightbox) {
+
+            achievementLightbox.classList.remove("active");
+
+            document.body.classList.remove("lightbox-open");
+
+        }
+
+    }
+);
+
+
+// =========================================================
+// ESCAPE KEY
+// =========================================================
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            !achievementLightbox.classList.contains("active")
+        ) {
+            return;
+        }
+
+        if (event.key === "Escape") {
+
+            achievementLightbox.classList.remove("active");
+
+            document.body.classList.remove("lightbox-open");
+
+        }
+
+    }
+);
