@@ -3050,6 +3050,7 @@ body.lightbox-open {
 @media (max-width: 900px) {
 
     .hero-visual {
+        display: flex;
         justify-content: center;
         padding-right: 0;
         width: 100%;
@@ -3095,13 +3096,4 @@ body.lightbox-open {
         margin-top: 32px;
     }
 
-}
-
-.hero-image-wrap img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    object-position: center;
 }
