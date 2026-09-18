@@ -3179,6 +3179,35 @@
 
 
     <script src="script.js"></script>
+<script>
 
+function showPeople(category, button) {
+
+    /* Hide all people sections */
+
+    document.querySelectorAll('.people-display').forEach(function(section) {
+        section.classList.remove('active');
+    });
+
+
+    /* Remove active state from all buttons */
+
+    document.querySelectorAll('.people-category').forEach(function(btn) {
+        btn.classList.remove('active');
+    });
+
+
+    /* Show selected section */
+
+    document.getElementById(category).classList.add('active');
+
+
+    /* Activate selected button */
+
+    button.classList.add('active');
+
+}
+
+</script>
 </body>
 </html>
