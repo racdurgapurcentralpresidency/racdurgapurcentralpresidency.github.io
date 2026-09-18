@@ -2920,7 +2920,7 @@ body.lightbox-open {
 
 .hero-container {
     display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    grid-template-columns: 1.05fr 0.85fr;
     align-items: center;
     gap: 50px;
 }
@@ -2958,15 +2958,71 @@ body.lightbox-open {
     line-height: 1.5;
 }
 
+
+/* =========================================================
+   HERO IMAGE
+   ========================================================= */
+
 .hero-visual {
-    min-height: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
+    width: 100%;
+    padding-right: 4vw;
+}
+
+.hero-visual img {
+    width: min(42vw, 600px);
+    height: auto;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 18px;
+    display: block;
 }
 
 
-/* TABLET */
+/* =========================================================
+   HERO IMAGE WRAPPER
+   ========================================================= */
+
+.hero-image-wrap {
+    position: relative;
+    width: min(42vw, 600px);
+    max-width: 600px;
+    margin-left: auto;
+    overflow: hidden;
+    border-radius: 18px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+}
+
+.hero-image-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        90deg,
+        rgba(17, 83, 166, 0.65) 0%,
+        rgba(17, 83, 166, 0.15) 18%,
+        rgba(17, 83, 166, 0) 40%
+    );
+
+    pointer-events: none;
+}
+
+.hero-image-wrap img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+/* =========================================================
+   HERO — TABLET
+   ========================================================= */
 
 @media (max-width: 1000px) {
 
@@ -2987,7 +3043,39 @@ body.lightbox-open {
 }
 
 
-/* MOBILE */
+/* =========================================================
+   HERO — MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .hero-visual {
+        justify-content: center;
+        padding-right: 0;
+        width: 100%;
+    }
+
+    .hero-visual img {
+        width: min(88vw, 520px);
+        max-height: none;
+        height: auto;
+    }
+
+    .hero-image-wrap {
+        width: min(88vw, 520px);
+        max-width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-image-wrap img {
+        width: 100%;
+        max-height: none;
+        height: auto;
+    }
+
+}
+
 
 @media (max-width: 700px) {
 
@@ -3007,32 +3095,6 @@ body.lightbox-open {
         margin-top: 32px;
     }
 
-    .hero-meta-item {
-        max-width: 100%;
-    }
-
-}
-.hero-image-wrap {
-    position: relative;
-    width: 100%;
-    max-width: 540px;
-    margin-left: auto;
-    overflow: hidden;
-    border-radius: 24px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
-}
-
-.hero-image-wrap::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        90deg,
-        rgba(17, 83, 166, 0.65) 0%,
-        rgba(17, 83, 166, 0.15) 18%,
-        rgba(17, 83, 166, 0) 40%
-    );
-    pointer-events: none;
 }
 
 .hero-image-wrap img {
