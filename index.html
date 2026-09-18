@@ -3263,5 +3263,93 @@ function showPeople(category, button) {
 }
 
 </script>
+
+<!-- =========================================================
+     WEBSITE NOTIFICATIONS
+========================================================= -->
+
+<button class="notification-button"
+        onclick="toggleNotifications()"
+        aria-label="Open website updates">
+
+    <span class="notification-bell">🔔</span>
+    <span class="notification-count">3</span>
+
+</button>
+
+<div class="notification-panel" id="notificationPanel">
+
+    <div class="notification-header">
+
+        <div>
+            <p class="notification-label">WEBSITE UPDATES</p>
+            <h3>What's New</h3>
+        </div>
+
+        <button class="notification-close"
+                onclick="toggleNotifications()"
+                aria-label="Close notifications">
+            ×
+        </button>
+
+    </div>
+
+    <div class="notification-list">
+
+        <div class="notification-item">
+            <span class="notification-dot new"></span>
+
+            <div>
+                <span class="notification-status">NEW</span>
+
+                <h4>Zone 1 Cricket Tournament</h4>
+
+                <p>
+                    Tournament details and event information
+                    have been added to the website.
+                </p>
+
+                <small>18 September 2026</small>
+            </div>
+        </div>
+
+        <div class="notification-item">
+            <span class="notification-dot"></span>
+
+            <div>
+                <span class="notification-status">COMING SOON</span>
+
+                <h4>Gallery Update</h4>
+
+                <p>
+                    New project photographs and event memories
+                    will be added soon.
+                </p>
+
+                <small>Coming soon</small>
+            </div>
+        </div>
+
+        <div class="notification-item">
+            <span class="notification-dot"></span>
+
+            <div>
+                <span class="notification-status">COMING SOON</span>
+
+                <h4>RY 2026–27 Publications</h4>
+
+                <p>
+                    New newsletters and club publications
+                    will be available shortly.
+                </p>
+
+                <small>Coming soon</small>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+    
 </body>
 </html>
