@@ -2070,6 +2070,19 @@ body.lightbox-open {
 .legacy-featured .achievement-image {
     aspect-ratio: 16 / 8;
 }
+/* =========================================================
+   ACHIEVEMENTS — DESKTOP 3 COLUMN LAYOUT
+========================================================= */
+
+@media (min-width: 1001px) {
+
+    .achievement-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 25px;
+    }
+
+}
 
 
 /* =========================================================
