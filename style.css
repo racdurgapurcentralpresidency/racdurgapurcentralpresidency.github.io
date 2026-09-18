@@ -2225,61 +2225,136 @@ body.lightbox-open {
    ========================================================= */
 
 .contact-section {
-    background: var(--light);
+    background: #f7f9fc;
+}
+
+.contact-section .section-heading {
+    margin-bottom: 55px;
 }
 
 .contact-grid {
     display: grid;
-
-    grid-template-columns: repeat(3, 1fr);
-
-    gap: 25px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
 }
 
 .contact-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+
+    padding: 28px;
+
     background: var(--white);
-
     border: 1px solid var(--border);
+    border-radius: 16px;
 
-    padding: 35px;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
 
-    border-radius: 18px;
-
-    text-align: center;
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+    border-color: #d5dce5;
 }
 
 .contact-icon {
-    width: 55px;
-    height: 55px;
+    width: 46px;
+    height: 46px;
 
-    margin: 0 auto 18px;
+    flex-shrink: 0;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    border-radius: 50%;
+    border-radius: 12px;
 
-    background: var(--light-blue);
-
+    background: #eef4ff;
     color: var(--blue);
 
     font-size: 1.2rem;
+    font-weight: 700;
 }
 
-.contact-card h3 {
+.contact-info {
+    min-width: 0;
+}
+
+.contact-type {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--blue);
+
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+.contact-info h3 {
     color: var(--navy);
 
-    margin-bottom: 5px;
+    font-size: 1.05rem;
+
+    margin-bottom: 8px;
 }
 
-.contact-card p {
+.contact-info p {
     color: var(--muted);
 
-    font-size: 0.9rem;
+    font-size: 0.78rem;
+    line-height: 1.6;
+
+    margin-bottom: 14px;
 }
 
+.contact-info a {
+    color: var(--navy);
+
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+
+    text-decoration: none;
+
+    transition: color 0.25s ease;
+}
+
+.contact-info a:hover {
+    color: var(--blue);
+}
+
+
+@media (max-width: 1000px) {
+
+    .contact-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .contact-section .section-heading {
+        margin-bottom: 40px;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .contact-card {
+        padding: 22px;
+    }
+
+}
 
 /* =========================================================
    18. FOOTER
