@@ -2778,3 +2778,14 @@ body.lightbox-open {
     }
 
 }
+.join-section .join-content {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) !important;
+    gap: 80px !important;
+    align-items: center !important;
+}
+
+.join-section .join-highlights {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
