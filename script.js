@@ -702,3 +702,23 @@ document.addEventListener(
 
     }
 );
+function showPeople(categoryId, button) {
+
+    document.querySelectorAll('.people-display').forEach(function(display) {
+        display.classList.remove('active');
+    });
+
+    document.querySelectorAll('.people-category').forEach(function(category) {
+        category.classList.remove('active');
+    });
+
+    const selectedDisplay = document.getElementById(categoryId);
+
+    if (selectedDisplay) {
+        selectedDisplay.classList.add('active');
+    }
+
+    if (button) {
+        button.classList.add('active');
+    }
+}
