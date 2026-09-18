@@ -794,6 +794,289 @@ button {
     font-size: 0.85rem;
 }
 
+/* =========================================================
+   11. OUR PEOPLE
+   ========================================================= */
+
+.people-section {
+    background: var(--light);
+}
+
+
+/* CATEGORY BUTTONS */
+
+.people-category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+
+    margin-bottom: 55px;
+}
+
+.people-category {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    padding: 28px;
+
+    text-align: left;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.people-category:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.people-category.active {
+    border-color: var(--blue);
+    box-shadow: var(--shadow);
+}
+
+.category-icon {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: rgba(0, 102, 179, 0.08);
+
+    font-size: 1.5rem;
+}
+
+.category-label {
+    margin: 0 0 5px;
+
+    color: var(--blue);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    letter-spacing: 0.13em;
+}
+
+.people-category h3 {
+    margin: 0 0 8px;
+
+    color: var(--navy);
+
+    font-size: 1.2rem;
+}
+
+.category-action {
+    color: var(--muted);
+
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+
+/* PEOPLE DISPLAY */
+
+.people-display {
+    display: none;
+
+    animation: peopleFadeIn 0.35s ease;
+}
+
+.people-display.active {
+    display: block;
+}
+
+@keyframes peopleFadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* DISPLAY HEADING */
+
+.people-display-heading {
+    margin-bottom: 25px;
+}
+
+.people-display-heading .section-label {
+    margin-bottom: 8px;
+}
+
+.people-display-heading h3 {
+    margin: 0;
+
+    color: var(--navy);
+
+    font-size: 1.7rem;
+}
+
+.people-display-heading h3 span {
+    color: var(--blue);
+}
+
+
+/* PEOPLE GRID */
+
+.people-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+/* PEOPLE CARD */
+
+.people-card {
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.people-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: var(--shadow);
+}
+
+
+/* PHOTO */
+
+.people-photo {
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+}
+
+.people-photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* INFORMATION */
+
+.people-info {
+    padding: 14px 15px 16px;
+}
+
+.people-info h4 {
+    margin: 0;
+
+    color: var(--navy);
+
+    font-size: 0.92rem;
+
+    line-height: 1.25;
+}
+
+.people-designation {
+    margin: 5px 0 0;
+
+    color: var(--blue);
+
+    font-size: 0.68rem;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .people-category-grid {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+
+        margin-bottom: 40px;
+    }
+
+    .people-category {
+        padding: 22px;
+    }
+
+    .people-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 14px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .people-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+    .people-info {
+        padding: 12px;
+    }
+
+    .people-info h4 {
+        font-size: 0.82rem;
+    }
+
+    .people-designation {
+        font-size: 0.6rem;
+    }
+
+}
 
 /* =========================================================
    11. PROJECTS
