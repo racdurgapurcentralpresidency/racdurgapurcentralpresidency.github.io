@@ -722,3 +722,10 @@ function showPeople(categoryId, button) {
         button.classList.add('active');
     }
 }
+function toggleNotifications() {
+    const panel = document.getElementById("notificationPanel");
+
+    if (!panel) return;
+
+    panel.classList.toggle("active");
+}
