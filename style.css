@@ -2920,9 +2920,9 @@ body.lightbox-open {
 
 .hero-container {
     display: grid;
-    grid-template-columns: 0.95fr 1.05fr;
+    grid-template-columns: 0.8fr 1.2fr;
     align-items: center;
-    gap: 40px;
+    gap: 30px;
 }
 .hero-content {
     max-width: 680px;
@@ -2986,8 +2986,8 @@ body.lightbox-open {
 
 .hero-image-wrap {
     position: relative;
-    width: min(48vw, 700px);
-    max-width: 700px;
+    width: min(70vw, 1000px);
+    max-width: 1000px;
     margin-left: auto;
     overflow: hidden;
     border-radius: 24px;
