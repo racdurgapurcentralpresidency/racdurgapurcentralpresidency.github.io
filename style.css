@@ -2920,11 +2920,10 @@ body.lightbox-open {
 
 .hero-container {
     display: grid;
-    grid-template-columns: 1.05fr 0.85fr;
+    grid-template-columns: 0.95fr 1.05fr;
     align-items: center;
-    gap: 50px;
+    gap: 40px;
 }
-
 .hero-content {
     max-width: 680px;
     padding-left: 40px;
@@ -2968,7 +2967,7 @@ body.lightbox-open {
     align-items: center;
     justify-content: flex-end;
     width: 100%;
-    padding-right: 4vw;
+    padding-right: 2vw;
 }
 
 .hero-visual img {
@@ -2987,11 +2986,11 @@ body.lightbox-open {
 
 .hero-image-wrap {
     position: relative;
-    width: min(42vw, 600px);
-    max-width: 600px;
+    width: min(48vw, 700px);
+    max-width: 700px;
     margin-left: auto;
     overflow: hidden;
-    border-radius: 18px;
+    border-radius: 24px;
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
 }
 
@@ -2999,21 +2998,19 @@ body.lightbox-open {
     content: "";
     position: absolute;
     inset: 0;
-
     background: linear-gradient(
         90deg,
         rgba(17, 83, 166, 0.65) 0%,
         rgba(17, 83, 166, 0.15) 18%,
         rgba(17, 83, 166, 0) 40%
     );
-
     pointer-events: none;
 }
 
 .hero-image-wrap img {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
     object-position: center;
