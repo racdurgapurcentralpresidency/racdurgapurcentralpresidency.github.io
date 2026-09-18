@@ -463,63 +463,186 @@ button {
 
 
 /* =========================================================
-   8. ABOUT
+   ABOUT — DISTRICT & LOCATION CARD
    ========================================================= */
 
-.about-section {
-    background: var(--white);
-}
-
-.about-content {
+.about-location-card {
     display: grid;
-
-    grid-template-columns: 1.5fr 1fr;
-
-    gap: 80px;
-
+    grid-template-columns: 1.15fr 0.85fr;
     align-items: center;
+    gap: 35px;
+
+    padding: 30px;
+
+    background: var(--blue);
+    border-radius: 24px;
+
+    min-height: 280px;
 }
 
-.about-text p {
-    color: var(--muted);
 
-    font-size: 1.05rem;
+/* DISTRICT MAP */
 
-    margin-bottom: 20px;
+.district-map {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+    min-height: 220px;
 }
 
-.about-highlight {
-    background: var(--navy);
+.district-map img {
+    display: block;
 
-    color: var(--white);
+    width: 100%;
+    max-width: 500px;
+    height: 220px;
 
-    padding: 55px;
-
-    border-radius: 20px;
-
-    box-shadow: var(--shadow);
+    object-fit: contain;
 }
 
-.highlight-number {
-    font-size: 3.5rem;
+.map-label {
+    position: absolute;
+    top: 0;
+    left: 0;
 
+    font-size: 0.72rem;
     font-weight: 800;
+    letter-spacing: 0.12em;
 
-    letter-spacing: -0.05em;
+    color: rgba(255, 255, 255, 0.75);
 }
 
-.highlight-text {
-    color: #9cb0c6;
 
-    margin-bottom: 35px;
+/* DURGAPUR MARKER */
+
+.durgapur-marker {
+    position: absolute;
+
+    left: 50%;
+    top: 56%;
+
+    transform: translate(-50%, -50%);
+
+    font-size: 2rem;
+    line-height: 1;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
-.highlight-theme {
-    font-size: 1.5rem;
 
-    font-weight: 700;
+/* LOCATION INFORMATION */
 
-    line-height: 1.25;
+.location-info {
+    padding-left: 10px;
+}
+
+.location-eyebrow {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.location-info h3 {
+    margin: 0;
+
+    font-size: 1.7rem;
+    line-height: 1.2;
+
+    color: #ffffff;
+}
+
+.location-subtitle {
+    margin: 7px 0 25px;
+
+    font-size: 0.9rem;
+
+    color: rgba(255, 255, 255, 0.75);
+}
+
+
+/* OUR PRESENCE */
+
+.location-presence {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.presence-title {
+    margin-bottom: 2px;
+
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.presence-location {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    color: #ffffff;
+}
+
+.location-dot {
+    font-size: 0.7rem;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .about-location-card {
+        grid-template-columns: 1fr;
+        gap: 20px;
+
+        padding: 24px;
+    }
+
+    .district-map {
+        min-height: 190px;
+    }
+
+    .district-map img {
+        height: 190px;
+    }
+
+    .location-info {
+        padding-left: 0;
+    }
+
+    .location-info h3 {
+        font-size: 1.45rem;
+    }
+
+    .durgapur-marker {
+        top: 55%;
+    }
+
 }
 
 
