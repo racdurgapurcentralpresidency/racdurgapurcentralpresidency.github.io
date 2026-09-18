@@ -133,17 +133,19 @@ button {
     z-index: 1000;
 
     background: rgba(255, 255, 255, 0.96);
-
     backdrop-filter: blur(12px);
 
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .nav-container {
-    width: min(1400px, 94%);
+    width: 100%;
     height: 78px;
 
-    margin: 0 auto;
+    margin: 0;
+
+    padding-left: 2cm;
+    padding-right: 2cm;
 
     display: flex;
     align-items: center;
@@ -153,15 +155,19 @@ button {
 .brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
+
     text-decoration: none;
     color: var(--navy);
+
     min-width: 0;
+    flex-shrink: 1;
 }
 
 .brand-logo {
-    width: 46px;
-    height: 46px;
+    width: 52px;
+    height: 52px;
+
     object-fit: contain;
     flex-shrink: 0;
 }
@@ -169,27 +175,30 @@ button {
 .brand-text {
     display: flex;
     align-items: center;
+    min-width: 0;
 }
 
 .brand-short {
     display: none;
-    font-size: 1.15rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
 }
 
 .brand-full {
     display: block;
-    font-size: 0.95rem;
+
+    font-size: 1.08rem;
     font-weight: 700;
     line-height: 1.2;
-    max-width: 260px;
+
+    max-width: none;
+    white-space: nowrap;
 }
 
 .nav-menu {
     display: flex;
     align-items: center;
     gap: 25px;
+
+    flex-shrink: 0;
 }
 
 .nav-menu a {
@@ -2525,49 +2534,48 @@ body.lightbox-open {
 
 @media (max-width: 800px) {
 
-    .section {
-        padding: 80px 0;
+    .nav-container {
+        height: 70px;
+        padding-left: 12px;
+        padding-right: 12px;
     }
 
+    .brand {
+        gap: 9px;
+        min-width: 0;
+    }
 
-    /* Navigation */
+    .brand-logo {
+        width: 42px;
+        height: 42px;
+    }
+
+    .brand-full {
+        display: block;
+        font-size: 0.78rem;
+        line-height: 1.15;
+        white-space: normal;
+        max-width: 230px;
+    }
+
+    .brand-short {
+        display: none;
+    }
 
     .menu-toggle {
         display: block;
+        flex-shrink: 0;
+        margin-left: 8px;
     }
 
     .nav-menu {
-
-        position: absolute;
-
-        top: 78px;
-        left: 0;
-
-        width: 100%;
-
-        padding: 25px;
-
-        background: var(--white);
-
         display: none;
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 20px;
-
-        box-shadow: 0 15px 30px rgba(0,0,0,0.08);
     }
 
     .nav-menu.active {
         display: flex;
     }
-
-    .nav-menu a {
-        font-size: 0.9rem;
-    }
-
+}
 
     /* Hero */
 
