@@ -2027,64 +2027,198 @@ body.lightbox-open {
    ========================================================= */
 
 .join-section {
-    position: relative;
-
-    overflow: hidden;
-
-    padding: 120px 0;
-
-    background:
-        linear-gradient(
-            135deg,
-            #071a32,
-            #0876b9
-        );
-
+    background: var(--navy);
     color: var(--white);
 }
 
-.join-section::before {
-    content: "";
-
-    position: absolute;
-
-    width: 500px;
-    height: 500px;
-
-    right: -150px;
-    top: -150px;
-
-    border-radius: 50%;
-
-    border: 1px solid rgba(255,255,255,0.12);
-}
-
 .join-content {
-    position: relative;
-
-    z-index: 2;
-
-    max-width: 700px;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px;
+    align-items: center;
 }
 
-.join-content h2 {
-    font-size: clamp(3rem, 7vw, 5.5rem);
+.join-text .section-label {
+    color: #9fc5ff;
+}
 
-    line-height: 0.95;
-
-    letter-spacing: -0.06em;
-
+.join-text h2 {
+    color: var(--white);
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
     margin-bottom: 25px;
 }
 
-.join-content p:not(.section-label) {
-    max-width: 550px;
-
-    color: rgba(255,255,255,0.75);
-
-    margin-bottom: 35px;
+.join-text h2 span {
+    color: #8dbbff;
 }
 
+.join-description {
+    max-width: 620px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 18px;
+}
+
+.join-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 18px;
+    padding: 13px 20px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 999px;
+
+    background: var(--white);
+    color: var(--navy);
+
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+
+    text-decoration: none;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+.join-button:hover {
+    transform: translateY(-3px);
+    background: #eef4ff;
+    color: var(--blue);
+}
+
+
+/* ---------------------------------------------------------
+   JOIN HIGHLIGHTS
+--------------------------------------------------------- */
+
+.join-highlights {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.join-highlight {
+    min-height: 175px;
+
+    padding: 24px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.join-highlight:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.22);
+}
+
+.join-number {
+    margin-bottom: 22px;
+
+    color: #8dbbff;
+
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+.join-highlight h3 {
+    color: var(--white);
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+}
+
+.join-highlight p {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.78rem;
+    line-height: 1.6;
+}
+
+
+/* ---------------------------------------------------------
+   JOIN US — RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 1000px) {
+
+    .join-content {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .join-description {
+        max-width: 700px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .join-content {
+        gap: 40px;
+    }
+
+    .join-text h2 {
+        font-size: clamp(2.3rem, 11vw, 3.2rem);
+    }
+
+    .join-description {
+        font-size: 0.88rem;
+        line-height: 1.75;
+    }
+
+    .join-highlights {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .join-highlight {
+        min-height: 155px;
+        padding: 19px;
+    }
+
+    .join-number {
+        margin-bottom: 18px;
+    }
+
+    .join-highlight h3 {
+        font-size: 1rem;
+    }
+
+    .join-highlight p {
+        font-size: 0.72rem;
+    }
+
+}
+
+
+@media (max-width: 420px) {
+
+    .join-highlights {
+        grid-template-columns: 1fr;
+    }
+
+    .join-highlight {
+        min-height: auto;
+    }
+
+}
 
 /* =========================================================
    17. CONTACT
