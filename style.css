@@ -3771,3 +3771,140 @@ body.lightbox-open {
     }
 
 }
+/* =========================================================
+   WEBSITE CREATOR — VERSION 2.1
+========================================================= */
+
+.website-creator-section {
+    background: var(--light);
+}
+
+.website-creator-card {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+
+    padding: 35px 40px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+    border-radius: 22px;
+
+    box-shadow: var(--shadow);
+}
+
+
+/* Creator Photo */
+
+.creator-photo-wrap {
+    width: 125px;
+    height: 125px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    border: 5px solid rgba(0, 102, 179, 0.08);
+}
+
+.creator-photo-wrap img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* Creator Content */
+
+.creator-content {
+    min-width: 0;
+}
+
+.creator-content .section-label {
+    margin-bottom: 8px;
+}
+
+.creator-content h2 {
+    margin: 0 0 12px;
+
+    color: var(--navy);
+
+    font-size: 1.55rem;
+    line-height: 1.3;
+}
+
+.creator-content h2 span {
+    color: var(--blue);
+}
+
+.creator-description {
+    max-width: 720px;
+
+    margin: 0 0 16px;
+
+    color: var(--muted);
+
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+.creator-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.creator-meta span {
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    background: rgba(0, 102, 179, 0.07);
+
+    color: var(--blue);
+
+    font-size: 0.68rem;
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .website-creator-card {
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 22px;
+
+        padding: 30px 22px;
+    }
+
+    .creator-photo-wrap {
+        width: 105px;
+        height: 105px;
+    }
+
+    .creator-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .creator-description {
+        font-size: 0.82rem;
+    }
+
+    .creator-meta {
+        justify-content: center;
+    }
+
+}
