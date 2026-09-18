@@ -2360,55 +2360,72 @@ body.lightbox-open {
    18. FOOTER
    ========================================================= */
 
-.footer {
-    background: #061426;
-
+.site-footer {
+    background: #061225;
     color: var(--white);
-
-    padding: 60px 0 25px;
 }
 
-.footer-content {
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 65px 30px 25px;
+}
+
+.footer-main {
     display: flex;
-
+    align-items: flex-start;
     justify-content: space-between;
-
     gap: 50px;
+    padding-bottom: 45px;
+}
 
-    padding-bottom: 40px;
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
 
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+.footer-logo {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .footer-brand h3 {
-    font-size: 1.6rem;
-
-    margin-bottom: 10px;
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 4px;
 }
 
 .footer-brand p {
-    color: rgba(255,255,255,0.55);
+    max-width: 300px;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.72rem;
+    line-height: 1.5;
+}
 
-    font-size: 0.85rem;
-
-    margin-bottom: 5px;
+.footer-tagline {
+    max-width: 260px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    line-height: 1.6;
 }
 
 .footer-links {
     display: flex;
-
     flex-wrap: wrap;
-
-    gap: 20px;
-
-    align-content: flex-start;
+    justify-content: flex-end;
+    gap: 10px 22px;
+    max-width: 430px;
 }
 
 .footer-links a {
-    color: rgba(255,255,255,0.65);
-
-    font-size: 0.8rem;
-
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-decoration: none;
     transition: color 0.25s ease;
 }
 
@@ -2418,18 +2435,62 @@ body.lightbox-open {
 
 .footer-bottom {
     display: flex;
-
+    align-items: center;
     justify-content: space-between;
-
     gap: 20px;
 
-    padding-top: 25px;
+    padding-top: 22px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-bottom p {
-    color: rgba(255,255,255,0.4);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.65rem;
+    line-height: 1.5;
+}
 
-    font-size: 0.7rem;
+
+@media (max-width: 900px) {
+
+    .footer-main {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .footer-links {
+        justify-content: flex-start;
+        max-width: 600px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .footer-container {
+        padding: 50px 20px 22px;
+    }
+
+    .footer-main {
+        gap: 25px;
+        padding-bottom: 35px;
+    }
+
+    .footer-tagline {
+        max-width: 320px;
+    }
+
+    .footer-links {
+        gap: 12px 18px;
+    }
+
+    .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
 }
 
 
