@@ -8,11 +8,62 @@
 
     <meta name="description"
           content="Rotaract Club of Durgapur Central Presidency — Together we Serve, Together we Succeed.">
+    <meta property="og:title" content="Rotaract Club of Durgapur Central Presidency">
+    <meta property="og:description" content="Rotaract Club of Durgapur Central Presidency — Together We Serve, Together We Succeed. Rotary International District 3240.">
+    <meta property="og:image" content="club-logo.png">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" href="club-logo.png">
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="preloader-active">
+
+    <!-- =========================================================
+         PRELOADER & FAST 0-100% INTRO ANIMATION
+    ========================================================= -->
+    <div class="site-preloader" id="sitePreloader" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Loading Rotaract Club of Durgapur Central Presidency">
+        <div class="preloader-backdrop-glow" aria-hidden="true"></div>
+        <div class="preloader-content">
+            <div class="preloader-brand">
+                <div class="preloader-logo-wrap">
+                    <img src="club-logo.png" alt="RAC DCP Logo" class="preloader-logo">
+                    <div class="preloader-glow-ring"></div>
+                </div>
+                <div class="preloader-brand-text">
+                    <span class="preloader-club">ROTARACT CLUB OF DURGAPUR CENTRAL PRESIDENCY</span>
+                    <span class="preloader-district">RI DISTRICT 3240 • CHARTER 90723</span>
+                </div>
+            </div>
+
+            <div class="preloader-counter-container">
+                <div class="preloader-counter-row">
+                    <span class="preloader-number" id="preloaderNumber">0</span>
+                    <span class="preloader-percent">%</span>
+                </div>
+                <div class="preloader-bar-track">
+                    <div class="preloader-bar-fill" id="preloaderBar"></div>
+                </div>
+                <div class="preloader-status" id="preloaderStatus">
+                    INITIALIZING EXPERIENCE...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress-bar" id="scrollProgress" aria-hidden="true"></div>
+
+    <!-- Ambient 3D Glowing Background Orbs -->
+    <div class="ambient-orb ambient-orb-1" aria-hidden="true"></div>
+    <div class="ambient-orb ambient-orb-2" aria-hidden="true"></div>
+
 
     <!-- =====================================================
          NAVIGATION
@@ -36,14 +87,11 @@
     </span>
 </a>
 
-            <button class="menu-toggle" aria-label="Open navigation menu">
-                ☰
-            </button>
-
             <nav class="nav-menu">
 
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
+                <a href="#menu-action">Service Menu</a>
                 <a href="#board">Board</a>
                 <a href="#people">Our People</a>
                 <a href="#projects">Projects</a>
@@ -55,6 +103,13 @@
                 <a href="#contact">Contact</a>
 
             </nav>
+
+            <div class="nav-cta-wrap">
+                <a href="#join" class="nav-cta-btn">Take Action →</a>
+                <button class="menu-toggle" aria-label="Open navigation menu">
+                    ☰
+                </button>
+            </div>
 
         </div>
 
@@ -69,38 +124,88 @@
 
        <section id="home" class="hero">
 
-    <div class="hero-overlay"></div>
+    <!-- ANIMATED HERO BACKGROUND IMAGE & TRANSLUCENT GREEN OVERLAY -->
+    <div class="hero-backdrop" aria-hidden="true">
+        <img src="images/hero-project.jpg"
+             alt="RAC DCP community project background"
+             class="hero-backdrop-img">
+        <div class="hero-backdrop-overlay"></div>
+    </div>
 
     <div class="container hero-container">
 
         <div class="hero-content">
 
-            <span class="hero-eyebrow">
-                ROTARACT CLUB OF DURGAPUR CENTRAL PRESIDENCY
-            </span>
+            <div class="hero-badge-row">
+                <span class="hero-eyebrow">
+                    ROTARACT CLUB OF DURGAPUR CENTRAL PRESIDENCY • RY 2026–27
+                </span>
 
-            <h1>
-                Together We Serve,<br>
-                <span>Together We Succeed.</span>
-            </h1>
+                <div class="hero-floating-badge">
+                    <span class="badge-icon">🌿</span>
+                    <div>
+                        <strong>Real Action</strong>
+                        <small>100+ Projects Completed</small>
+                    </div>
+                </div>
+            </div>
 
-            <p>
-                A youth-led community of changemakers creating meaningful
-                impact through service, leadership, fellowship and professional development.
+            <!-- GREEN REBEL BOLD STATEMENT CAROUSEL -->
+            <div class="hero-statement-carousel" id="heroCarousel">
+
+                <div class="hero-slide active" data-slide="0">
+                    <h1>
+                        Don't just watch.<br>
+                        <span>Take real action.</span>
+                    </h1>
+                </div>
+
+                <div class="hero-slide" data-slide="1">
+                    <h1>
+                        We are not bystanders.<br>
+                        <span>We are real changemakers.</span>
+                    </h1>
+                </div>
+
+                <div class="hero-slide" data-slide="2">
+                    <h1>
+                        The choice is easy<br>
+                        <span>when it's real community service.</span>
+                    </h1>
+                </div>
+
+                <div class="hero-slide" data-slide="3">
+                    <h1>
+                        You are what you give back.<br>
+                        <span>Lead with heart and purpose.</span>
+                    </h1>
+                </div>
+
+                <div class="hero-carousel-dots">
+                    <button class="carousel-dot active" data-index="0" aria-label="Statement 1"></button>
+                    <button class="carousel-dot" data-index="1" aria-label="Statement 2"></button>
+                    <button class="carousel-dot" data-index="2" aria-label="Statement 3"></button>
+                    <button class="carousel-dot" data-index="3" aria-label="Statement 4"></button>
+                </div>
+
+            </div>
+
+            <p class="hero-description">
+                A youth-driven community creating authentic, measurable impact through health camps, environmental stewardship, youth leadership and lasting fellowship.
             </p>
 
             <p class="hero-sponsor">
-                Sponsored by Rotary Club of Durgapur Central
+                Sponsored by Rotary Club of Durgapur Central • District 3240
             </p>
 
             <div class="hero-buttons">
 
-                <a href="#join" class="btn btn-primary">
-                    Join the Movement
+                <a href="#join" class="btn btn-rebel-primary">
+                    Join the Movement →
                 </a>
 
-                <a href="#projects" class="btn btn-outline">
-                    Explore Our Work
+                <a href="#menu-action" class="btn btn-rebel-outline">
+                    Discover Our Work
                 </a>
 
             </div>
@@ -115,24 +220,14 @@
                 <div class="hero-meta-divider"></div>
 
                 <div class="hero-meta-item">
-                    <strong>Rotary International District 3240</strong>
-                    <span>Create Lasting Impact</span>
+                    <strong>RI District 3240</strong>
+                    <span>Create Lasting Sustainable Impact</span>
                 </div>
 
             </div>
 
         </div>
 
-        <div class="hero-visual">
-
-    <div class="hero-image-wrap">
-
-        <img src="images/hero-project.jpg"
-             alt="RAC DCP members conducting a learning session">
-
-    </div>
-
-</div>
     </div>
 
 </section>
@@ -241,7 +336,7 @@
              IMPACT STATISTICS
         ====================================================== -->
 
-        <section class="impact-section">
+        <section id="impact" class="section impact-section">
 
     <div class="section-container">
 
@@ -318,6 +413,157 @@
     </div>
 
 </section>
+
+
+        <!-- =====================================================
+             GREEN REBEL "MENU OF ACTION" SECTION
+        ====================================================== -->
+
+        <section id="menu-action" class="section rebel-menu-section">
+
+            <div class="section-container">
+
+                <div class="section-heading centered">
+
+                    <p class="section-label">OUR SERVICE MENU</p>
+
+                    <h2>
+                        The choice is easy when it's <span>Real Impact.</span>
+                    </h2>
+
+                    <p class="section-intro">
+                        Like wholesome food fuels the body, purposeful action transforms the community. Explore our four signature avenues of service.
+                    </p>
+
+                </div>
+
+                <div class="rebel-menu-grid">
+
+                    <div class="rebel-menu-card">
+
+                        <div class="rebel-card-header">
+                            <span class="rebel-menu-icon">🌱</span>
+                            <span class="rebel-badge">AVENUE 01</span>
+                        </div>
+
+                        <h3>Community Health & Care</h3>
+
+                        <p>
+                            Ground-level medical aid, Autism support workshops, Doctor's Day felicitation, blood donation drives, and direct community outreach.
+                        </p>
+
+                        <a href="#projects" class="rebel-menu-link">
+                            Explore Projects →
+                        </a>
+
+                    </div>
+
+
+                    <div class="rebel-menu-card featured">
+
+                        <div class="rebel-card-header">
+                            <span class="rebel-menu-icon">♻️</span>
+                            <span class="rebel-badge popular">THE REBEL GREEN PROGRAM</span>
+                        </div>
+
+                        <h3>Environmental Stewardship</h3>
+
+                        <p>
+                            Tree plantation drives, environmental sustainability awareness, and our flagship book recycling & literacy movement <em>Boier Desh</em>.
+                        </p>
+
+                        <a href="#projects" class="rebel-menu-link">
+                            See Green Initiatives →
+                        </a>
+
+                    </div>
+
+
+                    <div class="rebel-menu-card">
+
+                        <div class="rebel-card-header">
+                            <span class="rebel-menu-icon">⚡</span>
+                            <span class="rebel-badge">AVENUE 03</span>
+                        </div>
+
+                        <h3>Youth & Leadership</h3>
+
+                        <p>
+                            Workshops, skill-building forums, professional development, and real-world project leadership opportunities for college students and youth.
+                        </p>
+
+                        <a href="#events" class="rebel-menu-link">
+                            Discover Events →
+                        </a>
+
+                    </div>
+
+
+                    <div class="rebel-menu-card">
+
+                        <div class="rebel-card-header">
+                            <span class="rebel-menu-icon">🤝</span>
+                            <span class="rebel-badge">AVENUE 04</span>
+                        </div>
+
+                        <h3>Fellowship & Culture</h3>
+
+                        <p>
+                            Uniting changemakers across District 3240 through cultural celebrations, zonal sports meets, collaborative visits, and lifelong bonds.
+                        </p>
+
+                        <a href="#gallery" class="rebel-menu-link">
+                            View Gallery →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             GREEN REBEL CALLOUT BANNER — PLANNING AN INITIATIVE?
+        ====================================================== -->
+
+        <section class="rebel-callout-section">
+
+            <div class="section-container">
+
+                <div class="rebel-callout-card">
+
+                    <div class="rebel-callout-text">
+
+                        <span class="rebel-badge">COMMUNITY COLLABORATION</span>
+
+                        <h2>Planning a community drive or youth event?</h2>
+
+                        <p>
+                            Feel good about the people you collaborate with. We partner with Rotary, local schools, NGOs, and student bodies to deliver tangible, authentic community outcomes.
+                        </p>
+
+                    </div>
+
+                    <div class="rebel-callout-actions">
+
+                        <a href="#contact" class="btn btn-rebel-primary">
+                            Partner with RAC DCP →
+                        </a>
+
+                        <a href="mailto:rcdurgapurpresidency.3240@gmail.com" class="btn btn-rebel-outline">
+                            Send an Enquiry
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
 
 
         <!-- =====================================================
@@ -3274,37 +3520,6 @@
 </footer>
 
 
-    <script src="script.js"></script>
-<script>
-
-function showPeople(category, button) {
-
-    /* Hide all people sections */
-
-    document.querySelectorAll('.people-display').forEach(function(section) {
-        section.classList.remove('active');
-    });
-
-
-    /* Remove active state from all buttons */
-
-    document.querySelectorAll('.people-category').forEach(function(btn) {
-        btn.classList.remove('active');
-    });
-
-
-    /* Show selected section */
-
-    document.getElementById(category).classList.add('active');
-
-
-    /* Activate selected button */
-
-    button.classList.add('active');
-
-}
-
-</script>
 
 <!-- =========================================================
      WEBSITE NOTIFICATIONS
@@ -3390,6 +3605,63 @@ function showPeople(category, button) {
     </div>
 
 </div>
-    
+
+<!-- =========================================================
+     FLOATING 3D SECTION MINIMAP & TRACKER
+========================================================= -->
+<nav class="section-minimap" id="sectionMinimap" aria-label="Quick section navigation">
+    <a href="#home" class="minimap-dot active" data-section="home" aria-label="Home">
+        <span class="minimap-tooltip">Home</span>
+    </a>
+    <a href="#about" class="minimap-dot" data-section="about" aria-label="About">
+        <span class="minimap-tooltip">About</span>
+    </a>
+    <a href="#impact" class="minimap-dot" data-section="impact" aria-label="Impact">
+        <span class="minimap-tooltip">Impact</span>
+    </a>
+    <a href="#menu-action" class="minimap-dot" data-section="menu-action" aria-label="Service Menu">
+        <span class="minimap-tooltip">Service Menu</span>
+    </a>
+    <a href="#board" class="minimap-dot" data-section="board" aria-label="Board">
+        <span class="minimap-tooltip">Board</span>
+    </a>
+    <a href="#people" class="minimap-dot" data-section="people" aria-label="Our People">
+        <span class="minimap-tooltip">People</span>
+    </a>
+    <a href="#projects" class="minimap-dot" data-section="projects" aria-label="Projects">
+        <span class="minimap-tooltip">Projects</span>
+    </a>
+    <a href="#events" class="minimap-dot" data-section="events" aria-label="Events">
+        <span class="minimap-tooltip">Events</span>
+    </a>
+    <a href="#gallery" class="minimap-dot" data-section="gallery" aria-label="Gallery">
+        <span class="minimap-tooltip">Gallery</span>
+    </a>
+    <a href="#achievements" class="minimap-dot" data-section="achievements" aria-label="Achievements">
+        <span class="minimap-tooltip">Achievements</span>
+    </a>
+    <a href="#publications" class="minimap-dot" data-section="publications" aria-label="Publications">
+        <span class="minimap-tooltip">Publications</span>
+    </a>
+    <a href="#join" class="minimap-dot" data-section="join" aria-label="Join Us">
+        <span class="minimap-tooltip">Join</span>
+    </a>
+    <a href="#contact" class="minimap-dot" data-section="contact" aria-label="Contact">
+        <span class="minimap-tooltip">Contact</span>
+    </a>
+</nav>
+
+<!-- =========================================================
+     3D CIRCULAR SCROLL PROGRESS & BACK-TO-TOP DIAL
+========================================================= -->
+<button class="scroll-top-dial" id="scrollTopDial" aria-label="Back to top">
+    <svg class="scroll-dial-svg" width="48" height="48" viewBox="0 0 48 48">
+        <circle class="dial-bg" cx="24" cy="24" r="20"></circle>
+        <circle class="dial-progress" id="dialProgressCircle" cx="24" cy="24" r="20"></circle>
+    </svg>
+    <span class="dial-arrow">↑</span>
+</button>
+
+<script src="script.js"></script>
 </body>
 </html>
