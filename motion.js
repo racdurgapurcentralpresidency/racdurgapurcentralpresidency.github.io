@@ -91,6 +91,7 @@
 
     var items = [];              // compositor registry
     var triggers = [];           // one-shot, geometry-driven (headings, odometers)
+    var scenes = [];             // pinned sections driven by 0..1 progress
     var geomDirty = true;
     var maxYCache = 0;
     var maxYDirty = true;
@@ -182,6 +183,38 @@
         triggers.push({ el: el, fn: fn, top: 0, fired: false, measured: false });
     }
 
+    /* A scroll SCENE is a tall track with a sticky stage inside. While
+       the track is on screen its callback runs every frame with a single
+       number: how far through the track you are, 0..1. Everything the
+       fly-through does is maths on that number. Scenes are measured in
+       the same batched pass as everything else. */
+    function registerScene(el, fn) {
+        var sc = { el: el, fn: fn, top: 0, h: 0, measured: false, last: -1 };
+        scenes.push(sc);
+        return sc;
+    }
+
+    function updateScenes(y, vh) {
+        for (var i = 0; i < scenes.length; i++) {
+            var sc = scenes[i];
+            if (!sc.measured) { continue; }
+
+            var travel = sc.h - vh;
+            if (travel <= 0) { continue; }
+
+            var onScreen = (sc.top < y + vh) && (sc.top + sc.h > y);
+            var p = clamp((y - sc.top) / travel, 0, 1);
+
+            if (!onScreen && (sc.last === 0 || sc.last === 1)) { continue; }
+
+            if (p !== sc.last) {
+                sc.fn(p, onScreen);
+                sc.last = p;
+                idleFrames = 0;
+            }
+        }
+    }
+
     function checkTriggers(y, vh) {
         for (var i = 0; i < triggers.length; i++) {
             var t = triggers[i];
@@ -233,6 +266,16 @@
             });
         });
 
+        for (i = 0; i < scenes.length; i++) {
+            var scn = scenes[i];
+            var sr = scn.el.getBoundingClientRect();
+            if (sr.height === 0) { scn.measured = false; continue; }
+            scn.top = sr.top + y;
+            scn.h = sr.height;
+            scn.measured = true;
+            scn.last = -1;
+        }
+
         for (i = 0; i < triggers.length; i++) {
             var t = triggers[i];
             if (t.fired) { continue; }
@@ -246,6 +289,9 @@
     }
 
     function updateItem(st, y, vh, now) {
+        // A scene owns its elements' transforms outright; the depth
+        // conveyor and this writer must not both target them.
+        if (st.sceneOwned) { return; }
         if (!st.measured) { return; }
 
         // Activity test is pure math against cached geometry.
@@ -562,6 +608,12 @@
                 (MOTION.hover ? ptrNX * -14 : 0).toFixed(1) + 'px');
         }
 
+        if (hero.zoom) {
+            // Travel into the photo rather than sliding it away.
+            hero.zoom.style.transform = 'scale(' + (1 + hp * 0.42).toFixed(3) + ')';
+            hero.zoom.style.opacity = clamp(1 - hp * 0.5, 0, 1).toFixed(3);
+        }
+
         if (hero.meta) {
             hero.meta.style.transform =
                 'translate3d(0px,' + (hp * -60).toFixed(1) + 'px,0px)';
@@ -596,6 +648,10 @@
         if (chrome.orb2) {
             chrome.orb2.style.setProperty('--my', (-y * 0.08).toFixed(1) + 'px');
             chrome.orb2.style.setProperty('--mx', (-ptrNX * 22).toFixed(1) + 'px');
+        }
+        if (chrome.gear) {
+            /* ~360deg per 2000px, eased for free by the momentum lerp. */
+            chrome.gear.style.setProperty('--wheel-rot', (y * 0.18).toFixed(1) + 'deg');
         }
         if (chrome.dial) {
             chrome.dial.style.setProperty('--dry', (ptrNX * 12).toFixed(2) + 'deg');
@@ -819,9 +875,11 @@
                 if (r.width) { first.set(t, r); }
             });
 
-            requestAnimationFrame(function () {
+            setTimeout(function () {
                 markGeomDirty();
                 remeasure();
+                var rt = document.querySelector('.rail-track');
+                if (rt && rt.__recount) { rt.__recount(); }
                 tiles.forEach(function (t) {
                     var st = t.__mo;
                     if (!st) { return; }
@@ -839,7 +897,7 @@
                     }
                 });
                 wake();
-            });
+            }, 0);
         }, true);
 
         // Remember which thumbnail was clicked, for the FLIP zoom.
@@ -922,6 +980,20 @@
             var btn = ev.target.closest && ev.target.closest('.project-filter');
             if (!btn) { return; }
 
+            // The fly-through owns these transforms; a FLIP would fight it.
+            if (docEl.classList.contains('fly-on')) {
+                // setTimeout, not rAF: this only needs to run AFTER the
+                // filter handler toggles .hidden, and rAF is suspended
+                // whenever the frame loop is throttled — which left the
+                // corridor length and counter stale after filtering.
+                setTimeout(function () {
+                    var tr = document.querySelector('.fly-track');
+                    if (tr && tr.__recount) { tr.__recount(); }
+                    wake();
+                }, 0);
+                return;
+            }
+
             var cards = Array.prototype.slice.call(
                 document.querySelectorAll('.project-card'));
             var wasVisible = new Map();
@@ -946,6 +1018,270 @@
                 wake();
             });
         }, true);
+    }
+
+
+    /* =====================================================
+       11b. SCROLL SCENES
+       Each is opt-out via ?no=fly,rail,stack,hero,gear so they can be
+       judged one at a time. All of them require a fine pointer and a
+       wide viewport: pinned sections on touch feel sticky rather than
+       smooth, so below 1025px every section keeps its original layout.
+       ===================================================== */
+
+    var SCENE_OFF = (params.get('no') || '').split(',');
+
+    function sceneOn(name) {
+        return SCENE_OFF.indexOf(name) === -1 &&
+               window.innerWidth >= 1025 && finePointer;
+    }
+
+    /* Wrap an element in track + stage. Both are display:contents until
+       the scene's html class is set, so an inactive scene leaves the
+       original layout completely untouched. */
+    function wrapScene(el, trackCls, stageCls) {
+        if (!el || el.__wrapped) { return null; }
+        var track = document.createElement('div');
+        track.className = trackCls;
+        var stage = document.createElement('div');
+        stage.className = stageCls;
+        el.parentNode.insertBefore(track, el);
+        track.appendChild(stage);
+        stage.appendChild(el);
+        el.__wrapped = true;
+        return { track: track, stage: stage };
+    }
+
+    /* --- Scene 1: project camera fly-through ----------------------- */
+    function initFlythrough() {
+        var grid = document.querySelector('.project-grid');
+        if (!grid || !sceneOn('fly')) { return; }
+
+        var w = wrapScene(grid, 'fly-track', 'fly-stage');
+        if (!w) { return; }
+
+        var counter = document.createElement('div');
+        counter.className = 'fly-counter';
+        counter.setAttribute('aria-hidden', 'true');
+        counter.innerHTML = '<span class="fly-n">01</span>' +
+                            '<span class="fly-bar"><i></i></span>' +
+                            '<span class="fly-t">11</span>';
+        w.stage.appendChild(counter);
+
+        docEl.classList.add('fly-on');
+        counter.style.display = 'flex';
+
+        var cards = Array.prototype.slice.call(grid.querySelectorAll('.project-card'));
+        cards.forEach(function (c) { if (c.__mo) { c.__mo.sceneOwned = true; } });
+
+        var visible = cards.slice();
+
+        function recount() {
+            visible = cards.filter(function (c) {
+                return !c.classList.contains('hidden');
+            });
+            w.track.style.setProperty('--fly-h',
+                (window.innerHeight + visible.length * 260) + 'px');
+            counter.querySelector('.fly-t').textContent = ('0' + visible.length).slice(-2);
+            markGeomDirty();
+        }
+        recount();
+        w.track.__recount = recount;
+
+        registerScene(w.track, function (p) {
+            var n = visible.length;
+            if (!n) { return; }
+
+            cards.forEach(function (c) {
+                if (visible.indexOf(c) === -1) {
+                    c.style.opacity = '0';
+                    c.style.pointerEvents = 'none';
+                }
+            });
+
+            // Start at 1.2 rather than -1.3 so the first card is ALREADY in
+            // the corridor at p=0. Starting behind the fade-in point left a
+            // ~270px dead zone: you landed on the #projects anchor and saw
+            // an empty stage until the first card caught up.
+            var head = 1.2 + p * (n + 0.48);
+            var front = -1, frontD = 1e9;
+
+            visible.forEach(function (c, i) {
+                var local = head - i;
+                // 820px of travel per card, against a ~2300px visible depth
+                // window, keeps about three cards in flight at once. At the
+                // original 2500 only one was ever in view, which read as a
+                // slideshow rather than a corridor.
+                var z = -2000 + local * 820;
+                // Fade out between z=200 and z=500, so a card is fully opaque
+                // when it is closest. The old window started fading at z=300,
+                // which meant the card at the camera was only 58% visible.
+                var op = clamp((z + 2000) / 700, 0, 1) * clamp((500 - z) / 300, 0, 1);
+
+                // Fan OUT with distance, not with approach: the card at the
+                // camera stays centred while the ones behind it splay left
+                // and right, so you see down the corridor instead of at one
+                // card with the rest hidden directly behind it.
+                var side = (i % 2 ? 1 : -1);
+                var dist = clamp(-z / 2000, 0, 1);
+                var x = side * dist * 300;
+                var y = -dist * 46;
+
+                c.style.transform =
+                    'translate(-50%,-50%) translate3d(' + x.toFixed(1) + 'px,' +
+                    y.toFixed(1) + 'px,' + z.toFixed(0) + 'px) rotateY(' +
+                    (-side * dist * 17).toFixed(1) + 'deg)';
+                c.style.opacity = op.toFixed(3);
+                c.style.zIndex = String(500 + Math.round(z / 8));
+                c.style.pointerEvents = op > 0.72 ? 'auto' : 'none';
+
+                var d = Math.abs(z - 200);
+                if (op > 0.5 && d < frontD) { frontD = d; front = i; }
+            });
+
+            counter.querySelector('.fly-n').textContent =
+                ('0' + clamp(front + 1, 1, n)).slice(-2);
+            counter.style.setProperty('--fly-p', (p * 100).toFixed(1) + '%');
+        });
+    }
+
+    /* --- Scene 2: gallery runs sideways ---------------------------- */
+    function initRail() {
+        var grid = document.querySelector('.gallery-grid');
+        if (!grid || !sceneOn('rail')) { return; }
+
+        var w = wrapScene(grid, 'rail-track', 'rail-stage');
+        if (!w) { return; }
+        docEl.classList.add('rail-on');
+
+        function resize() {
+            var travel = Math.max(grid.scrollWidth - window.innerWidth, 0);
+            /* 0.55 vertical px per horizontal px keeps the track about
+               the same height as the 4-column grid it replaces. */
+            w.track.style.setProperty('--rail-h',
+                (window.innerHeight + travel * 0.55) + 'px');
+            markGeomDirty();
+        }
+        resize();
+        w.track.__recount = resize;
+
+        registerScene(w.track, function (p) {
+            var travel = Math.max(grid.scrollWidth - window.innerWidth, 0);
+            grid.style.transform = 'translate3d(' + (-p * travel).toFixed(0) + 'px,0,0)';
+        });
+    }
+
+    /* --- Scene 3: awards stack into a deck ------------------------- */
+    function initDeck() {
+        var grid = document.querySelector('.achievement-grid');
+        if (!grid || !sceneOn('stack')) { return; }
+
+        docEl.classList.add('stack-on');
+        grid.classList.add('is-deck');
+
+        var cards = Array.prototype.slice.call(grid.querySelectorAll('.achievement-card'));
+        cards.forEach(function (c, i) {
+            c.style.setProperty('--deck-i', i);
+            if (c.__mo) { c.__mo.sceneOwned = true; }
+            c.style.transform = '';
+            c.style.opacity = '';
+        });
+        markGeomDirty();
+
+        /* Cards further down the pile shrink and dim, so the deck reads
+           as depth rather than a stack of identical rectangles. */
+        registerScene(grid, function () {
+            // How buried a card is = how far the NEXT card has closed in on
+            // it. In free flow they sit ~158px apart; once both are stuck
+            // the gap is the 14px stagger. Measuring the distance a card
+            // has travelled from its own sticky top (the obvious approach)
+            // tops out at ~0.05 and is invisible.
+            var i, tops = [];
+            for (i = 0; i < cards.length; i++) {
+                tops.push(cards[i].getBoundingClientRect().top);   // read phase
+            }
+            for (i = 0; i < cards.length; i++) {
+                var gap = (i < cards.length - 1) ? tops[i + 1] - tops[i] : 999;
+                var buried = clamp((158 - gap) / 144, 0, 1);
+                cards[i].style.transform = 'scale(' + (1 - buried * 0.07).toFixed(3) + ')';
+                cards[i].style.filter = buried > 0.01
+                    ? 'brightness(' + (1 - buried * 0.22).toFixed(3) + ')'
+                    : '';
+            }
+        });
+    }
+
+    /* --- Scene 4: hero zoom-through --------------------------------
+       NOT a registerScene: that formula is (y - top) / (height - viewport),
+       which is right for a tall pinned track but gives the hero only
+       947 - 900 = 47px of travel, so the whole zoom fired in 47 pixels.
+       The hero is an ordinary section, so it rides updateHero's own `hp`
+       (y / heroHeight) instead. */
+    function initHeroZoom() {
+        var backdrop = document.querySelector('.hero-backdrop');
+        if (!backdrop || !sceneOn('hero')) { return; }
+        docEl.classList.add('herozoom-on');
+        hero.zoom = backdrop;
+    }
+
+    /* --- Scene 5: the page is geared to the Rotary wheel ------------ */
+    function initRotaryGear() {
+        var dial = document.getElementById('scrollTopDial');
+        if (!dial || SCENE_OFF.indexOf('gear') !== -1) { return; }
+        if (dial.querySelector('.rotary-gear')) { return; }
+
+        var NS = 'http://www.w3.org/2000/svg';
+        var svg = document.createElementNS(NS, 'svg');
+        svg.setAttribute('class', 'rotary-gear');
+        svg.setAttribute('viewBox', '0 0 100 100');
+        svg.setAttribute('aria-hidden', 'true');
+
+        var g = document.createElementNS(NS, 'g');
+        g.setAttribute('fill', 'currentColor');
+
+        var i, el;
+        /* 24 teeth and 6 spokes, as on the actual emblem. */
+        for (i = 0; i < 24; i++) {
+            el = document.createElementNS(NS, 'rect');
+            el.setAttribute('x', '47.4');
+            el.setAttribute('y', '2');
+            el.setAttribute('width', '5.2');
+            el.setAttribute('height', '9');
+            el.setAttribute('rx', '1.4');
+            el.setAttribute('transform', 'rotate(' + (i * 15) + ' 50 50)');
+            g.appendChild(el);
+        }
+        for (i = 0; i < 6; i++) {
+            el = document.createElementNS(NS, 'rect');
+            el.setAttribute('x', '47');
+            el.setAttribute('y', '22');
+            el.setAttribute('width', '6');
+            el.setAttribute('height', '56');
+            el.setAttribute('transform', 'rotate(' + (i * 30) + ' 50 50)');
+            g.appendChild(el);
+        }
+
+        var ring = document.createElementNS(NS, 'circle');
+        ring.setAttribute('cx', '50');
+        ring.setAttribute('cy', '50');
+        ring.setAttribute('r', '38');
+        ring.setAttribute('fill', 'none');
+        ring.setAttribute('stroke', 'currentColor');
+        ring.setAttribute('stroke-width', '9');
+        g.appendChild(ring);
+
+        var hub = document.createElementNS(NS, 'circle');
+        hub.setAttribute('cx', '50');
+        hub.setAttribute('cy', '50');
+        hub.setAttribute('r', '12');
+        hub.setAttribute('fill', 'none');
+        hub.setAttribute('stroke', 'currentColor');
+        hub.setAttribute('stroke-width', '7');
+        g.appendChild(hub);
+
+        svg.appendChild(g);
+        dial.insertBefore(svg, dial.firstChild);
+        chrome.gear = svg;
     }
 
 
@@ -1000,6 +1336,10 @@
         }
         document.addEventListener('load', markGeomDirty, true);   // img load doesn't bubble
         window.addEventListener('resize', function () {
+            ['.fly-track', '.rail-track'].forEach(function (sel) {
+                var el = document.querySelector(sel);
+                if (el && el.__recount) { el.__recount(); }
+            });
             hero.h = hero.sec ? hero.sec.offsetHeight : window.innerHeight;
             docEl.style.setProperty('--sbw', (window.innerWidth - docEl.clientWidth) + 'px');
             markGeomDirty();
@@ -1053,6 +1393,7 @@
             updateItem(st, scrollY, vh, now);
         }
 
+        updateScenes(scrollY, vh);
         checkTriggers(scrollY, vh);
         updateHero(scrollY, now);
         updateChrome(scrollY);
@@ -1085,6 +1426,12 @@
         initGalleryFlip();
         initProjectFlip();
         initLightboxFlip();
+
+        initRotaryGear();
+        initHeroZoom();
+        initFlythrough();
+        initRail();
+        initDeck();
         initIntegration();
 
         remeasure();

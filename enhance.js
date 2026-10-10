@@ -368,7 +368,11 @@
         status.setAttribute('role', 'status');
         bar.appendChild(status);
 
-        grid.parentNode.insertBefore(bar, grid);
+        // motion.js may already have wrapped the grid in a scene track
+        // (it loads first). Anchor to the outermost wrapper, or the bar
+        // ends up INSIDE the sticky stage and pins with the corridor.
+        var anchor = grid.closest('.fly-track') || grid;
+        anchor.parentNode.insertBefore(bar, anchor);
 
         // NOTE: class is .project-filter, deliberately NOT .gallery-filter.
         // script.js and motion.js both bind handlers to .gallery-filter,

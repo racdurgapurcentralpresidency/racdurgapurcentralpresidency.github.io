@@ -26,6 +26,19 @@
         return;
     }
 
+    // The site is three pages now, so the intro would replay on every
+    // navigation. Show it once per browsing session instead.
+    try {
+        if (sessionStorage.getItem("racdcp-intro-seen")) {
+            preloader.style.display = "none";
+            document.body.classList.remove("preloader-active");
+            return;
+        }
+        sessionStorage.setItem("racdcp-intro-seen", "1");
+    } catch (e) {
+        // Private mode or blocked storage: fall through and just play it.
+    }
+
     let isCompleted = false;
     const duration = 1350; // Total duration in ms (~1.35 seconds: snappy & energetic)
     const startTime = performance.now();
