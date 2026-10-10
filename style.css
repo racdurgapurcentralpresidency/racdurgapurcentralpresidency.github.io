@@ -70,6 +70,12 @@ button {
 
     --accent: #f59e0b;
 
+    /* Accessible emerald. --blue (#10b981) is a FILL colour: as text on
+       white it is 2.54:1, which fails WCAG AA. These two are for
+       foreground text and for fills that carry white text. */
+    --emerald-text: #067a52;      /* 4.6:1 on white  */
+    --emerald-strong: #047857;    /* 4.9:1 under white text */
+
     --max-width: 1200px;
 
     --shadow:
@@ -167,7 +173,7 @@ button {
 }
 
 .section-label {
-    color: var(--blue);
+    color: var(--emerald-text);
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.18em;
@@ -182,7 +188,7 @@ button {
 }
 
 .section-heading h2 span {
-    color: var(--blue);
+    color: var(--emerald-text);
 }
 
 .section-intro {
@@ -283,7 +289,7 @@ button {
 }
 
 .nav-menu a:hover {
-    color: var(--blue);
+    color: var(--emerald-text);
 }
 
 .nav-cta-wrap {
@@ -296,7 +302,7 @@ button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--blue);
+    background: var(--emerald-strong);
     color: #ffffff !important;
     padding: 9px 22px;
     border-radius: 9999px;
@@ -327,7 +333,7 @@ button {
 
 
 /* =========================================================
-   5. HERO — GREEN REBEL EDITORIAL STYLE WITH ANIMATED BACKDROP
+   5. HERO — GREEN REBEL EDITORIAL STYLE
    ========================================================= */
 
 .hero {
@@ -340,93 +346,51 @@ button {
     color: #ffffff;
 }
 
-/* ANIMATED BACKDROP IMAGE */
-.hero-backdrop {
+.hero-overlay {
     position: absolute;
     inset: 0;
-    overflow: hidden;
-    z-index: 1;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(7, 31, 22, 0.94) 0%,
+            rgba(7, 31, 22, 0.75) 45%,
+            rgba(7, 31, 22, 0.2) 100%
+        );
+
     pointer-events: none;
 }
 
-.hero-backdrop-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transform: scale(1.03);
-    animation: heroBackdropZoom 22s ease-in-out infinite alternate;
-    will-change: transform;
-}
-
-@keyframes heroBackdropZoom {
-    0% {
-        transform: scale(1.03) translate(0, 0);
-    }
-    50% {
-        transform: scale(1.10) translate(-1%, -1.2%);
-    }
-    100% {
-        transform: scale(1.05) translate(1%, 0.8%);
-    }
-}
-
-.hero-backdrop-overlay {
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(
-            135deg,
-            rgba(6, 26, 18, 0.88) 0%,
-            rgba(7, 34, 24, 0.78) 50%,
-            rgba(11, 48, 34, 0.65) 100%
-        ),
-        radial-gradient(
-            circle at 80% 25%,
-            rgba(16, 185, 129, 0.22) 0%,
-            transparent 55%
-        ),
-        radial-gradient(
-            circle at 15% 85%,
-            rgba(245, 158, 11, 0.15) 0%,
-            transparent 50%
-        );
-}
-
 .hero-container {
+    width: 100%;
     position: relative;
     z-index: 2;
-    width: 100%;
 }
 
 .hero-content {
-    max-width: 900px;
+    max-width: 920px;
     padding: 100px 0 90px;
     background: transparent;
     position: relative;
     z-index: 3;
 }
 
-.hero-badge-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 22px;
-}
-
 .hero-eyebrow {
     display: inline-block;
+
+    margin-bottom: 22px;
     padding: 8px 16px;
+
     border: 1px solid rgba(52, 211, 153, 0.35);
     border-radius: 9999px;
-    background: rgba(16, 185, 129, 0.15);
+
+    background: rgba(16, 185, 129, 0.12);
+
     font-size: 0.76rem;
     font-weight: 800;
     letter-spacing: 0.14em;
+
     color: #a7f3d0;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
 }
 
 /* STATEMENT CAROUSEL */
@@ -454,7 +418,7 @@ button {
     pointer-events: auto;
 }
 
-.hero-slide h1 {
+.hero-slide .hero-slide-title {
     margin: 0;
     font-size: clamp(2.9rem, 6.4vw, 5.2rem);
     line-height: 1.04;
@@ -462,7 +426,7 @@ button {
     font-weight: 800;
 }
 
-.hero-slide h1 span {
+.hero-slide .hero-slide-title span {
     color: #34d399;
 }
 
@@ -510,7 +474,7 @@ button {
 }
 
 .btn-rebel-primary {
-    background: #10b981;
+    background: var(--emerald-strong);
     color: #ffffff !important;
     border-radius: 9999px;
     font-weight: 700;
@@ -525,7 +489,7 @@ button {
 
 .btn-rebel-primary:hover {
     transform: translateY(-3px) scale(1.02);
-    background: #059669;
+    background: #036847;
     box-shadow: 0 16px 35px rgba(16, 185, 129, 0.45);
 }
 
@@ -551,40 +515,37 @@ button {
 }
 
 .hero-floating-badge {
-    position: relative;
-    background: rgba(11, 46, 33, 0.85);
+    position: absolute;
+    bottom: 22px;
+    right: 22px;
+    background: rgba(11, 46, 33, 0.88);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(52, 211, 153, 0.4);
+    border: 1px solid rgba(52, 211, 153, 0.35);
     border-radius: 9999px;
-    padding: 6px 16px;
+    padding: 10px 18px;
     color: #ffffff;
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 10px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.hero-floating-badge:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(16, 185, 129, 0.25);
+    gap: 12px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    transform: translateZ(28px);
 }
 
 .hero-floating-badge .badge-icon {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
 }
 
 .hero-floating-badge strong {
     display: block;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 700;
     line-height: 1.2;
 }
 
 .hero-floating-badge small {
     display: block;
-    font-size: 0.68rem;
+    font-size: 0.72rem;
     color: #a7f3d0;
 }
 
@@ -758,7 +719,7 @@ button {
 
     padding: 30px;
 
-    background: var(--blue);
+    background: var(--emerald-strong);
     border-radius: 24px;
 
     min-height: 280px;
@@ -817,7 +778,7 @@ button {
     font-weight: 800;
     letter-spacing: 0.14em;
 
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.93);
 }
 
 .location-info h3 {
@@ -925,7 +886,7 @@ button {
 }
 
 .impact-heading h2 span {
-    color: var(--blue);
+    color: var(--emerald-text);
 }
 
 .impact-period {
@@ -1060,7 +1021,7 @@ button {
 .rebel-badge {
     display: inline-block;
     background: #eafaf1;
-    color: var(--blue);
+    color: var(--emerald-text);
     font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 0.08em;
@@ -1092,7 +1053,7 @@ button {
 .rebel-menu-link {
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--blue);
+    color: var(--emerald-text);
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -1271,7 +1232,7 @@ button {
 }
 
 .member-role {
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.7rem;
 
@@ -1347,7 +1308,7 @@ button {
 }
 
 .people-category.active {
-    border-color: var(--blue);
+    border-color: var(--emerald-text);
     box-shadow: var(--shadow);
 }
 
@@ -1371,7 +1332,7 @@ button {
 .category-label {
     margin: 0 0 5px;
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.68rem;
     font-weight: 700;
@@ -1441,7 +1402,7 @@ button {
 }
 
 .people-display-heading h3 span {
-    color: var(--blue);
+    color: var(--emerald-text);
 }
 
 
@@ -1517,7 +1478,7 @@ button {
 .people-designation {
     margin: 5px 0 0;
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.68rem;
 
@@ -1667,7 +1628,7 @@ button {
 .project-meta span {
     color: var(--muted);
 
-    font-size: 0.68rem;
+    font-size: 0.75rem;
 
     font-weight: 700;
 
@@ -1703,7 +1664,7 @@ button {
 
     background: #eef4ff;
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.65rem;
 
@@ -1836,7 +1797,7 @@ button {
 .event-status {
     display: inline-block;
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.65rem;
 
@@ -1900,7 +1861,7 @@ button {
 .event-link {
     display: inline-block;
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.75rem;
 
@@ -1951,7 +1912,7 @@ button {
 
     justify-content: center;
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 2rem;
 
@@ -2030,8 +1991,8 @@ button {
 }
 
 .gallery-filter:hover {
-    color: var(--blue);
-    border-color: var(--blue);
+    color: var(--emerald-text);
+    border-color: var(--emerald-text);
     transform: translateY(-2px);
 }
 
@@ -2510,7 +2471,7 @@ body.lightbox-open {
 .achievement-type {
     display: inline-block;
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.63rem;
     font-weight: 800;
@@ -2561,7 +2522,7 @@ body.lightbox-open {
     border-radius: 50%;
 
     background: #eef4ff;
-    color: var(--blue);
+    color: var(--emerald-text);
 
     display: flex;
     align-items: center;
@@ -2772,7 +2733,7 @@ body.lightbox-open {
     border-radius: 12px;
 
     background: #eef4ff;
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.72rem;
     font-weight: 800;
@@ -2787,9 +2748,9 @@ body.lightbox-open {
 .publication-type {
     display: block;
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     font-weight: 800;
     letter-spacing: 0.1em;
 
@@ -2825,7 +2786,7 @@ body.lightbox-open {
     border-radius: 999px;
 
     background: var(--white);
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.62rem;
     font-weight: 800;
@@ -3009,7 +2970,7 @@ body.lightbox-open {
 .join-button:hover {
     transform: translateY(-3px);
     background: #eef4ff;
-    color: var(--blue);
+    color: var(--emerald-text);
 }
 
 
@@ -3195,7 +3156,7 @@ body.lightbox-open {
     border-radius: 12px;
 
     background: #eef4ff;
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 1.2rem;
     font-weight: 700;
@@ -3210,9 +3171,9 @@ body.lightbox-open {
 
     margin-bottom: 7px;
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     font-weight: 800;
     letter-spacing: 0.1em;
 }
@@ -3247,7 +3208,7 @@ body.lightbox-open {
 }
 
 .contact-info a:hover {
-    color: var(--blue);
+    color: var(--emerald-text);
 }
 
 
@@ -3487,7 +3448,6 @@ body.lightbox-open {
     .nav-menu.active {
         display: flex;
     }
-}
 
     /* Hero */
 
@@ -3499,7 +3459,7 @@ body.lightbox-open {
     padding: 80px 0 65px;
 }
 
-.hero h1 {
+.hero .hero-slide-title {
     font-size: clamp(2.8rem, 12vw, 4.2rem);
 }
 
@@ -3838,23 +3798,14 @@ body.lightbox-open {
    HOME HERO — UPDATED LAYOUT
    ========================================================= */
 
-.hero-container {
-    width: 100%;
-    position: relative;
-    z-index: 2;
-}
 
-.hero-content {
-    max-width: 920px;
-    padding: 85px 20px 75px;
-    background: transparent;
-}
+
 
 .hero-sponsor {
     margin-top: 20px;
     margin-bottom: 0;
     color: rgba(255, 255, 255, 0.75);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.04em;
 }
@@ -3876,22 +3827,86 @@ body.lightbox-open {
     line-height: 1.5;
 }
 
+
+/* =========================================================
+   HERO IMAGE
+   ========================================================= */
+
+
+
+
+
+
+/* =========================================================
+   HERO IMAGE WRAPPER
+   ========================================================= */
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   HERO — TABLET
+   ========================================================= */
+
 @media (max-width: 1000px) {
-    .hero-content {
-        max-width: 100%;
-        padding: 70px 16px 60px;
+
+    .hero-container {
+        grid-template-columns: 1fr;
     }
+
+    .hero-content {
+        max-width: 720px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .hero-visual {
+        display: none;
+    }
+
 }
 
-@media (max-width: 768px) {
-    .hero-content {
-        padding: 50px 14px 45px;
+
+/* =========================================================
+   HERO — MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .hero-visual {
+        display: flex;
+        justify-content: center;
+        padding-right: 0;
+        width: 100%;
     }
-    .hero-badge-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+
+    .hero-visual img {
+        width: min(88vw, 520px);
+        max-height: none;
+        height: auto;
     }
+
+    .hero-image-wrap {
+        width: min(88vw, 520px);
+        max-width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-image-wrap img {
+        width: 100%;
+        max-height: none;
+        height: auto;
+    }
+
 }
 
 
@@ -3939,7 +3954,7 @@ body.lightbox-open {
 
     cursor: pointer;
 
-    box-shadow: 0 12px 30px rgba(8, 118, 185, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
+    box-shadow: 0 12px 30px rgba(16, 185, 129, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
 
     animation: floatWidget 3.5s ease-in-out infinite;
     transform-style: preserve-3d;
@@ -4049,7 +4064,7 @@ body.lightbox-open {
 .notification-label {
     margin: 0 0 5px;
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.65rem;
     font-weight: 800;
@@ -4132,7 +4147,7 @@ body.lightbox-open {
 .notification-dot.new {
     background: var(--blue);
 
-    box-shadow: 0 0 0 4px rgba(0, 102, 179, 0.10);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
 }
 
 .notification-status {
@@ -4140,7 +4155,7 @@ body.lightbox-open {
 
     margin-bottom: 5px;
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.62rem;
     font-weight: 800;
@@ -4283,7 +4298,7 @@ body.lightbox-open {
 }
 
 .creator-content h2 span {
-    color: var(--blue);
+    color: var(--emerald-text);
 }
 
 .creator-description {
@@ -4310,7 +4325,7 @@ body.lightbox-open {
 
     background: rgba(0, 102, 179, 0.07);
 
-    color: var(--blue);
+    color: var(--emerald-text);
 
     font-size: 0.68rem;
     font-weight: 700;
@@ -4565,7 +4580,6 @@ body.lightbox-open {
 
     .ambient-orb,
     .hero-image-wrap,
-    .hero-backdrop-img,
     .notification-button {
         animation: none !important;
     }
@@ -4742,7 +4756,7 @@ body.lightbox-open {
 
 .scroll-top-dial:hover .dial-arrow {
     transform: translateY(-2px);
-    color: var(--blue);
+    color: var(--emerald-text);
 }
 
 
@@ -4758,7 +4772,7 @@ body.lightbox-open {
 }
 
 .section-heading.horizon-active h2 span {
-    text-shadow: 0 0 25px rgba(8, 118, 185, 0.4);
+    text-shadow: 0 0 25px rgba(16, 185, 129, 0.45);
     transition: text-shadow 0.4s ease;
 }
 
@@ -4966,3 +4980,518 @@ body.preloader-active {
 
 
 
+
+
+/* =========================================================
+   ACCESSIBILITY UTILITIES
+   ========================================================= */
+
+/* Nothing in this project set :focus or :focus-visible before, so the
+   only affordance was the UA default ring - invisible on emerald fills
+   and on the 8px minimap dots. */
+:focus-visible {
+    outline: 3px solid var(--emerald-strong);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.hero :focus-visible,
+.about-location-card :focus-visible,
+.gallery-lightbox :focus-visible,
+.achievement-lightbox :focus-visible,
+.rebel-callout-card :focus-visible {
+    outline-color: #ffffff;
+}
+
+.minimap-dot:focus-visible,
+.carousel-dot:focus-visible {
+    outline-offset: 5px;
+}
+
+.gallery-item:focus-visible,
+.achievement-image:focus-visible,
+.project-card:focus-visible {
+    outline-offset: 5px;
+}
+
+/* Visually hidden, still announced. */
+.sr-only {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 16px;
+    z-index: 100001;
+    padding: 12px 20px;
+    background: var(--rebel-forest);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 0 0 10px 10px;
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+#main:focus {
+    outline: none;
+}
+
+/* The gallery tiles and award images are divs/imgs with click handlers;
+   enhance.js makes them real buttons at runtime. */
+.gallery-item[role="button"],
+.achievement-image[role="button"],
+.project-card[role="button"] {
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   PROJECT FILTER + DETAIL MODAL
+   ========================================================= */
+
+.project-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.project-filter {
+    padding: 10px 18px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    border-radius: 9999px;
+    font-family: inherit;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color .25s ease, border-color .25s ease,
+                background-color .25s ease, transform .25s ease;
+}
+
+.project-filter span {
+    opacity: 0.6;
+    margin-left: 4px;
+}
+
+.project-filter:hover {
+    color: var(--emerald-text);
+    border-color: var(--emerald-text);
+    transform: translateY(-2px);
+}
+
+.project-filter.active {
+    background: var(--emerald-strong);
+    border-color: var(--emerald-strong);
+    color: #ffffff;
+}
+
+/* display:none is load-bearing — it makes motion.js's remeasure() see a
+   zero rect and stop compositing the card. opacity/visibility would
+   leave it measurable and still being written to every frame. */
+.project-card.hidden { display: none; }
+
+.project-open-hint {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--emerald-text);
+}
+
+/* --- modal --- */
+
+.project-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(7, 31, 22, 0.94);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+}
+
+.project-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.project-modal-panel {
+    position: relative;
+    width: min(980px, 100%);
+    max-height: 88vh;
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 24px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+}
+
+.project-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    z-index: 3;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(7, 31, 22, 0.55);
+    color: #ffffff;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color .25s ease, transform .25s ease;
+}
+
+.project-modal-close:hover {
+    background: rgba(7, 31, 22, 0.8);
+    transform: rotate(90deg);
+}
+
+.project-modal-hero {
+    position: relative;
+    background: #0b2e21;
+    border-radius: 24px 0 0 24px;
+    overflow: hidden;
+    min-height: 320px;
+}
+
+.project-modal-hero img {
+    width: 100%;
+    height: 100%;
+    max-height: 88vh;
+    object-fit: cover;
+    display: block;
+}
+
+.pm-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--navy);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color .25s ease;
+}
+
+.pm-nav:hover { background: #ffffff; }
+.pm-prev { left: 12px; }
+.pm-next { right: 12px; }
+
+.pm-counter {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px 12px;
+    border-radius: 9999px;
+    background: rgba(7, 31, 22, 0.7);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.project-modal-body { padding: 42px 38px; }
+
+.project-modal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 14px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+}
+
+.project-modal-meta .pm-avenue { color: var(--emerald-text); }
+
+.project-modal-body h3 {
+    margin: 0 0 14px;
+    font-size: 1.7rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+}
+
+.pm-desc {
+    margin: 0 0 20px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 0.97rem;
+}
+
+.pm-gallery-link {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--emerald-text);
+    text-decoration: none;
+}
+
+.pm-gallery-link:hover { text-decoration: underline; }
+
+@media (max-width: 860px) {
+    .project-modal { padding: 12px; }
+    .project-modal-panel { grid-template-columns: 1fr; }
+    .project-modal-hero {
+        border-radius: 24px 24px 0 0;
+        min-height: 220px;
+        max-height: 40vh;
+    }
+    .project-modal-body { padding: 28px 22px 34px; }
+    .project-modal-body h3 { font-size: 1.35rem; }
+}
+
+
+/* =========================================================
+   ANIMATED HERO BACKDROP  (ported from the live site)
+   ========================================================= */
+
+.hero-backdrop {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* The Ken Burns keyframe OWNS `transform` on this element, and an
+   animation outranks an inline style — so motion.js parallaxes it
+   through the --hb-x / --hb-y custom properties instead, which the
+   keyframe composes in. Same pattern as the ambient orbs. */
+.hero-backdrop-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.03);
+    animation: heroBackdropZoom 22s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+@keyframes heroBackdropZoom {
+    0%   { transform: translate3d(var(--hb-x, 0px), var(--hb-y, 0px), 0) scale(1.03) translate(0, 0); }
+    50%  { transform: translate3d(var(--hb-x, 0px), var(--hb-y, 0px), 0) scale(1.10) translate(-1%, -1.2%); }
+    100% { transform: translate3d(var(--hb-x, 0px), var(--hb-y, 0px), 0) scale(1.05) translate(1%, 0.8%); }
+}
+
+.hero-backdrop-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(6, 26, 18, 0.88) 0%,
+            rgba(7, 34, 24, 0.78) 50%,
+            rgba(11, 48, 34, 0.65) 100%
+        ),
+        radial-gradient(
+            circle at 80% 25%,
+            rgba(16, 185, 129, 0.22) 0%,
+            transparent 55%
+        ),
+        radial-gradient(
+            circle at 15% 85%,
+            rgba(245, 158, 11, 0.15) 0%,
+            transparent 50%
+        );
+}
+
+.hero-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+/* The badge is now a pill beside the eyebrow, not a card pinned to the
+   corner of an image that no longer exists. */
+.hero-floating-badge {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    background: rgba(11, 46, 33, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    border-radius: 9999px;
+    padding: 6px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transform: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hero-floating-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(16, 185, 129, 0.25);
+}
+
+.hero-floating-badge .badge-icon { font-size: 1.2rem; }
+.hero-floating-badge strong { font-size: 0.8rem; }
+
+@media (max-width: 700px) {
+    .hero-badge-row { gap: 10px; }
+    .hero-floating-badge { padding: 5px 13px; }
+    .hero-content { padding: 80px 0 70px; }
+}
+
+/* The live site disables the Ken Burns zoom for reduced motion; carry
+   that over, since this layer adds a THIRD reduced-motion block. */
+@media (prefers-reduced-motion: reduce) {
+    .hero-backdrop-img { animation: none !important; transform: scale(1.03) !important; }
+}
+
+
+/* =========================================================
+   HERO CONTAINER ALIGNMENT  (after the backdrop port)
+   The backdrop made .hero-container full-bleed, which left the hero
+   text flush against the viewport edge while every other section sits
+   in a centred 1200px column. Match them.
+   ========================================================= */
+
+.hero-container {
+    width: min(1200px, 90%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* =========================================================
+   NAVBAR BRAND OVERFLOW  (pre-existing, visible at >=1100px)
+   .brand-text is a flex item with min-width:0, so it shrinks to ~158px,
+   but .brand-full is white-space:nowrap at ~382px — so the club name
+   spilled across the nav links. Let it ellipsise instead of overlapping.
+   ========================================================= */
+
+.brand-text {
+    overflow: hidden;
+}
+
+.brand-full {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.brand {
+    min-width: 0;
+    flex: 0 1 auto;
+}
+
+.nav-container > .brand {
+    margin-right: 18px;
+}
+
+
+/* =========================================================
+   NAVBAR CTA OVERFLOW  (pre-existing)
+   With 12 nav links the flex row squeezed .nav-cta-btn to 89px, so
+   "Take Action →" wrapped onto three lines and spilled above and
+   below the 78px navbar. Pin its intrinsic width and let the brand
+   (which now ellipsises) absorb the squeeze instead.
+   ========================================================= */
+
+.nav-cta-wrap {
+    flex: 0 0 auto;
+}
+
+.nav-cta-btn {
+    white-space: nowrap;
+    flex: 0 0 auto;
+}
+
+.nav-menu {
+    min-width: 0;
+}
+
+/* A min-width floor here re-creates the overlap — the flex child then
+   exceeds its box instead of ellipsising. Let the brand shrink, and buy
+   it room by tightening the nav gap instead. */
+.brand-full { min-width: 0; }
+
+@media (min-width: 1200px) {
+    .nav-menu { gap: 17px; }
+}
+
+
+/* =========================================================
+   BRAND TEXT RESPONSIVE  (pre-existing bug)
+   .brand-short is display:none in the base rule AND in all three
+   media queries, so the short form never appeared anywhere. Mean-
+   while .brand-full is set to white-space:normal below 800px, so the
+   full club name wrapped onto four lines and inflated the navbar; and
+   between 801-1050px .brand-full is display:none, leaving no brand
+   text at all. Below 1050px, show the short form instead.
+   ========================================================= */
+
+@media (max-width: 1050px) {
+    .brand-short {
+        display: block !important;
+        font-size: 1.05rem;
+        font-weight: 800;
+        line-height: 1.2;
+        white-space: nowrap;
+        color: var(--navy);
+    }
+
+    .brand-full {
+        display: none !important;
+    }
+}
+
+
+/* =========================================================
+   MODAL VISIBILITY TIMING  (all three dialogs)
+   All three overlays had `visibility` inside their transition list, so
+   on open the element stayed visibility:hidden until the transition
+   advanced. .focus() on a visibility:hidden subtree is a no-op, which
+   made focus-into-dialog depend on an animation completing — and it
+   silently never happened whenever transitions were throttled.
+   Flip visibility instantly on open; delay it on close so the fade out
+   is still seen.
+   ========================================================= */
+
+.gallery-lightbox,
+.achievement-lightbox,
+.project-modal {
+    transition: opacity .3s ease, visibility 0s linear .3s;
+}
+
+.gallery-lightbox.active,
+.achievement-lightbox.active,
+.project-modal.active {
+    transition: opacity .3s ease, visibility 0s linear 0s;
+}

@@ -1,0 +1,396 @@
+/* =========================================================
+   RAC DCP — 3D CINEMATIC MOTION LAYER
+   Loaded AFTER style.css. Everything is scoped under
+   html.motion-on, so html.motion-off is byte-identical to
+   the original site.
+   ========================================================= */
+
+
+/* =========================================================
+   0. ENGINE PREREQUISITES
+   ========================================================= */
+
+/* style.css:17 sets scroll-behavior:smooth, which would make the
+   browser animate toward each of our 60 scrollTo() calls a second. */
+html.motion-on {
+    scroll-behavior: auto;
+}
+
+/* Anchors currently land under the 78px fixed navbar. */
+html.motion-on [id] {
+    scroll-margin-top: 94px;
+}
+
+/* Scrollbar-width compensation so opening a lightbox doesn't shift layout. */
+html.motion-on body.lightbox-open {
+    padding-right: var(--sbw, 0px);
+}
+
+/* Neutralise style.css:4832's `transition: transform .15s !important`
+   (later sheet + higher specificity breaks the !important tie). */
+html.motion-on .scroll-velocity-active .project-card,
+html.motion-on .scroll-velocity-active .board-card,
+html.motion-on .scroll-velocity-active .achievement-card,
+html.motion-on .scroll-velocity-active .publication-card {
+    transition: box-shadow .35s ease, border-color .35s ease !important;
+}
+
+
+/* =========================================================
+   1. UNLOCKING REAL Z-DEPTH
+   overflow:hidden silently nullifies transform-style:preserve-3d.
+   Six components declare both, so their translateZ children have
+   never rendered in 3D. Move each crop one level down to the inner
+   image wrapper, then free the parent.
+   ========================================================= */
+
+html.motion-on .impact-card,
+html.motion-on .project-card,
+html.motion-on .achievement-card,
+html.motion-on .board-card,
+html.motion-on .people-card,
+html.motion-on .event-card,
+html.motion-on .gallery-item {
+    overflow: visible;
+}
+
+/* Re-home the crops the parents used to provide. */
+html.motion-on .project-image     { border-radius: 20px 20px 0 0; }   /* has overflow:hidden @1590 */
+html.motion-on .achievement-image { border-radius: 20px 20px 0 0; }   /* has overflow:hidden @2441 */
+html.motion-on .people-photo      { border-radius: 14px 14px 0 0; }   /* has overflow:hidden @1445 */
+html.motion-on .event-poster      { border-radius: 18px 0 0 18px; }   /* has overflow:hidden @1929 */
+
+/* .member-photo had NEITHER overflow nor radius — the card provided both. */
+html.motion-on .member-photo {
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+}
+
+/* There is no `.gallery-item img` rule anywhere in style.css — cropping
+   depended entirely on the item's aspect-ratio + overflow. Author it. */
+html.motion-on .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    display: block;
+}
+
+/* Hero: clip the background gradients but give 3D room to project. */
+html.motion-on .hero {
+    /* The hero is now a full-bleed backdrop, so nothing needs to project
+       outside it — `clip` with no margin keeps document scrollWidth exact
+       while still avoiding a scroll container. */
+    overflow: clip;
+    perspective: 1500px;
+    perspective-origin: 50% 40%;
+}
+
+/* The hero backdrop's Ken Burns keyframe owns `transform`, and an
+   animation outranks an inline style, so motion.js parallaxes it via
+   the --hb-x / --hb-y custom properties the keyframe composes in. */
+
+
+/* =========================================================
+   2. COMPOSITOR SURFACES
+   script.js's .tilt-3d class (which supplied perspective +
+   preserve-3d) is disabled, so apply the equivalent directly.
+   transform is REMOVED from every transition list: a 0.35s
+   CSS transition layered on a 60fps lerp visibly smears.
+   ========================================================= */
+
+html.motion-on .project-card,
+html.motion-on .board-card,
+html.motion-on .achievement-card,
+html.motion-on .publication-card,
+html.motion-on .contact-card,
+html.motion-on .impact-card,
+html.motion-on .website-creator-card,
+html.motion-on .gallery-item,
+html.motion-on .people-card,
+html.motion-on .event-card,
+html.motion-on .rebel-menu-card,
+html.motion-on .join-highlight {
+    transform-style: preserve-3d;
+    transition: box-shadow .35s cubic-bezier(.2, 0, .2, 1),
+                border-color .35s ease,
+                background-color .35s ease;
+}
+
+/* The compositor owns transform, so CSS hover lifts must stand down —
+   they are re-expressed as a hover channel in JS. */
+html.motion-on .project-card:hover,
+html.motion-on .board-card:hover,
+html.motion-on .achievement-card:hover,
+html.motion-on .publication-card:hover,
+html.motion-on .contact-card:hover,
+html.motion-on .impact-card:hover,
+html.motion-on .website-creator-card:hover,
+html.motion-on .gallery-item:hover,
+html.motion-on .people-card:hover,
+html.motion-on .event-card:hover,
+html.motion-on .rebel-menu-card:hover,
+html.motion-on .join-highlight:hover {
+    transform: none;
+}
+
+/* Inner layers that finally parallax now that the parents are unclipped. */
+html.motion-on .impact-number        { transform: translateZ(58px); }
+html.motion-on .impact-label         { transform: translateZ(30px); }
+html.motion-on .project-content,
+html.motion-on .achievement-content  { transform: translateZ(34px); }
+html.motion-on .member-info,
+html.motion-on .people-info          { transform: translateZ(26px); }
+
+/* Specular glare, recreated by motion.js for the hovered card only. */
+html.motion-on .card-glare {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    mix-blend-mode: overlay;
+    z-index: 10;
+}
+
+
+/* =========================================================
+   3. SPLIT-TEXT HEADINGS
+   .mw is a 2D mask (its overflow IS the clip); .mwi carries its
+   own perspective() so rotateX still reads as 3D inside it.
+   ========================================================= */
+
+html.motion-on .mw {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+    padding-bottom: .16em;   /* descender rescue — g/y/p would clip */
+    margin-bottom: -.16em;
+}
+
+html.motion-on .mwi {
+    display: inline-block;
+    transform: perspective(700px) rotateX(-78deg) translateY(110%);
+    opacity: 0;
+    transition: transform .78s cubic-bezier(.16, 1, .3, 1),
+                opacity .55s cubic-bezier(.16, 1, .3, 1);
+}
+
+html.motion-on .mw.is-in .mwi {
+    transform: perspective(700px) rotateX(0deg) translateY(0);
+    opacity: 1;
+}
+
+/* Hero words exit upward when a carousel slide loses .active. */
+html.motion-on .mw.is-out .mwi {
+    transform: perspective(700px) rotateX(52deg) translateY(-95%);
+    opacity: 0;
+    transition: transform .34s cubic-bezier(.4, 0, 1, 1),
+                opacity .28s ease;
+}
+
+/* The carousel's own slide transform is handed to the words. The
+   outgoing slide fades faster than the incoming one arrives, otherwise
+   both statements are legible at once mid-crossfade and the hero
+   visibly ghosts. */
+html.motion-on .hero-slide,
+html.motion-on .hero-slide.active {
+    transform: none;
+}
+
+html.motion-on .hero-slide {
+    opacity: 0;
+    transition: opacity .16s ease-out;
+}
+
+html.motion-on .hero-slide.active {
+    opacity: 1;
+    transition: opacity .34s ease-in .06s;
+}
+
+
+/* =========================================================
+   4. ODOMETER COUNTERS
+   ========================================================= */
+
+html.motion-on .odo {
+    display: inline-flex;
+    align-items: flex-end;
+    transform: perspective(900px) rotateX(-58deg);
+    opacity: 0;
+    transform-origin: 50% 100%;
+    transition: transform .85s cubic-bezier(.16, 1, .3, 1),
+                opacity .5s ease;
+}
+
+html.motion-on .odo.is-in {
+    transform: perspective(900px) rotateX(0deg);
+    opacity: 1;
+}
+
+html.motion-on .odo-col {
+    height: 1em;
+    line-height: 1;
+    overflow: hidden;
+    display: inline-block;
+}
+
+html.motion-on .odo-strip {
+    display: block;
+    transform: translateY(0em);
+    will-change: transform;
+}
+
+html.motion-on .odo.is-rolling .odo-strip {
+    transition: transform var(--odo-dur, 2s) cubic-bezier(.17, .84, .34, 1);
+}
+
+html.motion-on .odo-digit {
+    display: block;
+    height: 1em;
+    line-height: 1;
+}
+
+html.motion-on .odo-sep {
+    display: inline-block;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   5. SITE CHROME — CSS CUSTOM PROPERTY CHANNEL
+   These elements have running keyframes or stateful classes that
+   already own `transform`, and a CSS animation outranks an inline
+   style. So JS writes only the custom properties and CSS keeps
+   ownership of the transform itself — a conflict is impossible.
+   ========================================================= */
+
+/* --- ambient orbs: the parallax script.js intended but never achieved --- */
+@keyframes motionOrbFloat1 {
+    0%   { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) translate(0, 0) scale(1); }
+    100% { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) translate(-60px, 80px) scale(1.1); }
+}
+@keyframes motionOrbFloat2 {
+    0%   { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) translate(0, 0) scale(1); }
+    100% { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) translate(75px, -65px) scale(1.12); }
+}
+html.motion-on .ambient-orb-1 {
+    animation: motionOrbFloat1 20s ease-in-out infinite alternate;
+    filter: blur(74px);
+}
+html.motion-on .ambient-orb-2 {
+    animation: motionOrbFloat2 24s ease-in-out infinite alternate;
+    filter: blur(74px);
+}
+
+/* --- back-to-top dial: CSS keeps show/hide, JS writes the lean --- */
+html.motion-on .scroll-top-dial {
+    transform: translateY(var(--dy, 20px))
+               scale(var(--ds, .85))
+               rotateX(var(--drx, 0deg))
+               rotateY(var(--dry, 0deg));
+    transform-style: preserve-3d;
+}
+html.motion-on .scroll-top-dial.visible { --dy: 0px;  --ds: 1; }
+html.motion-on .scroll-top-dial:hover   { --dy: -4px; --ds: 1.08; }
+
+/* --- section minimap: must preserve its centring translateY(-50%) --- */
+html.motion-on .section-minimap {
+    transform: translateY(-50%)
+               perspective(600px)
+               rotateY(var(--mmry, 0deg))
+               translateZ(var(--mmz, 0px));
+}
+html.motion-on .minimap-dot {
+    transform-style: preserve-3d;
+}
+
+/* --- notification widget: floatWidget owns transform --- */
+@keyframes motionFloatWidget {
+    0%, 100% { transform: translateY(0) scale(1)
+                          rotateY(var(--nry, 0deg)) translateZ(var(--nz, 0px)); }
+    50%      { transform: translateY(-8px) scale(1.04)
+                          rotateY(var(--nry, 0deg)) translateZ(var(--nz, 0px)); }
+}
+html.motion-on .notification-button {
+    animation: motionFloatWidget 3.5s ease-in-out infinite;
+}
+html.motion-on .notification-panel {
+    transform: perspective(1200px) rotateX(-14deg) translateY(20px) scale(.94);
+    transform-origin: 100% 100%;
+}
+html.motion-on .notification-panel.active {
+    transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
+}
+
+/* --- navbar: script.js's inline boxShadow is replaced by a class --- */
+html.motion-on .navbar {
+    transition: box-shadow .3s ease, background-color .3s ease;
+}
+html.motion-on .navbar.is-scrolled {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+}
+
+
+/* =========================================================
+   6. INTRO CASCADE (fires once, when the preloader curtain lifts)
+   ========================================================= */
+
+html.motion-on.motion-intro .navbar {
+    animation: motionNavDrop .95s cubic-bezier(.16, 1, .3, 1) both;
+}
+@keyframes motionNavDrop {
+    from { transform: translateY(-100%) rotateX(-34deg); opacity: 0; }
+    to   { transform: translateY(0) rotateX(0deg); opacity: 1; }
+}
+
+html.motion-on.motion-intro .ambient-orb {
+    animation-delay: .1s;
+}
+
+
+/* =========================================================
+   7. REDUCED MOTION
+   The two blocks already in style.css (4635, 5032) know nothing
+   about any of this, so this layer carries its own complete guard.
+   The JS half (never intercepting the wheel) is the part no CSS
+   rule can express.
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html.motion-on .mw  { overflow: visible; }
+    html.motion-on .mwi {
+        transform: none !important;
+        opacity: 1 !important;
+        transition: none !important;
+    }
+
+    html.motion-on .odo { display: none; }
+
+    html.motion-on .ambient-orb-1,
+    html.motion-on .ambient-orb-2,
+    html.motion-on .notification-button {
+        animation: none !important;
+    }
+
+    html.motion-on.motion-intro .navbar {
+        animation: none !important;
+    }
+
+    html.motion-on .hero-slide,
+    html.motion-on .hero-slide.active {
+        transition: none !important;
+    }
+}
+
+
+/* =========================================================
+   8. TOUCH / NARROW FALLBACKS
+   ========================================================= */
+
+@media (max-width: 1024px) {
+    /* orb-2 is the page's most expensive paint; it is decorative. */
+    html.motion-on .ambient-orb-2 { display: none; }
+}

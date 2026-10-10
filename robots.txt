@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /publications/
+
+Sitemap: https://racdurgapurcentralpresidency.github.io/sitemap.xml

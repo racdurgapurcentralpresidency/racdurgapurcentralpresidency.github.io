@@ -278,11 +278,13 @@ const counterObserver = new IntersectionObserver(
 );
 
 
-counters.forEach(function (counter) {
+if (!(window.MOTION3D && window.MOTION3D.enabled)) {          // motion.js owns the impact counters (odometer)
+    counters.forEach(function (counter) {
 
-    counterObserver.observe(counter);
+        counterObserver.observe(counter);
 
-});
+    });
+}
 
 
 // =========================================================
@@ -290,8 +292,10 @@ counters.forEach(function (counter) {
 // =========================================================
 
 const revealElements = document.querySelectorAll(
-    ".section-heading, .project-card, .board-card, .achievement-card, " +
-    ".contact-card, .event-card, .publication-card, .impact-card, .website-creator-card"
+    (window.MOTION3D && window.MOTION3D.enabled)
+        ? ".motion-owns-reveals"      // motion.js reveals these itself
+        : ".section-heading, .project-card, .board-card, .achievement-card, " +
+          ".contact-card, .event-card, .publication-card, .impact-card, .website-creator-card"
 );
 
 revealElements.forEach(function (element) {
@@ -367,6 +371,11 @@ const navbar =
 window.addEventListener("scroll", function () {
 
     if (!navbar) {
+        return;
+    }
+
+    if (window.MOTION3D && window.MOTION3D.enabled) {
+        navbar.classList.toggle("is-scrolled", window.scrollY > 20);
         return;
     }
 
@@ -917,7 +926,7 @@ function updateScrollMetrics() {
     }
 
     // Parallax on ambient 3D orbs
-    if (window.innerWidth > 768) {
+    if (window.innerWidth > 768 && !(window.MOTION3D && window.MOTION3D.enabled)) {   // motion.js drives the orbs via CSS vars
         if (orb1) {
             orb1.style.transform = `translate3d(0, ${(scrollTop * 0.1).toFixed(1)}px, 0)`;
         }
@@ -956,6 +965,7 @@ if (document.readyState === "loading") {
 // =========================================================
 
 function init3DCardTilt() {
+    if (window.MOTION3D && window.MOTION3D.enabled) { return; }   // motion.js owns card tilt + glare
     const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (isTouch) {
         return;
@@ -1043,6 +1053,7 @@ if (document.readyState === "loading") {
 // =========================================================
 
 (function initScrollVelocityPhysics() {
+    if (window.MOTION3D && window.MOTION3D.enabled) { return; }   // motion.js owns velocity pitch
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (isReducedMotion || window.innerWidth < 768) {
         return;
