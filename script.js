@@ -101,7 +101,7 @@
 
 
 // =========================================================
-// 1. MOBILE NAVIGATION
+// 1. MOBILE NAVIGATION & DROPDOWNS
 // =========================================================
 
 const menuToggle = document.querySelector(".menu-toggle");
@@ -117,28 +117,111 @@ if (menuToggle && navMenu) {
             menuToggle.textContent = "✕";
         } else {
             menuToggle.textContent = "☰";
+            // Close any open mobile dropdowns
+            document.querySelectorAll(".nav-item.has-dropdown.is-open").forEach(function (item) {
+                item.classList.remove("is-open");
+                const toggle = item.querySelector(".nav-dropdown-toggle");
+                if (toggle) toggle.setAttribute("aria-expanded", "false");
+            });
         }
 
     });
 
 
-    // Close mobile menu after clicking a navigation link
+    // Close mobile menu after clicking any leaf navigation link
+    const navLeafLinks = navMenu.querySelectorAll("a:not(.nav-dropdown-toggle)");
 
-    const navLinks = navMenu.querySelectorAll("a");
-
-    navLinks.forEach(function (link) {
+    navLeafLinks.forEach(function (link) {
 
         link.addEventListener("click", function () {
 
             navMenu.classList.remove("active");
-
             menuToggle.textContent = "☰";
+
+            document.querySelectorAll(".nav-item.has-dropdown.is-open").forEach(function (item) {
+                item.classList.remove("is-open");
+                const toggle = item.querySelector(".nav-dropdown-toggle");
+                if (toggle) toggle.setAttribute("aria-expanded", "false");
+            });
 
         });
 
     });
 
 }
+
+// Dropdown interactions (mobile accordion tap & desktop keyboard/click-away)
+(function initNavDropdowns() {
+    const navItems = document.querySelectorAll(".nav-item.has-dropdown");
+
+    navItems.forEach(function (item) {
+        const toggle = item.querySelector(".nav-dropdown-toggle");
+        const dropdown = item.querySelector(".nav-dropdown");
+        if (!toggle || !dropdown) return;
+
+        // Toggle accordion on mobile
+        toggle.addEventListener("click", function (e) {
+            const isMobile = window.innerWidth <= 1150 || (navMenu && navMenu.classList.contains("active"));
+            if (isMobile) {
+                e.preventDefault();
+                const isOpen = item.classList.contains("is-open");
+
+                // Close other dropdowns
+                navItems.forEach(function (other) {
+                    if (other !== item) {
+                        other.classList.remove("is-open");
+                        const otherToggle = other.querySelector(".nav-dropdown-toggle");
+                        if (otherToggle) otherToggle.setAttribute("aria-expanded", "false");
+                    }
+                });
+
+                if (isOpen) {
+                    item.classList.remove("is-open");
+                    toggle.setAttribute("aria-expanded", "false");
+                } else {
+                    item.classList.add("is-open");
+                    toggle.setAttribute("aria-expanded", "true");
+                }
+            }
+        });
+
+        // Keyboard accessibility
+        toggle.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " " || e.key === "ArrowDown") {
+                if (!item.classList.contains("is-open")) {
+                    e.preventDefault();
+                    item.classList.add("is-open");
+                    toggle.setAttribute("aria-expanded", "true");
+                    const firstItem = dropdown.querySelector("a");
+                    if (firstItem) firstItem.focus();
+                }
+            } else if (e.key === "Escape") {
+                item.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+                toggle.focus();
+            }
+        });
+
+        item.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+                item.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+                toggle.focus();
+            }
+        });
+    });
+
+    // Close open dropdowns if clicking outside
+    document.addEventListener("click", function (e) {
+        if (!e.target.closest(".nav-item.has-dropdown")) {
+            navItems.forEach(function (item) {
+                item.classList.remove("is-open");
+                const toggle = item.querySelector(".nav-dropdown-toggle");
+                if (toggle) toggle.setAttribute("aria-expanded", "false");
+            });
+        }
+    });
+})();
 
 
 // =========================================================
@@ -887,10 +970,50 @@ function showPeople(categoryId, button) {
         selectedDisplay.classList.add('active');
     }
 
+    if (!button && categoryId) {
+        button = document.querySelector('.people-category[onclick*="' + categoryId + '"]');
+    }
+
     if (button) {
         button.classList.add('active');
     }
 }
+
+// Automatically activate people categories when clicking dropdown links or on load with hash
+(function initPeopleHashRouting() {
+    function activateFromHash() {
+        const hash = window.location.hash;
+        if (hash === '#members' || hash === '#volunteers' || hash === '#rotary') {
+            const cat = hash.replace('#', '');
+            showPeople(cat);
+            const peopleSec = document.getElementById('people');
+            if (peopleSec) {
+                setTimeout(function () {
+                    peopleSec.scrollIntoView({ behavior: 'smooth' });
+                }, 80);
+            }
+        }
+    }
+
+    document.querySelectorAll('[data-people]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            const cat = link.getAttribute('data-people');
+            const isIndex = window.location.pathname.endsWith('index.html') ||
+                            window.location.pathname === '/' ||
+                            window.location.pathname.endsWith('/');
+            if (isIndex && cat) {
+                showPeople(cat);
+                const peopleSec = document.getElementById('people');
+                if (peopleSec) {
+                    peopleSec.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
+
+    window.addEventListener('DOMContentLoaded', activateFromHash);
+    window.addEventListener('hashchange', activateFromHash);
+})();
 function toggleNotifications() {
     const panel = document.getElementById("notificationPanel");
 
