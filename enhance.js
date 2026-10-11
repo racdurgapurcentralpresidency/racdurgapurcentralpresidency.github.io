@@ -348,6 +348,31 @@
         'autism-workshop': [
             { src: 'images/gallery/autism-workshop-1.png', alt: "Workshop on Autism Spectrum Disorder", w: 1600, h: 900 },
             { src: 'images/gallery/autism-workshop-3.png', alt: "Workshop on Autism Spectrum Disorder", w: 1600, h: 900 }
+        ],
+        'food-distribution': [
+            { src: 'images/gallery/food-distribution-1.jpeg', alt: "Food Distribution Drive", w: 720, h: 1267 }
+        ],
+        'drr-visit': [
+            { src: 'images/gallery/drr-visit-1.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 },
+            { src: 'images/gallery/drr-visit-2.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 },
+            { src: 'images/gallery/drr-visit-3.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 },
+            { src: 'images/gallery/drr-visit-4.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 }
+        ],
+        'zonal-cricket': [
+            { src: 'images/gallery/zonal-cricket-1.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1500, h: 1125 },
+            { src: 'images/gallery/zonal-cricket-2.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1280, h: 960 },
+            { src: 'images/gallery/zonal-cricket-3.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1600, h: 1200 },
+            { src: 'images/gallery/zonal-cricket-4.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 960, h: 1280 },
+            { src: 'images/gallery/zonal-cricket-5.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1280, h: 960 },
+            { src: 'images/gallery/zonal-cricket-6.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 780, h: 1040 },
+            { src: 'images/gallery/zonal-cricket-7.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 780, h: 1040 },
+            { src: 'images/gallery/zonal-cricket-8.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1280, h: 960 }
+        ],
+        'unmute': [
+            { src: 'images/gallery/unmute-1.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1599, h: 899 },
+            { src: 'images/gallery/unmute-2.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1599, h: 899 },
+            { src: 'images/gallery/unmute-3.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1280, h: 960 },
+            { src: 'images/gallery/unmute-4.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1599, h: 899 }
         ]
     };
 
