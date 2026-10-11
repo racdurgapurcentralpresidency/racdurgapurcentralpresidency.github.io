@@ -19,33 +19,36 @@
         return;
     }
 
-    // Fast-path bypass for low-end devices, mobile screens, data savers, or reduced-motion
-    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isLowEnd = isReducedMotion ||
-                     (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
-                     (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
-                     (navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType))) ||
-                     (window.innerWidth < 800);
-
-    if (isLowEnd) {
+    // Accessibility: instantly dismiss if user has OS-level reduced-motion active
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         preloader.style.display = "none";
         document.body.classList.remove("preloader-active");
-        try { sessionStorage.setItem("racdcp-intro-seen", "1"); } catch (e) {}
         return;
     }
 
-    // Show at most once per browsing session
+    // On internal subpage transitions (our-work.html, recognition.html), skip the preloader
+    // if the user has already seen the intro during this session.
+    // On the main entry page (index.html or root), always display the full cinematic intro.
+    const isSubPage = window.location.pathname.includes("our-work") ||
+                      window.location.pathname.includes("recognition");
+
+    if (isSubPage) {
+        try {
+            if (sessionStorage.getItem("racdcp-intro-seen")) {
+                preloader.style.display = "none";
+                document.body.classList.remove("preloader-active");
+                return;
+            }
+        } catch (e) {}
+    }
+
     try {
-        if (sessionStorage.getItem("racdcp-intro-seen")) {
-            preloader.style.display = "none";
-            document.body.classList.remove("preloader-active");
-            return;
-        }
         sessionStorage.setItem("racdcp-intro-seen", "1");
     } catch (e) {}
 
     let isCompleted = false;
-    const duration = 550; // Snappy 550ms intro for high-end PCs
+    // 2.4 seconds duration: counts 0 to 100 smoothly before unveiling
+    const duration = 2400;
     const startTime = performance.now();
 
     function finishPreloader() {
@@ -56,14 +59,16 @@
         preloaderBar.style.width = "100%";
         if (preloaderStatus) preloaderStatus.textContent = "WELCOME TO RAC DCP";
 
+        // Brief hold at 100% so user perceives completion before curtain unrolls
         setTimeout(function () {
             preloader.classList.add("loaded");
             document.body.classList.remove("preloader-active");
 
+            // Clean up display property once the 0.85s slide transition completes
             setTimeout(function () {
                 preloader.style.display = "none";
-            }, 400);
-        }, 120);
+            }, 900);
+        }, 180);
     }
 
     function step(timestamp) {
@@ -71,12 +76,26 @@
         const elapsed = timestamp - startTime;
         const t = Math.min(elapsed / duration, 1);
 
+        // Smooth cubic ease-out acceleration: starts fast, accelerates, lands firmly at 100
         const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
         const currentCount = Math.min(Math.round(eased * 100), 100);
 
         preloaderNumber.textContent = currentCount;
         preloaderBar.style.width = currentCount + "%";
         preloader.setAttribute("aria-valuenow", currentCount);
+
+        // Dynamic status milestones during 0-100% progression
+        if (preloaderStatus) {
+            if (currentCount < 30) {
+                preloaderStatus.textContent = "INITIALIZING EXPERIENCE...";
+            } else if (currentCount < 70) {
+                preloaderStatus.textContent = "COMMUNITY • LEADERSHIP • ACTION...";
+            } else if (currentCount < 100) {
+                preloaderStatus.textContent = "READY FOR ACTION...";
+            } else {
+                preloaderStatus.textContent = "WELCOME TO RAC DCP";
+            }
+        }
 
         if (t < 1) {
             requestAnimationFrame(step);
@@ -87,9 +106,8 @@
 
     requestAnimationFrame(step);
 
-    // Complete as soon as the page is fully loaded or fail-safe expires
-    window.addEventListener("load", finishPreloader, { once: true });
-    setTimeout(finishPreloader, 900);
+    // Hard fail-safe timeout in case browser background tab throttles RAF
+    setTimeout(finishPreloader, 4000);
 })();
 
 
