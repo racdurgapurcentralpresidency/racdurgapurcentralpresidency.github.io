@@ -522,54 +522,38 @@ const galleryFilters =
 const galleryItems =
     document.querySelectorAll(".gallery-item");
 
+if (galleryFilters.length && galleryItems.length) {
+    galleryFilters.forEach(function (filterButton) {
+        filterButton.addEventListener("click", function () {
+            const filter =
+                filterButton.getAttribute("data-filter");
 
-galleryFilters.forEach(function (filterButton) {
+            galleryFilters.forEach(function (button) {
+                button.classList.remove("active");
+            });
 
-    filterButton.addEventListener("click", function () {
+            filterButton.classList.add("active");
 
-        const filter =
-            filterButton.getAttribute("data-filter");
-
-
-        // Update active button
-
-        galleryFilters.forEach(function (button) {
-
-            button.classList.remove("active");
-
+            galleryItems.forEach(function (item) {
+                if (
+                    filter === "all" ||
+                    item.classList.contains(filter)
+                ) {
+                    item.classList.remove("hidden");
+                } else {
+                    item.classList.add("hidden");
+                }
+            });
         });
-
-        filterButton.classList.add("active");
-
-
-        // Filter gallery items
-
-        galleryItems.forEach(function (item) {
-
-            if (
-                filter === "all" ||
-                item.classList.contains(filter)
-            ) {
-
-                item.classList.remove("hidden");
-
-            } else {
-
-                item.classList.add("hidden");
-
-            }
-
-        });
-
     });
-
-});
+}
 
 
 // =========================================================
 // 7. GALLERY LIGHTBOX
 // =========================================================
 
+if (document.querySelector(".gallery-item")) {
 const lightbox = document.createElement("div");
 
 lightbox.className = "gallery-lightbox";
@@ -849,6 +833,8 @@ document.addEventListener(
 
     }
 );
+}
+
 // =========================================================
 // 8. ACHIEVEMENT LIGHTBOX
 // =========================================================

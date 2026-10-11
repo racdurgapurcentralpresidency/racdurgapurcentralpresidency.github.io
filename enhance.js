@@ -421,7 +421,6 @@
                 '<h3 class="pm-title"></h3>' +
                 '<p class="pm-desc"></p>' +
                 '<span class="pm-tag"></span>' +
-                '<a class="pm-gallery-link" href="#gallery">See all photos in the gallery &rarr;</a>' +
               '</div>' +
             '</div>';
         // MUST be a child of <body>: the compositor writes a live transform
@@ -489,7 +488,6 @@
         tag.textContent = p.tag;
         tag.className = 'pm-tag ' + p.tagClass;
         tag.style.display = p.tag ? '' : 'none';
-        qs('.pm-gallery-link', pm).style.display = p.photos.length ? '' : 'none';
 
         pmRender();
         pm.classList.add('active');
