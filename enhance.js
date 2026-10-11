@@ -293,18 +293,103 @@
         return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     }
 
+    var projectPhotoCatalog = {
+        'doctors-day': [
+            { src: 'images/gallery/doctors-day-1.jpg', alt: "Doctor's Day", w: 900, h: 1600 },
+            { src: 'images/gallery/doctors-day-2.jpeg', alt: "Doctor's Day", w: 1600, h: 1200 },
+            { src: 'images/gallery/doctors-day-3.jpeg', alt: "Doctor's Day", w: 1600, h: 1200 }
+        ],
+        'club-installation': [
+            { src: 'images/gallery/club-installation-1.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-2.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-3.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-4.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-5.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-6.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-7.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-8.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-9.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-10.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-11.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-12.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-13.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/club-installation-14.jpg', alt: "4th Club Installation", w: 1600, h: 1067 }
+        ],
+        'unakoti': [
+            { src: 'images/gallery/unakoti-1.jpeg', alt: "Trip to Unakoti", w: 963, h: 1280 },
+            { src: 'images/gallery/unakoti-2.jpeg', alt: "Trip to Unakoti", w: 1280, h: 960 },
+            { src: 'images/gallery/unakoti-3.jpeg', alt: "Trip to Unakoti", w: 1280, h: 960 }
+        ],
+        'boier-desh': [
+            { src: 'images/gallery/boier-desh-1.jpeg', alt: "Boier Desh", w: 1280, h: 960 },
+            { src: 'images/gallery/boier-desh-2.jpeg', alt: "Boier Desh", w: 1280, h: 960 },
+            { src: 'images/gallery/boier-desh-3.jpeg', alt: "Boier Desh", w: 1280, h: 960 },
+            { src: 'images/gallery/boier-desh-4.jpeg', alt: "Boier Desh", w: 1280, h: 960 },
+            { src: 'images/gallery/boier-desh-5.jpeg', alt: "Boier Desh", w: 1280, h: 960 },
+            { src: 'images/gallery/boier-desh-6.jpeg', alt: "Boier Desh", w: 1280, h: 960 },
+            { src: 'images/gallery/boier-desh-7.jpeg', alt: "Boier Desh", w: 1600, h: 866 }
+        ],
+        'soul-circle': [
+            { src: 'images/gallery/soul-circle-1.jpeg', alt: "Soul Circle", w: 1280, h: 960 },
+            { src: 'images/gallery/soul-circle-2.jpeg', alt: "Soul Circle", w: 1280, h: 960 }
+        ],
+        'triva': [
+            { src: 'images/gallery/triva-1.jpeg', alt: "TRIVA", w: 1600, h: 1200 },
+            { src: 'images/gallery/triva-2.jpeg', alt: "TRIVA", w: 1448, h: 1086 },
+            { src: 'images/gallery/triva-3.jpeg', alt: "TRIVA", w: 960, h: 1280 },
+            { src: 'images/gallery/triva-4.jpeg', alt: "TRIVA", w: 1600, h: 1204 },
+            { src: 'images/gallery/triva-5.jpeg', alt: "TRIVA", w: 1600, h: 1200 },
+            { src: 'images/gallery/triva-6.jpeg', alt: "TRIVA", w: 1600, h: 1200 },
+            { src: 'images/gallery/triva-7.jpeg', alt: "TRIVA", w: 1600, h: 1200 },
+            { src: 'images/gallery/triva-8.jpeg', alt: "TRIVA", w: 1600, h: 1200 },
+            { src: 'images/gallery/triva-9.jpeg', alt: "TRIVA", w: 1600, h: 1200 },
+            { src: 'images/gallery/triva-10.jpeg', alt: "TRIVA", w: 1280, h: 960 },
+            { src: 'images/gallery/triva-11.jpeg', alt: "TRIVA", w: 960, h: 1280 },
+            { src: 'images/gallery/triva-12.jpeg', alt: "TRIVA", w: 1200, h: 1600 },
+            { src: 'images/gallery/triva-13.jpeg', alt: "TRIVA", w: 960, h: 1280 },
+            { src: 'images/gallery/triva-14.jpeg', alt: "TRIVA", w: 960, h: 1280 },
+            { src: 'images/gallery/triva-15.jpeg', alt: "TRIVA", w: 1200, h: 1600 },
+            { src: 'images/gallery/triva-16.jpeg', alt: "TRIVA", w: 1200, h: 1600 },
+            { src: 'images/gallery/triva-17.jpeg', alt: "TRIVA", w: 960, h: 1280 },
+            { src: 'images/gallery/triva-18.jpeg', alt: "TRIVA", w: 960, h: 1280 },
+            { src: 'images/gallery/triva-19.jpeg', alt: "TRIVA", w: 1200, h: 1600 },
+            { src: 'images/gallery/triva-20.jpeg', alt: "TRIVA", w: 960, h: 1280 },
+            { src: 'images/gallery/triva-21.jpeg', alt: "TRIVA", w: 1200, h: 1600 },
+            { src: 'images/gallery/triva-22.jpeg', alt: "TRIVA", w: 1280, h: 960 },
+            { src: 'images/gallery/triva-23.jpeg', alt: "TRIVA", w: 1600, h: 1200 }
+        ],
+        'she-inspires': [
+            { src: 'images/gallery/she-inspires.jpeg', alt: "She Inspires", w: 960, h: 1280 }
+        ],
+        'birthday-august': [
+            { src: 'images/gallery/birthday-august-1.jpeg', alt: "August Birthday Celebration", w: 1600, h: 1200 },
+            { src: 'images/gallery/birthday-august-2.jpeg', alt: "August Birthday Celebration", w: 1200, h: 1600 }
+        ],
+        'club-meetup': [
+            { src: 'images/gallery/club-meetup-1.jpeg', alt: "Club Meetup", w: 1599, h: 1200 },
+            { src: 'images/gallery/club-meetup-2.jpeg', alt: "Club Meetup", w: 1200, h: 1600 },
+            { src: 'images/gallery/club-meetup-3.jpeg', alt: "Club Meetup", w: 1600, h: 1200 },
+            { src: 'images/gallery/club-meetup-4.jpeg', alt: "Club Meetup", w: 960, h: 1280 },
+            { src: 'images/gallery/club-meetup-5.jpeg', alt: "Club Meetup", w: 1280, h: 960 },
+            { src: 'images/gallery/club-meetup-6.jpeg', alt: "Club Meetup", w: 1280, h: 960 },
+            { src: 'images/gallery/club-meetup-7.jpeg', alt: "Club Meetup", w: 1280, h: 960 },
+            { src: 'images/gallery/club-meetup-8.jpeg', alt: "Club Meetup", w: 738, h: 1600 },
+            { src: 'images/gallery/club-meetup-9.jpeg', alt: "Club Meetup", w: 960, h: 1280 },
+            { src: 'images/gallery/club-meetup-10.jpeg', alt: "Club Meetup", w: 960, h: 1280 }
+        ],
+        '7-days-rotaract': [
+            { src: 'images/gallery/7-days-rotaract.jpeg', alt: "7 Days of Rotaract", w: 1600, h: 736 }
+        ],
+        'autism-workshop': [
+            { src: 'images/gallery/autism-workshop-1.png', alt: "Workshop on Autism Spectrum Disorder", w: 1600, h: 900 },
+            { src: 'images/gallery/autism-workshop-2.png', alt: "Workshop on Autism Spectrum Disorder", w: 1600, h: 900 },
+            { src: 'images/gallery/autism-workshop-3.png', alt: "Workshop on Autism Spectrum Disorder", w: 1600, h: 900 },
+            { src: 'images/gallery/autism-workshop-4.png', alt: "Workshop on Autism Spectrum Disorder", w: 1600, h: 900 }
+        ]
+    };
+
     function buildProjectIndex() {
-        // Photo sets already exist in the gallery, just unlinked.
-        var photos = {};
-        qsa('.gallery-item img').forEach(function (img) {
-            var k = keyOf(img.getAttribute('src'));
-            (photos[k] = photos[k] || []).push({
-                src: img.getAttribute('src'),
-                alt: img.alt || '',
-                w: img.getAttribute('width'),
-                h: img.getAttribute('height')
-            });
-        });
+        var photos = projectPhotoCatalog;
 
         qsa('.project-card').forEach(function (card) {
             var img = qs('.project-image img', card);
@@ -317,6 +402,10 @@
             card.dataset.project = k;
             if (avenue) { card.classList.add('pf-' + slug(avenue)); }
 
+            var pList = (photos[k] && photos[k].length)
+                ? photos[k]
+                : [{ src: img.getAttribute('src'), alt: img.alt || '', w: null, h: null }];
+
             projects[k] = {
                 card: card,
                 title: (qs('h3', card) || {}).textContent || '',
@@ -326,7 +415,7 @@
                 tagClass: tagEl ? tagEl.className : 'project-tag',
                 body: (qs('.project-content p', card) || {}).textContent || '',
                 hero: img.getAttribute('src'),
-                photos: photos[k] || []
+                photos: pList
             };
         });
         return projects;
@@ -436,6 +525,28 @@
         pm.addEventListener('click', function (ev) {
             if (ev.target === pm) { closeProjectModal(); }
         });
+
+        // Touch swipe support for smooth mobile photo scrolling
+        var heroEl = qs('.project-modal-hero', pm);
+        var touchStartX = 0;
+        var touchStartY = 0;
+        heroEl.addEventListener('touchstart', function (ev) {
+            if (ev.touches && ev.touches[0]) {
+                touchStartX = ev.touches[0].clientX;
+                touchStartY = ev.touches[0].clientY;
+            }
+        }, { passive: true });
+        heroEl.addEventListener('touchend', function (ev) {
+            if (ev.changedTouches && ev.changedTouches[0]) {
+                var dx = ev.changedTouches[0].clientX - touchStartX;
+                var dy = ev.changedTouches[0].clientY - touchStartY;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+                    if (dx < 0) { pmPage(1); }
+                    else { pmPage(-1); }
+                }
+            }
+        }, { passive: true });
+
         document.addEventListener('keydown', function (ev) {
             if (!pm.classList.contains('active')) { return; }
             if (ev.key === 'Escape') { closeProjectModal(); }
@@ -506,7 +617,7 @@
         qsa('.project-card').forEach(function (card) {
             makeActivatable(card, 'View project details: ' +
                 ((qs('h3', card) || {}).textContent || '').trim());
-            if (!qs('.project-open-hint', card)) {
+            if (!qs('.project-btn', card) && !qs('.project-open-hint', card)) {
                 var hint = document.createElement('span');
                 hint.className = 'project-open-hint';
                 hint.textContent = 'VIEW PROJECT →';
