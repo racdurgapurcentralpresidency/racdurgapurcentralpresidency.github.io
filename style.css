@@ -3666,6 +3666,7 @@ body.lightbox-open {
     position: relative;
     transform-style: preserve-3d;
     box-shadow: var(--shadow-3d);
+    cursor: pointer;
 
     transition:
         transform 0.35s cubic-bezier(0.2, 0, 0.2, 1),

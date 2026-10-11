@@ -664,6 +664,21 @@
         });
     }
 
+    function wireContactCards() {
+        var cards = qsa('.contact-card');
+        cards.forEach(function (card) {
+            var link = qs('a', card);
+            if (!link) { return; }
+            card.addEventListener('click', function (ev) {
+                if (ev.target.closest('a')) { return; }
+                if (link.target === '_blank') {
+                    window.open(link.href, '_blank', 'noopener,noreferrer');
+                } else {
+                    window.location.href = link.href;
+                }
+            });
+        });
+    }
 
     /* =====================================================
        6. BOOT
@@ -683,6 +698,7 @@
         buildProjectModal();
         handleUrlProjectParam();
         wireWashModal();
+        wireContactCards();
 
         window.addEventListener('popstate', handleUrlProjectParam);
         window.addEventListener('hashchange', handleUrlProjectParam);
