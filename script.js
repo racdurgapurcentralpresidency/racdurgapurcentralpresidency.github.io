@@ -148,6 +148,19 @@ if (menuToggle && navMenu) {
 
     });
 
+    const navCtaBtn = document.querySelector(".nav-cta-btn");
+    if (navCtaBtn) {
+        navCtaBtn.addEventListener("click", function () {
+            navMenu.classList.remove("active");
+            menuToggle.textContent = "☰";
+            document.querySelectorAll(".nav-item.has-dropdown.is-open").forEach(function (item) {
+                item.classList.remove("is-open");
+                const toggle = item.querySelector(".nav-dropdown-toggle");
+                if (toggle) toggle.setAttribute("aria-expanded", "false");
+            });
+        });
+    }
+
 }
 
 // Dropdown interactions (mobile accordion tap & desktop keyboard/click-away)

@@ -4700,7 +4700,8 @@ body.lightbox-open {
         border-bottom: none;
     }
 
-    .nav-menu > a:last-child {
+    .nav-menu > a:last-child,
+    .nav-menu > .nav-item:last-child {
         border-bottom: none;
     }
 }
