@@ -637,6 +637,12 @@
                 ev.preventDefault();
                 openWash();
             });
+            btn.addEventListener('keydown', function (ev) {
+                if (ev.key === 'Enter' || ev.key === ' ' || ev.key === 'Spacebar') {
+                    ev.preventDefault();
+                    openWash();
+                }
+            });
         });
 
         closeBtns.forEach(function (btn) {
