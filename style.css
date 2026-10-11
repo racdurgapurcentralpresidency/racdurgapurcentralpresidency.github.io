@@ -1111,15 +1111,26 @@ button {
 
 .rebel-menu-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+    align-items: stretch;
+}
+
+@media (min-width: 1101px) {
+    .rebel-menu-card:nth-child(7) {
+        grid-column: 1 / -1;
+        max-width: 760px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
 }
 
 .rebel-menu-card {
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: 22px;
-    padding: 34px 26px;
+    padding: 30px 24px;
     box-shadow: var(--shadow-3d);
     display: flex;
     flex-direction: column;
@@ -1143,7 +1154,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .rebel-menu-icon {
@@ -1168,34 +1179,323 @@ button {
 }
 
 .rebel-menu-card h3 {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     font-weight: 800;
     color: var(--navy);
-    margin-bottom: 12px;
-    line-height: 1.2;
+    margin-bottom: 8px;
+    line-height: 1.25;
 }
 
-.rebel-menu-card p {
-    font-size: 0.92rem;
-    line-height: 1.6;
+.area-intro-desc {
+    font-size: 0.88rem;
+    line-height: 1.55;
     color: var(--muted);
-    margin-bottom: 24px;
-    flex-grow: 1;
+    margin-bottom: 20px;
 }
 
-.rebel-menu-link {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--emerald-text);
+/* Projects inside each Area of Focus card */
+
+.focus-projects-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: auto;
+}
+
+.focus-project-item {
+    background: #f8fafc;
+    border: 1px solid rgba(16, 185, 129, 0.18);
+    border-radius: 16px;
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.28s ease, 
+                border-color 0.28s ease,
+                background-color 0.28s ease;
+}
+
+.focus-project-item:hover {
+    background: #ffffff;
+    border-color: rgba(16, 185, 129, 0.45);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.12);
+    transform: translateY(-2px);
+}
+
+.focus-project-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.35;
+    margin: 0 0 6px;
+}
+
+.focus-project-desc {
+    font-size: 0.83rem;
+    line-height: 1.55;
+    color: var(--muted);
+    margin: 0 0 14px;
+}
+
+.focus-project-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    transition: gap 0.2s ease, color 0.2s ease;
+    gap: 8px;
+    padding: 7px 18px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: linear-gradient(135deg, #0b4632 0%, #059669 100%);
+    border: 1px solid rgba(52, 211, 153, 0.7);
+    border-radius: 999px;
+    box-shadow: 0 3px 12px rgba(5, 150, 105, 0.28);
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+    position: relative;
+    z-index: 3;
+    transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: auto;
 }
 
-.rebel-menu-link:hover {
-    gap: 10px;
-    color: #059669;
+.focus-project-btn .btn-arrow {
+    display: inline-block;
+    font-size: 1.05em;
+    line-height: 1;
+    transition: transform 0.25s ease;
+}
+
+.focus-project-btn:hover {
+    background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+    color: #ffffff;
+    border-color: #a7f3d0;
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
+    transform: translateY(-2px);
+}
+
+.focus-project-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+/* Water, Sanitation and Hygiene Special Styles */
+
+.wash-card {
+    background: linear-gradient(180deg, #ffffff 0%, #f0fdf9 100%);
+    border-color: rgba(6, 182, 212, 0.35);
+}
+
+.wash-feature-item {
+    background: linear-gradient(135deg, #f0fdfa 0%, #e6fffa 100%);
+    border: 1px solid rgba(13, 148, 136, 0.3);
+}
+
+.wash-status-tag {
+    display: inline-block;
+    padding: 3px 9px;
+    margin-bottom: 8px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #0d9488;
+    background: rgba(204, 251, 241, 0.85);
+    border-radius: 999px;
+    border: 1px solid rgba(13, 148, 136, 0.2);
+}
+
+.wash-trigger-btn {
+    background: linear-gradient(135deg, #0e7490 0%, #0891b2 100%);
+    border-color: rgba(103, 232, 249, 0.7);
+    box-shadow: 0 4px 14px rgba(8, 145, 178, 0.3);
+}
+
+.wash-trigger-btn:hover {
+    background: linear-gradient(135deg, #06b6d4 0%, #0e7490 100%);
+    box-shadow: 0 6px 20px rgba(6, 182, 212, 0.45);
+    border-color: #cffafe;
+}
+
+/* --- WASH Modal Window --- */
+
+.wash-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10002;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.wash-modal.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0s linear 0s;
+}
+
+.wash-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 31, 22, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.wash-modal-panel {
+    position: relative;
+    z-index: 2;
+    width: min(720px, 94vw);
+    max-height: 88vh;
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 38px 36px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    transform: scale(0.96);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wash-modal.active .wash-modal-panel {
+    transform: scale(1);
+}
+
+.wash-modal-close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: var(--navy);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+
+.wash-modal-close:hover {
+    background: #e2e8f0;
+    color: #ef4444;
+    transform: rotate(90deg);
+}
+
+.wash-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.wash-modal-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.wash-modal-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.25;
+    margin: 0 0 6px;
+}
+
+.wash-modal-subtitle {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0891b2;
+    margin: 0 0 20px;
+}
+
+.wash-modal-body p {
+    font-size: 0.94rem;
+    line-height: 1.65;
+    color: var(--muted);
+    margin-bottom: 20px;
+}
+
+.wash-roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 22px 0 26px;
+}
+
+@media (max-width: 650px) {
+    .wash-roadmap-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .wash-modal-panel {
+        padding: 28px 20px;
+    }
+}
+
+.wash-roadmap-card {
+    background: #f0fdfa;
+    border: 1px solid rgba(13, 148, 136, 0.25);
+    border-radius: 16px;
+    padding: 18px 14px;
+    text-align: left;
+}
+
+.wash-roadmap-icon {
+    font-size: 1.5rem;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.wash-roadmap-card h4 {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin: 0 0 6px;
+    line-height: 1.3;
+}
+
+.wash-roadmap-card p {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0;
+}
+
+.wash-modal-callout {
+    background: linear-gradient(135deg, #071f16 0%, #0d3827 100%);
+    border-radius: 18px;
+    padding: 24px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.wash-modal-callout h4 {
+    color: #ffffff;
+    font-size: 1.05rem;
+    margin: 0 0 8px;
+}
+
+.wash-modal-callout p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    margin: 0 0 16px;
+    line-height: 1.5;
+}
+
+.wash-modal-cta {
+    display: inline-flex;
+    padding: 10px 24px;
 }
 
 

@@ -594,6 +594,70 @@
         });
     }
 
+    function handleUrlProjectParam() {
+        var params = new URLSearchParams(window.location.search);
+        var pKey = params.get('project');
+        if (!pKey && window.location.hash) {
+            var match = window.location.hash.match(/^#project-([a-z0-9-]+)$/i);
+            if (match) { pKey = match[1]; }
+        }
+        if (pKey && projects[pKey]) {
+            var card = projects[pKey].card;
+            if (card && card.classList.contains('hidden')) {
+                var allBtn = qs('.project-filter[data-filter="all"]');
+                if (allBtn) { allBtn.click(); }
+            }
+            setTimeout(function () {
+                if (card && card.scrollIntoView) {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                window.openProjectModal(pKey);
+            }, 300);
+        }
+    }
+
+    function wireWashModal() {
+        var modal = qs('#washModal');
+        if (!modal) { return; }
+        registerModal(modal, 'Water, Sanitation, and Hygiene Initiatives');
+        var openBtns = qsa('.wash-trigger-btn');
+        var closeBtns = qsa('.wash-modal-close, .wash-modal-backdrop, .wash-modal-cta', modal);
+
+        function openWash() {
+            modal.classList.add('active');
+            openModal(modal);
+        }
+        function closeWash() {
+            modal.classList.remove('active');
+            closeModal(modal);
+        }
+
+        openBtns.forEach(function (btn) {
+            btn.addEventListener('click', function (ev) {
+                ev.preventDefault();
+                openWash();
+            });
+        });
+
+        closeBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                closeWash();
+            });
+        });
+
+        modal.addEventListener('click', function (ev) {
+            if (ev.target === modal || ev.target.classList.contains('wash-modal-backdrop')) {
+                closeWash();
+            }
+        });
+
+        document.addEventListener('keydown', function (ev) {
+            if (modal.classList.contains('active') && ev.key === 'Escape') {
+                closeWash();
+            }
+        });
+    }
+
 
     /* =====================================================
        6. BOOT
@@ -611,6 +675,11 @@
         buildFilterBar();
         wireProjectCards();
         buildProjectModal();
+        handleUrlProjectParam();
+        wireWashModal();
+
+        window.addEventListener('popstate', handleUrlProjectParam);
+        window.addEventListener('hashchange', handleUrlProjectParam);
 
         // Re-key keyboard access after a people tab switches.
         var origShow = window.showPeople;
