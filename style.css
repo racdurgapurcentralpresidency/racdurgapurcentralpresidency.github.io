@@ -111,8 +111,8 @@ button {
 .ambient-orb {
     position: fixed;
     border-radius: 50%;
-    filter: blur(95px);
-    opacity: 0.20;
+    filter: blur(35px);
+    opacity: 0.16;
     pointer-events: none;
     z-index: -1;
     will-change: transform;
@@ -5811,4 +5811,66 @@ body.preloader-active {
 @media (max-width: 1150px) {
     .nav-menu a.is-current::after,
     .nav-dropdown-toggle.is-current::after { display: none; }
+}
+
+/* =========================================================
+   PERFORMANCE ENGINE & LOW-END HARDWARE OPTIMIZATIONS
+   ========================================================= */
+
+/* Content visibility: Defer layout and painting of off-screen sections */
+@supports (content-visibility: auto) {
+    .section:not(.hero):not(.page-banner) {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 750px;
+    }
+
+    .gallery-grid,
+    .achievements-grid,
+    .publications-grid,
+    .people-display {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 600px;
+    }
+
+    .website-creator-section,
+    .site-footer {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 400px;
+    }
+}
+
+/* Disable GPU-heavy effects on mobile, low-spec devices, and battery savers */
+@media (max-width: 1024px) {
+    .ambient-orb {
+        display: none !important;
+        animation: none !important;
+    }
+
+    .site-header,
+    .navbar,
+    .section-minimap,
+    .nav-dropdown,
+    .hero-floating-badge {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+}
+
+html.low-spec .ambient-orb {
+    display: none !important;
+    animation: none !important;
+}
+
+html.low-spec .site-header,
+html.low-spec .navbar,
+html.low-spec .section-minimap,
+html.low-spec .nav-dropdown,
+html.low-spec .hero-floating-badge {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Image rendering optimizations */
+img {
+    content-visibility: auto;
 }

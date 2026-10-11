@@ -36,7 +36,9 @@
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"></noscript>
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="motion.css">
@@ -1538,8 +1540,8 @@
     <span class="dial-arrow">↑</span>
 </button>
 
-<script src="motion.js"></script>
-<script src="script.js"></script>
-<script src="enhance.js"></script>
+<script src="motion.js" defer></script>
+<script src="script.js" defer></script>
+<script src="enhance.js" defer></script>
 </body>
 </html>

@@ -19,15 +19,22 @@
         return;
     }
 
-    // Accessibility: instantly dismiss if user prefers reduced motion
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Fast-path bypass for low-end devices, mobile screens, data savers, or reduced-motion
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isLowEnd = isReducedMotion ||
+                     (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+                     (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                     (navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType))) ||
+                     (window.innerWidth < 800);
+
+    if (isLowEnd) {
         preloader.style.display = "none";
         document.body.classList.remove("preloader-active");
+        try { sessionStorage.setItem("racdcp-intro-seen", "1"); } catch (e) {}
         return;
     }
 
-    // The site is three pages now, so the intro would replay on every
-    // navigation. Show it once per browsing session instead.
+    // Show at most once per browsing session
     try {
         if (sessionStorage.getItem("racdcp-intro-seen")) {
             preloader.style.display = "none";
@@ -35,12 +42,10 @@
             return;
         }
         sessionStorage.setItem("racdcp-intro-seen", "1");
-    } catch (e) {
-        // Private mode or blocked storage: fall through and just play it.
-    }
+    } catch (e) {}
 
     let isCompleted = false;
-    const duration = 1350; // Total duration in ms (~1.35 seconds: snappy & energetic)
+    const duration = 550; // Snappy 550ms intro for high-end PCs
     const startTime = performance.now();
 
     function finishPreloader() {
@@ -55,11 +60,10 @@
             preloader.classList.add("loaded");
             document.body.classList.remove("preloader-active");
 
-            // Clean up after curtain transition finishes
             setTimeout(function () {
                 preloader.style.display = "none";
-            }, 900);
-        }, 160);
+            }, 400);
+        }, 120);
     }
 
     function step(timestamp) {
@@ -67,24 +71,12 @@
         const elapsed = timestamp - startTime;
         const t = Math.min(elapsed / duration, 1);
 
-        // Smooth cubic ease-out acceleration: starts fast, accelerates, lands firmly at 100
         const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
         const currentCount = Math.min(Math.round(eased * 100), 100);
 
         preloaderNumber.textContent = currentCount;
         preloaderBar.style.width = currentCount + "%";
         preloader.setAttribute("aria-valuenow", currentCount);
-
-        // Dynamic status milestones
-        if (preloaderStatus) {
-            if (currentCount < 30) {
-                preloaderStatus.textContent = "INITIALIZING EXPERIENCE...";
-            } else if (currentCount < 70) {
-                preloaderStatus.textContent = "COMMUNITY • LEADERSHIP • ACTION...";
-            } else if (currentCount < 100) {
-                preloaderStatus.textContent = "READY FOR ACTION...";
-            }
-        }
 
         if (t < 1) {
             requestAnimationFrame(step);
@@ -95,8 +87,9 @@
 
     requestAnimationFrame(step);
 
-    // Hard fail-safe timeout in case frame scheduling gets throttled
-    setTimeout(finishPreloader, 2200);
+    // Complete as soon as the page is fully loaded or fail-safe expires
+    window.addEventListener("load", finishPreloader, { once: true });
+    setTimeout(finishPreloader, 900);
 })();
 
 
@@ -1085,8 +1078,15 @@ function updateScrollMetrics() {
     }
 }
 
+let scrollMetricsTicking = false;
 window.addEventListener("scroll", function () {
-    requestAnimationFrame(updateScrollMetrics);
+    if (!scrollMetricsTicking) {
+        scrollMetricsTicking = true;
+        requestAnimationFrame(function () {
+            updateScrollMetrics();
+            scrollMetricsTicking = false;
+        });
+    }
 }, { passive: true });
 
 updateScrollMetrics();
@@ -1204,7 +1204,11 @@ if (document.readyState === "loading") {
 (function initScrollVelocityPhysics() {
     if (window.MOTION3D && window.MOTION3D.enabled) { return; }   // motion.js owns velocity pitch
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isReducedMotion || window.innerWidth < 768) {
+    const isLowEnd = isReducedMotion ||
+                     (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+                     (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                     window.innerWidth < 1024;
+    if (isLowEnd) {
         return;
     }
 
@@ -1369,13 +1373,26 @@ function initSectionMinimap() {
         });
     }
 
-    // Real-time tracking on scroll with RAF
+    // Throttled real-time tracking on scroll with single RAF
+    let minimapTicking = false;
     window.addEventListener("scroll", function () {
-        requestAnimationFrame(updateActiveSection);
+        if (!minimapTicking) {
+            minimapTicking = true;
+            requestAnimationFrame(function () {
+                updateActiveSection();
+                minimapTicking = false;
+            });
+        }
     }, { passive: true });
 
     window.addEventListener("resize", function () {
-        requestAnimationFrame(updateActiveSection);
+        if (!minimapTicking) {
+            minimapTicking = true;
+            requestAnimationFrame(function () {
+                updateActiveSection();
+                minimapTicking = false;
+            });
+        }
     }, { passive: true });
 
     // Initial check

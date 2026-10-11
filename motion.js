@@ -30,17 +30,31 @@
 
     var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    var lowSpec = (navigator.deviceMemory && navigator.deviceMemory < 4) ||
-                  (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
+
+    // Comprehensive low-spec detection: budget PCs (<=4 cores or <=4GB RAM), slow networks, mobile screens
+    var lowSpec = (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+                  (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                  (navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType))) ||
+                  (window.innerWidth < 1024);
+
+    if (lowSpec) {
+        docEl.classList.add('low-spec');
+    }
+
+    // High-end workstation qualification (requires >=6 CPU cores and >=8GB RAM)
+    var isHighEnd = (!lowSpec) &&
+                    (!navigator.hardwareConcurrency || navigator.hardwareConcurrency >= 6) &&
+                    (!navigator.deviceMemory || navigator.deviceMemory >= 8);
 
     var enabled = !params.has('nomotion') &&
                   !prefersReduced &&
+                  !lowSpec &&
                   !!window.requestAnimationFrame &&
                   !!window.Map;
 
-    // Momentum scroll is desktop-only: touch devices keep native
-    // overscroll / pull-to-refresh, which hijacking would break.
-    var useMomentum = enabled && finePointer && window.innerWidth >= 1025 && !lowSpec;
+    // Native scrolling is preserved on all standard & low-end devices.
+    // Momentum lerp is only activated for verified high-end workstations with fine pointers.
+    var useMomentum = enabled && finePointer && window.innerWidth >= 1200 && isHighEnd;
 
     var MOTION = {
         enabled: enabled,
