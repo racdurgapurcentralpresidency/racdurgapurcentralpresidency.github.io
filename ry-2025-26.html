@@ -623,74 +623,1264 @@
                     </p>
                 </div>
 
-                <div class="archive-placeholder-card">
-                    <div class="archive-placeholder-icon">🌟</div>
-                    <h4>RY 2025–26 Projects Archive</h4>
-                    <p>
-                        Project records, dates, avenue tags, and photo archives will be linked here once full activity lists are provided.
-                    </p>
+                <div class="archive-stats-ribbon">
+                    <div class="archive-stat-card">
+                        <div class="archive-stat-icon">🌟</div>
+                        <div class="archive-stat-info">
+                            <span class="archive-stat-number">35</span>
+                            <span class="archive-stat-label">Total Events &amp; Initiatives</span>
+                        </div>
+                    </div>
+                    <div class="archive-stat-card">
+                        <div class="archive-stat-icon">📚</div>
+                        <div class="archive-stat-info">
+                            <span class="archive-stat-number">13</span>
+                            <span class="archive-stat-label">Community &amp; Literacy Drives</span>
+                        </div>
+                    </div>
+                    <div class="archive-stat-card">
+                        <div class="archive-stat-icon">🏛️</div>
+                        <div class="archive-stat-info">
+                            <span class="archive-stat-number">11</span>
+                            <span class="archive-stat-label">District &amp; Zonal Summits</span>
+                        </div>
+                    </div>
+                    <div class="archive-stat-card">
+                        <div class="archive-stat-icon">🏆</div>
+                        <div class="archive-stat-info">
+                            <span class="archive-stat-number">10+</span>
+                            <span class="archive-stat-label">Awards &amp; District Honors</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="archive-template-grid">
-                    <div class="archive-project-card">
-                        <div class="archive-project-thumb">
-                            <span class="archive-project-thumb-badge">Community Service</span>
-                            <span>🎯</span>
+                <!-- CONTROLS: CATEGORY FILTERS & REAL-TIME SEARCH -->
+                <div class="archive-controls-bar">
+                    <div class="archive-controls-top">
+                        <div class="archive-search-wrap">
+                            <span class="archive-search-icon" aria-hidden="true">🔍</span>
+                            <input type="text"
+                                   id="archiveEventSearch"
+                                   class="archive-search-input"
+                                   placeholder="Search 2025–26 events by title, venue, or keyword..."
+                                   aria-label="Search events in Rotary Year 2025-26">
                         </div>
-                        <div class="archive-project-body">
-                            <h4>Project Slot 1</h4>
-                            <p>Community development, health camp, or outreach initiative conducted during Rotary Year 2025–26.</p>
-                            <div class="archive-project-meta-row">
-                                <span>📅 Date: TBD</span>
-                                <span>👥 Beneficiaries: TBD</span>
-                            </div>
-                        </div>
+                        <span class="archive-counter-text" id="archiveEventCounter">Showing 35 of 35 events</span>
                     </div>
 
-                    <div class="archive-project-card">
-                        <div class="archive-project-thumb">
-                            <span class="archive-project-thumb-badge">Professional Dev.</span>
-                            <span>💡</span>
+                    <div class="archive-filter-row" role="tablist" aria-label="Event Category Filters">
+                        <button type="button" class="archive-filter-btn active" data-filter="all">
+                            <span>All Events</span>
+                            <span class="archive-filter-badge">35</span>
+                        </button>
+                        <button type="button" class="archive-filter-btn" data-filter="community">
+                            <span>Community &amp; Literacy</span>
+                            <span class="archive-filter-badge">13</span>
+                        </button>
+                        <button type="button" class="archive-filter-btn" data-filter="district">
+                            <span>District &amp; Zonal</span>
+                            <span class="archive-filter-badge">11</span>
+                        </button>
+                        <button type="button" class="archive-filter-btn" data-filter="club">
+                            <span>Club Service &amp; Fellowship</span>
+                            <span class="archive-filter-badge">7</span>
+                        </button>
+                        <button type="button" class="archive-filter-btn" data-filter="awards">
+                            <span>Awards &amp; Citations</span>
+                            <span class="archive-filter-badge">2</span>
+                        </button>
+                        <button type="button" class="archive-filter-btn" data-filter="youth-international">
+                            <span>Youth Exchange &amp; Special</span>
+                            <span class="archive-filter-badge">2</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 35 EVENTS ARCHIVE GRID -->
+                <div class="archive-events-grid" id="archiveEventsGrid">
+
+                    <!-- 1. Symphony District Installation -->
+                    <article class="archive-event-card" data-category="district">
+                        <div class="archive-event-banner" data-event-key="symphony" role="button" tabindex="0" aria-label="View photo gallery for Symphony District Installation">
+                            <img src="images/projects/2025-26/symphony.jpg" alt="Symphony District Installation" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Event</span>
+                            <span class="archive-event-index">#01</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>11 Photos</span></span>
                         </div>
-                        <div class="archive-project-body">
-                            <h4>Project Slot 2</h4>
-                            <p>Skill building session, career workshop, or youth empowerment program conducted during Rotary Year 2025–26.</p>
-                            <div class="archive-project-meta-row">
-                                <span>📅 Date: TBD</span>
-                                <span>👥 Beneficiaries: TBD</span>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>12th and 13th July 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Malda, West Bengal</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Symphony District Installation</h3>
+                            <div class="archive-event-desc">
+                                <p>The 36th District Installation Symphony was held at Malda, hosted by Rotaract Club of Malda Central. The Installation was followed by a visit to Gour malda on Day 2.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">36th District Installation</span>
+                                <span class="archive-event-tag">RAC Malda Central</span>
+                                <span class="archive-event-tag">Gour Malda Visit</span>
                             </div>
                         </div>
+                    </article>
+
+                    <!-- 2. Parent Rotary Installation -->
+                    <article class="archive-event-card" data-category="club">
+                        <div class="archive-event-banner" data-event-key="parent-rotary-installation" role="button" tabindex="0" aria-label="View photo gallery for Parent Rotary Installation">
+                            <img src="images/projects/2025-26/parent-rotary-installation.jpeg" alt="Parent Rotary Installation" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Parent Rotary</span>
+                            <span class="archive-event-index">#02</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>4 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>12th July 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Peerless Hotel, Durgapur</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Parent Rotary Installation</h3>
+                            <div class="archive-event-desc">
+                                <p>The Rotary Club of Durgapur Central organised their 28th Club Installation on 12th July 2025.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">28th Club Installation</span>
+                                <span class="archive-event-tag">RC Durgapur Central</span>
+                                <span class="archive-event-tag">Mentorship</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 3. District Project Chalo Chale -->
+                    <article class="archive-event-card" data-category="club">
+                        <div class="archive-event-banner" data-event-key="chalo-chale" role="button" tabindex="0" aria-label="View photo gallery for District Project Chalo Chale">
+                            <img src="images/projects/2025-26/chalo-chale.jpeg" alt="District Project Chalo Chale" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Project</span>
+                            <span class="archive-event-index">#03</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>3 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>18th July 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Peerless Hotel, Durgapur</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">District Project Chalo Chale</h3>
+                            <div class="archive-event-desc">
+                                <p>On Friday the 18th of July, Rtr. Debarpito Sarkar our Secretary visited the 2nd Regular General Meeting of Rotary club of Durgapur Central held at Peerless Hotel, Durgapur City Centre. There, after the meeting started and the initial agendas were done, he started the District Project by felicitating the President Rtn. Mantaar Singh and the Immediate Past President Rtn. Anuja Agarwal and presenting the Rotarians with Sweets from Eastern Sweets and Confectioners, Kolkata. He then showcased all awards received by our club in the RY 2024-25. Along with them, he showcased the District Directory and shared the theme of DRR Kumar Shivam Das, “Sustainable Odyssey”. After explanation ended, the remaining agendas were followed, after which the meeting was adjourned, followed by a Dinner party at the venue.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Felicitation</span>
+                                <span class="archive-event-tag">Awards Showcase</span>
+                                <span class="archive-event-tag">Sustainable Odyssey</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 4. 3rd Club Installation -->
+                    <article class="archive-event-card" data-category="club">
+                        <div class="archive-event-banner" data-event-key="club-installation" role="button" tabindex="0" aria-label="View photo gallery for 3rd Club Installation">
+                            <img src="images/projects/2025-26/club-installation.png" alt="3rd Club Installation" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Club Service</span>
+                            <span class="archive-event-index">#04</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>20th July 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Google Meet (Virtual)</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">3rd Club Installation</h3>
+                            <div class="archive-event-desc">
+                                <p>On Sunday the 20th of July, we hosted our third Club Installation ceremony for RY 2025-26 at Google Meet. The meeting started sharp at 10:00 AM in the morning. Our invitees, Guest of Honors Rtn. Santosh Maheshwari (Director - Club Service) and Rtn. Mantaar Singh (President) and our Chief Guest DRR Rtr. Kumar Shivam Das joined the meeting, with 13 of our club members and 4 rotaractors from other Rotaract Clubs, Rtr. Chandrama Mistri (ZRR Zone 1) and Rtr. Nancy Jasmine D’couth (President) of RaC Durgapur Central, Rtr. Rajarshi Das Rishi (District Chair - Projects and Foundation) of RaC Bolpur Santiniketan and Rtr. Mayank Agarwal (President) of RaC DSMS College.</p>
+                                <ul class="archive-event-bullets">
+                                    <li>The meeting started by calling Dignitaries to the Dias, felicitating them one by one, collaring the outgoing President Rtr. Debarpan and Secretary Rtr. Debarpito, and calling the meeting to order.</li>
+                                    <li>MC requested everyone to stand up for the National Anthem, followed by Outgoing President and Secretary speech with the Yearly report presentation.</li>
+                                    <li>Collar exchange ceremony followed by DRR administering the President Secretary oath. Secretary Rtr. Debarpito revealed the District Theme “Sustainable Odyssey”, followed by President Rtr. Debarpan revealing the Club Theme <strong>“Together we rise, Together we shine”</strong>. Board of Directors was then revealed.</li>
+                                    <li>Inspiring speeches by Guest of Honor Rtn. Mantaar Singh and Chief Guest DRR Rtr. Kumar Shivam Das. Sergeant-at-Arms Rtr. Subhadeep Garai delivered the attendance report, followed by vote of thanks and meeting adjournment.</li>
+                                </ul>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag special">Club Theme: Together we rise, Together we shine</span>
+                                <span class="archive-event-tag">DRR Kumar Shivam Das</span>
+                                <span class="archive-event-tag">Board Induction</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 5. Boier Desh Universal Smile Day 1 -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="boier-desh-day1" role="button" tabindex="0" aria-label="View photo gallery for Boier Desh Universal Smile Day 1">
+                            <img src="images/projects/2025-26/boier-desh-day1.jpeg" alt="Boier Desh Universal Smile Day 1" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Community Service</span>
+                            <span class="archive-event-index">#05</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>5 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>2nd August 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Universal Smile Children’s Home, Anandapur, WB - 700107</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Boier Desh Universal Smile Day 1</h3>
+                            <div class="archive-event-desc">
+                                <p>On 2nd August 2025, we visited Universal Smile Orphanage situated at Anandapur, Kolkata 700107 to conduct a survey. We wanted to know the children's requirements and necessities before conducting our project Boier Desh. We have been conducting this since last year and every year we adapt and change according to the children’s requirements. A total of 31 students were present that day at the orphanage, out of 42 students, some absent due to tuition. Before starting our survey, we distributed Bourbon biscuits to all students, so they can have a snack while we work and interact with them. We started chatting with each student one by one, got to know their names, their passion and aim for the future. Each answer were quite unique and we identified what were their requirements and where they need our help. We will be conducting classes every Tuesday and Saturday from now on.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag special">Flagship Initiative</span>
+                                <span class="archive-event-tag">31 Students Surveyed</span>
+                                <span class="archive-event-tag">Needs Assessment</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 6. District Project Re-Flag -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="re-flag" role="button" tabindex="0" aria-label="View photo gallery for District Project Re-Flag">
+                            <img src="images/projects/2025-26/re-flag.jpeg" alt="District Project Re-Flag" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Project</span>
+                            <span class="archive-event-index">#06</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>4 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>12th August to 15th August 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Dum Dum Park WB - 700055 &amp; Ganga Brick Factory, WB - 743126</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">District Project Re-Flag</h3>
+                            <div class="archive-event-desc">
+                                <p>On 12th August 2025, our Secretary Rtr. Debarpito Sarkar started making Indian flags for this project. He used old A4 pages which were used for previous Club Bulletin spare printouts. From each Page, one Indian flag was made. He individually started making the flags one by one, unsure of how many he can make, and in the end, made 25 flags till his colors ran out.</p>
+                                <p>On the same time, our Vice-President Rtr. Pratisruti Dutta started arrangements for a flag hosting event at our Boier Desh venue at Ganga Brick Factory, Kankinara. She along with our club volunteer Bhromor Nath visited the office of the BDO and SDO of Barrackpore, to invite them at the venue as Chief Guests. She also coordinated with local volunteers to help on the preparations of the event.</p>
+                                <p>On 14th August 2025, Rtr. Debarpito went to Kankinara, gave his handmade 25 flags to Rtr. Pratisruti. On 15th August 2025, Rtr. Pratisruti joined by our Club Editor Rtr. Monimoy Ghosh &amp; volunteer Bhromor, went to the event venue. The BDO of Barrackpore Block-1 - Mrs. Gargi Das, came to the venue as the Chief Guest. More than 50 children and their parents were also present at the venue.</p>
+                                <p>The BDO hoisted the flag, followed by the children singing the National Anthem. Rtr. Monimoy helped distribute pens and diaries brought by him, and the brick factory manager distributed Cadbury chocolates. The highest point from the event was the BDO recognizing the children's hunger for education and our efforts, thus sponsoring students to attend a tuition program locally for exam prep and higher study prep free of cost.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag special">Tuition Sponsorship Sponsored by BDO</span>
+                                <span class="archive-event-tag">25 Upcycled Flags</span>
+                                <span class="archive-event-tag">50+ Children</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 7. DRR Visit -->
+                    <article class="archive-event-card" data-category="club">
+                        <div class="archive-event-banner" data-event-key="drr-visit" role="button" tabindex="0" aria-label="View photo gallery for DRR Visit">
+                            <img src="images/projects/2025-26/drr-visit.jpeg" alt="DRR Visit" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Official Visit</span>
+                            <span class="archive-event-index">#07</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>7 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>15th August 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Peerless Hotel &amp; Club Address, Durgapur, WB - 713216</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">DRR Visit</h3>
+                            <div class="archive-event-desc">
+                                <p>On 15th August 2025, our Secretary Rtr. Debarpito Sarkar went to Durgapur to conduct the club's DRR visit. Our DRR Rtr. Kumar Shivam Das came from Guwahati to visit Zone 1 clubs. He visited Durgapur on Day 2 of his visit, after visiting RaC Bolpur Santiniketan. Rtr. Debarpito tagged along with the DRR, District Secretary Reporting Rtn. Rtr. Didhiti Singha, ZRR Zone 1 Rtr. Chandrama Mistri and ZS Zone 1 Rtr. Arkapravo Sengupta to visit other clubs of Durgapur, namely RaC DSMS and RaC Durgapur Central.</p>
+                                <p>After their visit was over, they all went to Peerless Hotel Durgapur, where Parent Rotary President Rtn. Mantaar Singh had booked a table at the Restaurant. The DRR along with the ZRR and ZS thoroughly reviewed all documents made by Rtr. Debarpito, gave him tips to fix errors and suggestions. Rtr. Molly Chowdhury, Secretary of RaC Durgapur Central was also present.</p>
+                                <p>After fellowship at PDRR Diptendu Mustafee's Home, Rtr. Debarpito along with the DRR and ZS went to his home near Shyampur where they stayed the night—hosting the DRR and ZS at our official club address. Next morning, Rtr. Debarpito dropped them at City Centre bus stand before their onward journey to RaC RIIT.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">DRR Kumar Shivam Das</span>
+                                <span class="archive-event-tag">Records Review</span>
+                                <span class="archive-event-tag">Hosted at Club Address</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 8. Boier Desh Universal Smile Day 2 -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="boier-desh-day2" role="button" tabindex="0" aria-label="View photo gallery for Boier Desh Universal Smile Day 2">
+                            <img src="images/projects/2025-26/boier-desh-day2.jpeg" alt="Boier Desh Universal Smile Day 2" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Community Service</span>
+                            <span class="archive-event-index">#08</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>19th August 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Universal Smile Children’s Home, Anandapur, WB - 700107</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Boier Desh Universal Smile Day 2</h3>
+                            <div class="archive-event-desc">
+                                <p>On 19th August 2025, we visited Universal Smile Children's home at Anandapur Kolkata for our 2nd class. That day we organized a free English class for students studying between class VIII to XII. We interacted with them and identified their weaknesses and strengths. We focused on strengthening their reading &amp; writing skills, their grammar skills, speaking in English, communication in English. The students were shy and unresponsive at first, but within a few minutes, they started having fun and themselves started interacting with us in English. We also looked at their current syllabus at their school, and from there, tried to identify on which chapters are they facing issues. We will be continuing them on the upcoming classes.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Spoken English</span>
+                                <span class="archive-event-tag">Class VIII to XII</span>
+                                <span class="archive-event-tag">Grammar &amp; Fluency</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 9. Boier Desh Universal Smile Day 3 -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="boier-desh-day3" role="button" tabindex="0" aria-label="View photo gallery for Boier Desh Universal Smile Day 3">
+                            <img src="images/projects/2025-26/boier-desh-day3.jpeg" alt="Boier Desh Universal Smile Day 3" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Community Service</span>
+                            <span class="archive-event-index">#09</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>2 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>24th August 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Universal Smile Children’s Home, Anandapur, WB - 700107</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Boier Desh Universal Smile Day 3</h3>
+                            <div class="archive-event-desc">
+                                <p>On 24th August 2025, we visited Universal Smile Children's Home at Anandapur Kolkata. We focused on students of Class X to XII. We interacted with the students present and tried to understand their Strengths and Weakness in Mathematics and Statistics. We learnt about their streams and what type of mathematics do they need to focus on. We learnt about the upcoming exams they are preparing for and also their future career aspirations.</p>
+                                <p>To guide them better, our members Rtr. Saptick Das and Rtr. Hossain Rumaya took the session—where Saptick explained Probability &amp; Bayes’ Theorem with simple, relatable examples, making the concepts much easier to grasp. That was all for that day and we are going to continue that in the upcoming classes.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Mathematics &amp; Statistics</span>
+                                <span class="archive-event-tag">Probability &amp; Bayes’ Theorem</span>
+                                <span class="archive-event-tag">Mentors: Saptick &amp; Rumaya</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 10. EDU BRIDGE: Boier Desh -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="edubridge-boier-desh" role="button" tabindex="0" aria-label="View photo gallery for EDU BRIDGE: Boier Desh">
+                            <img src="images/projects/2025-26/edubridge-boier-desh.jpeg" alt="EDU BRIDGE: Boier Desh" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Project</span>
+                            <span class="archive-event-index">#10</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>16th September 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Universal Smile Children’s Home, Anandapur, WB - 700107</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">EDU BRIDGE: Boier Desh</h3>
+                            <div class="archive-event-desc">
+                                <p>As part of the District Project EDU BRIDGE: Boier Desh, we conducted educational sessions on Spoken English and Grammar at Universal Smile Children’s Home, Kolkata. The initiative aimed to enhance the communication skills and linguistic proficiency of children residing in the institution, thereby supporting their overall academic and personal development. The classes were designed to introduce students to the fundamentals of English grammar, sentence formation, and conversational fluency. Interactive learning methods such as reading exercises, vocabulary-building activities, and guided conversations were incorporated to make the sessions engaging and effective. The focus was not only on improving their language skills but also on building confidence and encouraging self-expression. Through this initiative, the club sought to bridge educational gaps by bringing structured learning opportunities to children who have limited access to such resources. The project reinforced the importance of language education as a tool for empowerment and lifelong growth.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Edu Bridge</span>
+                                <span class="archive-event-tag">Spoken English &amp; Grammar</span>
+                                <span class="archive-event-tag">Empowerment</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 11. EDU BRIDGE: Skill for me -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="edubridge-skill-for-me" role="button" tabindex="0" aria-label="View photo gallery for EDU BRIDGE: Skill for me">
+                            <img src="images/projects/2025-26/edubridge-skill-for-me.png" alt="EDU BRIDGE: Skill for me" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Project</span>
+                            <span class="archive-event-index">#11</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>20th September 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Ganga Brick Factory, West Bengal - 743126</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">EDU BRIDGE: Skill for me</h3>
+                            <div class="archive-event-desc">
+                                <p>As part of the District Project EDU BRIDGE: Skill for Me, we organized a vocational training session focusing on singing and music appreciation for the children of Ganga Brick Factory workers. The initiative aimed to nurture artistic talent among underprivileged youth and provide them with a platform to explore music as a skill for personal growth and confidence building. The session was conducted by Mr. Arkaprabha Mitra, the lead vocalist of the renowned band Mitra Dal, who graciously volunteered his time to mentor the children. He introduced the basics of rhythm, melody, and vocal techniques through engaging and interactive exercises. The participants showed remarkable enthusiasm and interest, making the session both educational and inspiring. Through this project, the club sought to bridge the gap between opportunity and potential by empowering young individuals with creative skills. The initiative not only promoted vocational learning but also fostered a sense of joy, discipline, and self-expression among the children.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag special">Mentorship by Mitra Dal Vocalist</span>
+                                <span class="archive-event-tag">Vocational Training</span>
+                                <span class="archive-event-tag">Music Appreciation</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 12. EDU BRIDGE: Donate Literacy Materials -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="edubridge-donation" role="button" tabindex="0" aria-label="View photo gallery for EDU BRIDGE: Donate Literacy Materials">
+                            <img src="images/projects/2025-26/edubridge-donation.jpeg" alt="EDU BRIDGE: Donate Literacy Materials" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Project</span>
+                            <span class="archive-event-index">#12</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>20th September 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Ganga Brick Factory, West Bengal - 743126</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">EDU BRIDGE: Donate Literacy Materials</h3>
+                            <div class="archive-event-desc">
+                                <p>In alignment with the District Project EDU BRIDGE: Donate Literacy Materials, we undertook an initiative to support the educational needs of underprivileged children from the Ganga Brick Factory community. The project aimed to promote literacy and encourage sustained learning among children belonging to economically challenged backgrounds. As part of this initiative, the club distributed 60 notebooks (a combination of dista and Classmate copies) to the children, ensuring they had access to essential learning materials. This activity followed up on the club’s earlier donations of stationery items such as pencils, erasers, sharpeners, and other educational supplies in previous months, reinforcing a consistent commitment to the children’s educational development. The project emphasized the importance of continuity in education by not only addressing immediate material needs but also fostering a supportive learning environment. Through this effort, the club reaffirmed its dedication to taking responsibility for the academic growth of deserving students, in line with the district directive to mentor and support meritorious learners for a year.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">60 Copies Distributed</span>
+                                <span class="archive-event-tag">Sustained Mentorship</span>
+                                <span class="archive-event-tag">Literacy Continuity</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 13. EDU BRIDGE: Felicitation -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="edubridge-felicitation" role="button" tabindex="0" aria-label="View photo gallery for EDU BRIDGE: Felicitation">
+                            <img src="images/projects/2025-26/edubridge-felicitation.jpeg" alt="EDU BRIDGE: Felicitation" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Project</span>
+                            <span class="archive-event-index">#13</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>20th September 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Cafe opposite Naihati Railway Station, WB - 743165</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">EDU BRIDGE: Felicitation</h3>
+                            <div class="archive-event-desc">
+                                <p>Under the District Project EDU BRIDGE: Felicitate Authors, Writers, and Domain Experts, we organized a special felicitation ceremony to honor individuals contributing to the promotion of education and local culture. The event aimed to recognize and appreciate community figures who have played a meaningful role in inspiring learning and creativity within the region. In this initiative, the club felicitated the renowned local band "Mitra Dal" for their consistent support and contribution towards the club’s educational and cultural projects, particularly their involvement in the Boier Desh singing classes under the EDU BRIDGE: Skill for Me component. Their active participation helped in nurturing artistic expression and promoting the value of music as a medium of education among underprivileged children. The felicitation was received by Mr. Arkaprabha Mitra, the lead vocalist of Mitra Dal, on behalf of the band. His acceptance and encouraging words further strengthened the spirit of collaboration between local artists and community initiatives focused on education and empowerment.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Felicitation of Band Mitra Dal</span>
+                                <span class="archive-event-tag">Domain Experts</span>
+                                <span class="archive-event-tag">Cultural Contribution</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 14. EDU BRIDGE: Rotaract Literacy Conclave -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="edubridge-conclave" role="button" tabindex="0" aria-label="View photo gallery for EDU BRIDGE: Rotaract Literacy Conclave">
+                            <img src="images/projects/2025-26/edubridge-conclave.jpeg" alt="EDU BRIDGE: Rotaract Literacy Conclave" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Project</span>
+                            <span class="archive-event-index">#14</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>5 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>5th October 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Rotary Club of Durgapur, Durgapur, WB - 713214</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">EDU BRIDGE: Rotaract Literacy Conclave</h3>
+                            <div class="archive-event-desc">
+                                <p>As part of the District Project EDU BRIDGE: Rotaract Literacy Conclave, the Rotaract Club of Durgapur Central Presidency, in collaboration with the Rotaract Club of Durgapur Central, organized a literacy conclave on the theme “Early Education Against Addiction: Peer Pressure and Substance Abuse – Navigating Teen Challenges.” The initiative aimed to raise awareness among students and young adults about the challenges of peer pressure, the dangers of substance abuse, and the importance of early preventive education.</p>
+                                <p>The conclave featured two distinguished speakers — Mr. Aditya Kumar Sinha, who retired as Assistant General Manager from Durgapur Steel Plant in October 2022 and had previously served as a teacher for fifteen years, and Rtn. Subrata Chattopadhyay, an esteemed Rotarian and educationist. Drawing from his dual experience in education and industry, Mr. Sinha shared valuable insights on how early moral and social education can guide young minds away from harmful influences and towards purposeful living. Rtn. Subrata Chattopadhyay delivered an informative session accompanied by a PowerPoint presentation, highlighting the psychological, social, and health implications of drug abuse. His session emphasized the role of families, schools, and community organizations in fostering awareness and resilience among youth.</p>
+                                <p>The conclave witnessed active participation from members of the Rotaract Club of DSMS College and NSHM Knowledge Campus Durgapur, along with several students, educators, and professionals from the region. The event successfully created an engaging platform for dialogue, learning, and community collaboration on one of the most pressing social issues affecting youth today.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Anti-Addiction Education</span>
+                                <span class="archive-event-tag">Joint Conclave</span>
+                                <span class="archive-event-tag">DSP &amp; Rotary Speakers</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 15. DREAMCRAFT - Trash to Treasure: Nobosristi -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="dreamcraft" role="button" tabindex="0" aria-label="View photo gallery for DREAMCRAFT - Trash to Treasure: Nobosristi">
+                            <img src="images/projects/2025-26/dreamcraft.jpeg" alt="DREAMCRAFT - Trash to Treasure: Nobosristi" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Project</span>
+                            <span class="archive-event-index">#15</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>6 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>30th October 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Surya Narayan Complex, Naihati, WB – 743123</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">DREAMCRAFT - Trash to Treasure: Nobosristi</h3>
+                            <div class="archive-event-desc">
+                                <p>Nobosristi – A Journey of Creation &amp; Change was a one-of-a-kind exhibition organized by the Rotaract Club of Durgapur Central Presidency under the District Project DreamWorks. The initiative aimed to empower unemployed youth and women by promoting self-reliance through creativity and sustainability. The event beautifully showcased how discarded materials can be transformed into eco-friendly, aesthetic, and marketable products — a true reflection of innovation and social responsibility.</p>
+                                <ul class="archive-event-bullets">
+                                    <li><strong>Objectives:</strong> Empower local women and unemployed youth by providing a platform to exhibit and sell handcrafted items; promote sustainability through waste-to-art upcycling; encourage eco-friendly habits; and generate funds for Boier Desh by collecting nominal contributions from vendors.</li>
+                                    <li><strong>Event Overview:</strong> Featured a wide range of handcrafted and upcycled products including bags, lamps, paper stationery, and home décor made from recycled materials. Guests admired banners reading <em>“Explore, Admire &amp; Take Home a Piece of Sustainability.”</em></li>
+                                    <li><strong>Highlights &amp; Impact:</strong> Over 100 handcrafted items displayed; direct income generated for women artisans; live demonstrations of upcycling; funds raised for Boier Desh free education project; and strong community engagement reinforcing Rotaract’s ideals of service.</li>
+                                </ul>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag special">100+ Handcrafted Upcycled Items</span>
+                                <span class="archive-event-tag">Women Empowerment</span>
+                                <span class="archive-event-tag">Boier Desh Fundraiser</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 16. Boier Desh - Defense Workshop -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="boier-desh-defense" role="button" tabindex="0" aria-label="View photo gallery for Boier Desh - Defense Workshop">
+                            <img src="images/projects/2025-26/boier-desh-defense.jpeg" alt="Boier Desh - Defense Workshop" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Community Service</span>
+                            <span class="archive-event-index">#16</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>4 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>4th November 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Ganga Brick Factory, West Bengal - 743126</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Boier Desh - Defense Workshop</h3>
+                            <div class="archive-event-desc">
+                                <p>As part of our ongoing Boier Desh initiative, which aims to support and uplift underprivileged children through education and skill-building activities, we organized a Defense Training Workshop on 4th November 2025 at the Ganga Brick Factory in Bhatpara Naihati — the regular project site of Boier Desh. This workshop was designed to empower the children with essential self-defense skills, boost their confidence, and encourage physical fitness.</p>
+                                <ul class="archive-event-bullets">
+                                    <li><strong>Workshop Details:</strong> Featured Karate training conducted by Mr. Arghya Das, a skilled and experienced instructor. Introduced 40+ enthusiastic students to the fundamentals of self-defense, discipline, body coordination, and safety awareness.</li>
+                                    <li><strong>Impact:</strong> Students gained exposure to basic self-defense techniques, improved safety awareness, encouraged physical fitness, and strengthened bonds with Rotaractors.</li>
+                                    <li><strong>Future Plans:</strong> Recognizing potential, Mr. Arghya Das proposed regular free Karate classes at a local clubhouse for Boier Desh students for continuous long-term development.</li>
+                                </ul>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag special">40+ Students Trained</span>
+                                <span class="archive-event-tag">Karate &amp; Self-Defense</span>
+                                <span class="archive-event-tag">Instructor Mr. Arghya Das</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 17. AI Prompt Engineering Workshop -->
+                    <article class="archive-event-card" data-category="club">
+                        <div class="archive-event-banner" data-event-key="ai-workshop" role="button" tabindex="0" aria-label="View photo gallery for AI Prompt Engineering Workshop">
+                            <img src="images/projects/2025-26/ai-workshop.png" alt="AI Prompt Engineering Workshop" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Professional Dev.</span>
+                            <span class="archive-event-index">#17</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>15th November 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Google Meet (Virtual)</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">AI Prompt Engineering Workshop</h3>
+                            <div class="archive-event-desc">
+                                <p>On 15th November 2025, we hosted an enlightening virtual session titled “AI Unlocked”, where our Charter President &amp; Club Advisor, Rtr. Sairath Das, shared his valuable insights into the rapidly evolving world of Artificial Intelligence. The session was conducted via Google Meet, making it easily accessible to all participants.</p>
+                                <ul class="archive-event-bullets">
+                                    <li><strong>Workshop Details:</strong> Focused on introducing beginners to Prompt Engineering in simple, understandable terms. Rtr. Sairath broke down complex concepts, ensuring members with no prior AI experience could follow comfortably.</li>
+                                    <li><strong>Live Demonstrations:</strong> Demonstrated real prompting workflows on Google Gemini and ChatGPT, showing how prompt phrasing, tone, and framing govern model outputs.</li>
+                                    <li><strong>Impact &amp; Conclusion:</strong> Equipped participants with foundational understanding and practical skills to harness emerging AI tools effectively in academic and professional life.</li>
+                                </ul>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Prompt Engineering</span>
+                                <span class="archive-event-tag">Google Gemini &amp; ChatGPT</span>
+                                <span class="archive-event-tag">Advisor Rtr. Sairath Das</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 18. District Assembly -->
+                    <article class="archive-event-card" data-category="district">
+                        <div class="archive-event-banner" data-event-key="district-assembly" role="button" tabindex="0" aria-label="View photo gallery for District Assembly">
+                            <img src="images/projects/2025-26/district-assembly.JPG" alt="District Assembly" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Event</span>
+                            <span class="archive-event-index">#18</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>3 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>19th December 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Institute of Engineers Guwahati, Assam 781001</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">District Assembly</h3>
+                            <div class="archive-event-desc">
+                                <p>The Rotaract District Assembly 2025 was successfully conducted on 19th December 2025 as an integral part of the Rotaract District Conference – Navasangam. The Assembly served as a pivotal preparatory platform for the upcoming district leadership, focusing on orientation, motivation, and alignment with the district’s vision for Rotary Year 2026–27.</p>
+                                <ul class="archive-event-bullets">
+                                    <li><strong>Leadership &amp; Proceedings:</strong> Led by DRR Elect Rtr. Pintu Sharma, graced by DRR Kumar Shivam Das, DLF Rtn. Sandip Das, DRCC Rtn. Abhijit Chowdhury, IPDRR Aloka Dey, PDRR Saurav Bajoria, PDG Prabhat Kedia, DGN Danny Dutta, DGE Dr. Asim Kanti Adhikary, and DG Dr. Kameswar Singh Elangbam.</li>
+                                    <li><strong>Training Session:</strong> Comprehensive general training conducted by DLF Rtn. Sandip Das focusing on leadership development and club functioning.</li>
+                                    <li><strong>Theme Reveal:</strong> Official reveal of District Theme for RY 2026–27 by PDIR Rtr. Devesh Agarwal: <strong>“Serve with Heart, Lead with Purpose”</strong>.</li>
+                                    <li><strong>Council Reveal:</strong> DRR Elect Rtr. Pintu Sharma unveiled the District Council Reveal Video and personally presented the District Assembly Training Manual to each council member.</li>
+                                </ul>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag special">Theme: Serve with Heart, Lead with Purpose</span>
+                                <span class="archive-event-tag">DRR Elect Pintu Sharma</span>
+                                <span class="archive-event-tag">Guwahati Assembly</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 19. District Official Learning Seminar -->
+                    <article class="archive-event-card" data-category="district">
+                        <div class="archive-event-banner" data-event-key="dols" role="button" tabindex="0" aria-label="View photo gallery for District Official Learning Seminar">
+                            <img src="images/projects/2025-26/dols.jpg" alt="District Official Learning Seminar" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Training</span>
+                            <span class="archive-event-index">#19</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>3 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>19th December 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Institute of Engineers Guwahati, Assam 781001</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">District Official Learning Seminar</h3>
+                            <div class="archive-event-desc">
+                                <p>The District Official Learning Seminar was successfully conducted immediately after the Rotaract District Assembly on 19th December 2025, during the Rotaract District Conference – Navasangam. The seminar was designed as an in-depth learning and orientation session for the upcoming district leadership, with a focused approach towards role clarity and effective district functioning.</p>
+                                <p>The session was conducted by IPDRR Rtn. Rtr. Aloka Dey, serving as the District Learning Co-Facilitator. A total of 20 future District Council Members were present, ensuring an interactive and focused learning environment. Rtn. Rtr. Aloka Dey systematically explained the roles and responsibilities of each District Council position, coordination between different avenues, and best practices for smooth and impactful district operations, concluding with an open discussion session.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">20 District Council Members</span>
+                                <span class="archive-event-tag">IPDRR Aloka Dey</span>
+                                <span class="archive-event-tag">Leadership Readiness</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 20. President Elect Learning Seminar -->
+                    <article class="archive-event-card" data-category="district">
+                        <div class="archive-event-banner" data-event-key="pels" role="button" tabindex="0" aria-label="View photo gallery for President Elect Learning Seminar">
+                            <img src="images/projects/2025-26/pels.jpg" alt="President Elect Learning Seminar" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Training</span>
+                            <span class="archive-event-index">#20</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>19th December 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Institute of Engineers Guwahati, Assam 781001</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">President Elect Learning Seminar (PELS)</h3>
+                            <div class="archive-event-desc">
+                                <p>The President-Elect Learning Seminar (PELS) was successfully conducted immediately after the District Official Learning Seminar on 19th December 2025, during the Rotaract District Conference – Navasangam. The seminar was designed to prepare incoming club presidents for their leadership roles, ensuring alignment with Rotary International’s vision, values, and operational standards.</p>
+                                <p>The session was conducted by Past District Governor Rtn. Prabhat Kedia, whose vast experience and guidance provided valuable insights into effective club leadership and administration. President-Elect, Rtr. Pratisruti Dutta, attended the seminar and actively participated in the learning process, gaining clarity on presidential expectations and proactive planning for the upcoming Rotary year.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">PELS RY 2026–27</span>
+                                <span class="archive-event-tag">PDG Prabhat Kedia</span>
+                                <span class="archive-event-tag">PE Rtr. Pratisruti Dutta</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 21. Navasangam - 36th District Conference -->
+                    <article class="archive-event-card" data-category="district">
+                        <div class="archive-event-banner" data-event-key="conference" role="button" tabindex="0" aria-label="View photo gallery for Navasangam - 36th District Conference">
+                            <img src="images/projects/2025-26/conference.jpg" alt="Navasangam - 36th District Conference" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Conference</span>
+                            <span class="archive-event-index">#21</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>6 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>19th to 21st December 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Institute of Engineers Guwahati, Assam 781001</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Navasangam - 36th District Conference</h3>
+                            <div class="archive-event-desc">
+                                <p>NAVASANGAM – the 36th Rotaract District Conference cum Assembly was successfully held at Guwahati from 19th to 21st December 2025, bringing together Rotaractors from across the district for leadership training, elections, cultural celebration, and fellowship.</p>
+                                <ul class="archive-event-bullets">
+                                    <li><strong>Day 0 (18 Dec):</strong> Delegates travelled aboard 13173 Kanchanjungha Express from Sealdah with RAC DSMS College, RAC Durgapur Central, and RAC RIIT.</li>
+                                    <li><strong>Day 1 (19 Dec):</strong> Assembly, Learning Seminars, and Graduation Certificates from DG. Inaugural Ceremony featured a tribute to late Zubeen Garg, cultural and gymnastic performances, addresses by DRR Kumar Shivam Das, DG Dr. Kameswar Singh Elangbam, and Rotaractors’ March.</li>
+                                    <li><strong>Day 2 (20 Dec):</strong> Rtr. Sayantan Debroy of RAC Dharmanagar was unanimously declared DRR for RY 2027–28. Featured Rang De Ramp Fashion Show, Rotaractors Got Talent, and DJ Night.</li>
+                                    <li><strong>Day 3 (21 Dec):</strong> Conference Open House Resolutions passed, Interactor dance performance, Awards Ceremony, and valediction.</li>
+                                </ul>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">36th District Conference</span>
+                                <span class="archive-event-tag">Guwahati, Assam</span>
+                                <span class="archive-event-tag">DRR Election 2027–28</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 22. Santa Elo Sohore -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="santa-elo-sohore" role="button" tabindex="0" aria-label="View photo gallery for Santa Elo Sohore">
+                            <img src="images/projects/2025-26/santa-elo-sohore.jpeg" alt="Santa Elo Sohore" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Community Service</span>
+                            <span class="archive-event-index">#22</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>7 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>28th December 2025</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Ganga Brick Factory, Bhatpara, WB - 743126</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Santa Elo Sohore</h3>
+                            <div class="archive-event-desc">
+                                <p>Santa Elo Sohore was a heartwarming community outreach initiative organized with the aim of spreading the joy and warmth of Christmas among underprivileged children residing at Ganga Brick Factory premises.</p>
+                                <ul class="archive-event-bullets">
+                                    <li>A volunteer dressed as Santa Claus created a festive and joyful atmosphere for 50 children.</li>
+                                    <li>Distribution of 50 water bottles (600 ml capacity each) and 50 food packets.</li>
+                                    <li>Distribution of 50 pairs of socks, considering the cold winter climatic conditions (average temperature 10–12°C).</li>
+                                    <li>Zonal Secretary, Rtr. Arkapravo Sengupta, was felicitated by the President and Vice President for his presence and support.</li>
+                                </ul>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">50 Children Benefited</span>
+                                <span class="archive-event-tag">Winter Socks &amp; Bottles</span>
+                                <span class="archive-event-tag">Christmas Outreach</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 23. Euphoria - Zone 3 Zonal Conference -->
+                    <article class="archive-event-card" data-category="district">
+                        <div class="archive-event-banner" data-event-key="zone-3-conference" role="button" tabindex="0" aria-label="View photo gallery for Euphoria - Zone 3 Zonal Conference">
+                            <img src="images/projects/2025-26/zone-3-conference.png" alt="Euphoria - Zone 3 Zonal Conference" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Zonal Conference</span>
+                            <span class="archive-event-index">#23</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>3rd to 4th January 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Agartala, Tripura</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Euphoria - Zone 3 Zonal Conference</h3>
+                            <div class="archive-event-desc">
+                                <p>The club marked the beginning of the Rotary year 2026 with its participation in the Zone 3 Zonal Conference, Euphoria, held on 3rd and 4th January 2026 at Agartala, Tripura, and hosted by the Rotaract Club of Agartala City. The conference served as a dynamic platform for inter-club collaboration, leadership development, and exchange of best practices among Rotaractors from across the zone. Our club was represented by President Rtr. Debarpan Mazumder and Vice-President Rtr. Pratisruti Dutta, who actively engaged in the conference sessions, networking meets, and zonal discussions, contributing to strengthening inter-district relations.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Agartala, Tripura</span>
+                                <span class="archive-event-tag">Zone 3 Conference</span>
+                                <span class="archive-event-tag">Represented by President &amp; VP</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 24. Meetup with RAC Agartala Nexus -->
+                    <article class="archive-event-card" data-category="club">
+                        <div class="archive-event-banner" data-event-key="meetup-agartala-nexus" role="button" tabindex="0" aria-label="View photo gallery for Meetup with RAC Agartala Nexus">
+                            <img src="images/projects/2025-26/meetup-agartala-nexus.jpeg" alt="Meetup with RAC Agartala Nexus" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Inter-Club</span>
+                            <span class="archive-event-index">#24</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>9th January 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>City Center 1, Salt Lake, Kolkata 700064</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Meetup with RAC Agartala Nexus</h3>
+                            <div class="archive-event-desc">
+                                <p>As part of its inter-club engagement initiatives, the club facilitated a meetup with the Rotaract Club of Agartala Nexus on 9th January 2026 at City Center 1 Mall, Salt Lake, Kolkata. The meetup was attended by our Vice-President, Rtr. Pratisruti Dutta, along with eight Rotaractors from the Rotaract Club of Agartala Nexus. The interaction provided an informal yet meaningful platform for fellowship, exchange of ideas, and discussion on club activities and future collaboration opportunities, reinforcing camaraderie across districts.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">RAC Agartala Nexus</span>
+                                <span class="archive-event-tag">Salt Lake, Kolkata</span>
+                                <span class="archive-event-tag">Inter-Club Fellowship</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 25. DRR Elect Kolkata Visit -->
+                    <article class="archive-event-card" data-category="district">
+                        <div class="archive-event-banner" data-event-key="drre-visit" role="button" tabindex="0" aria-label="View photo gallery for DRR Elect Kolkata Visit">
+                            <img src="images/projects/2025-26/drre-visit.jpeg" alt="DRR Elect Kolkata Visit" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Fellowship</span>
+                            <span class="archive-event-index">#25</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>5 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>17th January 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Jorasanko Thakurbari, Park Street, Victoria Memorial, CC1</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">DRR Elect Kolkata Visit</h3>
+                            <div class="archive-event-desc">
+                                <p>The club actively participated in the Kolkata visit of the District Rotaract Representative Elect, Rtr. Pintu Sharma, on 17th January 2026, which included visits to prominent locations such as Jorasanko Thakurbari, Park Street, Victoria Memorial, and City Center 1. The visit was attended by our Vice-President, Rtr. Pratisruti Dutta, and Secretary, Rtr. Debarpito Sarkar, providing an excellent opportunity for fellowship, informal interaction, and meaningful discussion on Rotaract leadership and district vision over lunch with Kathi rolls.</p>
+                                <p>The interaction was further enriched at City Center 1 with the joining of District Professional Development Director, Rtr. Priyakshi Saha, facilitating broader discussions on leadership development and future district initiatives.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">DRR Elect Rtr. Pintu Sharma</span>
+                                <span class="archive-event-tag">Heritage Tour</span>
+                                <span class="archive-event-tag">District Leadership</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 26. Ethos 3240 -->
+                    <article class="archive-event-card" data-category="district">
+                        <div class="archive-event-banner" data-event-key="ethos3240" role="button" tabindex="0" aria-label="View photo gallery for Ethos 3240">
+                            <img src="images/projects/2025-26/ethos3240.png" alt="Ethos 3240" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Training</span>
+                            <span class="archive-event-index">#26</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>15th February 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Google Meet (Virtual)</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Ethos 3240</h3>
+                            <div class="archive-event-desc">
+                                <p>The club participated in Ethos 3240, a district-level training session held on 15th February 2026 through Google Meet and organized under the leadership of DRR Elect Rtr. Pintu Sharma. The session brought together Rotaractors from across the district for an insightful learning experience aimed at strengthening the understanding of the values, vision, and operational aspects of the Rotaract movement.</p>
+                                <p>The program featured short yet impactful sessions conducted by esteemed Rotary and Rotaract dignitaries covering the Four-Way Test, Rotary’s Seven Areas of Focus, collective vision, Rotary–Rotaract relations, MDIO opportunities, public image, and balancing professional and Rotary commitments.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Four-Way Test</span>
+                                <span class="archive-event-tag">7 Areas of Focus</span>
+                                <span class="archive-event-tag">Leadership with Purpose</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 27. World Rotaract Week Celebration -->
+                    <article class="archive-event-card" data-category="youth-international community">
+                        <div class="archive-event-banner" data-event-key="world-rotaract-week" role="button" tabindex="0" aria-label="View photo gallery for World Rotaract Week Celebration">
+                            <img src="images/projects/2025-26/world-rotaract-week.png" alt="World Rotaract Week Celebration" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Special Observance</span>
+                            <span class="archive-event-index">#27</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>6 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>8th to 15th March 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Kolkata &amp; Naihati</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">World Rotaract Week Celebration</h3>
+                            <div class="archive-event-desc">
+                                <p>In celebration of World Rotaract Week 2026, the club undertook a series of meaningful activities focusing on environmental sustainability, community care, health awareness, and social responsibility across multiple days:</p>
+                                <ul class="archive-event-bullets">
+                                    <li><strong>Day 3: Tree Plantation (13/03/2026):</strong> Rtr. Er. Debarpito Sarkar planted three saplings at home: 2 Jui (<em>Jasminum auriculatum</em>) and 1 Bel (<em>Arabian Jasmine</em>), maintained for long-term sustainability.</li>
+                                    <li><strong>Day 4: Feeding Animals (14/03/2026):</strong> Rtr. Pratisruti Dutta carried out a compassionate feeding drive distributing biscuits to street dogs in Naihati.</li>
+                                    <li><strong>Day 5: Blood Donation (14/03/2026):</strong> Rtr. Er. Debarpito Sarkar donated one unit of AB+ blood at IBTM&amp;IH Central Blood Bank, Maniktala.</li>
+                                    <li><strong>Day 7: Awareness Campaign (15/03/2026):</strong> Digital awareness posters on Cervical Cancer and Thalassemia designed and circulated across Instagram, WhatsApp, and Facebook, collaborating directly with District Social Media channels.</li>
+                                </ul>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Tree Plantation</span>
+                                <span class="archive-event-tag">Stray Care</span>
+                                <span class="archive-event-tag">Blood Donation</span>
+                                <span class="archive-event-tag">Health Awareness</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 28. Prakritih - District Environment Seminar -->
+                    <article class="archive-event-card" data-category="district">
+                        <div class="archive-event-banner" data-event-key="prakritih" role="button" tabindex="0" aria-label="View photo gallery for Prakritih - District Environment Seminar">
+                            <img src="images/projects/2025-26/prakritih.jpg" alt="Prakritih - District Environment Seminar" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Seminar</span>
+                            <span class="archive-event-index">#28</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>15th March 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Durgapur Club, DSP Township, WB 713204</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Prakritih - District Environment Seminar</h3>
+                            <div class="archive-event-desc">
+                                <p>The District Environment Seminar – “Prakritih” was organized with the objective of promoting environmental awareness and encouraging sustainable practices, bringing together Rotarians, Rotaractors, and distinguished speakers.</p>
+                                <p>A club delegation comprising Rtr. Debarpito Sarkar, Rtr. Pratisruti Dutta, and volunteers Bhromor Nath, Ankan Singha Roy, Om Dasgupta, and Akash Das travelled via 22321 Hool Superfast Express and actively assisted in venue setup and event operations. Sessions featured addresses by DG Elect Rtn. Dr. Asim K. Adhikary, DG Nominee Designate Rtn. Dr. Pallavi Maji, and an online address by DG Rtn. Dr. Kameswar Singh Elangbam. A special stall by Green by Goonj showcased eco-friendly products made from recycled materials.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Environmental Awareness</span>
+                                <span class="archive-event-tag">DGE &amp; DG Addresses</span>
+                                <span class="archive-event-tag">Green by Goonj</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 29. Mahadan 11.0 -->
+                    <article class="archive-event-card" data-category="community">
+                        <div class="archive-event-banner" data-event-key="mahadan" role="button" tabindex="0" aria-label="View photo gallery for Mahadan 11.0">
+                            <img src="images/projects/2025-26/mahadan.jpg" alt="Mahadan 11.0" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Community Service</span>
+                            <span class="archive-event-index">#29</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>14th March 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Central Blood Bank, Maniktala, Kolkata</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Mahadan 11.0</h3>
+                            <div class="archive-event-desc">
+                                <p>Mahadan 11.0 is a global initiative dedicated to promoting voluntary blood donation and saving lives through collective action. Observed from 9th to 15th March 2026 across RI District 3240, coordinated by District Professional Development Director Rtr. Priyakshi Saha.</p>
+                                <p>In alignment with World Rotaract Week – Day 5, Rtr. Debarpito Sarkar actively contributed to this noble cause by donating 1 unit of AB+ blood at Central Blood Bank, Maniktala—an act capable of saving up to three lives.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag special">1 Unit AB+ Blood Donated</span>
+                                <span class="archive-event-tag">Mahadan 11.0</span>
+                                <span class="archive-event-tag">Voluntary Blood Donation</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 30. Nomadia 3240 - Multi-District Youth Exchange -->
+                    <article class="archive-event-card" data-category="youth-international">
+                        <div class="archive-event-banner" data-event-key="nomadia" role="button" tabindex="0" aria-label="View photo gallery for Nomadia 3240 - Multi-District Youth Exchange">
+                            <img src="images/projects/2025-26/nomadia.jpeg" alt="Nomadia 3240 - Multi-District Youth Exchange" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">International Service</span>
+                            <span class="archive-event-index">#30</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>8 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>19th to 23rd March 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Kolkata, Naihati, Bandel, Halisahar</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Nomadia 3240 - Multi-District Youth Exchange</h3>
+                            <div class="archive-event-desc">
+                                <p>Nomadia 3240 – Multi District Youth Exchange (MDYE) is a flagship initiative of R.I. District 3240 fostering cultural exchange and youth fellowship. Our club had the privilege of serving as Host Club for delegate Rtr. Anoop Singh Bedi, Club President of Rotaract Club of Avyanna Roorkee.</p>
+                                <ul class="archive-event-bullets">
+                                    <li><strong>Day 1:</strong> Airport arrival welcome, local transit via metro and train to Naihati, traditional Bengali dinner.</li>
+                                    <li><strong>Day 2:</strong> Bankim Chandra Pathagar, Madral Hanuman Mandir, Annapurna Mandir, Khatu Shyam Mandir, Rani Rashmoni ancestral residence, Ramprasad Kali Mandir, and Naihati ferry ghat.</li>
+                                    <li><strong>Day 3:</strong> Bandel Imambara, Bandel Church, Hanseswari Mandir, Zafar Khan Ghazi Darga, Lahiri Baba Ashram, Jamdani saree shopping.</li>
+                                    <li><strong>Day 4:</strong> Project Boier Desh at Ganga Brick Factory (distributed 70 food packets to children), followed by Kolkata city exploration including India’s first underwater metro and Dalhousie Square.</li>
+                                    <li><strong>Day 5:</strong> Heartfelt airport farewell. The club earned the prestigious <strong>Nomadia 3240 MDYE Hosting Club Award</strong> at the Upohar District Awards!</li>
+                                </ul>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag special">Nomadia Hosting Club Award</span>
+                                <span class="archive-event-tag">Delegate Rtr. Anoop Singh Bedi</span>
+                                <span class="archive-event-tag">70 Food Packets</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 31. Aikyaam Coffee House Meetup -->
+                    <article class="archive-event-card" data-category="club">
+                        <div class="archive-event-banner" data-event-key="aikyaam" role="button" tabindex="0" aria-label="View photo gallery for Aikyaam Coffee House Meetup">
+                            <img src="images/projects/2025-26/aikyaam.jpeg" alt="Aikyaam Coffee House Meetup" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Club Service</span>
+                            <span class="archive-event-index">#31</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>25th April 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Indian Coffee House, College Street, Kolkata 700073</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Aikyaam Coffee House Meetup</h3>
+                            <div class="archive-event-desc">
+                                <p>We successfully organized Aikyaam Coffee House Meetup on 25th April 2026 at the iconic Indian Coffee House under the Avenue of Club Service. A total of 6 Rotaractors along with 1 volunteer participated in the gathering to strengthen fellowship and discuss future club roadmaps.</p>
+                                <p>Over traditional coffee and the famous Kaviraji cutlet, members exchanged ideas regarding upcoming club activities, collaborative projects, and future tenures in a relaxed, friendly ambiance that epitomized the fellowship spirit of Rotaract.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Iconic Indian Coffee House</span>
+                                <span class="archive-event-tag">Roadmap Discussion</span>
+                                <span class="archive-event-tag">Fellowship</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 32. The Synergy - Zone 1 Conference & Awards -->
+                    <article class="archive-event-card" data-category="awards">
+                        <div class="archive-event-banner" data-event-key="the-synergy" role="button" tabindex="0" aria-label="View photo gallery for The Synergy - Zone 1 Conference &amp; Awards">
+                            <img src="images/projects/2025-26/the-synergy.JPG" alt="The Synergy - Zone 1 Conference &amp; Awards" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge gold">Zonal Awards</span>
+                            <span class="archive-event-index">#32</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>1 Photo</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>9th May 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Google Meet (Virtual)</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">The Synergy - Zone 1 Conference &amp; Awards</h3>
+                            <div class="archive-event-desc">
+                                <p>The Synergy – Zone 1 Zonal Conference &amp; Zonal Awards was held virtually on 9th May 2026 through Google Meet, bringing together Rotaractors from across Zone 1. Representing the club, 7 Rotaractors and 2 volunteers actively participated in the conference.</p>
+                                <div class="archive-event-awards-list">
+                                    <div class="archive-event-awards-title">🏆 Zonal Recognitions Won</div>
+                                    <div class="archive-event-award-tag">⭐ Best Club Bulletin Award</div>
+                                    <div class="archive-event-award-tag">⭐ Star Rotaractor — Rtr. Pratisruti Dutta</div>
+                                    <div class="archive-event-award-tag">⭐ Best Secretary Award — Rtr. Debarpito Sarkar</div>
+                                </div>
+                                <p>These achievements reflected the dedication, teamwork, and commitment of club members throughout the rotary year.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag special">3 Major Zonal Awards</span>
+                                <span class="archive-event-tag">Best Bulletin</span>
+                                <span class="archive-event-tag">Star Rotaractor</span>
+                                <span class="archive-event-tag">Best Secretary</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 33. Upohar Zone 5 Conference and Awards -->
+                    <article class="archive-event-card" data-category="district">
+                        <div class="archive-event-banner" data-event-key="upohar-zone-5" role="button" tabindex="0" aria-label="View photo gallery for Upohar Zone 5 Conference and Awards">
+                            <img src="images/projects/2025-26/upohar-zone-5.JPG" alt="Upohar Zone 5 Conference and Awards" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">Zonal Conference</span>
+                            <span class="archive-event-index">#33</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>2 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>16th May 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Hotel Jahnabi Regency, Bongaigaon, Assam-783380</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Upohar Zone 5 Conference and Awards</h3>
+                            <div class="archive-event-desc">
+                                <p>The Upohar Zone 5 Conference and Awards was held on 16th May 2026 at Hotel Jahnabi Regency, Bongaigaon, Assam, as the first phase of the prestigious Upohar Rotaract District Awards. The event brought together more than 80 Rotaractors from across Zone 5 for a day of fellowship, learning, and celebration of achievements.</p>
+                                <p>Representing the club, Rtr. Er. Debarpito Sarkar attended and engaged in discussions, gaining insights into impactful projects and district recognition standards.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Bongaigaon, Assam</span>
+                                <span class="archive-event-tag">80+ Rotaractors</span>
+                                <span class="archive-event-tag">Zone 5 Fellowship</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 34. Upohar District Awards -->
+                    <article class="archive-event-card" data-category="awards">
+                        <div class="archive-event-banner" data-event-key="upohar-awards" role="button" tabindex="0" aria-label="View photo gallery for Upohar District Awards">
+                            <img src="images/projects/2025-26/upohar-awards.JPG" alt="Upohar District Awards" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge gold">District Awards</span>
+                            <span class="archive-event-index">#34</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>12 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>16th May 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Hotel Jahnabi Regency, Bongaigaon, Assam-783380</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Upohar District Awards</h3>
+                            <div class="archive-event-desc">
+                                <p>The Upohar District Awards was held on 16th May 2026 at Hotel Jahnabi Regency, bringing together more than 80 Rotaractors from across RI District 3240 to celebrate excellence in service, leadership, and club administration under DRR Kumar Shivam Das’s theme “Sustainable Odyssey”.</p>
+                                <div class="archive-event-awards-list">
+                                    <div class="archive-event-awards-title">🌟 Prestigious District Citations &amp; Accolades Won</div>
+                                    <div class="archive-event-award-tag">🥇 The Sustainable Odyssey Gold Citation (Top Club Honor)</div>
+                                    <div class="archive-event-award-tag">🏆 The Sustainable Odyssey Echelon Project Award (for Boier Desh)</div>
+                                    <div class="archive-event-award-tag">🤝 Nomadia 3240 MDYE Hosting Club Award</div>
+                                    <div class="archive-event-award-tag">✨ The Sustainable Odyssey DRR Appreciation Citation — Rtr. Pratisruti Dutta</div>
+                                    <div class="archive-event-award-tag">👑 The Sustainable Odyssey Presidential Award — Rtr. Debarpan Mazumder</div>
+                                    <div class="archive-event-award-tag">🎖️ Rotaract District Council Honour Award — Rtr. Debarpito Sarkar</div>
+                                    <div class="archive-event-award-tag">🔑 Keystone Secretary Honor (District Best Secretary Equivalent) — Rtr. Debarpito Sarkar</div>
+                                </div>
+                                <p>Representing the club, Rtr. Er. Debarpito Sarkar received these honours, marking an extraordinary milestone in RAC DCP history.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag special">Gold Citation Club</span>
+                                <span class="archive-event-tag special">Echelon Award: Boier Desh</span>
+                                <span class="archive-event-tag">Keystone Secretary Honor</span>
+                                <span class="archive-event-tag">Presidential Award</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- 35. Elevate 3240 -->
+                    <article class="archive-event-card" data-category="district">
+                        <div class="archive-event-banner" data-event-key="elevate-3240" role="button" tabindex="0" aria-label="View photo gallery for Elevate 3240">
+                            <img src="images/projects/2025-26/elevate-3240.jpg" alt="Elevate 3240" loading="lazy" decoding="async">
+                            <span class="archive-event-category-badge">District Assembly</span>
+                            <span class="archive-event-index">#35</span>
+                            <span class="archive-gallery-badge" aria-hidden="true"><span class="badge-icon">&#128248;</span> <span>8 Photos</span></span>
+                        </div>
+                        <div class="archive-event-body">
+                            <div class="archive-event-meta-block">
+                                <div class="archive-event-meta-item date">
+                                    <span class="icon">&#128197;</span>
+                                    <span>21st June 2026</span>
+                                </div>
+                                <div class="archive-event-meta-item">
+                                    <span class="icon">&#128205;</span>
+                                    <span>Rotary Club of Raniganj, Raniganj</span>
+                                </div>
+                            </div>
+                            <h3 class="archive-event-title">Elevate 3240</h3>
+                            <div class="archive-event-desc">
+                                <p>Our Club along with Rotaract Club of DSMS College and Rotaract Club of Raniganj Institute of Information Technology hosted Elevate 3240 - Club Assembly, a Rotaract District 3240 initiative.</p>
+                                <p>The guest speakers were PDRR Rtn. Diptendu Mustafee, PDRR Jagdish Jhunjhunwala and Assistant Governor Zone 1 Rtn. Smith Jhunjhunwala, delivering inspirational keynote sessions on youth leadership, continuity, and district vision.</p>
+                            </div>
+                            <div class="archive-event-footer">
+                                <span class="archive-event-tag">Co-Hosted District Assembly</span>
+                                <span class="archive-event-tag">Joint with RAC DSMS &amp; RAC RIIT</span>
+                                <span class="archive-event-tag">PDRR &amp; AG Keynotes</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Empty Search State -->
+                    <div class="archive-no-results" id="archiveNoResults" style="display: none;">
+                        <div class="no-results-icon">🔍</div>
+                        <h4>No matching events found</h4>
+                        <p>Try searching for a different keyword or select another category filter.</p>
                     </div>
 
-                    <div class="archive-project-card">
-                        <div class="archive-project-thumb">
-                            <span class="archive-project-thumb-badge">Club Service</span>
-                            <span>🤝</span>
-                        </div>
-                        <div class="archive-project-body">
-                            <h4>Project Slot 3</h4>
-                            <p>Club installation, fellowship celebration, or leadership induction event for Rotary Year 2025–26.</p>
-                            <div class="archive-project-meta-row">
-                                <span>📅 Date: TBD</span>
-                                <span>👥 Rotaractors Present: TBD</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="archive-project-card">
-                        <div class="archive-project-thumb">
-                            <span class="archive-project-thumb-badge">International Service</span>
-                            <span>🌐</span>
-                        </div>
-                        <div class="archive-project-body">
-                            <h4>Project Slot 4</h4>
-                            <p>Global fellowship exchange, letterhead exchange, or international awareness project conducted in 2025–26.</p>
-                            <div class="archive-project-meta-row">
-                                <span>📅 Date: TBD</span>
-                                <span>👥 Partners: TBD</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -788,14 +1978,14 @@
             </div>
 
             <div class="notification-item">
-                <span class="notification-dot"></span>
+                <span class="notification-dot new"></span>
                 <div>
-                    <span class="notification-status">COMING SOON</span>
-                    <h4>Archives of Rotary Year 2023-24, 2024-25, 2025-26</h4>
+                    <span class="notification-status">PUBLISHED</span>
+                    <h4>RY 2025–26 Archives Complete</h4>
                     <p>
-                        Archives of Rotary Year 2023-24, 2024-25, 2025-26 to be updated soon with full project records, statistics, and photo memories.
+                        Full record of 35 projects, initiatives, district conferences, and awards published for Rotary Year 2025–26 under theme “Sustainable Odyssey”.
                     </p>
-                    <small>Coming soon</small>
+                    <small>October 2026</small>
                 </div>
             </div>
         </div>
@@ -835,8 +2025,307 @@
         <span class="dial-arrow">↑</span>
     </button>
 
+        <!-- =========================================================
+         EVENT GALLERY LIGHTBOX MODAL
+    ========================================================= -->
+    <div class="archive-lightbox" id="archiveLightbox" role="dialog" aria-modal="true" aria-label="Event Photos Gallery" hidden>
+        <div class="archive-lightbox-backdrop" id="archiveLightboxBackdrop"></div>
+        <div class="archive-lightbox-container" role="document">
+            <header class="archive-lightbox-header">
+                <div class="archive-lightbox-header-info">
+                    <div class="archive-lightbox-meta-top">
+                        <span class="archive-lightbox-badge" id="archiveLightboxBadge">District Event</span>
+                        <span class="archive-lightbox-counter" id="archiveLightboxCounter">1 / 1</span>
+                    </div>
+                    <h3 class="archive-lightbox-title" id="archiveLightboxTitle">Event Title</h3>
+                    <p class="archive-lightbox-meta" id="archiveLightboxMeta">&#128197; Date • &#128205; Location</p>
+                </div>
+                <button type="button" class="archive-lightbox-close" id="archiveLightboxClose" aria-label="Close photo gallery">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </header>
+
+            <div class="archive-lightbox-stage">
+                <button type="button" class="archive-lightbox-nav prev" id="archiveLightboxPrev" aria-label="Previous photo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+
+                <div class="archive-lightbox-image-wrap">
+                    <img src="" alt="" id="archiveLightboxImage" class="archive-lightbox-img">
+                </div>
+
+                <button type="button" class="archive-lightbox-nav next" id="archiveLightboxNext" aria-label="Next photo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+
+            <div class="archive-lightbox-thumbnails" id="archiveLightboxThumbs" aria-label="Photo thumbnails">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
     <script src="motion.js" defer></script>
     <script src="script.js" defer></script>
     <script src="enhance.js" defer></script>
+
+    <!-- RY 2025-26 Interactive Events Search & Filter + Gallery Lightbox Script -->
+    <script>
+    (function () {
+    const EVENT_GALLERIES = {
+        "symphony": {"title":"Symphony District Installation","badge":"District Event","date":"12th and 13th July 2025","location":"Malda, West Bengal","photos":["images/gallery/2025-26/symphony-1.JPG","images/gallery/2025-26/symphony-2.JPG","images/gallery/2025-26/symphony-3.JPG","images/gallery/2025-26/symphony-4.JPG","images/gallery/2025-26/symphony-5.JPG","images/gallery/2025-26/symphony-6.JPG","images/gallery/2025-26/symphony-7.jpg","images/gallery/2025-26/symphony-8.JPG","images/gallery/2025-26/symphony-9.JPG","images/gallery/2025-26/symphony-10.JPG","images/gallery/2025-26/symphony-11.JPG"]},
+        "parent-rotary-installation": {"title":"Parent Rotary Installation","badge":"Parent Rotary","date":"12th July 2025","location":"Peerless Hotel, Durgapur","photos":["images/gallery/2025-26/parent-rotary-installation-1.jpeg","images/gallery/2025-26/parent-rotary-installation-2.jpeg","images/gallery/2025-26/parent-rotary-installation-3.jpeg","images/gallery/2025-26/parent-rotary-installation-4.jpeg"]},
+        "chalo-chale": {"title":"District Project Chalo Chale","badge":"District Project","date":"18th July 2025","location":"Peerless Hotel, Durgapur","photos":["images/gallery/2025-26/chalo-chale-1.jpeg","images/gallery/2025-26/chalo-chale-2.jpeg","images/gallery/2025-26/chalo-chale-3.jpeg"]},
+        "club-installation": {"title":"3rd Club Installation","badge":"Club Service","date":"20th July 2025","location":"Google Meet (Virtual)","photos":["images/gallery/2025-26/club-installation.png"]},
+        "boier-desh-day1": {"title":"Boier Desh Universal Smile Day 1","badge":"Community Service","date":"2nd August 2025","location":"Universal Smile Children’s Home, Anandapur","photos":["images/gallery/2025-26/boier-desh-day1-1.jpeg","images/gallery/2025-26/boier-desh-day1-2.jpeg","images/gallery/2025-26/boier-desh-day1-3.jpeg","images/gallery/2025-26/boier-desh-day1-4.jpeg","images/gallery/2025-26/boier-desh-day1-5.jpeg"]},
+        "re-flag": {"title":"District Project Re-Flag","badge":"District Project","date":"3rd August 2025","location":"Malancha Park, Barrackpore","photos":["images/gallery/2025-26/re-flag-1.jpeg","images/gallery/2025-26/re-flag-2.jpeg","images/gallery/2025-26/re-flag-3.jpeg","images/gallery/2025-26/re-flag-4.jpeg"]},
+        "drr-visit": {"title":"DRR Visit","badge":"Official Visit","date":"3rd August 2025","location":"Dakshinayan, Barrackpore","photos":["images/gallery/2025-26/drr-visit-1.jpeg","images/gallery/2025-26/drr-visit-2.jpeg","images/gallery/2025-26/drr-visit-3.jpeg","images/gallery/2025-26/drr-visit-4.jpeg","images/gallery/2025-26/drr-visit-5.jpeg","images/gallery/2025-26/drr-visit-6.jpeg","images/gallery/2025-26/drr-visit-7.jpeg"]},
+        "boier-desh-day2": {"title":"Boier Desh Universal Smile Day 2","badge":"Community Service","date":"8th August 2025","location":"Universal Smile Children’s Home, Anandapur","photos":["images/gallery/2025-26/boier-desh-day2.jpeg"]},
+        "boier-desh-day3": {"title":"Boier Desh Universal Smile Day 3","badge":"Community Service","date":"15th August 2025","location":"Universal Smile Children’s Home, Anandapur","photos":["images/gallery/2025-26/boier-desh-day3-1.jpeg","images/gallery/2025-26/boier-desh-day3-2.jpeg"]},
+        "edubridge-boier-desh": {"title":"EDU BRIDGE: Boier Desh","badge":"District Project","date":"2nd, 8th \u0026 15th August 2025","location":"Universal Smile, Anandapur","photos":["images/gallery/2025-26/edubridge-boier-desh.jpeg"]},
+        "edubridge-skill-for-me": {"title":"EDU BRIDGE: Skill for me","badge":"District Project","date":"3rd September 2025","location":"Google Meet (Virtual)","photos":["images/gallery/2025-26/edubridge-skill-for-me.png"]},
+        "edubridge-donation": {"title":"EDU BRIDGE: Donate Literacy Materials","badge":"District Project","date":"5th September 2025","location":"Taratala, Kolkata","photos":["images/gallery/2025-26/edubridge-donation.jpeg"]},
+        "edubridge-felicitation": {"title":"EDU BRIDGE: Felicitation","badge":"District Project","date":"5th September 2025","location":"Peerless Hotel, Durgapur City Centre","photos":["images/gallery/2025-26/edubridge-felicitation.jpeg"]},
+        "edubridge-conclave": {"title":"EDU BRIDGE: Rotaract Literacy Conclave","badge":"District Project","date":"8th September 2025","location":"Rotary Sadan, Kolkata","photos":["images/gallery/2025-26/edubridge-conclave-1.jpeg","images/gallery/2025-26/edubridge-conclave-2.jpeg","images/gallery/2025-26/edubridge-conclave-3.jpeg","images/gallery/2025-26/edubridge-conclave-4.jpeg","images/gallery/2025-26/edubridge-conclave-5.jpeg"]},
+        "dreamcraft": {"title":"DREAMCRAFT - Trash to Treasure: Nobosristi","badge":"District Project","date":"14th September 2025","location":"Ashray, Near Garia Metro, Kolkata","photos":["images/gallery/2025-26/dreamcraft-1.jpeg","images/gallery/2025-26/dreamcraft-2.jpeg","images/gallery/2025-26/dreamcraft-3.jpeg","images/gallery/2025-26/dreamcraft-4.jpeg","images/gallery/2025-26/dreamcraft-5.jpeg","images/gallery/2025-26/dreamcraft-6.jpeg"]},
+        "boier-desh-defense": {"title":"Boier Desh - Defense Workshop","badge":"Community Service","date":"19th September 2025","location":"Universal Smile Children’s Home, Anandapur","photos":["images/gallery/2025-26/boier-desh-defense-1.jpeg","images/gallery/2025-26/boier-desh-defense-2.jpeg","images/gallery/2025-26/boier-desh-defense-3.jpeg","images/gallery/2025-26/boier-desh-defense-4.jpeg"]},
+        "ai-workshop": {"title":"AI Prompt Engineering Workshop","badge":"Professional Dev.","date":"22nd September 2025","location":"Google Meet (Virtual)","photos":["images/gallery/2025-26/ai-workshop.png"]},
+        "district-assembly": {"title":"District Assembly","badge":"District Event","date":"28th September 2025","location":"Siliguri, West Bengal","photos":["images/gallery/2025-26/district-assembly-1.JPG","images/gallery/2025-26/district-assembly-2.JPG","images/gallery/2025-26/district-assembly-3.JPG"]},
+        "dols": {"title":"District Official Learning Seminar","badge":"District Training","date":"15th November 2025","location":"Rotary Sadan, Kolkata","photos":["images/gallery/2025-26/dols-1.JPG","images/gallery/2025-26/dols-2.JPG","images/gallery/2025-26/dols-3.JPG"]},
+        "pels": {"title":"President Elect Learning Seminar","badge":"District Training","date":"20th December 2025","location":"Peerless Inn, Kolkata","photos":["images/gallery/2025-26/pels.jpg"]},
+        "conference": {"title":"Navasangam - 36th District Conference","badge":"District Conference","date":"27th \u0026 28th December 2025","location":"Science City Auditorium, Kolkata","photos":["images/gallery/2025-26/conference-1.JPG","images/gallery/2025-26/conference-2.JPG","images/gallery/2025-26/conference-3.JPG","images/gallery/2025-26/conference-4.jpg","images/gallery/2025-26/conference-5.JPG","images/gallery/2025-26/conference-6.JPG"]},
+        "santa-elo-sohore": {"title":"Santa Elo Sohore","badge":"Community Service","date":"25th December 2025","location":"Durgapur Railway Station \u0026 Slum Areas","photos":["images/gallery/2025-26/santa-elo-sohore-1.jpeg","images/gallery/2025-26/santa-elo-sohore-2.jpeg","images/gallery/2025-26/santa-elo-sohore-3.jpeg","images/gallery/2025-26/santa-elo-sohore-4.jpeg","images/gallery/2025-26/santa-elo-sohore-5.jpeg","images/gallery/2025-26/santa-elo-sohore-6.jpeg","images/gallery/2025-26/santa-elo-sohore-7.jpeg"]},
+        "zone-3-conference": {"title":"Euphoria - Zone 3 Zonal Conference","badge":"Zonal Conference","date":"11th January 2026","location":"Asansol, West Bengal","photos":["images/gallery/2025-26/zone-3-conference.png"]},
+        "meetup-agartala-nexus": {"title":"Meetup with RAC Agartala Nexus","badge":"Inter-Club","date":"18th January 2026","location":"Agartala, Tripura","photos":["images/gallery/2025-26/meetup-agartala-nexus.jpeg"]},
+        "drre-visit": {"title":"DRR Elect Kolkata Visit","badge":"District Fellowship","date":"25th January 2026","location":"Kolkata, West Bengal","photos":["images/gallery/2025-26/drre-visit-1.jpeg","images/gallery/2025-26/drre-visit-2.jpeg","images/gallery/2025-26/drre-visit-3.jpeg","images/gallery/2025-26/drre-visit-4.jpeg","images/gallery/2025-26/drre-visit-5.jpeg"]},
+        "ethos3240": {"title":"Ethos 3240","badge":"District Training","date":"8th February 2026","location":"Guwahati, Assam","photos":["images/gallery/2025-26/ethos3240.png"]},
+        "world-rotaract-week": {"title":"World Rotaract Week Celebration","badge":"Special Observance","date":"9th - 15th March 2026","location":"Durgapur \u0026 Virtual","photos":["images/gallery/2025-26/world-rotaract-week-1.png","images/gallery/2025-26/world-rotaract-week-2.png","images/gallery/2025-26/world-rotaract-week-3.png","images/gallery/2025-26/world-rotaract-week-4.png","images/gallery/2025-26/world-rotaract-week-5.png","images/gallery/2025-26/world-rotaract-week-6.png"]},
+        "prakritih": {"title":"Prakritih - District Environment Seminar","badge":"District Seminar","date":"22nd March 2026","location":"Kolkata, West Bengal","photos":["images/gallery/2025-26/prakritih.jpg"]},
+        "mahadan": {"title":"Mahadan 11.0","badge":"Community Service","date":"29th March 2026","location":"Durgapur Blood Center","photos":["images/gallery/2025-26/mahadan.jpg"]},
+        "nomadia": {"title":"Nomadia 3240 - Multi-District Youth Exchange","badge":"International Service","date":"5th - 12th April 2026","location":"Darjeeling \u0026 Kalimpong","photos":["images/gallery/2025-26/nomadia-1.jpeg","images/gallery/2025-26/nomadia-2.jpeg","images/gallery/2025-26/nomadia-3.jpeg","images/gallery/2025-26/nomadia-4.jpeg","images/gallery/2025-26/nomadia-5.jpeg","images/gallery/2025-26/nomadia-6.jpeg","images/gallery/2025-26/nomadia-7.jpeg","images/gallery/2025-26/nomadia-8.jpeg"]},
+        "aikyaam": {"title":"Aikyaam Coffee House Meetup","badge":"Club Service","date":"19th April 2026","location":"College Street Coffee House, Kolkata","photos":["images/gallery/2025-26/aikyaam.jpeg"]},
+        "the-synergy": {"title":"The Synergy - Zone 1 Conference \u0026 Awards","badge":"Zonal Awards","date":"26th April 2026","location":"Durgapur, West Bengal","photos":["images/gallery/2025-26/the-synergy.JPG"]},
+        "upohar-zone-5": {"title":"Upohar Zone 5 Conference and Awards","badge":"Zonal Conference","date":"3rd May 2026","location":"Siliguri, West Bengal","photos":["images/gallery/2025-26/upohar-zone5-1.JPG","images/gallery/2025-26/upohar-zone5-2.JPG"]},
+        "upohar-awards": {"title":"Upohar District Awards","badge":"District Awards","date":"17th May 2026","location":"Kolkata, West Bengal","photos":["images/gallery/2025-26/upohar-awards-1.JPG","images/gallery/2025-26/upohar-awards-2.JPG","images/gallery/2025-26/upohar-awards-3.JPG","images/gallery/2025-26/upohar-awards-4.JPG","images/gallery/2025-26/upohar-awards-5.JPG","images/gallery/2025-26/upohar-awards-6.JPG","images/gallery/2025-26/upohar-awards-7.JPG","images/gallery/2025-26/upohar-awards-8.JPG","images/gallery/2025-26/upohar-awards-9.JPG","images/gallery/2025-26/upohar-awards-10.JPG","images/gallery/2025-26/upohar-awards-11.JPG","images/gallery/2025-26/upohar-awards-12.JPG"]},
+        "elevate-3240": {"title":"Elevate 3240","badge":"District Assembly","date":"24th May 2026","location":"Guwahati, Assam","photos":["images/gallery/2025-26/elevate-3240-1.jpg","images/gallery/2025-26/elevate-3240-2.jpg","images/gallery/2025-26/elevate-3240-3.jpg","images/gallery/2025-26/elevate-3240-4.jpg","images/gallery/2025-26/elevate-3240-5.jpg","images/gallery/2025-26/elevate-3240-6.jpg","images/gallery/2025-26/elevate-3240-7.jpg","images/gallery/2025-26/elevate-3240-8.jpg"]}
+    };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Filter & Search Controls
+            var filterBtns = document.querySelectorAll('.archive-filter-btn');
+            var searchInput = document.getElementById('archiveEventSearch');
+            var cards = document.querySelectorAll('.archive-event-card');
+            var counterEl = document.getElementById('archiveEventCounter');
+            var noResultsEl = document.getElementById('archiveNoResults');
+            var currentFilter = 'all';
+
+            function updateCards() {
+                var query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+                var visibleCount = 0;
+
+                cards.forEach(function (card) {
+                    var categories = (card.getAttribute('data-category') || '').toLowerCase().split(' ');
+                    var cardText = (card.textContent || '').toLowerCase();
+                    var matchesFilter = (currentFilter === 'all') || categories.indexOf(currentFilter) !== -1;
+                    var matchesSearch = !query || cardText.indexOf(query) !== -1;
+
+                    if (matchesFilter && matchesSearch) {
+                        card.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                if (counterEl) {
+                    counterEl.textContent = 'Showing ' + visibleCount + ' of ' + cards.length + ' events';
+                }
+                if (noResultsEl) {
+                    noResultsEl.style.display = (visibleCount === 0) ? 'block' : 'none';
+                }
+            }
+
+            filterBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    filterBtns.forEach(function (b) { b.classList.remove('active'); });
+                    this.classList.add('active');
+                    currentFilter = this.getAttribute('data-filter') || 'all';
+                    updateCards();
+                });
+            });
+
+            if (searchInput) {
+                searchInput.addEventListener('input', updateCards);
+            }
+
+            // ==========================================
+            // ARCHIVE EVENT GALLERY LIGHTBOX CONTROLLER
+            // ==========================================
+            var lightbox = document.getElementById('archiveLightbox');
+            var backdrop = document.getElementById('archiveLightboxBackdrop');
+            var closeBtn = document.getElementById('archiveLightboxClose');
+            var prevBtn = document.getElementById('archiveLightboxPrev');
+            var nextBtn = document.getElementById('archiveLightboxNext');
+            var imgEl = document.getElementById('archiveLightboxImage');
+            var titleEl = document.getElementById('archiveLightboxTitle');
+            var metaEl = document.getElementById('archiveLightboxMeta');
+            var badgeEl = document.getElementById('archiveLightboxBadge');
+            var counterElModal = document.getElementById('archiveLightboxCounter');
+            var thumbsEl = document.getElementById('archiveLightboxThumbs');
+
+            var currentEvent = null;
+            var currentPhotoIdx = 0;
+            var touchStartX = 0;
+
+            function openLightbox(eventKey) {
+                var data = EVENT_GALLERIES[eventKey];
+                if (!data || !data.photos || data.photos.length === 0) return;
+
+                currentEvent = data;
+                currentPhotoIdx = 0;
+
+                titleEl.textContent = data.title;
+                metaEl.textContent = '\uD83D\uDCC5 ' + data.date + ' \u2022 \uD83D\uDCCD ' + data.location;
+                badgeEl.textContent = data.badge;
+
+                // Build thumbnails
+                thumbsEl.innerHTML = '';
+                if (data.photos.length > 1) {
+                    thumbsEl.style.display = 'flex';
+                    data.photos.forEach(function (src, idx) {
+                        var thumbBtn = document.createElement('button');
+                        thumbBtn.type = 'button';
+                        thumbBtn.className = 'archive-lightbox-thumb' + (idx === 0 ? ' active' : '');
+                        thumbBtn.setAttribute('aria-label', 'View photo ' + (idx + 1));
+                        thumbBtn.innerHTML = '<img src=\"' + src + '\" alt=\"Thumbnail ' + (idx + 1) + '\" loading=\"lazy\">';
+                        thumbBtn.addEventListener('click', function () {
+                            setPhoto(idx);
+                        });
+                        thumbsEl.appendChild(thumbBtn);
+                    });
+                } else {
+                    thumbsEl.style.display = 'none';
+                }
+
+                // Show/hide nav buttons if only 1 photo
+                if (data.photos.length <= 1) {
+                    prevBtn.classList.add('disabled');
+                    nextBtn.classList.add('disabled');
+                } else {
+                    prevBtn.classList.remove('disabled');
+                    nextBtn.classList.remove('disabled');
+                }
+
+                lightbox.removeAttribute('hidden');
+                // Force reflow
+                void lightbox.offsetWidth;
+                lightbox.classList.add('active');
+                document.body.classList.add('archive-lightbox-open');
+
+                setPhoto(0);
+                if (closeBtn) closeBtn.focus();
+            }
+
+            function setPhoto(idx) {
+                if (!currentEvent || !currentEvent.photos.length) return;
+                currentPhotoIdx = (idx + currentEvent.photos.length) % currentEvent.photos.length;
+                var src = currentEvent.photos[currentPhotoIdx];
+
+                imgEl.classList.add('loading');
+                var temp = new Image();
+                temp.onload = function () {
+                    imgEl.src = src;
+                    imgEl.alt = currentEvent.title + ' - Photo ' + (currentPhotoIdx + 1);
+                    imgEl.classList.remove('loading');
+                };
+                temp.src = src;
+
+                counterElModal.textContent = (currentPhotoIdx + 1) + ' / ' + currentEvent.photos.length;
+
+                // Update thumbnail states
+                var thumbs = thumbsEl.querySelectorAll('.archive-lightbox-thumb');
+                thumbs.forEach(function (th, tIdx) {
+                    if (tIdx === currentPhotoIdx) {
+                        th.classList.add('active');
+                        th.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    } else {
+                        th.classList.remove('active');
+                    }
+                });
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('archive-lightbox-open');
+                setTimeout(function () {
+                    lightbox.setAttribute('hidden', '');
+                    imgEl.src = '';
+                }, 300);
+            }
+
+            function prevPhoto() {
+                if (!currentEvent || currentEvent.photos.length <= 1) return;
+                setPhoto(currentPhotoIdx - 1);
+            }
+
+            function nextPhoto() {
+                if (!currentEvent || currentEvent.photos.length <= 1) return;
+                setPhoto(currentPhotoIdx + 1);
+            }
+
+            // Click banner to open
+            document.querySelectorAll('.archive-event-banner').forEach(function (banner) {
+                banner.addEventListener('click', function (e) {
+                    var key = this.getAttribute('data-event-key');
+                    if (key) openLightbox(key);
+                });
+                banner.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        var key = this.getAttribute('data-event-key');
+                        if (key) openLightbox(key);
+                    }
+                });
+            });
+
+            // Modal event listeners
+            if (backdrop) backdrop.addEventListener('click', closeLightbox);
+            if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+            if (prevBtn) prevBtn.addEventListener('click', prevPhoto);
+            if (nextBtn) nextBtn.addEventListener('click', nextPhoto);
+
+            // Keyboard navigation
+            window.addEventListener('keydown', function (e) {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    prevPhoto();
+                } else if (e.key === 'ArrowRight') {
+                    nextPhoto();
+                }
+            });
+
+            // Mobile swipe navigation
+            if (lightbox) {
+                lightbox.addEventListener('touchstart', function (e) {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+
+                lightbox.addEventListener('touchend', function (e) {
+                    var touchEndX = e.changedTouches[0].screenX;
+                    var diff = touchEndX - touchStartX;
+                    if (Math.abs(diff) > 45) {
+                        if (diff > 0) {
+                            prevPhoto();
+                        } else {
+                            nextPhoto();
+                        }
+                    }
+                }, { passive: true });
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
+
