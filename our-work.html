@@ -219,6 +219,183 @@
 
         </div>
 
+        <!-- =========================================================
+             CREATIVE ANIMATED AVENUE PIE CHART (RY 2026–27)
+        ========================================================= -->
+        <div class="avenue-chart-wrapper" data-year="2026-27">
+            <div class="avenue-chart-header">
+                <div class="avenue-chart-tag">
+                    <span class="chart-sparkle">✨</span>
+                    <span>AVENUE-WISE DISTRIBUTION</span>
+                    <span class="chart-year-badge">RY 2026–27</span>
+                </div>
+                <h3 class="avenue-chart-title">Projects Across <span>4 Avenues of Service</span></h3>
+                <p class="avenue-chart-subtitle">
+                    Interactive visual breakdown of the 15 initiatives and fellowship activities executed during Rotary Year 2026–27 across Rotary's four foundational avenues. Hover or tap any slice or card to explore avenue shares.
+                </p>
+            </div>
+
+            <div class="avenue-chart-grid">
+                <!-- Chart Donut Stage -->
+                <div class="avenue-pie-visual">
+                    <div class="avenue-donut-stage">
+                        <svg class="avenue-svg-donut" viewBox="0 0 240 240" role="img" aria-label="Pie chart of 15 projects across 4 avenues of service for Rotary Year 2026-27">
+                            <defs>
+                                <linearGradient id="gradClubWork" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#3b82f6"/>
+                                    <stop offset="100%" stop-color="#1d4ed8"/>
+                                </linearGradient>
+                                <linearGradient id="gradCommunityWork" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#10b981"/>
+                                    <stop offset="100%" stop-color="#059669"/>
+                                </linearGradient>
+                                <linearGradient id="gradIntlWork" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#8b5cf6"/>
+                                    <stop offset="100%" stop-color="#6366f1"/>
+                                </linearGradient>
+                                <linearGradient id="gradProfWork" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#f59e0b"/>
+                                    <stop offset="100%" stop-color="#d97706"/>
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Donut Base Track -->
+                            <circle class="donut-track" cx="120" cy="120" r="80" fill="none" stroke-width="24"/>
+
+                            <!-- Segments -->
+                            <circle class="donut-segment club" cx="120" cy="120" r="80"
+                                    fill="none" stroke="url(#gradClubWork)" stroke-width="24"
+                                    data-avenue="club" tabindex="0" role="button"
+                                    aria-label="Club Service: 8 projects, 53.3%"/>
+                            <circle class="donut-segment community" cx="120" cy="120" r="80"
+                                    fill="none" stroke="url(#gradCommunityWork)" stroke-width="24"
+                                    data-avenue="community" tabindex="0" role="button"
+                                    aria-label="Community Service: 5 projects, 33.3%"/>
+                            <circle class="donut-segment international" cx="120" cy="120" r="80"
+                                    fill="none" stroke="url(#gradIntlWork)" stroke-width="24"
+                                    data-avenue="international" tabindex="0" role="button"
+                                    aria-label="International Service: 1 project, 6.7%"/>
+                            <circle class="donut-segment professional" cx="120" cy="120" r="80"
+                                    fill="none" stroke="url(#gradProfWork)" stroke-width="24"
+                                    data-avenue="professional" tabindex="0" role="button"
+                                    aria-label="Professional Development: 1 project, 6.7%"/>
+                        </svg>
+
+                        <!-- Center Hub -->
+                        <div class="avenue-donut-center" aria-live="polite">
+                            <div class="center-content-default">
+                                <span class="center-icon">🌿</span>
+                                <span class="center-number" data-target="15">0</span>
+                                <span class="center-label">Total Projects</span>
+                                <span class="center-pill">RY 2026–27</span>
+                            </div>
+                            <div class="center-content-hover" aria-hidden="true">
+                                <span class="hover-icon"></span>
+                                <span class="hover-number">0</span>
+                                <span class="hover-label"></span>
+                                <span class="hover-percent"></span>
+                            </div>
+                        </div>
+
+                        <div class="donut-ambient-glow" aria-hidden="true"></div>
+                    </div>
+
+                    <div class="avenue-chart-hint">
+                        <span class="hint-icon">💡</span>
+                        <span>Hover or tap segments to inspect avenue statistics</span>
+                    </div>
+                </div>
+
+                <!-- Legend & Stat Cards -->
+                <div class="avenue-legend-grid">
+                    <!-- Club Service -->
+                    <div class="avenue-stat-card club" data-avenue="club" data-count="8" data-percent="53.3" data-color="#3b82f6" data-icon="🤝" data-title="Club Service" role="button" tabindex="0" aria-label="Club Service: 8 projects, 53.3%">
+                        <div class="stat-card-top">
+                            <div class="stat-card-badge">
+                                <span class="stat-icon">🤝</span>
+                                <span>Club Service</span>
+                            </div>
+                            <span class="stat-percent-badge">53.3%</span>
+                        </div>
+                        <div class="stat-card-mid">
+                            <div class="stat-number-wrap">
+                                <span class="stat-number" data-target="8">0</span>
+                                <span class="stat-unit">Projects</span>
+                            </div>
+                            <span class="stat-sparkle-tag">Top Avenue</span>
+                        </div>
+                        <div class="stat-card-bar-track">
+                            <div class="stat-card-bar-fill club" data-target-width="53.3%"></div>
+                        </div>
+                        <p class="stat-card-desc">4th Club Installation, Unakoti fellowship tour, Soul Circle, August Birthday, Agartala &amp; Tezpur meetup, 7 Days of Rotaract, DRR official visit &amp; Zone 1 Cricket Tournament.</p>
+                    </div>
+
+                    <!-- Community Service -->
+                    <div class="avenue-stat-card community" data-avenue="community" data-count="5" data-percent="33.3" data-color="#10b981" data-icon="🌿" data-title="Community Service" role="button" tabindex="0" aria-label="Community Service: 5 projects, 33.3%">
+                        <div class="stat-card-top">
+                            <div class="stat-card-badge">
+                                <span class="stat-icon">🌿</span>
+                                <span>Community Service</span>
+                            </div>
+                            <span class="stat-percent-badge">33.3%</span>
+                        </div>
+                        <div class="stat-card-mid">
+                            <div class="stat-number-wrap">
+                                <span class="stat-number" data-target="5">0</span>
+                                <span class="stat-unit">Projects</span>
+                            </div>
+                        </div>
+                        <div class="stat-card-bar-track">
+                            <div class="stat-card-bar-fill community" data-target-width="33.3%"></div>
+                        </div>
+                        <p class="stat-card-desc">Boier Desh online class inauguration, TRIVA Independence Day, She Inspires recognition, Naihati food relief &amp; Unmute menstrual hygiene outreach.</p>
+                    </div>
+
+                    <!-- International Service -->
+                    <div class="avenue-stat-card international" data-avenue="international" data-count="1" data-percent="6.7" data-color="#8b5cf6" data-icon="🌐" data-title="International Service" role="button" tabindex="0" aria-label="International Service: 1 project, 6.7%">
+                        <div class="stat-card-top">
+                            <div class="stat-card-badge">
+                                <span class="stat-icon">🌐</span>
+                                <span>International Service</span>
+                            </div>
+                            <span class="stat-percent-badge">6.7%</span>
+                        </div>
+                        <div class="stat-card-mid">
+                            <div class="stat-number-wrap">
+                                <span class="stat-number" data-target="1">0</span>
+                                <span class="stat-unit">Project</span>
+                            </div>
+                        </div>
+                        <div class="stat-card-bar-track">
+                            <div class="stat-card-bar-fill international" data-target-width="6.7%"></div>
+                        </div>
+                        <p class="stat-card-desc">Doctor's Day joint international tribute celebrating the selfless dedication and societal service of healthcare professionals worldwide.</p>
+                    </div>
+
+                    <!-- Professional Development -->
+                    <div class="avenue-stat-card professional" data-avenue="professional" data-count="1" data-percent="6.7" data-color="#f59e0b" data-icon="💡" data-title="Professional Dev." role="button" tabindex="0" aria-label="Professional Development: 1 project, 6.7%">
+                        <div class="stat-card-top">
+                            <div class="stat-card-badge">
+                                <span class="stat-icon">💡</span>
+                                <span>Professional Dev.</span>
+                            </div>
+                            <span class="stat-percent-badge">6.7%</span>
+                        </div>
+                        <div class="stat-card-mid">
+                            <div class="stat-number-wrap">
+                                <span class="stat-number" data-target="1">0</span>
+                                <span class="stat-unit">Project</span>
+                            </div>
+                        </div>
+                        <div class="stat-card-bar-track">
+                            <div class="stat-card-bar-fill professional" data-target-width="6.7%"></div>
+                        </div>
+                        <p class="stat-card-desc">Autism Spectrum Disorder workshop in collaboration with Autism Society of West Bengal, advancing inclusive community education and awareness.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="project-grid">
 
@@ -1220,5 +1397,40 @@
 <script src="motion.js" defer></script>
 <script src="script.js" defer></script>
 <script src="enhance.js" defer></script>
+<script src="pie-chart.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var chart = document.querySelector('.projects-section .avenue-chart-wrapper');
+    if (!chart) return;
+
+    var filterMap = {
+        'club': 'pf-club-service',
+        'community': 'pf-community-service',
+        'international': 'pf-international-service',
+        'professional': 'pf-professional-development'
+    };
+
+    function handleAvenueClick(key) {
+        var filterClass = filterMap[key];
+        if (!filterClass) return;
+        var btn = document.querySelector('.project-filter[data-filter="' + filterClass + '"]');
+        if (btn) {
+            btn.click();
+            var targetEl = document.querySelector('.project-filters') || document.querySelector('.project-grid');
+            if (targetEl) {
+                targetEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+    }
+
+    chart.querySelectorAll('.donut-segment, .avenue-stat-card').forEach(function (el) {
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', function () {
+            var key = el.getAttribute('data-avenue');
+            if (key) handleAvenueClick(key);
+        });
+    });
+});
+</script>
 </body>
 </html>
