@@ -26,21 +26,14 @@
         return;
     }
 
-    // On internal subpage transitions (our-work.html, recognition.html), skip the preloader
-    // if the user has already seen the intro during this session.
-    // On the main entry page (index.html or root), always display the full cinematic intro.
-    const isSubPage = window.location.pathname.includes("our-work") ||
-                      window.location.pathname.includes("recognition");
-
-    if (isSubPage) {
-        try {
-            if (sessionStorage.getItem("racdcp-intro-seen")) {
-                preloader.style.display = "none";
-                document.body.classList.remove("preloader-active");
-                return;
-            }
-        } catch (e) {}
-    }
+    // Skip preloader if the user has already seen the intro during this session.
+    try {
+        if (sessionStorage.getItem("racdcp-intro-seen")) {
+            preloader.style.display = "none";
+            document.body.classList.remove("preloader-active");
+            return;
+        }
+    } catch (e) {}
 
     try {
         sessionStorage.setItem("racdcp-intro-seen", "1");
@@ -183,30 +176,63 @@ if (menuToggle && navMenu) {
         const dropdown = item.querySelector(".nav-dropdown");
         if (!toggle || !dropdown) return;
 
-        // Toggle accordion on mobile
+        // Toggle dropdown on click (mobile accordion tap & desktop click)
         toggle.addEventListener("click", function (e) {
-            const isMobile = window.innerWidth <= 1150 || (navMenu && navMenu.classList.contains("active"));
-            if (isMobile) {
-                e.preventDefault();
-                const isOpen = item.classList.contains("is-open");
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = item.classList.contains("is-open");
 
-                // Close other dropdowns
-                navItems.forEach(function (other) {
-                    if (other !== item) {
-                        other.classList.remove("is-open");
-                        const otherToggle = other.querySelector(".nav-dropdown-toggle");
-                        if (otherToggle) otherToggle.setAttribute("aria-expanded", "false");
-                    }
-                });
-
-                if (isOpen) {
-                    item.classList.remove("is-open");
-                    toggle.setAttribute("aria-expanded", "false");
-                } else {
-                    item.classList.add("is-open");
-                    toggle.setAttribute("aria-expanded", "true");
+            // Close other dropdowns
+            navItems.forEach(function (other) {
+                if (other !== item) {
+                    other.classList.remove("is-open");
+                    const otherToggle = other.querySelector(".nav-dropdown-toggle");
+                    if (otherToggle) otherToggle.setAttribute("aria-expanded", "false");
                 }
+            });
+
+            if (isOpen) {
+                item.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+            } else {
+                item.classList.add("is-open");
+                toggle.setAttribute("aria-expanded", "true");
             }
+        });
+
+        // Close dropdown and handle navigation smoothly without redundant reloads
+        dropdown.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", function (e) {
+                const href = link.getAttribute("href") || "";
+                const currentPath = window.location.pathname;
+                const currentFile = currentPath.split("/").pop() || "index.html";
+
+                item.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+
+                // Parse destination file and hash anchor
+                const hashIndex = href.indexOf("#");
+                const destFile = (hashIndex >= 0 ? href.substring(0, hashIndex) : href).trim();
+                const hash = hashIndex >= 0 ? href.substring(hashIndex + 1) : "";
+
+                const isCurrentPage = (!destFile || destFile === currentFile || destFile === currentPath || (currentFile === "index.html" && destFile === ""));
+
+                if (isCurrentPage) {
+                    if (hash) {
+                        const targetEl = document.getElementById(hash);
+                        if (targetEl) {
+                            e.preventDefault();
+                            targetEl.scrollIntoView({ behavior: "smooth" });
+                            try { history.pushState(null, "", "#" + hash); } catch (_) {}
+                            return;
+                        }
+                    } else {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                        return;
+                    }
+                }
+            });
         });
 
         // Keyboard accessibility
