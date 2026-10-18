@@ -9372,5 +9372,114 @@ html.theme-transitioning *::after {
     outline-color: #34d399 !important;
 }
 
+/* =========================================================
+   WEBSITE UPDATES & NOTIFICATION POPUP IN DARK MODE
+   ========================================================= */
+
+/* Floating Notification Bell Button */
+[data-theme="dark"] .notification-button {
+    background: #11221b !important;
+    color: #34d399 !important;
+    border: 1.5px solid rgba(52, 211, 153, 0.35) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 0 18px rgba(52, 211, 153, 0.22) !important;
+}
+
+[data-theme="dark"] .notification-button:hover {
+    background: #183328 !important;
+    border-color: rgba(52, 211, 153, 0.65) !important;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.65), 0 0 24px rgba(52, 211, 153, 0.38) !important;
+}
+
+[data-theme="dark"] .notification-count {
+    background: #ef4444 !important;
+    color: #ffffff !important;
+    border: 2px solid #11221b !important;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.5) !important;
+}
+
+/* Notification Panel Modal */
+[data-theme="dark"] .notification-panel {
+    background: #10201a !important;
+    border: 1px solid rgba(52, 211, 153, 0.25) !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(16px);
+}
+
+[data-theme="dark"] .notification-header {
+    border-bottom: 1px solid rgba(52, 211, 153, 0.16) !important;
+}
+
+[data-theme="dark"] .notification-label {
+    color: #34d399 !important;
+    text-shadow: 0 0 12px rgba(52, 211, 153, 0.25);
+}
+
+[data-theme="dark"] .notification-header h3 {
+    color: #f0fbf5 !important;
+}
+
+[data-theme="dark"] .notification-close {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #cbdad2 !important;
+    border: 1px solid rgba(52, 211, 153, 0.15) !important;
+}
+
+[data-theme="dark"] .notification-close:hover {
+    background: rgba(52, 211, 153, 0.22) !important;
+    color: #34d399 !important;
+    border-color: #34d399 !important;
+}
+
+[data-theme="dark"] .notification-item {
+    border-bottom: 1px solid rgba(52, 211, 153, 0.12) !important;
+}
+
+[data-theme="dark"] .notification-item:hover {
+    background: rgba(52, 211, 153, 0.04) !important;
+}
+
+[data-theme="dark"] .notification-item:last-child {
+    border-bottom: none !important;
+}
+
+[data-theme="dark"] .notification-dot {
+    background: rgba(255, 255, 255, 0.22) !important;
+}
+
+[data-theme="dark"] .notification-dot.new {
+    background: #10b981 !important;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25), 0 0 10px rgba(16, 185, 129, 0.4) !important;
+}
+
+[data-theme="dark"] .notification-status {
+    color: #34d399 !important;
+}
+
+[data-theme="dark"] .notification-item h4 {
+    color: #f0fbf5 !important;
+}
+
+[data-theme="dark"] .notification-item p {
+    color: #9cb3a7 !important;
+}
+
+[data-theme="dark"] .notification-item small {
+    color: #6d887a !important;
+}
+
+[data-theme="dark"] .notification-list::-webkit-scrollbar-track {
+    background: #0d1915 !important;
+}
+
+[data-theme="dark"] .notification-list::-webkit-scrollbar-thumb {
+    background: rgba(52, 211, 153, 0.25) !important;
+    border-radius: 4px;
+}
+
+[data-theme="dark"] .notification-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(52, 211, 153, 0.45) !important;
+}
+
+
 
 
