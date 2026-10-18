@@ -706,10 +706,110 @@
     }
 
     /* =====================================================
+       5b. THEME SYSTEM (DARK & LIGHT MODE)
+       ===================================================== */
+
+    function getSavedTheme() {
+        try {
+            var saved = localStorage.getItem('racdcp-theme');
+            if (saved === 'dark' || saved === 'light') return saved;
+        } catch (e) {}
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+        }
+        return 'light';
+    }
+
+    function applyTheme(theme, animate) {
+        var isDark = theme === 'dark';
+        var root = document.documentElement;
+
+        if (animate) {
+            root.classList.add('theme-transitioning');
+            setTimeout(function () {
+                root.classList.remove('theme-transitioning');
+            }, 300);
+        }
+
+        root.setAttribute('data-theme', theme);
+        if (isDark) {
+            root.classList.add('dark-theme');
+        } else {
+            root.classList.remove('dark-theme');
+        }
+
+        try {
+            localStorage.setItem('racdcp-theme', theme);
+        } catch (e) {}
+
+        // Update mobile theme color meta tag
+        var metaTheme = qs('meta[name="theme-color"]');
+        if (metaTheme) {
+            metaTheme.setAttribute('content', isDark ? '#09110e' : '#0b2e21');
+        }
+
+        // Update all toggle buttons on page
+        var toggles = qsa('.theme-toggle');
+        toggles.forEach(function (btn) {
+            btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+            var label = isDark ? 'Switch to light mode' : 'Switch to dark mode';
+            btn.setAttribute('aria-label', label);
+            btn.setAttribute('title', label);
+
+            var statusEl = qs('.theme-toggle-status', btn);
+            if (statusEl) {
+                statusEl.textContent = isDark ? 'Light' : 'Dark';
+            }
+        });
+
+        // Notify other components if needed
+        try {
+            window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: theme } }));
+        } catch (e) {}
+    }
+
+    function initTheme() {
+        var current = getSavedTheme();
+        // Sync without animation on boot
+        applyTheme(current, false);
+
+        // Click handler for all theme toggles
+        document.addEventListener('click', function (e) {
+            var btn = e.target.closest('.theme-toggle');
+            if (!btn) return;
+            e.preventDefault();
+            var activeTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+            var newTheme = activeTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme, true);
+        });
+
+        // OS color-scheme watcher (only if user hasn't explicitly set preference)
+        if (window.matchMedia) {
+            try {
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+                    try {
+                        if (!localStorage.getItem('racdcp-theme')) {
+                            applyTheme(e.matches ? 'dark' : 'light', true);
+                        }
+                    } catch (err) {}
+                });
+            } catch (err) {}
+        }
+
+        // Cross-tab synchronization
+        window.addEventListener('storage', function (e) {
+            if (e.key === 'racdcp-theme' && (e.newValue === 'dark' || e.newValue === 'light')) {
+                applyTheme(e.newValue, false);
+            }
+        });
+    }
+
+    /* =====================================================
        6. BOOT
        ===================================================== */
 
     function init() {
+        initTheme();
         retrofitGalleryLightbox();
         retrofitAchievementLightbox();
         enableGridKeyboard();
