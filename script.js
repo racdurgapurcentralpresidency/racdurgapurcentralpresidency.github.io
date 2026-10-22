@@ -19,8 +19,9 @@
         return;
     }
 
-    // Accessibility: instantly dismiss if user has OS-level reduced-motion active
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Accessibility & fast-boot: instantly dismiss if user has OS reduced-motion, fast-boot class, or seen in session
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+        document.documentElement.classList.contains("racdcp-fast-boot")) {
         preloader.style.display = "none";
         document.body.classList.remove("preloader-active");
         return;
@@ -39,9 +40,20 @@
         sessionStorage.setItem("racdcp-intro-seen", "1");
     } catch (e) {}
 
+    // Comprehensive mobile and device tier detection
+    const isMobile = window.innerWidth < 768 || /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isLowEndDevice = (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+                           (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                           (navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType)));
+
+    // On low-end phones: ultra-fast 150ms for instant access
+    // On standard/high-end mobile phones (Android & iOS): crisp 420ms branded counter
+    // On desktop: 1600ms smooth welcome
+    const duration = isLowEndDevice ? 150 : (isMobile ? 420 : 1600);
+    const holdDelay = isMobile ? 50 : 150;
+    const cleanupDelay = isMobile ? 400 : 900;
+
     let isCompleted = false;
-    // 2.4 seconds duration: counts 0 to 100 smoothly before unveiling
-    const duration = 2400;
     const startTime = performance.now();
 
     function finishPreloader() {
@@ -52,16 +64,23 @@
         preloaderBar.style.width = "100%";
         if (preloaderStatus) preloaderStatus.textContent = "WELCOME TO RAC DCP";
 
-        // Brief hold at 100% so user perceives completion before curtain unrolls
         setTimeout(function () {
             preloader.classList.add("loaded");
             document.body.classList.remove("preloader-active");
 
-            // Clean up display property once the 0.85s slide transition completes
             setTimeout(function () {
                 preloader.style.display = "none";
-            }, 900);
-        }, 180);
+            }, cleanupDelay);
+        }, holdDelay);
+    }
+
+    // Fast-path: When page finishes loading, accelerate to 100% smoothly
+    if (document.readyState === "complete") {
+        setTimeout(finishPreloader, Math.min(duration, 350));
+    } else {
+        window.addEventListener("load", function () {
+            setTimeout(finishPreloader, Math.min(duration, 350));
+        }, { once: true });
     }
 
     function step(timestamp) {
@@ -69,7 +88,6 @@
         const elapsed = timestamp - startTime;
         const t = Math.min(elapsed / duration, 1);
 
-        // Smooth cubic ease-out acceleration: starts fast, accelerates, lands firmly at 100
         const eased = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
         const currentCount = Math.min(Math.round(eased * 100), 100);
 
@@ -77,7 +95,6 @@
         preloaderBar.style.width = currentCount + "%";
         preloader.setAttribute("aria-valuenow", currentCount);
 
-        // Dynamic status milestones during 0-100% progression
         if (preloaderStatus) {
             if (currentCount < 30) {
                 preloaderStatus.textContent = "INITIALIZING EXPERIENCE...";
@@ -99,8 +116,8 @@
 
     requestAnimationFrame(step);
 
-    // Hard fail-safe timeout in case browser background tab throttles RAF
-    setTimeout(finishPreloader, 4000);
+    // Hard fail-safe timeout
+    setTimeout(finishPreloader, isMobile ? 1200 : 3000);
 })();
 
 
@@ -513,30 +530,27 @@ if (footerYear) {
 const navbar =
     document.querySelector(".navbar");
 
-
+let navScrollTicking = false;
 window.addEventListener("scroll", function () {
-
-    if (!navbar) {
+    if (!navbar || navScrollTicking) {
         return;
     }
-
-    if (window.MOTION3D && window.MOTION3D.enabled) {
-        navbar.classList.toggle("is-scrolled", window.scrollY > 20);
-        return;
-    }
-
-    if (window.scrollY > 20) {
-
-        navbar.style.boxShadow =
-            "0 8px 25px rgba(0, 0, 0, 0.08)";
-
-    } else {
-
-        navbar.style.boxShadow = "none";
-
-    }
-
-});
+    navScrollTicking = true;
+    requestAnimationFrame(function () {
+        const isScrolled = window.scrollY > 20;
+        if (window.MOTION3D && window.MOTION3D.enabled) {
+            navbar.classList.toggle("is-scrolled", isScrolled);
+        } else {
+            navbar.classList.toggle("is-scrolled", isScrolled);
+            if (!isScrolled) {
+                navbar.style.boxShadow = "none";
+            } else {
+                navbar.style.boxShadow = "0 8px 25px rgba(0, 0, 0, 0.08)";
+            }
+        }
+        navScrollTicking = false;
+    });
+}, { passive: true });
 
 // =========================================================
 // 6. GALLERY FILTERS
@@ -1359,6 +1373,9 @@ function initSectionMinimap() {
 
     function updateActiveSection() {
         if (!trackedItems.length) return;
+        // On mobile and tablets, section minimap is hidden with display:none.
+        // Skip layout recalculations entirely to guarantee 60fps/120fps scrolling on phones.
+        if (window.innerWidth <= 1024) return;
 
         // Viewport trigger line (35% from the top of the viewport)
         const triggerY = window.scrollY + window.innerHeight * 0.35;

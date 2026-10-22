@@ -60,12 +60,19 @@
                 document.documentElement.setAttribute('data-theme', 'light');
                 document.documentElement.classList.remove('dark-theme');
             }
+            // Mobile & Repeat Visit Fast-Boot: skip preloader screen lock immediately
+            var introSeen = sessionStorage.getItem('racdcp-intro-seen');
+            var prefersLessMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var lowData = navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType));
+            if (introSeen || prefersLessMotion || lowData) {
+                document.documentElement.classList.add('racdcp-fast-boot');
+            }
         } catch (e) {}
     })();
     </script>
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="motion.css">
+    <link rel="stylesheet" href="motion.css" media="(min-width: 1024px)">
 </head>
 
 <body class="preloader-active">
@@ -1308,6 +1315,8 @@
                      height="256"
                      width="256"
                      alt="RAC DCP Logo"
+                     loading="lazy"
+                     decoding="async"
                      class="footer-logo">
 
                 <div>
