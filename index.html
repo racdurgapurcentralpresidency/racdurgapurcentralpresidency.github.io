@@ -2019,6 +2019,15 @@
     <span class="dial-arrow">↑</span>
 </button>
 
+<!-- ==========================================================================
+     JAVASCRIPT PIPELINE & SCRIPT LOADING SEQUENCE
+     ==========================================================================
+     The scripts are loaded in a specific, deliberate order using 'defer' so
+     the webpage HTML parses instantly without waiting for network downloads:
+       1. motion.js: Loaded first to establish the 3D compositor & window.MOTION3D.
+       2. script.js: Core website features (preloader, menu, lightboxes, counters).
+       3. enhance.js: Loaded last to wrap modals, add focus traps, and project filters.
+     ========================================================================== -->
 <script src="motion.js" defer></script>
 <script src="script.js" defer></script>
 <script src="enhance.js" defer></script>

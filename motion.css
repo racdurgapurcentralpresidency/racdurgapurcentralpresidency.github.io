@@ -1,33 +1,61 @@
-/* =========================================================
-   RAC DCP — 3D CINEMATIC MOTION LAYER
-   Loaded AFTER style.css. Everything is scoped under
-   html.motion-on, so html.motion-off is byte-identical to
-   the original site.
-   ========================================================= */
+/* ============================================================================
+   RAC DCP — 3D CINEMATIC MOTION & CAMERA STYLING LAYER
+   ============================================================================
+   
+   WHAT THIS FILE DOES:
+   This stylesheet powers all the 3D depth, perspective, and cinematic camera
+   effects on the website when viewed on desktop and high-performance screens.
+   
+   HOW IT IS STRUCTURED:
+   1. It is loaded AFTER `style.css`.
+   2. Every single rule is safely scoped under `html.motion-on`.
+      - On high-end computers: `html.motion-on` is added by motion.js, activating 3D.
+      - On phones, battery-saver mode, or low-spec computers: `html.motion-off` is used,
+        meaning the website looks clean, fast, and uses standard web layout with
+        zero performance lag!
+   ============================================================================ */
 
 
-/* =========================================================
-   0. ENGINE PREREQUISITES
-   ========================================================= */
+/* ============================================================================
+   0. ENGINE PREREQUISITES & CONFLICT PREVENTION
+   ============================================================================ */
 
-/* style.css:17 sets scroll-behavior:smooth, which would make the
-   browser animate toward each of our 60 scrollTo() calls a second. */
+/* 
+ * 1. Disable browser's native smooth-scroll:
+ * style.css has `scroll-behavior: smooth`. If the browser tries to animate
+ * scrolling while our JavaScript physics engine is also calculating 60 smooth frames
+ * per second, they will fight each other and cause jittery stuttering.
+ * Setting `scroll-behavior: auto` gives full smooth control to the JS engine.
+ */
 html.motion-on {
     scroll-behavior: auto;
 }
 
-/* Anchors currently land under the 78px fixed navbar. */
+/* 
+ * 2. Offset anchor links:
+ * When you click a link like "#about" or "#projects", this ensures the section
+ * heading stops 94px below the top of the screen so it isn't hidden under
+ * our fixed 78px navigation bar.
+ */
 html.motion-on [id] {
     scroll-margin-top: 94px;
 }
 
-/* Scrollbar-width compensation so opening a lightbox doesn't shift layout. */
+/* 
+ * 3. Prevent page layout shifting when popups open:
+ * When a modal lightbox opens, the page scrollbar disappears. Adding this
+ * custom padding variable (--sbw = scrollbar width) prevents the entire webpage
+ * from abruptly jumping or shifting to the right.
+ */
 html.motion-on body.lightbox-open {
     padding-right: var(--sbw, 0px);
 }
 
-/* Neutralise style.css:4832's `transition: transform .15s !important`
-   (later sheet + higher specificity breaks the !important tie). */
+/* 
+ * 4. Remove conflicting CSS transitions during fast scrolling:
+ * During rapid scrolling, JS dynamically tilts cards. We neutralize any slow CSS
+ * transform transitions so cards tilt instantaneously and cleanly without smearing.
+ */
 html.motion-on .scroll-velocity-active .project-card,
 html.motion-on .scroll-velocity-active .board-card,
 html.motion-on .scroll-velocity-active .achievement-card,
@@ -36,14 +64,20 @@ html.motion-on .scroll-velocity-active .publication-card {
 }
 
 
-/* =========================================================
-   1. UNLOCKING REAL Z-DEPTH
-   overflow:hidden silently nullifies transform-style:preserve-3d.
-   Six components declare both, so their translateZ children have
-   never rendered in 3D. Move each crop one level down to the inner
-   image wrapper, then free the parent.
-   ========================================================= */
+/* ============================================================================
+   1. UNLOCKING REAL 3D Z-DEPTH
+   ============================================================================
+   IMPORTANT BROWSER RULE:
+   In CSS 3D graphics, if a parent card has `overflow: hidden`, the browser
+   flattens all 3D layers onto a single flat 2D plane (destroying transform-style: preserve-3d).
+   
+   SOLUTION:
+   We set `overflow: visible` on the outer card so its text and badges can pop
+   forward in real 3D space toward the screen (translateZ), and we move the rounded
+   corner image cropping down into the inner image containers instead!
+   ============================================================================ */
 
+/* Allow cards to project elements outwards in 3D */
 html.motion-on .impact-card,
 html.motion-on .project-card,
 html.motion-on .achievement-card,
@@ -54,20 +88,19 @@ html.motion-on .gallery-item {
     overflow: visible;
 }
 
-/* Re-home the crops the parents used to provide. */
-html.motion-on .project-image     { border-radius: 20px 20px 0 0; }   /* has overflow:hidden @1590 */
-html.motion-on .achievement-image { border-radius: 20px 20px 0 0; }   /* has overflow:hidden @2441 */
-html.motion-on .people-photo      { border-radius: 14px 14px 0 0; }   /* has overflow:hidden @1445 */
-html.motion-on .event-poster      { border-radius: 18px 0 0 18px; }   /* has overflow:hidden @1929 */
+/* Maintain rounded top corners on the inner image containers */
+html.motion-on .project-image     { border-radius: 20px 20px 0 0; }   /* Top-left & top-right rounded */
+html.motion-on .achievement-image { border-radius: 20px 20px 0 0; }   /* Top-left & top-right rounded */
+html.motion-on .people-photo      { border-radius: 14px 14px 0 0; }   /* Top-left & top-right rounded */
+html.motion-on .event-poster      { border-radius: 18px 0 0 18px; }   /* Left corners rounded */
 
-/* .member-photo had NEITHER overflow nor radius — the card provided both. */
+/* Member photos need both overflow hidden and rounded corners */
 html.motion-on .member-photo {
     overflow: hidden;
     border-radius: 20px 20px 0 0;
 }
 
-/* There is no `.gallery-item img` rule anywhere in style.css — cropping
-   depended entirely on the item's aspect-ratio + overflow. Author it. */
+/* Gallery images: Fill their container smoothly with rounded corners */
 html.motion-on .gallery-item img {
     width: 100%;
     height: 100%;
@@ -76,29 +109,27 @@ html.motion-on .gallery-item img {
     display: block;
 }
 
-/* Hero: clip the background gradients but give 3D room to project. */
+/* 
+ * Hero Section 3D Viewport:
+ * Gives the hero section a 1500px camera perspective so 3D elements
+ * appear natural to the human eye (items closer look bigger, items further look smaller).
+ */
 html.motion-on .hero {
-    /* The hero is now a full-bleed backdrop, so nothing needs to project
-       outside it — `clip` with no margin keeps document scrollWidth exact
-       while still avoiding a scroll container. */
-    overflow: clip;
+    overflow: clip; /* Keeps background gradients contained without creating an unwanted scrollbar */
     perspective: 1500px;
     perspective-origin: 50% 40%;
 }
 
-/* The hero backdrop's Ken Burns keyframe owns `transform`, and an
-   animation outranks an inline style, so motion.js parallaxes it via
-   the --hb-x / --hb-y custom properties the keyframe composes in. */
 
+/* ============================================================================
+   2. 3D COMPOSITOR SURFACES & CARD TILTS
+   ============================================================================ */
 
-/* =========================================================
-   2. COMPOSITOR SURFACES
-   script.js's .tilt-3d class (which supplied perspective +
-   preserve-3d) is disabled, so apply the equivalent directly.
-   transform is REMOVED from every transition list: a 0.35s
-   CSS transition layered on a 60fps lerp visibly smears.
-   ========================================================= */
-
+/*
+ * Enable 3D rendering context on all interactive cards.
+ * We transition box-shadow, borders, and colors with CSS, but leave
+ * the `transform` property to JavaScript so there is zero animation lag or smearing.
+ */
 html.motion-on .project-card,
 html.motion-on .board-card,
 html.motion-on .achievement-card,
@@ -117,8 +148,14 @@ html.motion-on .join-highlight {
                 background-color .35s ease;
 }
 
-/* The compositor owns transform, so CSS hover lifts must stand down —
-   they are re-expressed as a hover channel in JS. */
+/*
+ * DISABLE CSS HOVER LIFTS:
+ * Normally in simple CSS, `:hover` does `transform: translateY(-8px)`.
+ * However, our JavaScript engine (motion.js) calculates interactive 3D mouse tilt,
+ * spring physics, and lift dynamically on every frame.
+ * Setting `transform: none` here stops CSS from fighting JavaScript, allowing
+ * the smooth mouse-tracking tilt to work flawlessly!
+ */
 html.motion-on .project-card:hover,
 html.motion-on .board-card:hover,
 html.motion-on .achievement-card:hover,
@@ -134,7 +171,15 @@ html.motion-on .join-highlight:hover {
     transform: none;
 }
 
-/* Inner layers that finally parallax now that the parents are unclipped. */
+/*
+ * PARALLAX DEPTH LAYERS (Floating elements inside the card):
+ * Because we enabled `preserve-3d`, these elements physically float forward
+ * toward the viewer in 3D space!
+ * - Large impact stats float 58px above the card surface!
+ * - Text descriptions float 34px above the card!
+ * When the user moves their mouse and the card tilts, these layers shift at
+ * different speeds, creating a stunning holographic depth effect.
+ */
 html.motion-on .impact-number        { transform: translateZ(58px); }
 html.motion-on .impact-label         { transform: translateZ(30px); }
 html.motion-on .project-content,
@@ -142,33 +187,42 @@ html.motion-on .achievement-content  { transform: translateZ(34px); }
 html.motion-on .member-info,
 html.motion-on .people-info          { transform: translateZ(26px); }
 
-/* Specular glare, recreated by motion.js for the hovered card only. */
+/*
+ * SPECULAR LIGHT GLARE:
+ * A semi-transparent glossy reflection placed over the card.
+ * motion.js tracks the mouse cursor and moves a radial spotlight gradient
+ * across this layer, giving cards a premium glass/metallic sheen.
+ */
 html.motion-on .card-glare {
     position: absolute;
     inset: 0;
     border-radius: inherit;
     opacity: 0;
-    pointer-events: none;
+    pointer-events: none; /* Allows mouse clicks to pass through to the card buttons */
     transition: opacity .3s ease;
-    mix-blend-mode: overlay;
+    mix-blend-mode: overlay; /* Blends naturally with the card image/colors */
     z-index: 10;
 }
 
 
-/* =========================================================
-   3. SPLIT-TEXT HEADINGS
-   .mw is a 2D mask (its overflow IS the clip); .mwi carries its
-   own perspective() so rotateX still reads as 3D inside it.
-   ========================================================= */
+/* ============================================================================
+   3. CINEMATIC SPLIT-TEXT HEADINGS
+   ============================================================================
+   Breaks headings into individual words wrapped in invisible masks (.mw).
+   Each word (.mwi) starts tilted downward by -78 degrees and slides up smoothly
+   into view, giving a movie-title reveal effect as you scroll.
+   ============================================================================ */
 
+/* The outer word mask (clips the word while it is hidden below) */
 html.motion-on .mw {
     display: inline-block;
     overflow: hidden;
     vertical-align: top;
-    padding-bottom: .16em;   /* descender rescue — g/y/p would clip */
+    padding-bottom: .16em;   /* Extra bottom space so letters like 'g', 'y', 'p' don't get cut off */
     margin-bottom: -.16em;
 }
 
+/* The inner word: starts tilted down in 3D and transparent */
 html.motion-on .mwi {
     display: inline-block;
     transform: perspective(700px) rotateX(-78deg) translateY(110%);
@@ -177,12 +231,13 @@ html.motion-on .mwi {
                 opacity .55s cubic-bezier(.16, 1, .3, 1);
 }
 
+/* When the word enters the viewport, animate it to upright position */
 html.motion-on .mw.is-in .mwi {
     transform: perspective(700px) rotateX(0deg) translateY(0);
     opacity: 1;
 }
 
-/* Hero words exit upward when a carousel slide loses .active. */
+/* When a hero slider changes, old words tilt upward and fade out */
 html.motion-on .mw.is-out .mwi {
     transform: perspective(700px) rotateX(52deg) translateY(-95%);
     opacity: 0;
@@ -190,10 +245,7 @@ html.motion-on .mw.is-out .mwi {
                 opacity .28s ease;
 }
 
-/* The carousel's own slide transform is handed to the words. The
-   outgoing slide fades faster than the incoming one arrives, otherwise
-   both statements are legible at once mid-crossfade and the hero
-   visibly ghosts. */
+/* Hero Carousel Slide cross-fade timings */
 html.motion-on .hero-slide,
 html.motion-on .hero-slide.active {
     transform: none;
@@ -210,10 +262,15 @@ html.motion-on .hero-slide.active {
 }
 
 
-/* =========================================================
-   4. ODOMETER COUNTERS
-   ========================================================= */
+/* ============================================================================
+   4. ODOMETER NUMBER COUNTERS (SLOT-MACHINE DIGITS)
+   ============================================================================
+   Replaces static numbers with rolling mechanical odometer columns.
+   Each digit is stacked in a vertical column (0 through 9) that rolls
+   upward like a classic slot machine or car mileage gauge!
+   ============================================================================ */
 
+/* The outer odometer container with 3D tilt */
 html.motion-on .odo {
     display: inline-flex;
     align-items: flex-end;
@@ -229,6 +286,7 @@ html.motion-on .odo.is-in {
     opacity: 1;
 }
 
+/* A single digit column: hides all numbers except the current one visible in the 1em box */
 html.motion-on .odo-col {
     height: 1em;
     line-height: 1;
@@ -236,37 +294,43 @@ html.motion-on .odo-col {
     display: inline-block;
 }
 
+/* The vertical strip of digits 0 through 9 */
 html.motion-on .odo-strip {
     display: block;
     transform: translateY(0em);
     will-change: transform;
 }
 
+/* When spinning to target number, smoothly slide the strip upward */
 html.motion-on .odo.is-rolling .odo-strip {
     transition: transform var(--odo-dur, 2s) cubic-bezier(.17, .84, .34, 1);
 }
 
+/* Individual digit box */
 html.motion-on .odo-digit {
     display: block;
     height: 1em;
     line-height: 1;
 }
 
+/* Separator symbols like commas or plus signs */
 html.motion-on .odo-sep {
     display: inline-block;
     line-height: 1;
 }
 
 
-/* =========================================================
-   5. SITE CHROME — CSS CUSTOM PROPERTY CHANNEL
-   These elements have running keyframes or stateful classes that
-   already own `transform`, and a CSS animation outranks an inline
-   style. So JS writes only the custom properties and CSS keeps
-   ownership of the transform itself — a conflict is impossible.
-   ========================================================= */
+/* ============================================================================
+   5. SITE CHROME & CSS CUSTOM PROPERTY BRIDGE
+   ============================================================================
+   These elements already have running CSS keyframe animations.
+   To avoid conflicts between CSS animations and JavaScript:
+     - JavaScript ONLY updates CSS variables (like --mx, --my, --wheel-rot).
+     - CSS animations use these variables inside their `transform` property.
+   This guarantees 100% smooth 60fps animations with zero stutter!
+   ============================================================================ */
 
-/* --- ambient orbs: the parallax script.js intended but never achieved --- */
+/* Ambient Glowing Background Orbs */
 @keyframes motionOrbFloat1 {
     0%   { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) translate(0, 0) scale(1); }
     100% { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0) translate(-60px, 80px) scale(1.1); }
@@ -284,7 +348,7 @@ html.motion-on .ambient-orb-2 {
     filter: blur(74px);
 }
 
-/* --- back-to-top dial: CSS keeps show/hide, JS writes the lean --- */
+/* Back-to-Top Circular Dial (bottom right corner) */
 html.motion-on .scroll-top-dial {
     transform: translateY(var(--dy, 20px))
                scale(var(--ds, .85))
@@ -295,7 +359,7 @@ html.motion-on .scroll-top-dial {
 html.motion-on .scroll-top-dial.visible { --dy: 0px;  --ds: 1; }
 html.motion-on .scroll-top-dial:hover   { --dy: -4px; --ds: 1.08; }
 
-/* --- section minimap: must preserve its centring translateY(-50%) --- */
+/* Floating Section Minimap (right screen edge) */
 html.motion-on .section-minimap {
     transform: translateY(-50%)
                perspective(600px)
@@ -306,7 +370,7 @@ html.motion-on .minimap-dot {
     transform-style: preserve-3d;
 }
 
-/* --- notification widget: floatWidget owns transform --- */
+/* Floating Notification Widget */
 @keyframes motionFloatWidget {
     0%, 100% { transform: translateY(0) scale(1)
                           rotateY(var(--nry, 0deg)) translateZ(var(--nz, 0px)); }
@@ -324,7 +388,7 @@ html.motion-on .notification-panel.active {
     transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
 }
 
-/* --- navbar: script.js's inline boxShadow is replaced by a class --- */
+/* Fixed Navigation Bar Scroll Shadow */
 html.motion-on .navbar {
     transition: box-shadow .3s ease, background-color .3s ease;
 }
@@ -333,9 +397,12 @@ html.motion-on .navbar.is-scrolled {
 }
 
 
-/* =========================================================
-   6. INTRO CASCADE (fires once, when the preloader curtain lifts)
-   ========================================================= */
+/* ============================================================================
+   6. INTRO ENTRANCE CASCADE
+   ============================================================================
+   Plays once when the site preloader finishes counting up to 100%.
+   The navigation bar smoothly slides down from the top in 3D.
+   ============================================================================ */
 
 html.motion-on.motion-intro .navbar {
     animation: motionNavDrop .95s cubic-bezier(.16, 1, .3, 1) both;
@@ -350,16 +417,15 @@ html.motion-on.motion-intro .ambient-orb {
 }
 
 
-/* =========================================================
-   7. REDUCED MOTION
-   The two blocks already in style.css (4635, 5032) know nothing
-   about any of this, so this layer carries its own complete guard.
-   The JS half (never intercepting the wheel) is the part no CSS
-   rule can express.
-   ========================================================= */
+/* ============================================================================
+   7. ACCESSIBILITY: REDUCED MOTION SAFEGUARD
+   ============================================================================
+   If the user has enabled "Reduce Motion" in their Windows / macOS / iOS
+   settings, we immediately turn off all heavy 3D camera animations and
+   flying effects to prevent motion sickness or dizziness.
+   ============================================================================ */
 
 @media (prefers-reduced-motion: reduce) {
-
     html.motion-on .mw  { overflow: visible; }
     html.motion-on .mwi {
         transform: none !important;
@@ -386,35 +452,39 @@ html.motion-on.motion-intro .ambient-orb {
 }
 
 
-/* =========================================================
-   8. TOUCH / NARROW FALLBACKS
-   ========================================================= */
+/* ============================================================================
+   8. TOUCH & SMALL SCREEN PERFORMANCE OPTIMIZATION
+   ============================================================================ */
 
 @media (max-width: 1024px) {
-    /* orb-2 is the page's most expensive paint; it is decorative. */
+    /* Hide the second blurred background orb on tablets/mobile to save battery and GPU */
     html.motion-on .ambient-orb-2 { display: none; }
 }
 
 
-/* =========================================================
-   SCROLL SCENES — PROJECT CAMERA FLY-THROUGH
-   The wrappers are display:contents until the scene is enabled, so
-   when it is off (touch, narrow, reduced motion) the layout is
-   byte-for-byte the original grid with no stray boxes.
-   ========================================================= */
+/* ============================================================================
+   SCROLL SCENE 1 — 3D PROJECT CAMERA FLY-THROUGH
+   ============================================================================
+   As you scroll through the Projects section, the project cards appear as if
+   you are flying through a 3D corridor in space. Cards float past the camera!
+   
+   If 3D is disabled (touch screens, reduced motion, small screens), the container
+   reverts to `display: contents` so it renders as the standard, clean grid!
+   ============================================================================ */
 
 .fly-track,
 .fly-stage {
-    display: contents;
+    display: contents; /* Inactive by default: zero layout interference */
 }
 
+/* Active 3D Fly-through Corridor */
 html.fly-on .fly-track {
     display: block;
     position: relative;
-    height: var(--fly-h, 400vh);
+    height: var(--fly-h, 400vh); /* The virtual track distance for scrolling */
 }
 
-/* A soft vignette so depth is legible against the light section bg. */
+/* Soft dark vignette so card text is easily readable */
 html.fly-on .fly-stage::before {
     content: "";
     position: absolute;
@@ -424,6 +494,7 @@ html.fly-on .fly-stage::before {
                 rgba(11, 46, 33, 0) 34%, rgba(11, 46, 33, 0.07) 100%);
 }
 
+/* The fixed 3D camera viewport */
 html.fly-on .fly-stage {
     display: block;
     position: sticky;
@@ -451,7 +522,7 @@ html.fly-on .fly-stage .project-card {
     backface-visibility: hidden;
 }
 
-/* A readout of where you are in the corridor. */
+/* Project fly-through progress badge at the bottom of the screen */
 html.fly-on .fly-counter {
     position: absolute;
     left: 50%;
@@ -490,9 +561,12 @@ html.fly-on .fly-counter .fly-bar i {
 .fly-counter { display: none; }
 
 
-/* =========================================================
-   GEARED ROTARY WHEEL — the page is geared to the emblem
-   ========================================================= */
+/* ============================================================================
+   GEARED ROTARY WHEEL
+   ============================================================================
+   The Rotary gear emblem inside the back-to-top dial physically spins in sync
+   with how far the user has scrolled down the page!
+   ============================================================================ */
 
 .rotary-gear {
     position: absolute;
@@ -502,7 +576,7 @@ html.fly-on .fly-counter .fly-bar i {
     height: 30px;
     margin: -15px 0 0 -15px;
     pointer-events: none;
-    transform: rotate(var(--wheel-rot, 0deg));
+    transform: rotate(var(--wheel-rot, 0deg)); /* Rotated smoothly by motion.js */
     color: var(--emerald-text, #067a52);
     opacity: 0.9;
 }
@@ -511,7 +585,7 @@ html.motion-on .scroll-top-dial .dial-arrow {
     transition: opacity .25s ease, transform .2s ease;
 }
 
-/* The arrow only appears on hover; the wheel is the resting state. */
+/* The arrow fades in when hovered; the Rotary wheel is the resting state */
 html.motion-on .scroll-top-dial .dial-arrow { opacity: 0; }
 html.motion-on .scroll-top-dial:hover .dial-arrow { opacity: 1; }
 html.motion-on .scroll-top-dial:hover .rotary-gear { opacity: 0.18; }
@@ -524,11 +598,13 @@ html.motion-on .scroll-top-dial:focus-visible .dial-arrow { opacity: 1; }
 }
 
 
-/* =========================================================
-   SCENE 2 — GALLERY RUNS SIDEWAYS
-   Two rows deep so 70 tiles don't need a 20,000px track; the
-   resulting page height is about the same as the 4-column grid.
-   ========================================================= */
+/* ============================================================================
+   SCROLL SCENE 2 — SIDEWAYS PHOTO GALLERY RAIL
+   ============================================================================
+   Instead of stacking 70+ gallery photos vertically down an endless page,
+   the gallery locks into place and glides smoothly horizontally as you scroll!
+   Organized into two compact rows.
+   ============================================================================ */
 
 .rail-track,
 .rail-stage {
@@ -569,15 +645,13 @@ html.rail-on .rail-stage .gallery-item {
 }
 
 
-/* =========================================================
-   SCENE 3 — AWARDS STACK INTO A DECK
-   Cards become compact rows in stack mode, so the deck costs about
-   the same height as the 3-column grid it replaces.
-   ========================================================= */
+/* ============================================================================
+   SCROLL SCENE 3 — AWARDS STACKING DECK
+   ============================================================================
+   As the user scrolls down through club achievements and awards, each award card
+   sticks to the top and stacks like a physical deck of cards!
+   ============================================================================ */
 
-/* style.css has `@media (min-width:1001px){ .achievement-grid{ display:grid
-   !important } }`, which beats a normal declaration no matter how specific.
-   Matching !important at higher specificity is the only way past it. */
 html.stack-on .achievement-grid.is-deck {
     display: block !important;
     grid-template-columns: none !important;
@@ -587,7 +661,7 @@ html.stack-on .achievement-grid.is-deck {
 
 html.stack-on .achievement-grid.is-deck .achievement-card {
     position: sticky;
-    top: calc(96px + var(--deck-i, 0) * 14px);
+    top: calc(96px + var(--deck-i, 0) * 14px); /* Staggered stacking offset */
     display: grid;
     grid-template-columns: 150px 1fr;
     align-items: center;
@@ -615,11 +689,12 @@ html.stack-on .achievement-grid.is-deck .achievement-content h4 {
 }
 
 
-/* =========================================================
-   SCENE 4 — HERO ZOOM-THROUGH
-   Scrolling past the hero travels INTO the backdrop rather than
-   sliding it away.
-   ========================================================= */
+/* ============================================================================
+   SCROLL SCENE 4 — HERO BACKDROP ZOOM-THROUGH
+   ============================================================================
+   Scrolling down past the hero gently travels *into* the hero photography
+   background rather than sliding it away, providing cinematic scale.
+   ============================================================================ */
 
 html.herozoom-on .hero-backdrop {
     will-change: transform, opacity;

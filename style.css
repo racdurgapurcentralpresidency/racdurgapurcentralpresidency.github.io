@@ -1,29 +1,56 @@
-/* =========================================================
-   RAC DCP WEBSITE
-   STYLE SHEET
-   ========================================================= */
+/* ============================================================================
+   RAC DCP WEBSITE — MAIN STYLESHEET (style.css)
+   ============================================================================
+   
+   WHAT THIS FILE DOES:
+   This is the master design system and styling stylesheet for the Rotaract Club
+   of Durgapur Central Presidency website.
+   
+   HOW THIS STYLESHEET IS STRUCTURED:
+     1. Reset & Global Base Settings: Standardizes typography, box-sizing, and links.
+     2. Design Tokens (CSS Variables): Brand colors (Green Rebel palette), shadows,
+        radii, and 3D depth variables.
+     3. Progress Bars & Ambient Glowing Orbs: Fixed chrome elements.
+     4. Navigation Bar & Multi-Level Dropdowns: Desktop & mobile responsive header.
+     5. Hero Section & Slideshow Rotator: Cinematic entrance with statements.
+     6. About & Club Overview: History, charter info, and district details.
+     7. Impact Statistics & Metrics: Counter cards and achievement numbers.
+     8. Areas of Focus & Service Avenues: Rotary's 4 core service channels.
+     9. Project Cards & Showcase Grid: Interactive cards with tags and dates.
+     10. Leadership Board & Member Grids: Officer photo cards and member rosters.
+     11. Awards & Recognition: Certificate cards and accolades.
+     12. Photo Gallery: Grid layout with category filtering and lightboxes.
+     13. Join Us & Contact Form: Membership application and club contact info.
+     14. Footer & Social Links: Directory links and dynamic copyright notice.
+     15. Dark Mode & Responsive Media Queries: Mobile, tablet, and desktop adaptations.
+   ============================================================================ */
 
 
-/* =========================================================
-   1. RESET & GLOBAL SETTINGS
-   ========================================================= */
+/* ============================================================================
+   1. RESET & GLOBAL BASE SETTINGS
+   ============================================================================
+   Ensures the website displays identically across Chrome, Safari, Edge, and Firefox.
+   ============================================================================ */
 
+/* Box Sizing: Widths and heights include padding and borders so layouts never break */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Enable smooth scrolling for anchor links (e.g. clicking "About" slides smoothly) */
 html {
     scroll-behavior: smooth;
 }
 
+/* Base Body Typography and Clean Canvas */
 body {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: #ffffff;
     color: #172033;
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevent accidental horizontal scrollbars */
 }
 
 a {
@@ -40,6 +67,7 @@ button {
     font: inherit;
 }
 
+/* Improve tap responsiveness on mobile touchscreen devices (removes 300ms tap delay) */
 a, button, input, select, textarea,
 .nav-dropdown-toggle, .theme-toggle, .menu-toggle,
 .project-card, .minimap-dot, .scroll-top-dial, .hero-btn, .btn,
@@ -48,47 +76,50 @@ a, button, input, select, textarea,
 }
 
 
-/* =========================================================
-   2. VARIABLES
-   ========================================================= */
+/* ============================================================================
+   2. DESIGN TOKENS & CSS VARIABLES
+   ============================================================================
+   Central design variables: update a color here and it updates across the entire site!
+   ============================================================================ */
 
 :root {
 
-    /* Green Rebel Signature Palette */
-    --navy: #0b2e21;           /* Deep Forest Green */
-    --blue: #10b981;           /* Vibrant Emerald (Primary Brand Action) */
-    --light-blue: #eafaf1;     /* Fresh Mint Tint */
+    /* --- Brand Color Palette: "Green Rebel" --- */
+    --navy: #0b2e21;           /* Deep Forest Green (Header, Footers, Dark accents) */
+    --blue: #10b981;           /* Vibrant Emerald (Primary Brand Action & Highlights) */
+    --light-blue: #eafaf1;     /* Fresh Mint Tint (Light card backgrounds & pill badges) */
 
     --rebel-forest: #0b2e21;
     --rebel-deep: #134633;
     --rebel-emerald: #10b981;
     --rebel-mint: #eafaf1;
     --rebel-light: #f7faf8;
-    --rebel-amber: #f59e0b;
+    --rebel-amber: #f59e0b;    /* Warm Gold/Amber (Rotary Theme & Star highlights) */
 
     --white: #ffffff;
     --black: #111111;
 
-    --text: #172922;
-    --muted: #536b60;
+    --text: #172922;           /* High contrast body text for effortless reading */
+    --muted: #536b60;          /* Subtle secondary text (dates, subtitles, captions) */
 
-    --light: #f7faf8;
-    --border: #e1ede5;
+    --light: #f7faf8;          /* Light gray-green section background */
+    --border: #e1ede5;         /* Crisp card borders */
 
     --accent: #f59e0b;
 
-    /* Accessible emerald. --blue (#10b981) is a FILL colour: as text on
-       white it is 2.54:1, which fails WCAG AA. These two are for
-       foreground text and for fills that carry white text. */
-    --emerald-text: #067a52;      /* 4.6:1 on white  */
-    --emerald-strong: #047857;    /* 4.9:1 under white text */
+    /* --- Accessibility & Contrast Safe Emerald ---
+       While --blue (#10b981) looks great as a button background, it fails WCAG AA
+       contrast when used as text on white. These two tokens guarantee high contrast: */
+    --emerald-text: #067a52;      /* 4.6:1 contrast ratio on white backgrounds */
+    --emerald-strong: #047857;    /* 4.9:1 contrast ratio under white text */
 
-    --max-width: 1200px;
+    --max-width: 1200px;       /* Standard maximum container width */
 
+    /* --- Box Shadows & Glassmorphism --- */
     --shadow:
         0 12px 35px rgba(11, 46, 33, 0.07);
 
-    /* 3D Depth & Lighting Tokens */
+    /* 3D Depth & Lighting Elevation Tokens */
     --shadow-3d: 0 16px 36px -8px rgba(11, 46, 33, 0.09), 0 6px 12px -4px rgba(11, 46, 33, 0.04);
     --shadow-hover-3d: 0 28px 60px -12px rgba(16, 185, 129, 0.22), 0 16px 24px -6px rgba(11, 46, 33, 0.08);
     --shadow-glass: 0 12px 35px rgba(11, 46, 33, 0.06);
@@ -98,9 +129,9 @@ a, button, input, select, textarea,
 
 }
 
-/* =========================================================
-   SCROLL PROGRESS BAR & AMBIENT 3D ORBS
-   ========================================================= */
+/* ============================================================================
+   3. SCROLL PROGRESS BAR & AMBIENT 3D GLOWING ORBS
+   ============================================================================ */
 
 .scroll-progress-bar {
     position: fixed;

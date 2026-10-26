@@ -1,53 +1,74 @@
-/* =========================================================
-   RAC DCP — ACCESSIBILITY + INTERACTION LAYER
-   =========================================================
-
-   Loaded AFTER script.js so it can wrap the functions script.js
-   declares on window (openLightbox / closeLightbox).
-
-   ONE IIFE, ZERO top-level declarations — script.js declares 26
-   top-level `const`s in the global declarative record and
-   re-declaring any of them is a SyntaxError that kills the file.
-
-   Contents:
-     1. Modal helper   dialog semantics, focus trap + restore, and a
-                       STACK so body.lightbox-open is only released
-                       when the last dialog closes.
-     2. Retrofits      the two existing lightboxes gain the above
-                       without their internals being rewritten, so
-                       motion.js's FLIP wrap keeps working.
-     3. Keyboard       70 gallery tiles and 17 award images are divs
-                       and imgs with click handlers - mouse-only today.
-     4. Project filter + detail modal.
-   ========================================================= */
+/* ============================================================================
+   RAC DCP — ACCESSIBILITY & INTERACTION LAYER (enhance.js)
+   ============================================================================
+   
+   WHAT THIS FILE DOES:
+   This file is an enhancement layer loaded AFTER `script.js`. It adds:
+     1. Complete Keyboard & Screen-Reader Accessibility (ARIA dialog roles,
+        focus trapping so keyboard users don't get lost behind popups, and focus
+        restoration when closing modals).
+     2. Seamless Retrofits: Enhances the existing image lightboxes without
+        rewriting their core code, preserving 3D animations in motion.js.
+     3. Project Filtering System: Instant category filtering buttons (Community
+        Service, Club Service, etc.) and deep-link URL sharing (#project-name).
+     4. Interactive Project Detail Modal: Shows project photos, description, date,
+        avenue badge, and supports touch swipe on mobile phones!
+     5. Dark / Light Theme System: Persists user preference across page reloads
+        and synchronizes theme switches instantly across open browser tabs.
+   
+   SAFETY ARCHITECTURE:
+   Wrapped inside a single self-executing function (IIFE) with 'use strict'.
+   Zero top-level global variables are declared to prevent naming collisions
+   with `script.js` or `motion.js`.
+   ============================================================================ */
 
 (function () {
     'use strict';
 
+    // ------------------------------------------------------------------------
+    // MODAL STACK TRACKER
+    // ------------------------------------------------------------------------
+    // Keeps a list of all currently open popups/dialogs in order.
+    // If modal B opens on top of modal A, we only unlock the webpage scrollbar
+    // when the very last modal is closed!
     var MODAL_STACK = [];
 
+    // Helper shorthand for document.querySelector and querySelectorAll
     function qs(sel, root) { return (root || document).querySelector(sel); }
     function qsa(sel, root) {
         return Array.prototype.slice.call((root || document).querySelectorAll(sel));
     }
 
-    /* =====================================================
-       1. MODAL HELPER
-       ===================================================== */
 
+    /* ========================================================================
+       1. MODAL & ACCESSIBILITY HELPER FUNCTIONS
+       ======================================================================== */
+
+    // CSS selector matching all HTML elements that can receive keyboard focus
     var FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea,' +
                     '[tabindex]:not([tabindex="-1"])';
 
+    /**
+     * Find all visible, interactive elements inside a container
+     * (Ignores elements that are hidden with display:none)
+     */
     function focusablesIn(el) {
         return qsa(FOCUSABLE, el).filter(function (n) {
             return n.offsetParent !== null || n === document.activeElement;
         });
     }
 
+    /**
+     * Get the topmost active modal from the stack
+     */
     function topModal() {
         return MODAL_STACK.length ? MODAL_STACK[MODAL_STACK.length - 1] : null;
     }
 
+    /**
+     * Set up proper screen reader attributes on a dialog
+     * Tells screen readers: "This is an interactive dialog window"
+     */
     function registerModal(el, label) {
         if (!el || el.__modalReady) { return; }
         el.setAttribute('role', 'dialog');
@@ -57,7 +78,11 @@
         el.__modalReady = true;
     }
 
-    /* Hide the rest of the page from assistive tech while a dialog is up. */
+    /**
+     * Hide or unhide the rest of the webpage from screen readers.
+     * When a modal is open, assistive tech should ONLY read the modal content,
+     * not the background page behind it.
+     */
     function setBackgroundHidden(hidden) {
         qsa('body > *').forEach(function (node) {
             if (node.__isModal || node.tagName === 'SCRIPT') { return; }
@@ -73,30 +98,34 @@
         });
     }
 
+    /**
+     * Move keyboard focus smoothly into the modal
+     */
     function focusInto(el) {
         var f = focusablesIn(el);
         try { (f.length ? f[0] : el).focus({ preventScroll: true }); } catch (e) {}
     }
 
+    /**
+     * Open a modal dialog
+     * - Remembers which button originally had focus so we can return focus when closed.
+     * - Locks page scrolling by adding the 'lightbox-open' class to <body>.
+     * - Pushes modal onto MODAL_STACK.
+     */
     function openModal(el) {
         if (!el) { return; }
-        // Already open (a stuck stack entry, or a re-open): still re-focus
-        // rather than silently doing nothing.
+        // If already open, just make sure keyboard focus stays inside
         if (MODAL_STACK.indexOf(el) !== -1) { focusInto(el); return; }
         el.__isModal = true;
-        el.__restoreFocus = document.activeElement;
+        el.__restoreFocus = document.activeElement; // Remember where the user was
+        
         if (!MODAL_STACK.length) {
             setBackgroundHidden(true);
             document.body.classList.add('lightbox-open');
         }
         MODAL_STACK.push(el);
 
-        // Focus SYNCHRONOUSLY. Callers add .active before calling this, so
-        // the overlay is already visible and .focus() lands. Deferring to
-        // requestAnimationFrame looked equivalent but is not: rAF is frozen
-        // whenever the tab is hidden or throttled, and focus would then
-        // never move into the dialog at all. A 0ms retry covers the case
-        // where a caller sets .active after us.
+        // Move focus into the modal immediately
         focusInto(el);
         setTimeout(function () {
             if (MODAL_STACK.indexOf(el) !== -1 && !el.contains(document.activeElement)) {
@@ -105,6 +134,12 @@
         }, 0);
     }
 
+    /**
+     * Close a modal dialog
+     * - Removes from MODAL_STACK.
+     * - If no more modals are open, re-enables background page scrolling.
+     * - Returns keyboard focus back to the button that originally opened it.
+     */
     function closeModal(el) {
         var i = MODAL_STACK.indexOf(el);
         if (i === -1) { return; }
@@ -114,15 +149,23 @@
             setBackgroundHidden(false);
             document.body.classList.remove('lightbox-open');
         }
+        // Return keyboard focus to the triggering element
         var r = el.__restoreFocus;
         if (r && document.contains(r) && r.offsetParent !== null) {
             r.focus({ preventScroll: true });
         }
         el.__restoreFocus = null;
+        
+        // Notify motion.js to recalculate layout measurements
         if (window.MOTION3D && window.MOTION3D.remeasure) { window.MOTION3D.remeasure(); }
     }
 
-    // One trap for every dialog, capture phase so it beats page handlers.
+    /**
+     * Keyboard Focus Trap:
+     * When pressing Tab or Shift+Tab inside an open modal, this guarantees
+     * that focus cycles strictly between the modal's buttons/links and CANNOT
+     * accidentally escape to the hidden background page.
+     */
     document.addEventListener('keydown', function (ev) {
         var m = topModal();
         if (!m || ev.key !== 'Tab') { return; }
@@ -130,20 +173,21 @@
         if (!f.length) { ev.preventDefault(); m.focus(); return; }
         var first = f[0], last = f[f.length - 1];
         if (ev.shiftKey && (document.activeElement === first || document.activeElement === m)) {
-            ev.preventDefault(); last.focus();
+            ev.preventDefault(); last.focus(); // Shift+Tab on first element wraps to last
         } else if (!ev.shiftKey && document.activeElement === last) {
-            ev.preventDefault(); first.focus();
+            ev.preventDefault(); first.focus(); // Tab on last element wraps to first
         }
     }, true);
 
 
-    /* =====================================================
-       2. RETROFIT THE TWO EXISTING LIGHTBOXES
-       Wrap rather than rewrite: script.js's openLightbox must stay a
-       top-level function declaration on window, because motion.js
-       wraps it for the FLIP zoom. Replacing it would silently kill
-       that effect with no error.
-       ===================================================== */
+    /* ========================================================================
+       2. RETROFIT EXISTING LIGHTBOXES
+       ========================================================================
+       Instead of rewriting the gallery & achievement lightboxes from scratch,
+       we gently "wrap" the existing open/close functions from script.js.
+       This adds full accessibility while keeping motion.js's smooth FLIP zoom
+       animations working 100%!
+       ======================================================================== */
 
     function retrofitGalleryLightbox() {
         var lb = qs('.gallery-lightbox');
@@ -152,6 +196,7 @@
         var closeBtn = qs('.lightbox-close', lb);
         if (closeBtn) { closeBtn.setAttribute('aria-label', 'Close image viewer'); }
 
+        // Wrap window.openLightbox
         var origOpen = window.openLightbox;
         if (typeof origOpen === 'function') {
             window.openLightbox = function () {
@@ -160,6 +205,7 @@
                 return r;
             };
         }
+        // Wrap window.closeLightbox
         var origClose = window.closeLightbox;
         if (typeof origClose === 'function') {
             window.closeLightbox = function () {
@@ -176,7 +222,7 @@
         var closeBtn = qs('.achievement-lightbox-close', lb);
         if (closeBtn) { closeBtn.setAttribute('aria-label', 'Close award viewer'); }
 
-        // It has no opener function to wrap, so follow its .active class.
+        // Observe class changes on the achievement lightbox (.active added/removed)
         new MutationObserver(function () {
             if (lb.classList.contains('active')) { openModal(lb); }
             else { closeModal(lb); }
@@ -184,48 +230,50 @@
     }
 
 
-    /* =====================================================
-       3. KEYBOARD ACCESS FOR THE CLICKABLE GRIDS
-       Done at runtime so none of the 87 tags need editing.
-       ===================================================== */
+    /* ========================================================================
+       3. KEYBOARD ACCESSIBILITY FOR IMAGE GRIDS
+       ========================================================================
+       Makes photo gallery tiles and achievement images fully operable via
+       the keyboard (Tab to navigate, Enter or Space to open).
+       ======================================================================== */
 
     function makeActivatable(el, label) {
         if (el.__activatable) { return; }
         el.__activatable = true;
         el.setAttribute('role', 'button');
-        el.setAttribute('tabindex', '0');
+        el.setAttribute('tabindex', '0'); // Allows element to receive keyboard Tab focus
         if (label) { el.setAttribute('aria-label', label); }
         el.addEventListener('keydown', function (ev) {
             if (ev.key === 'Enter' || ev.key === ' ' || ev.key === 'Spacebar') {
                 ev.preventDefault();
-                el.click();
+                el.click(); // Trigger click event when Enter or Space is pressed
             }
         });
     }
 
     function enableGridKeyboard() {
+        // Gallery items
         qsa('.gallery-item').forEach(function (it) {
             var img = qs('img', it);
             makeActivatable(it, img ? 'View photo: ' + img.alt : 'View photo');
         });
+        // Achievement & Award cards
         qsa('.achievement-image img').forEach(function (img) {
             makeActivatable(img, 'View award: ' + img.alt);
         });
     }
 
 
-    /* =====================================================
-       4. NAV + HERO SEMANTICS
-       ===================================================== */
+    /* ========================================================================
+       4. NAVIGATION & HERO ACCESSIBILITY
+       ======================================================================== */
 
     function enhanceNav() {
         var toggle = qs('.menu-toggle');
         var menu = qs('.nav-menu');
         if (!toggle || !menu) { return; }
 
-        // script.js toggles .active and swaps the glyph but never updates
-        // aria state, so a screen reader hears "Open navigation menu"
-        // while the menu is already open.
+        // Sync aria-expanded state so screen readers announce whether menu is open or closed
         function sync() {
             var open = menu.classList.contains('active');
             toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -247,8 +295,7 @@
         carousel.setAttribute('aria-live', 'polite');
         carousel.setAttribute('aria-atomic', 'true');
 
-        // All four slides sit in the DOM at opacity 0, so without this a
-        // screen reader reads all four slogans back to back.
+        // Hide inactive slides from screen readers so they only hear the active slide
         function sync() {
             slides.forEach(function (s) {
                 var on = s.classList.contains('active');
@@ -263,36 +310,42 @@
         });
         sync();
 
+        // Label carousel indicator dots for screen readers
         qsa('.carousel-dot', carousel).forEach(function (d, i) {
             d.setAttribute('type', 'button');
             d.setAttribute('aria-label', 'Show statement ' + (i + 1));
         });
     }
 
+    // Automatically keep the copyright year current
     function fixFooterYear() {
         var el = document.getElementById('footerYear');
         if (el) { el.textContent = new Date().getFullYear(); }
     }
 
 
-    /* =====================================================
-       5. PROJECT FILTER + DETAIL MODAL
-       ===================================================== */
+    /* ========================================================================
+       5. PROJECT FILTER & POPUP DETAIL MODAL
+       ========================================================================
+       Allows visitors to filter projects by Rotary Avenue of Service and click
+       any project to see full high-res photos and detailed descriptions!
+       ======================================================================== */
 
-    var projects = {};   // key -> { card, title, date, avenue, tag, body, photos[] }
+    var projects = {}; // In-memory index of all projects on the page
 
-    // "club-installation-14.jpg" -> "club-installation"
-    // "7-days-rotaract.jpeg"     -> "7-days-rotaract"   (no trailing -N)
+    // Extract a clean project key from an image URL (e.g., "club-installation-14.jpg" -> "club-installation")
     function keyOf(src) {
         return src.split('/').pop()
                   .replace(/\.[a-z0-9]+$/i, '')
                   .replace(/-\d+$/, '');
     }
 
+    // Convert text string to a clean URL-friendly slug (e.g., "Community Service" -> "community-service")
     function slug(s) {
         return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     }
 
+    // High-resolution photo catalog for project detail slideshows
     var projectPhotoCatalog = {
         'doctors-day': [
             { src: 'images/gallery/doctors-day-1.jpg', alt: "Doctor's Day", w: 900, h: 1600 },
@@ -376,6 +429,9 @@
         ]
     };
 
+    /**
+     * Scan the project cards on the page and build an in-memory database of projects
+     */
     function buildProjectIndex() {
         var photos = projectPhotoCatalog;
 
@@ -409,10 +465,15 @@
         return projects;
     }
 
+    /**
+     * Build the Filter Buttons Bar above the project grid
+     * (e.g. ALL, Community Service, Club Service, Professional Development, International Service)
+     */
     function buildFilterBar() {
         var grid = qs('.project-grid');
         if (!grid || qs('.project-filters')) { return; }
 
+        // Count how many projects belong to each avenue
         var counts = {};
         qsa('.project-card').forEach(function (c) {
             var k = c.dataset.project;
@@ -445,27 +506,24 @@
         status.setAttribute('role', 'status');
         bar.appendChild(status);
 
-        // motion.js may already have wrapped the grid in a scene track
-        // (it loads first). Anchor to the outermost wrapper, or the bar
-        // ends up INSIDE the sticky stage and pins with the corridor.
+        // Place the filter bar above the project grid (or its 3D fly-track wrapper)
         var anchor = grid.closest('.fly-track') || grid;
         anchor.parentNode.insertBefore(bar, anchor);
 
-        // NOTE: class is .project-filter, deliberately NOT .gallery-filter.
-        // script.js and motion.js both bind handlers to .gallery-filter,
-        // so sharing the class would re-filter the gallery and fire a
-        // 70-element FLIP on every project-filter click.
+        // Handle filter clicks
         bar.addEventListener('click', function (ev) {
             var b = ev.target.closest && ev.target.closest('.project-filter');
             if (!b) { return; }
             var f = b.getAttribute('data-filter');
 
+            // Update active styling on filter buttons
             qsa('.project-filter', bar).forEach(function (o) {
                 var on = o === b;
                 o.classList.toggle('active', on);
                 o.setAttribute('aria-pressed', on ? 'true' : 'false');
             });
 
+            // Show matching project cards, hide non-matching cards
             var shown = 0;
             qsa('.project-card').forEach(function (c) {
                 var vis = (f === 'all') || c.classList.contains(f);
@@ -476,10 +534,12 @@
         });
     }
 
-    /* --- the modal ------------------------------------------------- */
-
+    /* --- Project Detail Modal Component --- */
     var pm = null, pmIndex = 0, pmKey = null;
 
+    /**
+     * Create the Project Details Popup Modal element in the DOM
+     */
     function buildProjectModal() {
         if (pm) { return pm; }
         pm = document.createElement('div');
@@ -500,13 +560,12 @@
                 '<span class="pm-tag"></span>' +
               '</div>' +
             '</div>';
-        // MUST be a child of <body>: the compositor writes a live transform
-        // to every .project-card, and a transformed ancestor becomes the
-        // containing block for position:fixed — a nested modal would tilt
-        // and drift with the card every frame.
+        
+        // Append to <body> so fixed positioning isn't disrupted by transformed parents
         document.body.appendChild(pm);
         registerModal(pm, 'Project details');
 
+        // Button clicks
         qs('.project-modal-close', pm).addEventListener('click', closeProjectModal);
         qs('.pm-prev', pm).addEventListener('click', function () { pmPage(-1); });
         qs('.pm-next', pm).addEventListener('click', function () { pmPage(1); });
@@ -514,7 +573,7 @@
             if (ev.target === pm) { closeProjectModal(); }
         });
 
-        // Touch swipe support for smooth mobile photo scrolling
+        // Touch swipe gestures on mobile phones (swipe left = next photo, swipe right = previous)
         var heroEl = qs('.project-modal-hero', pm);
         var touchStartX = 0;
         var touchStartY = 0;
@@ -535,6 +594,7 @@
             }
         }, { passive: true });
 
+        // Keyboard navigation (Escape to close, Left/Right arrow keys to switch photos)
         document.addEventListener('keydown', function (ev) {
             if (!pm.classList.contains('active')) { return; }
             if (ev.key === 'Escape') { closeProjectModal(); }
@@ -550,6 +610,9 @@
         return p.photos.length ? p.photos : [{ src: p.hero, alt: p.title, w: null, h: null }];
     }
 
+    /**
+     * Render the active photo and counter in the modal
+     */
     function pmRender() {
         var list = pmPhotos();
         var img = qs('.project-modal-hero img', pm);
@@ -564,14 +627,20 @@
         qs('.pm-next', pm).style.display = multi ? '' : 'none';
     }
 
+    /**
+     * Move to the previous or next photo in the project slideshow
+     */
     function pmPage(d) {
         var n = pmPhotos().length;
         if (n < 2) { return; }
-        pmIndex = (pmIndex + d + n) % n;   // same wrap arithmetic as the gallery lightbox
+        pmIndex = (pmIndex + d + n) % n; // Circular wrap (e.g. 1st photo wraps to last)
         pmRender();
     }
 
-    // Global so motion.js can wrap it for the FLIP zoom.
+    /**
+     * Open the Project Details Modal for a specific project
+     * (Attached to window so motion.js or HTML links can invoke it directly)
+     */
     window.openProjectModal = function (key) {
         var p = projects[key];
         if (!p) { return; }
@@ -599,6 +668,9 @@
         closeModal(pm);
     }
 
+    /**
+     * Attach click listeners and accessibility hints to all project cards
+     */
     function wireProjectCards() {
         var grid = qs('.project-grid');
         if (!grid) { return; }
@@ -619,6 +691,10 @@
         });
     }
 
+    /**
+     * Deep-link handling: If visitor arrives with "?project=unmute" or "#project-unmute"
+     * in the browser address bar, automatically open that project's modal!
+     */
     function handleUrlProjectParam() {
         var params = new URLSearchParams(window.location.search);
         var pKey = params.get('project');
@@ -641,6 +717,9 @@
         }
     }
 
+    /**
+     * Wire up the WASH (Water, Sanitation, & Hygiene) Initiative modal
+     */
     function wireWashModal() {
         var modal = qs('#washModal');
         if (!modal) { return; }
@@ -689,6 +768,9 @@
         });
     }
 
+    /**
+     * Make contact cards fully clickable
+     */
     function wireContactCards() {
         var cards = qsa('.contact-card');
         cards.forEach(function (card) {
@@ -705,15 +787,22 @@
         });
     }
 
-    /* =====================================================
-       5b. THEME SYSTEM (DARK & LIGHT MODE)
-       ===================================================== */
+
+    /* ========================================================================
+       5b. DARK & LIGHT THEME ENGINE
+       ========================================================================
+       Controls the theme toggle button:
+       - Remembers user selection in browser localStorage.
+       - Respects OS dark/light mode preference if user hasn't explicitly chosen.
+       - Synchronizes instantly across open browser tabs via storage events.
+       ======================================================================== */
 
     function getSavedTheme() {
         try {
             var saved = localStorage.getItem('racdcp-theme');
             if (saved === 'dark' || saved === 'light') return saved;
         } catch (e) {}
+        // Fallback to computer/phone system theme
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             return 'dark';
         }
@@ -724,6 +813,7 @@
         var isDark = theme === 'dark';
         var root = document.documentElement;
 
+        // Briefly add transition class so background colors transition smoothly
         if (animate) {
             root.classList.add('theme-transitioning');
             setTimeout(function () {
@@ -742,13 +832,13 @@
             localStorage.setItem('racdcp-theme', theme);
         } catch (e) {}
 
-        // Update mobile theme color meta tag
+        // Update mobile browser address bar color (<meta name="theme-color">)
         var metaTheme = qs('meta[name="theme-color"]');
         if (metaTheme) {
             metaTheme.setAttribute('content', isDark ? '#09110e' : '#0b2e21');
         }
 
-        // Update all toggle buttons on page
+        // Update all toggle buttons on the page
         var toggles = qsa('.theme-toggle');
         toggles.forEach(function (btn) {
             btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
@@ -762,7 +852,7 @@
             }
         });
 
-        // Notify other components if needed
+        // Dispatch custom event in case external components want to respond
         try {
             window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: theme } }));
         } catch (e) {}
@@ -770,10 +860,9 @@
 
     function initTheme() {
         var current = getSavedTheme();
-        // Sync without animation on boot
-        applyTheme(current, false);
+        applyTheme(current, false); // Apply immediately without flash
 
-        // Click handler for all theme toggles
+        // Click handler for theme switch toggle buttons
         document.addEventListener('click', function (e) {
             var btn = e.target.closest('.theme-toggle');
             if (!btn) return;
@@ -783,7 +872,7 @@
             applyTheme(newTheme, true);
         });
 
-        // OS color-scheme watcher (only if user hasn't explicitly set preference)
+        // Listen for OS dark mode changes (only if user hasn't explicitly set a preference)
         if (window.matchMedia) {
             try {
                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
@@ -796,7 +885,7 @@
             } catch (err) {}
         }
 
-        // Cross-tab synchronization
+        // Sync theme across different browser tabs simultaneously
         window.addEventListener('storage', function (e) {
             if (e.key === 'racdcp-theme' && (e.newValue === 'dark' || e.newValue === 'light')) {
                 applyTheme(e.newValue, false);
@@ -804,9 +893,10 @@
         });
     }
 
-    /* =====================================================
-       6. BOOT
-       ===================================================== */
+
+    /* ========================================================================
+       6. BOOT & INITIALIZATION
+       ======================================================================== */
 
     function init() {
         initTheme();
@@ -828,7 +918,7 @@
         window.addEventListener('popstate', handleUrlProjectParam);
         window.addEventListener('hashchange', handleUrlProjectParam);
 
-        // Re-key keyboard access after a people tab switches.
+        // Keep keyboard navigation working even after switching member tabs
         var origShow = window.showPeople;
         if (typeof origShow === 'function') {
             window.showPeople = function () {
@@ -839,6 +929,7 @@
         }
     }
 
+    // Start everything as soon as the DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {

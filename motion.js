@@ -1,37 +1,58 @@
-/* =========================================================
-   RAC DCP — 3D CINEMATIC MOTION LAYER
-   =========================================================
-
-   Loaded BEFORE script.js so that window.MOTION3D exists by the
-   time script.js's guards are parsed.
-
-   ONE IIFE, ZERO top-level declarations. script.js declares 26
-   top-level `const`s (navbar, lightbox, counters, ...) in the
-   global declarative record; re-declaring any of them here is a
-   SyntaxError that would kill this entire file. Do not add
-   anything outside this closure.
-
-   Design: a single rAF loop owns every transform. The old code
-   had three engines racing for element.style.transform (hover
-   tilt, scroll-velocity pitch, orb parallax). Here effects are
-   additive channels composed into one string per element per
-   frame, so nothing needs to arbitrate.
-   ========================================================= */
+/* ============================================================================
+   RAC DCP — 3D CINEMATIC MOTION & CAMERA ENGINE (motion.js)
+   ============================================================================
+   
+   WHAT THIS FILE DOES:
+   This is the advanced 3D motion and physics engine for the website.
+   It creates high-end visual effects on desktop and workstation displays:
+     1. Unified Compositor Loop: Drives all transforms in a single 60fps/120fps
+        `requestAnimationFrame` loop, preventing different scripts from fighting
+        over element styles.
+     2. Hardware Capability Detection: Checks CPU cores, RAM, and connection speed.
+        Budget laptops, mobile phones, or users with "Reduced Motion" enabled
+        automatically skip heavy 3D calculations to stay fast and battery-friendly.
+     3. Smooth Momentum Scrolling: Glides page scrolling with physical momentum.
+     4. Interactive 3D Card Tilting & Dynamic Glare: Cards physically tilt toward
+        the user's mouse with a glossy spotlight glare following the cursor.
+     5. Scroll Scenes:
+        - 3D Project Corridor: Project cards fly past the camera in 3D space!
+        - Sideways Photo Gallery: Horizontal scrolling track across 70+ photos.
+        - Stacking Awards Deck: Achievement cards stack like a deck of playing cards.
+        - Geared Rotary Wheel: The Rotary emblem spins in sync with your scroll.
+     6. Odometer Counters: Numbers roll up like mechanical slot-machine reels.
+     7. Split-Text Revealing: Headings tilt upward word-by-word into view.
+     8. FLIP Lightbox Transitions: Smoothly expands clicked photos from their
+        thumbnail position into full-screen view.
+   
+   SAFETY & ARCHITECTURE:
+   Loaded BEFORE `script.js` so `window.MOTION3D` is available early.
+   Everything is wrapped in a private self-executing function (IIFE) with
+   ZERO global variable leaks to avoid conflicts with other scripts.
+   ============================================================================ */
 
 (function () {
     'use strict';
 
-    /* =====================================================
-       1. CAPABILITY DETECTION  (runs synchronously)
-       ===================================================== */
+    /* ========================================================================
+       1. HARDWARE & CAPABILITY DETECTION (Runs synchronously on page load)
+       ========================================================================
+       Checks whether the user's computer is powerful enough for 3D graphics.
+       We check:
+         - Reduced motion settings (prefers-reduced-motion).
+         - Input type (fine pointer mouse vs. touch screen).
+         - Device RAM (navigator.deviceMemory) & CPU cores (hardwareConcurrency).
+         - Network connection type (Save-Data mode, 2G/3G).
+       ======================================================================== */
 
     var docEl = document.documentElement;
     var params = new URLSearchParams(location.search);
 
+    // Check if the user turned on "Reduce Motion" in their operating system
     var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Check if user has an accurate mouse pointer (not a mobile touchscreen)
     var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-    // Comprehensive low-spec detection: budget PCs (<=4 cores or <=4GB RAM), slow networks, mobile screens
+    // Detect low-spec devices: <=4 CPU cores, <=4GB RAM, slow networks, or narrow screens
     var lowSpec = (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
                   (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
                   (navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType))) ||
@@ -46,16 +67,17 @@
                     (!navigator.hardwareConcurrency || navigator.hardwareConcurrency >= 6) &&
                     (!navigator.deviceMemory || navigator.deviceMemory >= 8);
 
+    // 3D Motion is enabled ONLY if the device meets all performance criteria
     var enabled = !params.has('nomotion') &&
                   !prefersReduced &&
                   !lowSpec &&
                   !!window.requestAnimationFrame &&
                   !!window.Map;
 
-    // Native scrolling is preserved on all standard & low-end devices.
-    // Momentum lerp is only activated for verified high-end workstations with fine pointers.
+    // Smooth momentum scrolling is reserved for verified high-end workstations with a mouse
     var useMomentum = enabled && finePointer && window.innerWidth >= 1200 && isHighEnd;
 
+    // Public motion configuration object attached to window
     var MOTION = {
         enabled: enabled,
         momentum: useMomentum,
@@ -65,21 +87,29 @@
     };
     window.MOTION3D = MOTION;
 
+    // Tag the <html> element so CSS can activate 3D styles
     docEl.classList.add(enabled ? 'motion-on' : 'motion-off');
 
+    // If device is not capable, safely exit right now — zero battery or CPU waste!
     if (!enabled) { return; }
 
 
-    /* =====================================================
-       2. UTILITIES
-       ===================================================== */
+    /* ========================================================================
+       2. MATH & EASING UTILITIES
+       ======================================================================== */
 
+    // Constrain a number between a minimum and maximum boundary
     function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+    
+    // Exponential deceleration curve: starts fast, lands very gently
     function easeOutExpo(t) { return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+    
+    // Quartic ease in-out curve: slow start, fast middle, gentle stop
     function easeInOutQuart(t) {
         return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
     }
 
+    // Run callback as soon as DOM is ready
     function onReady(fn) {
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', fn);
@@ -89,41 +119,38 @@
     }
 
 
-    /* =====================================================
-       3. SHARED FRAME STATE
-       ===================================================== */
+    /* ========================================================================
+       3. SHARED ANIMATION FRAME STATE & DIALS
+       ======================================================================== */
 
-    /* --- Scroll feel. These are the dials worth touching. ---
-       MOMENTUM_EASE  lower = longer, heavier glide (0.12 was snappy)
-       WHEEL_GAIN     scales each notch of wheel travel
-       WHEEL_MAX      per-event clamp; without it a trackpad flick
-                      injects one huge spike the lerp must absorb,
-                      which reads as a lurch rather than a glide     */
-    var MOMENTUM_EASE = 0.075;
-    var WHEEL_GAIN = 0.9;
-    var WHEEL_MAX = 160;
+    // Smooth Scroll Feel Tuning Parameters:
+    var MOMENTUM_EASE = 0.075; // Lower number = heavier, more luxurious glide
+    var WHEEL_GAIN = 0.9;      // Sensitivity scaling for mouse wheel notches
+    var WHEEL_MAX = 160;       // Max travel clamped per single wheel tick
 
-    var items = [];              // compositor registry
-    var triggers = [];           // one-shot, geometry-driven (headings, odometers)
-    var scenes = [];             // pinned sections driven by 0..1 progress
-    var geomDirty = true;
-    var maxYCache = 0;
+    var items = [];            // Registry of all 3D cards tracked on the page
+    var triggers = [];         // Geometry triggers (e.g. section titles, odometers)
+    var scenes = [];           // Pinned interactive scroll corridors & rails
+    var geomDirty = true;      // Flag indicating page layout has changed and needs remeasuring
+    var maxYCache = 0;         // Cached maximum scrollable page height
     var maxYDirty = true;
 
     var scrollY = window.scrollY || 0;
     var prevScrollY = scrollY;
-    var velocity = 0;            // normalised px per frame
+    var velocity = 0;          // Instantaneous scrolling speed in pixels per frame
     var lastFrame = 0;
-    var rafId = 0;
-    var idleFrames = 0;
+    var rafId = 0;             // requestAnimationFrame ID
+    var idleFrames = 0;        // Counter of inactive frames (parks loop when page is idle)
 
-    var ptrNX = 0, ptrNY = 0;    // pointer, -1..1 across the viewport
-    var ptrX = 0, ptrY = 0;      // raw client coords
+    var ptrNX = 0, ptrNY = 0;  // Normalized mouse coordinates (-1 at left/top to +1 at right/bottom)
+    var ptrX = 0, ptrY = 0;    // Raw mouse coordinates in pixels
 
-    var hovered = null;          // the one card under the pointer
+    var hovered = null;        // The card currently directly underneath the mouse cursor
 
+    // Tell the engine to re-measure card positions on the next animation frame
     function markGeomDirty() { geomDirty = true; maxYDirty = true; wake(); }
 
+    // Calculate maximum distance the page can be scrolled down
     function maxScroll() {
         if (maxYDirty) {
             maxYCache = Math.max(0, docEl.scrollHeight - window.innerHeight);
@@ -132,6 +159,7 @@
         return maxYCache;
     }
 
+    // Check if animation should pause (e.g. browser tab is in background or modal is open)
     function isPaused() {
         return document.hidden ||
                document.body.classList.contains('preloader-active') ||
@@ -139,12 +167,19 @@
     }
 
 
-    /* =====================================================
-       4. COMPOSITOR
-       Channels (reveal / depth / velocity / hover) are additive
-       and compose into ONE transform string per element.
-       ===================================================== */
+    /* ========================================================================
+       4. COMPOSITOR & CARD TRANSFORMS
+       ========================================================================
+       Instead of having 3 separate scripts all writing to `element.style.transform`
+       at different times, this compositor calculates all channels together:
+         1. Entry Reveal Channel (card floating up into position on scroll).
+         2. Depth Conveyor Channel (perspective parallax as card passes through center screen).
+         3. Velocity Pitch Channel (physical lean based on fast scrolling speed).
+         4. Mouse Hover Channel (interactive 3D tilt towards mouse cursor).
+       These channels are added together and written once per element per frame!
+       ======================================================================== */
 
+    // Motion presets defining travel distances, tilt intensity, and timings
     var PRESETS = {
         card: {
             entry: { y: 92, z: -430, rx: 24, ry: 0, s: 0.88 },
@@ -166,6 +201,9 @@
         }
     };
 
+    /**
+     * Register an HTML card element into the 3D compositor
+     */
     function register(el, presetName) {
         if (el.__mo) { return el.__mo; }
         var st = {
@@ -183,31 +221,33 @@
         return st;
     }
 
+    /**
+     * Register all elements matching a selector
+     */
     function registerAll(selector, presetName) {
         var list = document.querySelectorAll(selector);
         for (var i = 0; i < list.length; i++) { register(list[i], presetName); }
     }
 
-    /* One-shot reveals driven by cached geometry rather than an
-       IntersectionObserver. IO callbacks are suspended entirely while
-       a tab is hidden, and a split heading whose trigger never fires
-       would stay at opacity 0 — i.e. invisible text. The frame loop
-       is the safer owner: it cannot leave content stranded. */
+    /**
+     * One-shot trigger: Fires a callback once an element scrolls into view
+     */
     function addTrigger(el, fn) {
         triggers.push({ el: el, fn: fn, top: 0, fired: false, measured: false });
     }
 
-    /* A scroll SCENE is a tall track with a sticky stage inside. While
-       the track is on screen its callback runs every frame with a single
-       number: how far through the track you are, 0..1. Everything the
-       fly-through does is maths on that number. Scenes are measured in
-       the same batched pass as everything else. */
+    /**
+     * Register a pinned scroll scene (e.g. fly-through corridor or sideways gallery)
+     */
     function registerScene(el, fn) {
         var sc = { el: el, fn: fn, top: 0, h: 0, measured: false, last: -1 };
         scenes.push(sc);
         return sc;
     }
 
+    /**
+     * Update progress on pinned scroll scenes
+     */
     function updateScenes(y, vh) {
         for (var i = 0; i < scenes.length; i++) {
             var sc = scenes[i];
@@ -229,6 +269,9 @@
         }
     }
 
+    /**
+     * Check if any one-shot triggers (headings, odometers) have scrolled into view
+     */
     function checkTriggers(y, vh) {
         for (var i = 0; i < triggers.length; i++) {
             var t = triggers[i];
@@ -241,14 +284,18 @@
         }
     }
 
-    /* Batched geometry read — the only place rects are taken.
-       Elements inside display:none tabs measure as 0 and are simply
-       skipped until a remeasure after they become visible. */
+    /**
+     * Batched Geometry Measurement Pass:
+     * Reads element positions and dimensions all at once.
+     * Doing all browser DOM reads together prevents "layout thrashing" and
+     * keeps scrolling at a locked 60/120 frames per second!
+     */
     function remeasure() {
         var y = window.scrollY;
         var groups = new Map();
         var i, st, r;
 
+        // Measure all tracked cards
         for (i = 0; i < items.length; i++) {
             st = items[i];
             r = st.el.getBoundingClientRect();
@@ -264,8 +311,7 @@
             groups.get(p).push(st);
         }
 
-        // Column index from measured x-position, not indexOf() — the
-        // DOM order breaks as soon as the gallery is filtered.
+        // Determine column position for each card based on its horizontal X coordinate
         groups.forEach(function (list) {
             var lefts = [];
             list.forEach(function (s) {
@@ -276,10 +322,11 @@
             var n = Math.max(lefts.length - 1, 1);
             list.forEach(function (s) {
                 s.col = lefts.indexOf(Math.round(s.left));
-                s.colPhase = (s.col / n) - 0.5;   // -0.5 .. +0.5
+                s.colPhase = (s.col / n) - 0.5; // -0.5 (left column) to +0.5 (right column)
             });
         });
 
+        // Measure scroll scenes
         for (i = 0; i < scenes.length; i++) {
             var scn = scenes[i];
             var sr = scn.el.getBoundingClientRect();
@@ -290,6 +337,7 @@
             scn.last = -1;
         }
 
+        // Measure triggers
         for (i = 0; i < triggers.length; i++) {
             var t = triggers[i];
             if (t.fired) { continue; }
@@ -302,13 +350,14 @@
         geomDirty = false;
     }
 
+    /**
+     * Compute and apply the final 3D transform for a single card on this frame
+     */
     function updateItem(st, y, vh, now) {
-        // A scene owns its elements' transforms outright; the depth
-        // conveyor and this writer must not both target them.
-        if (st.sceneOwned) { return; }
+        if (st.sceneOwned) { return; } // Handled by fly-through scene if owned
         if (!st.measured) { return; }
 
-        // Activity test is pure math against cached geometry.
+        // Only compute if card is within or near the visible screen viewport
         var on = (st.top + st.h > y - vh * 0.35) && (st.top < y + vh * 1.35);
         if (on !== st.active) {
             st.active = on;
@@ -318,7 +367,7 @@
 
         var cfg = st.cfg;
 
-        // --- reveal channel -------------------------------------
+        // --- Channel 1: Scroll Reveal Entrance Animation ---
         if (st.revealAt < 0 && st.top < y + vh - 70) {
             st.revealAt = now + (st.col % 4) * cfg.stagger;
         }
@@ -334,7 +383,7 @@
         var sc = 1 + inv * (cfg.entry.s - 1);
         var op = e;
 
-        // --- depth conveyor -------------------------------------
+        // --- Channel 2: Parallax Depth Conveyor ---
         if (cfg.depth && e > 0.001) {
             var p = clamp((st.top + st.h / 2 - y - vh / 2) / (vh / 2), -1.4, 1.4);
             var w = e * (1 - st.hoverT);
@@ -343,27 +392,28 @@
             sc *= 1 - Math.abs(p) * cfg.depth.s * w;
             if (cfg.depth.ry) { ry += st.colPhase * p * cfg.depth.ry * 2 * w; }
 
-            // --- velocity pitch, same writer, no arbitration -----
+            // --- Channel 3: Scroll Velocity Physical Pitch ---
             if (cfg.vel && MOTION.tier > 1) {
                 rx += clamp(velocity * 0.5, -3, 3) * (1 - st.hoverT) * e;
             }
         }
 
-        // --- hover channel --------------------------------------
+        // --- Channel 4: Interactive Mouse Hover Tilt & Lift ---
         if (st.hoverT > 0.001) {
             var h = st.hoverT;
-            ty += -8 * h;
-            tz += cfg.hoverZ * h;
-            sc *= 1 + 0.018 * h;
-            rx += -st.tiltY * cfg.hoverTilt * h;
-            ry += st.tiltX * cfg.hoverTilt * h;
+            ty += -8 * h;               // Lift card 8px forward
+            tz += cfg.hoverZ * h;       // Push forward in 3D Z space
+            sc *= 1 + 0.018 * h;        // Subtle 1.8% scale
+            rx += -st.tiltY * cfg.hoverTilt * h; // Tilt X based on mouse Y
+            ry += st.tiltX * cfg.hoverTilt * h;  // Tilt Y based on mouse X
         }
 
-        // --- single write ---------------------------------------
+        // Compose all channels into ONE clean transform string
         var s = 'perspective(1100px) translate3d(0px,' + ty.toFixed(2) + 'px,' +
                 tz.toFixed(1) + 'px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' +
                 ry.toFixed(2) + 'deg) scale3d(' + sc.toFixed(4) + ',' + sc.toFixed(4) + ',1)';
 
+        // Only update DOM if the value has actually changed
         if (s !== st.last) { st.el.style.transform = s; st.last = s; idleFrames = 0; }
         if (Math.abs(op - st.lastOp) > 0.004) {
             st.el.style.opacity = op > 0.999 ? '' : op.toFixed(3);
@@ -372,9 +422,12 @@
     }
 
 
-    /* =====================================================
-       5. HOVER  (one delegated listener, not 154)
-       ===================================================== */
+    /* ========================================================================
+       5. DELEGATED MOUSE HOVER & SPECULAR GLARE
+       ========================================================================
+       Instead of binding 100+ separate mouse listeners, we use ONE single
+       efficient window pointermove listener that detects which card is hovered!
+       ======================================================================== */
 
     var HOVER_SEL = '.project-card, .board-card, .achievement-card, .publication-card,' +
                     '.contact-card, .impact-card, .website-creator-card, .rebel-menu-card,' +
@@ -388,6 +441,7 @@
         wake();
     }
 
+    // Create the reflective glare layer over the hovered card
     function addGlare(st) {
         if (!MOTION.hover || st.glare) { return; }
         var g = st.el.querySelector(':scope > .card-glare');
@@ -404,10 +458,11 @@
         if (st.glare) { st.glare.style.opacity = '0'; }
     }
 
+    // Pointer move listener: Tracks mouse position and calculates tilt angles
     function onPointerMove(ev) {
         ptrX = ev.clientX; ptrY = ev.clientY;
-        ptrNX = (ptrX / window.innerWidth) * 2 - 1;
-        ptrNY = (ptrY / window.innerHeight) * 2 - 1;
+        ptrNX = (ptrX / window.innerWidth) * 2 - 1;   // -1 (left edge) to +1 (right edge)
+        ptrNY = (ptrY / window.innerHeight) * 2 - 1;  // -1 (top edge) to +1 (bottom edge)
 
         if (MOTION.hover) {
             var el = ev.target && ev.target.closest ? ev.target.closest(HOVER_SEL) : null;
@@ -419,6 +474,7 @@
                 var ly = (ptrY + window.scrollY) - st.top;
                 st.tiltX = clamp((lx / st.w) * 2 - 1, -1, 1);
                 st.tiltY = clamp((ly / st.h) * 2 - 1, -1, 1);
+                // Move specular light spotlight over mouse location
                 if (st.glare) {
                     st.glare.style.background =
                         'radial-gradient(circle at ' + ((lx / st.w) * 100).toFixed(1) + '% ' +
@@ -430,15 +486,17 @@
     }
 
 
-    /* =====================================================
-       6. MOMENTUM SCROLL
-       Lenis-style: native scrollY stays authoritative, we just
-       animate it. That keeps IntersectionObserver, position:fixed,
-       keyboard, find-in-page and the scrollbar all working.
-       ===================================================== */
+    /* ========================================================================
+       6. SMOOTH MOMENTUM SCROLLING (Lenis-Style Physical Lerp)
+       ========================================================================
+       Smoothly glides page scrolling. Unlike virtual scroll libraries that break
+       page accessibility, native `window.scrollY` remains 100% authoritative!
+       Find-in-page (Ctrl+F), browser scrollbars, and bookmarks all work seamlessly.
+       ======================================================================== */
 
     var mm = { target: 0, cur: 0, lastApplied: 0, tween: null };
 
+    // Prevent momentum scrolling if mouse is scrolling inside an internal scrollable box
     function canScrollInside(node, dir) {
         while (node && node !== document.body && node !== docEl) {
             if (node.scrollHeight > node.clientHeight + 1) {
@@ -453,7 +511,7 @@
         return false;
     }
 
-    /* True if something other than this engine moved the page. */
+    // Sync state if user dragged the physical browser scrollbar with their mouse
     function syncFromActual() {
         var actual = window.scrollY;
         if (Math.abs(actual - mm.lastApplied) > 1.5) {
@@ -463,6 +521,7 @@
         return false;
     }
 
+    // Mouse wheel event listener
     function onWheel(ev) {
         if (!MOTION.momentum || isPaused() || ev.ctrlKey || ev.metaKey) { return; }
         if (canScrollInside(ev.target, ev.deltaY)) { return; }
@@ -471,21 +530,17 @@
         if (ev.deltaMode === 1) { d *= 16; }
         else if (ev.deltaMode === 2) { d *= window.innerHeight; }
 
-        // Clamp first, then gain: a single trackpad flick can report
-        // several hundred px, which the spring then has to swallow.
+        // Clamp travel delta to prevent violent spikes on laptop trackpad flicks
         d = clamp(d, -WHEEL_MAX, WHEEL_MAX) * WHEEL_GAIN;
 
-        // Resync BEFORE accumulating. If anything else moved the page
-        // since our last write (scrollbar, anchor, focus, find-in-page),
-        // the next frame's resync would otherwise discard this delta.
         syncFromActual();
-
         mm.tween = null;
         mm.target = clamp(mm.target + d, 0, maxScroll());
         ev.preventDefault();
         wake();
     }
 
+    // Keyboard navigation keys (PageDown, PageUp, Space, Home, End)
     function onKeyScroll(ev) {
         if (!MOTION.momentum || isPaused() || mm.tween) { return; }
         var a = document.activeElement;
@@ -504,13 +559,13 @@
         wake();
     }
 
+    // Interpolation step: Coast gently towards scroll target
     function momentumStep(dt) {
         if (!MOTION.momentum) { return; }
 
         if (mm.tween) { stepTween(); return; }
         if (isPaused()) { mm.cur = mm.target = window.scrollY; return; }
 
-        // Resync: anything that isn't us moved the page.
         if (syncFromActual()) { return; }
 
         if (Math.abs(mm.target - mm.cur) < 0.03) {
@@ -518,7 +573,7 @@
             return;
         }
 
-        // Frame-rate normalised so 60Hz and 120Hz feel identical.
+        // Frame-rate normalized so 60Hz and 120Hz displays feel identically smooth
         var k = 1 - Math.pow(1 - MOMENTUM_EASE, dt / 16.67);
         mm.cur += (mm.target - mm.cur) * k;
         window.scrollTo(0, mm.cur);
@@ -526,7 +581,7 @@
         idleFrames = 0;
     }
 
-    /* Anchors use a fixed-duration tween so they land exactly. */
+    // Smooth animated scroll to a specific pixel destination (e.g. clicking an anchor link)
     function scrollToY(dest, dur) {
         dest = clamp(dest, 0, maxScroll());
         if (!MOTION.momentum) {
@@ -548,41 +603,37 @@
         if (p >= 1) { mm.tween = null; }
     }
 
+    // Handle clicks on internal anchor links (e.g. #about, #contact)
     function onAnchorClick(ev) {
         if (ev.defaultPrevented || ev.button !== 0 || ev.metaKey || ev.ctrlKey) { return; }
         var a = ev.target.closest && ev.target.closest('a[href^="#"], .scroll-top-dial');
         if (!a) { return; }
 
         var target = null;
-        var owns = false;   // does script.js also scroll for this element?
+        var owns = false;
 
         if (a.classList.contains('scroll-top-dial')) {
             target = 0;
-            owns = true;                       // script.js §9 does scrollTo({smooth})
+            owns = true;
         } else {
             var href = a.getAttribute('href');
             if (!href || href === '#') { return; }
             var el = document.getElementById(href.slice(1));
             if (!el) { return; }
             target = el.getBoundingClientRect().top + window.scrollY - 94;
-            owns = a.classList.contains('minimap-dot');   // §12 does scrollIntoView
+            owns = a.classList.contains('minimap-dot');
             history.replaceState(null, '', href);
         }
 
         ev.preventDefault();
-
-        // Only silence the elements script.js would ALSO scroll for.
-        // Plain nav/footer links must keep propagating, or script.js
-        // never gets to close the mobile menu on tap.
         if (owns) { ev.stopPropagation(); }
-
         scrollToY(target, 950);
     }
 
 
-    /* =====================================================
-       7. HERO — LAYERED PARALLAX
-       ===================================================== */
+    /* ========================================================================
+       7. HERO SECTION LAYERED PARALLAX
+       ======================================================================== */
 
     var hero = {};
 
@@ -598,10 +649,11 @@
 
     function updateHero(y, now) {
         if (!hero.sec) { return; }
-        if (y > hero.h + 200) { return; }              // fully scrolled past
+        if (y > hero.h + 200) { return; } // Skip calculations if scrolled well past hero
 
         var hp = clamp(y / (hero.h * 0.9), 0, 1);
 
+        // Content tilts and fades gently backwards
         if (hero.content) {
             hero.content.style.transform =
                 'perspective(1400px) translate3d(0px,' + (hp * -120).toFixed(1) + 'px,' +
@@ -613,9 +665,7 @@
             hero.overlay.style.transform = 'translate3d(0px,' + (hp * 55).toFixed(1) + 'px,0px)';
         }
 
-        /* Custom-property channel: the Ken Burns keyframe owns `transform`
-           on this element and a CSS animation outranks an inline style, so
-           writing style.transform here would be silently discarded. */
+        // Bridge to CSS custom properties on backdrop
         if (hero.backdrop) {
             hero.backdrop.style.setProperty('--hb-y', (hp * 90).toFixed(1) + 'px');
             hero.backdrop.style.setProperty('--hb-x',
@@ -623,25 +673,22 @@
         }
 
         if (hero.zoom) {
-            // Travel into the photo rather than sliding it away.
             hero.zoom.style.transform = 'scale(' + (1 + hp * 0.42).toFixed(3) + ')';
             hero.zoom.style.opacity = clamp(1 - hp * 0.5, 0, 1).toFixed(3);
         }
 
         if (hero.meta) {
-            hero.meta.style.transform =
-                'translate3d(0px,' + (hp * -60).toFixed(1) + 'px,0px)';
+            hero.meta.style.transform = 'translate3d(0px,' + (hp * -60).toFixed(1) + 'px,0px)';
             hero.meta.style.opacity = clamp(1 - hp * 1.4, 0, 1).toFixed(3);
         }
     }
 
 
-    /* =====================================================
-       8. SITE CHROME  (CSS custom-property channel)
-       These all have running keyframes or stateful classes that
-       own `transform`, and a CSS animation outranks an inline
-       style — so JS writes only the vars.
-       ===================================================== */
+    /* ========================================================================
+       8. SITE CHROME & CSS CUSTOM-PROPERTY BRIDGES
+       ========================================================================
+       Updates CSS variables for floating background orbs, minimap tilt, and gear.
+       ======================================================================== */
 
     var chrome = {};
 
@@ -655,6 +702,7 @@
     }
 
     function updateChrome(y) {
+        // Ambient background glowing orbs parallax
         if (chrome.orb1) {
             chrome.orb1.style.setProperty('--my', (y * 0.10).toFixed(1) + 'px');
             chrome.orb1.style.setProperty('--mx', (ptrNX * 18).toFixed(1) + 'px');
@@ -663,14 +711,16 @@
             chrome.orb2.style.setProperty('--my', (-y * 0.08).toFixed(1) + 'px');
             chrome.orb2.style.setProperty('--mx', (-ptrNX * 22).toFixed(1) + 'px');
         }
+        // Rotate Rotary gear emblem in sync with scroll position
         if (chrome.gear) {
-            /* ~360deg per 2000px, eased for free by the momentum lerp. */
             chrome.gear.style.setProperty('--wheel-rot', (y * 0.18).toFixed(1) + 'deg');
         }
+        // Lean circular scroll dial toward mouse cursor
         if (chrome.dial) {
             chrome.dial.style.setProperty('--dry', (ptrNX * 12).toFixed(2) + 'deg');
             chrome.dial.style.setProperty('--drx', clamp(-velocity * 1.1, -14, 14).toFixed(2) + 'deg');
         }
+        // Section minimap 3D tilt
         if (chrome.minimap) {
             chrome.minimap.style.setProperty('--mmry', (ptrNX * -8).toFixed(2) + 'deg');
             chrome.minimap.style.setProperty('--mmz', clamp(Math.abs(velocity) * 1.6, 0, 22).toFixed(1) + 'px');
@@ -681,11 +731,12 @@
     }
 
 
-    /* =====================================================
-       9. SPLIT-TEXT HEADINGS
-       Recursive text-node walk. Never textContent: every h2 holds
-       a coloured <span>, one also holds a <br>, and one IS a span.
-       ===================================================== */
+    /* ========================================================================
+       9. SPLIT-TEXT REVEAL ENGINE
+       ========================================================================
+       Splits heading sentences into individual words wrapped in invisible masks.
+       As you scroll, each word rotates upright and slides smoothly into place.
+       ======================================================================== */
 
     function wordSpan(text) {
         var outer = document.createElement('span');
@@ -697,6 +748,7 @@
         return outer;
     }
 
+    // Recursively walk text nodes so HTML tags (like <span class="highlight">) are preserved
     function walkSplit(node, out) {
         var kids = Array.prototype.slice.call(node.childNodes);
         for (var i = 0; i < kids.length; i++) {
@@ -715,7 +767,7 @@
                 if (c.tagName === 'BR') {
                     out.appendChild(c.cloneNode(false));
                 } else {
-                    var clone = c.cloneNode(false);      // keeps <span class> + its colour
+                    var clone = c.cloneNode(false);
                     walkSplit(c, clone);
                     out.appendChild(clone);
                 }
@@ -753,7 +805,6 @@
         }
     }
 
-    /* Hero h1s: observe script.js's rotator, never fight it. */
     function initHeroRotator() {
         var slides = document.querySelectorAll('.hero-slide');
         if (!slides.length) { return; }
@@ -767,6 +818,7 @@
             }
         });
 
+        // Observe slide class changes to animate incoming and outgoing statements
         var mo = new MutationObserver(function (muts) {
             muts.forEach(function (m) {
                 var s = m.target;
@@ -780,12 +832,11 @@
     }
 
 
-    /* =====================================================
-       10. ODOMETER COUNTERS
-       Strips roll monotonically (0 -> spins -> final digit), so
-       there is never a backward wrap. The value is exposed to
-       assistive tech via aria-label; the spinner is hidden.
-       ===================================================== */
+    /* ========================================================================
+       10. MECHANICAL ODOMETER NUMBER COUNTERS
+       ========================================================================
+       Replaces static numbers with rolling mechanical odometer strips (0-9).
+       ======================================================================== */
 
     function buildOdometer(el) {
         if (el.dataset.odo) { return; }
@@ -794,7 +845,7 @@
 
         var text = target.toLocaleString();
         el.dataset.odo = '1';
-        el.setAttribute('aria-label', text);
+        el.setAttribute('aria-label', text); // Accessible for screen readers
         el.textContent = '';
 
         var odo = document.createElement('span');
@@ -870,14 +921,19 @@
     }
 
 
-    /* =====================================================
-       11. GALLERY — FILTER FLIP + LIGHTBOX ZOOM
-       ===================================================== */
+    /* ========================================================================
+       11. FLIP LIGHTBOX EXPANSION & FILTER TRANSITIONS
+       ========================================================================
+       FLIP technique:
+         1. First: Measure clicked thumbnail rect on screen.
+         2. Last: Measure opened modal/image destination rect.
+         3. Invert: Apply transform to start exactly over the thumbnail.
+         4. Play: Animate transform to 0, creating a seamless zoom-in!
+       ======================================================================== */
 
     var lastThumb = null;
 
     function initGalleryFlip() {
-        // Capture phase: measure BEFORE script.js toggles .hidden.
         document.addEventListener('click', function (ev) {
             var btn = ev.target.closest && ev.target.closest('.gallery-filter');
             if (!btn) { return; }
@@ -902,10 +958,8 @@
 
                     var f = first.get(t);
                     if (f) {
-                        // Moved: replay reveal from its old position.
                         st.revealAt = performance.now() + (st.col % 4) * 40;
                     } else {
-                        // Newly shown: full 3D entrance.
                         st.revealAt = performance.now() + (st.col % 4) * 55;
                         st.last = '';
                     }
@@ -914,7 +968,7 @@
             }, 0);
         }, true);
 
-        // Remember which thumbnail was clicked, for the FLIP zoom.
+        // Record clicked thumbnail position
         document.addEventListener('click', function (ev) {
             var tile = ev.target.closest && ev.target.closest(
                 '.gallery-item, .achievement-image, .project-card .project-image');
@@ -944,7 +998,7 @@
                                     Math.max(sy, 0.05).toFixed(4) + ') rotateY(10deg)';
             imgEl.style.opacity = '0.4';
 
-            // force reflow so the transition has a start value
+            // Force reflow
             void imgEl.offsetWidth;
 
             imgEl.style.transition = 'transform .52s cubic-bezier(.16,1,.3,1), opacity .3s ease';
@@ -954,9 +1008,6 @@
     }
 
     function initLightboxFlip() {
-        // script.js exposes these as function declarations, so they
-        // land on window and can be wrapped. Its `const lightbox`
-        // bindings are NOT reachable — re-query the DOM instead.
         var OPENERS = {
             openLightbox: '.gallery-lightbox .lightbox-content img',
             openProjectModal: '.project-modal .project-modal-hero img'
@@ -973,7 +1024,6 @@
             };
         });
 
-        // Achievement lightbox has no wrappable opener — observe it.
         var achv = document.querySelector('.achievement-lightbox');
         if (achv) {
             new MutationObserver(function () {
@@ -984,22 +1034,12 @@
         }
     }
 
-
-    /* Project filter FLIP. Mirrors initGalleryFlip but matches
-       .project-filter (NOT .gallery-filter, which script.js and the
-       gallery FLIP both already own) and uses % 3 for the 3-column
-       project grid. */
     function initProjectFlip() {
         document.addEventListener('click', function (ev) {
             var btn = ev.target.closest && ev.target.closest('.project-filter');
             if (!btn) { return; }
 
-            // The fly-through owns these transforms; a FLIP would fight it.
             if (docEl.classList.contains('fly-on')) {
-                // setTimeout, not rAF: this only needs to run AFTER the
-                // filter handler toggles .hidden, and rAF is suspended
-                // whenever the frame loop is throttled — which left the
-                // corridor length and counter stale after filtering.
                 setTimeout(function () {
                     var tr = document.querySelector('.fly-track');
                     if (tr && tr.__recount) { tr.__recount(); }
@@ -1008,8 +1048,7 @@
                 return;
             }
 
-            var cards = Array.prototype.slice.call(
-                document.querySelectorAll('.project-card'));
+            var cards = Array.prototype.slice.call(document.querySelectorAll('.project-card'));
             var wasVisible = new Map();
             cards.forEach(function (c) {
                 var r = c.getBoundingClientRect();
@@ -1024,9 +1063,6 @@
                     if (!st || !c.getBoundingClientRect().width) { return; }
                     var fresh = !wasVisible.has(c);
                     st.revealAt = performance.now() + (st.col % 3) * (fresh ? 60 : 45);
-                    // Without this the `s !== st.last` write guard can skip
-                    // the first frame and the card renders with the stale
-                    // transform it held before display:none.
                     if (fresh) { st.last = ''; }
                 });
                 wake();
@@ -1035,13 +1071,9 @@
     }
 
 
-    /* =====================================================
-       11b. SCROLL SCENES
-       Each is opt-out via ?no=fly,rail,stack,hero,gear so they can be
-       judged one at a time. All of them require a fine pointer and a
-       wide viewport: pinned sections on touch feel sticky rather than
-       smooth, so below 1025px every section keeps its original layout.
-       ===================================================== */
+    /* ========================================================================
+       11b. SCROLL SCENES (Camera Fly-Through, Horizontal Rails, Card Decks)
+       ======================================================================== */
 
     var SCENE_OFF = (params.get('no') || '').split(',');
 
@@ -1050,9 +1082,6 @@
                window.innerWidth >= 1025 && finePointer;
     }
 
-    /* Wrap an element in track + stage. Both are display:contents until
-       the scene's html class is set, so an inactive scene leaves the
-       original layout completely untouched. */
     function wrapScene(el, trackCls, stageCls) {
         if (!el || el.__wrapped) { return null; }
         var track = document.createElement('div');
@@ -1066,7 +1095,7 @@
         return { track: track, stage: stage };
     }
 
-    /* --- Scene 1: project camera fly-through ----------------------- */
+    /* --- Scene 1: 3D Project Corridor Camera Fly-Through --- */
     function initFlythrough() {
         var grid = document.querySelector('.project-grid');
         if (!grid || !sceneOn('fly')) { return; }
@@ -1113,29 +1142,14 @@
                 }
             });
 
-            // Start at 1.2 rather than -1.3 so the first card is ALREADY in
-            // the corridor at p=0. Starting behind the fade-in point left a
-            // ~270px dead zone: you landed on the #projects anchor and saw
-            // an empty stage until the first card caught up.
             var head = 1.2 + p * (n + 0.48);
             var front = -1, frontD = 1e9;
 
             visible.forEach(function (c, i) {
                 var local = head - i;
-                // 820px of travel per card, against a ~2300px visible depth
-                // window, keeps about three cards in flight at once. At the
-                // original 2500 only one was ever in view, which read as a
-                // slideshow rather than a corridor.
-                var z = -2000 + local * 820;
-                // Fade out between z=200 and z=500, so a card is fully opaque
-                // when it is closest. The old window started fading at z=300,
-                // which meant the card at the camera was only 58% visible.
+                var z = -2000 + local * 820; // 3D depth position along corridor
                 var op = clamp((z + 2000) / 700, 0, 1) * clamp((500 - z) / 300, 0, 1);
 
-                // Fan OUT with distance, not with approach: the card at the
-                // camera stays centred while the ones behind it splay left
-                // and right, so you see down the corridor instead of at one
-                // card with the rest hidden directly behind it.
                 var side = (i % 2 ? 1 : -1);
                 var dist = clamp(-z / 2000, 0, 1);
                 var x = side * dist * 300;
@@ -1153,13 +1167,12 @@
                 if (op > 0.5 && d < frontD) { frontD = d; front = i; }
             });
 
-            counter.querySelector('.fly-n').textContent =
-                ('0' + clamp(front + 1, 1, n)).slice(-2);
+            counter.querySelector('.fly-n').textContent = ('0' + clamp(front + 1, 1, n)).slice(-2);
             counter.style.setProperty('--fly-p', (p * 100).toFixed(1) + '%');
         });
     }
 
-    /* --- Scene 2: gallery runs sideways ---------------------------- */
+    /* --- Scene 2: Gallery Runs Sideways on Horizontal Rail --- */
     function initRail() {
         var grid = document.querySelector('.gallery-grid');
         if (!grid || !sceneOn('rail')) { return; }
@@ -1170,10 +1183,7 @@
 
         function resize() {
             var travel = Math.max(grid.scrollWidth - window.innerWidth, 0);
-            /* 0.55 vertical px per horizontal px keeps the track about
-               the same height as the 4-column grid it replaces. */
-            w.track.style.setProperty('--rail-h',
-                (window.innerHeight + travel * 0.55) + 'px');
+            w.track.style.setProperty('--rail-h', (window.innerHeight + travel * 0.55) + 'px');
             markGeomDirty();
         }
         resize();
@@ -1185,7 +1195,7 @@
         });
     }
 
-    /* --- Scene 3: awards stack into a deck ------------------------- */
+    /* --- Scene 3: Awards Stack Into a Physical Deck --- */
     function initDeck() {
         var grid = document.querySelector('.achievement-grid');
         if (!grid || !sceneOn('stack')) { return; }
@@ -1202,17 +1212,10 @@
         });
         markGeomDirty();
 
-        /* Cards further down the pile shrink and dim, so the deck reads
-           as depth rather than a stack of identical rectangles. */
         registerScene(grid, function () {
-            // How buried a card is = how far the NEXT card has closed in on
-            // it. In free flow they sit ~158px apart; once both are stuck
-            // the gap is the 14px stagger. Measuring the distance a card
-            // has travelled from its own sticky top (the obvious approach)
-            // tops out at ~0.05 and is invisible.
             var i, tops = [];
             for (i = 0; i < cards.length; i++) {
-                tops.push(cards[i].getBoundingClientRect().top);   // read phase
+                tops.push(cards[i].getBoundingClientRect().top);
             }
             for (i = 0; i < cards.length; i++) {
                 var gap = (i < cards.length - 1) ? tops[i + 1] - tops[i] : 999;
@@ -1225,12 +1228,7 @@
         });
     }
 
-    /* --- Scene 4: hero zoom-through --------------------------------
-       NOT a registerScene: that formula is (y - top) / (height - viewport),
-       which is right for a tall pinned track but gives the hero only
-       947 - 900 = 47px of travel, so the whole zoom fired in 47 pixels.
-       The hero is an ordinary section, so it rides updateHero's own `hp`
-       (y / heroHeight) instead. */
+    /* --- Scene 4: Hero Backdrop Zoom-Through --- */
     function initHeroZoom() {
         var backdrop = document.querySelector('.hero-backdrop');
         if (!backdrop || !sceneOn('hero')) { return; }
@@ -1238,7 +1236,7 @@
         hero.zoom = backdrop;
     }
 
-    /* --- Scene 5: the page is geared to the Rotary wheel ------------ */
+    /* --- Scene 5: Geared Rotary Wheel SVG Emblem --- */
     function initRotaryGear() {
         var dial = document.getElementById('scrollTopDial');
         if (!dial || SCENE_OFF.indexOf('gear') !== -1) { return; }
@@ -1253,8 +1251,8 @@
         var g = document.createElementNS(NS, 'g');
         g.setAttribute('fill', 'currentColor');
 
+        // Draw 24 gear teeth and 6 spokes matching official Rotary emblem
         var i, el;
-        /* 24 teeth and 6 spokes, as on the actual emblem. */
         for (i = 0; i < 24; i++) {
             el = document.createElementNS(NS, 'rect');
             el.setAttribute('x', '47.4');
@@ -1276,21 +1274,13 @@
         }
 
         var ring = document.createElementNS(NS, 'circle');
-        ring.setAttribute('cx', '50');
-        ring.setAttribute('cy', '50');
-        ring.setAttribute('r', '38');
-        ring.setAttribute('fill', 'none');
-        ring.setAttribute('stroke', 'currentColor');
-        ring.setAttribute('stroke-width', '9');
+        ring.setAttribute('cx', '50'); ring.setAttribute('cy', '50'); ring.setAttribute('r', '38');
+        ring.setAttribute('fill', 'none'); ring.setAttribute('stroke', 'currentColor'); ring.setAttribute('stroke-width', '9');
         g.appendChild(ring);
 
         var hub = document.createElementNS(NS, 'circle');
-        hub.setAttribute('cx', '50');
-        hub.setAttribute('cy', '50');
-        hub.setAttribute('r', '12');
-        hub.setAttribute('fill', 'none');
-        hub.setAttribute('stroke', 'currentColor');
-        hub.setAttribute('stroke-width', '7');
+        hub.setAttribute('cx', '50'); hub.setAttribute('cy', '50'); hub.setAttribute('r', '12');
+        hub.setAttribute('fill', 'none'); hub.setAttribute('stroke', 'currentColor'); hub.setAttribute('stroke-width', '7');
         g.appendChild(hub);
 
         svg.appendChild(g);
@@ -1299,13 +1289,12 @@
     }
 
 
-    /* =====================================================
+    /* ========================================================================
        12. INTEGRATION WITH script.js STATE CHANGES
-       ===================================================== */
+       ======================================================================== */
 
     function initIntegration() {
-        // People tabs: 9 of 13 cards live in display:none panes, so
-        // they have no geometry until their tab is shown.
+        // Tab switching: Re-measure geometry when switching people tabs
         var origShow = window.showPeople;
         if (typeof origShow === 'function') {
             window.showPeople = function () {
@@ -1324,8 +1313,7 @@
             };
         }
 
-        // Every rect taken while the preloader is up is garbage:
-        // body is height:100vh; overflow:hidden.
+        // When site preloader finishes, play intro entrance animation
         var body = document.body;
         if (body.classList.contains('preloader-active')) {
             var mo = new MutationObserver(function () {
@@ -1341,14 +1329,13 @@
             mo.observe(body, { attributes: true, attributeFilter: ['class'] });
         }
 
-        // Scrollbar width, for the lightbox padding compensation.
+        // Calculate scrollbar width so dialogs don't shift layout
         docEl.style.setProperty('--sbw', (window.innerWidth - docEl.clientWidth) + 'px');
 
-        // Document height moves all session: 70 lazy images.
         if (window.ResizeObserver) {
             new ResizeObserver(markGeomDirty).observe(docEl);
         }
-        document.addEventListener('load', markGeomDirty, true);   // img load doesn't bubble
+        document.addEventListener('load', markGeomDirty, true);
         window.addEventListener('resize', function () {
             ['.fly-track', '.rail-track'].forEach(function (sel) {
                 var el = document.querySelector(sel);
@@ -1368,9 +1355,13 @@
     }
 
 
-    /* =====================================================
-       13. THE LOOP
-       ===================================================== */
+    /* ========================================================================
+       13. THE UNIFIED REQUESTANIMATIONFRAME RENDER LOOP
+       ========================================================================
+       This is the central heartbeat of the motion layer.
+       Runs at display refresh rate (60Hz / 120Hz).
+       Parks automatically when there is no user input or movement to conserve power!
+       ======================================================================== */
 
     function wake() {
         idleFrames = 0;
@@ -1381,9 +1372,10 @@
         var dt = clamp(now - lastFrame, 8, 50);
         lastFrame = now;
 
+        // Step 1: Smooth momentum scrolling
         momentumStep(dt);
 
-        // --- the only DOM read of the frame ---
+        // Step 2: Read current scroll position and remeasure if needed
         scrollY = window.scrollY;
         if (geomDirty) { remeasure(); }
 
@@ -1393,7 +1385,7 @@
         velocity = velocity * 0.88 + (dy / dt * 16.67) * 0.12;
         if (Math.abs(velocity) < 0.02) { velocity = 0; }
 
-        // --- hover easing ---
+        // Step 3: Update hover easing and all 3D cards
         if (hovered || velocity) { idleFrames = 0; }
         for (var i = 0; i < items.length; i++) {
             var st = items[i];
@@ -1407,12 +1399,13 @@
             updateItem(st, scrollY, vh, now);
         }
 
+        // Step 4: Update scenes, triggers, hero, and chrome
         updateScenes(scrollY, vh);
         checkTriggers(scrollY, vh);
         updateHero(scrollY, now);
         updateChrome(scrollY);
 
-        // Park when genuinely idle; any input wakes us again.
+        // Step 5: Power conservation — park loop when user has stopped moving
         idleFrames++;
         if (idleFrames > 90 && !mm.tween && Math.abs(mm.target - mm.cur) < 0.1) {
             rafId = 0;
@@ -1422,9 +1415,9 @@
     }
 
 
-    /* =====================================================
-       14. BOOT
-       ===================================================== */
+    /* ========================================================================
+       14. BOOT & INITIALIZATION
+       ======================================================================== */
 
     function init() {
         registerAll('.project-card, .board-card, .achievement-card, .publication-card,' +
@@ -1469,9 +1462,9 @@
     onReady(init);
 
 
-    /* =====================================================
-       15. DEBUG SURFACE
-       ===================================================== */
+    /* ========================================================================
+       15. PUBLIC API & DEBUG SURFACE
+       ======================================================================== */
 
     MOTION.stats = function () {
         var active = 0;
