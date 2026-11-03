@@ -957,6 +957,14 @@ a, button, input, select, textarea,
         drop-shadow(0 6px 12px rgba(0, 0, 0, 0.2));
 }
 
+.district-map .map-img-dark {
+    display: none;
+}
+
+.district-map .map-img-light {
+    display: block;
+}
+
 .map-label {
     position: absolute;
     top: 14px;
@@ -8482,6 +8490,23 @@ html.theme-transitioning *::after {
 [data-theme="dark"] .district-map img {
     filter: drop-shadow(0 0 1px rgba(52, 211, 153, 0.6))
             drop-shadow(0 14px 22px rgba(0, 0, 0, 0.5)) !important;
+}
+
+[data-theme="dark"] .district-map .map-img-light {
+    display: none !important;
+}
+
+[data-theme="dark"] .district-map .map-img-dark {
+    display: block !important;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .district-map .map-img-light {
+        display: none !important;
+    }
+    :root:not([data-theme="light"]) .district-map .map-img-dark {
+        display: block !important;
+    }
 }
 
 [data-theme="dark"] .map-label {
