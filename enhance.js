@@ -426,6 +426,11 @@
             { src: 'images/gallery/unmute-2.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1599, h: 899 },
             { src: 'images/gallery/unmute-3.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1280, h: 960 },
             { src: 'images/gallery/unmute-4.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1599, h: 899 }
+        ],
+        'saradiya-sangam': [
+            { src: 'images/gallery/saradiya-sangam-1.jpeg', alt: "Saradiya Sangam", w: 1280, h: 960 },
+            { src: 'images/gallery/saradiya-sangam-2.jpeg', alt: "Saradiya Sangam", w: 1280, h: 960 },
+            { src: 'images/gallery/saradiya-sangam-3.jpeg', alt: "Saradiya Sangam", w: 1152, h: 864 }
         ]
     };
 
