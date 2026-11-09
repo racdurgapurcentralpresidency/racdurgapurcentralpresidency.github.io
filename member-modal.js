@@ -519,6 +519,9 @@
             if (rawPastDistrictRoles.trim()) {
                 pastDistrictRoles = parseList(rawPastDistrictRoles);
                 currentDistrictRole = rawDistrictRole.trim();
+            } else if (card.hasAttribute('data-past-district-roles')) {
+                currentDistrictRole = rawDistrictRole.trim();
+                pastDistrictRoles = [];
             } else if (rawDistrictRole.trim()) {
                 var allDistRoles = parseList(rawDistrictRole);
                 allDistRoles.forEach(function (distItem) {
@@ -530,6 +533,7 @@
                 });
                 if (!currentDistrictRole && allDistRoles.length > 0) {
                     currentDistrictRole = allDistRoles[0];
+                    pastDistrictRoles.shift();
                 }
             }
 
