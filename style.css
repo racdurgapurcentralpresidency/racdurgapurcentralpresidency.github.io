@@ -9584,6 +9584,604 @@ html.theme-transitioning *::after {
     background: rgba(52, 211, 153, 0.45) !important;
 }
 
+/* ============================================================================
+   MEMBER PROFILE CARDS INTERACTION & CUE
+   ============================================================================ */
+
+.board-card[data-name],
+.people-card[data-name] {
+    cursor: pointer;
+}
+
+.member-card-cue {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #047857;
+    background: #eafaf1;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 999px;
+    padding: 3px 10px;
+    margin-top: 10px;
+    letter-spacing: 0.02em;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 4px rgba(16, 185, 129, 0.08);
+}
+
+.board-card:hover .member-card-cue,
+.people-card:hover .member-card-cue,
+.board-card:focus-visible .member-card-cue,
+.people-card:focus-visible .member-card-cue {
+    background: #10b981;
+    color: #ffffff;
+    border-color: #10b981;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+}
+
+.board-card:focus-visible,
+.people-card:focus-visible {
+    outline: 2px solid #10b981;
+    outline-offset: 3px;
+}
+
+/* Dark mode card cue */
+[data-theme="dark"] .member-card-cue {
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.12);
+    border-color: rgba(52, 211, 153, 0.28);
+}
+
+[data-theme="dark"] .board-card:hover .member-card-cue,
+[data-theme="dark"] .people-card:hover .member-card-cue,
+[data-theme="dark"] .board-card:focus-visible .member-card-cue,
+[data-theme="dark"] .people-card:focus-visible .member-card-cue {
+    background: #10b981;
+    color: #0b2e21;
+    border-color: #34d399;
+    box-shadow: 0 4px 14px rgba(52, 211, 153, 0.4);
+}
+
+/* ============================================================================
+   INTERACTIVE MEMBER PROFILE & ROTARY AREAS OF FOCUS MODAL
+   ============================================================================ */
+
+.member-profile-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10005;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0s linear 0.3s;
+}
+
+.member-profile-modal.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0s linear 0s;
+}
+
+/* Dark Frosted Glass Overlay */
+.mpm-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 26, 18, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* 3D Glassmorphic Modal Panel */
+.mpm-panel {
+    position: relative;
+    z-index: 2;
+    width: min(780px, 94vw);
+    max-height: 90vh;
+    background: #ffffff;
+    border-radius: 26px;
+    border: 1px solid rgba(16, 185, 129, 0.22);
+    box-shadow: 0 32px 75px rgba(0, 0, 0, 0.38),
+                0 0 0 1px rgba(16, 185, 129, 0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.95) translateY(12px);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.member-profile-modal.active .mpm-panel {
+    transform: scale(1) translateY(0);
+}
+
+/* Close Button (X) */
+.mpm-close {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    z-index: 10;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: var(--navy);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.mpm-close:hover {
+    background: #fee2e2;
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.35);
+    transform: rotate(90deg) scale(1.08);
+}
+
+.mpm-close:focus-visible {
+    outline: 2px solid #10b981;
+    outline-offset: 2px;
+}
+
+/* Scroll Container */
+.mpm-scroll-content {
+    overflow-y: auto;
+    padding: 34px 32px 28px;
+    max-height: 90vh;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(16, 185, 129, 0.3) transparent;
+}
+
+.mpm-scroll-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mpm-scroll-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.mpm-scroll-content::-webkit-scrollbar-thumb {
+    background: rgba(16, 185, 129, 0.3);
+    border-radius: 999px;
+}
+
+.mpm-scroll-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(16, 185, 129, 0.6);
+}
+
+/* Header Area */
+.mpm-header {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--border);
+}
+
+.mpm-avatar-wrapper {
+    position: relative;
+    width: 86px;
+    height: 86px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, #10b981 0%, #047857 50%, #f59e0b 100%);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.25);
+}
+
+.mpm-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    background: #e2ece6;
+}
+
+.mpm-header-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.mpm-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.mpm-badge {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.28);
+}
+
+.mpm-district-badge {
+    font-size: 0.74rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(245, 158, 11, 0.12);
+    color: #b45309;
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.mpm-name {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.2;
+    margin: 0 0 4px;
+}
+
+.mpm-role {
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: #059669;
+    margin: 0;
+}
+
+/* Quick Stats Grid */
+.mpm-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 22px 0;
+}
+
+.mpm-stat-card {
+    background: #f8faf9;
+    border: 1px solid #e2ece6;
+    border-radius: 18px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.mpm-stat-card:hover {
+    border-color: rgba(16, 185, 129, 0.35);
+    transform: translateY(-2px);
+}
+
+.mpm-stat-card.mpm-stat-highlight {
+    background: linear-gradient(135deg, #f0fdf4 0%, #eafaf1 100%);
+    border-color: rgba(16, 185, 129, 0.35);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.1);
+}
+
+.mpm-stat-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: rgba(16, 185, 129, 0.14);
+    color: #047857;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.mpm-stat-highlight .mpm-stat-icon {
+    background: #10b981;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+}
+
+.mpm-stat-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.mpm-stat-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+}
+
+.mpm-stat-val {
+    font-size: 1.08rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.25;
+    margin-top: 2px;
+}
+
+.mpm-stat-highlight .mpm-stat-val {
+    color: #047857;
+}
+
+/* Full Width Stat Cards (Past Roles & Awards) */
+.mpm-stat-card.mpm-stat-full {
+    grid-column: 1 / -1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 16px 18px;
+}
+
+.mpm-stat-header {
+    width: 100%;
+}
+
+.mpm-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+}
+
+/* Pill Badges */
+.mpm-pill {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    line-height: 1.35;
+    transition: transform 0.2s ease;
+}
+
+.mpm-pill:hover {
+    transform: translateY(-1px);
+}
+
+.mpm-pill-role {
+    background: #eafaf1;
+    color: #065f46;
+    border: 1px solid rgba(16, 185, 129, 0.28);
+}
+
+.mpm-pill-award {
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    color: #92400e;
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.15);
+}
+
+.mpm-empty-note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+}
+
+/* Rotary 7 Areas of Focus Chart Section */
+.mpm-chart-section {
+    background: #ffffff;
+    border: 1px solid #e2ece6;
+    border-radius: 20px;
+    padding: 22px 24px;
+    margin-top: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+}
+
+.mpm-chart-header {
+    margin-bottom: 16px;
+}
+
+.mpm-chart-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.mpm-chart-subtitle {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin: 3px 0 0;
+}
+
+.mpm-chart-wrapper {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+/* ============================================================================
+   DARK MODE OVERRIDES FOR MEMBER MODAL
+   ============================================================================ */
+
+[data-theme="dark"] .mpm-backdrop {
+    background: rgba(3, 15, 10, 0.92);
+}
+
+[data-theme="dark"] .mpm-panel {
+    background: #0d1915;
+    border-color: rgba(52, 211, 153, 0.25);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7),
+                0 0 0 1px rgba(52, 211, 153, 0.18);
+}
+
+[data-theme="dark"] .mpm-close {
+    background: #142820;
+    border-color: rgba(52, 211, 153, 0.2);
+    color: #d6e4dc;
+}
+
+[data-theme="dark"] .mpm-close:hover {
+    background: rgba(239, 68, 68, 0.22);
+    color: #fca5a5;
+    border-color: rgba(239, 68, 68, 0.45);
+}
+
+[data-theme="dark"] .mpm-header {
+    border-bottom-color: rgba(52, 211, 153, 0.16);
+}
+
+[data-theme="dark"] .mpm-badge {
+    background: rgba(52, 211, 153, 0.14);
+    color: #6ee7b7;
+    border-color: rgba(52, 211, 153, 0.32);
+}
+
+[data-theme="dark"] .mpm-district-badge {
+    background: rgba(245, 158, 11, 0.16);
+    color: #fcd34d;
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
+[data-theme="dark"] .mpm-name {
+    color: #f0fbf5;
+}
+
+[data-theme="dark"] .mpm-role {
+    color: #34d399;
+}
+
+[data-theme="dark"] .mpm-stat-card {
+    background: #12211c;
+    border-color: rgba(52, 211, 153, 0.16);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .mpm-stat-card:hover {
+    border-color: rgba(52, 211, 153, 0.4);
+}
+
+[data-theme="dark"] .mpm-stat-card.mpm-stat-highlight {
+    background: linear-gradient(135deg, #172d24 0%, #12211c 100%);
+    border-color: rgba(52, 211, 153, 0.35);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .mpm-stat-icon {
+    background: rgba(52, 211, 153, 0.16);
+    color: #34d399;
+}
+
+[data-theme="dark"] .mpm-stat-label {
+    color: #8da79b;
+}
+
+[data-theme="dark"] .mpm-stat-val {
+    color: #f0fbf5;
+}
+
+[data-theme="dark"] .mpm-stat-highlight .mpm-stat-val {
+    color: #34d399;
+}
+
+[data-theme="dark"] .mpm-pill-role {
+    background: rgba(52, 211, 153, 0.12);
+    color: #a7f3d0;
+    border-color: rgba(52, 211, 153, 0.28);
+}
+
+[data-theme="dark"] .mpm-pill-award {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(245, 158, 11, 0.1) 100%);
+    color: #fde68a;
+    border-color: rgba(245, 158, 11, 0.45);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .mpm-empty-note {
+    color: #8da79b;
+}
+
+[data-theme="dark"] .mpm-chart-section {
+    background: #12211c;
+    border-color: rgba(52, 211, 153, 0.18);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .mpm-chart-title {
+    color: #f0fbf5;
+}
+
+[data-theme="dark"] .mpm-chart-subtitle {
+    color: #8da79b;
+}
+
+/* ============================================================================
+   RESPONSIVE MODAL ADAPTATIONS
+   ============================================================================ */
+
+@media (max-width: 640px) {
+    .mpm-panel {
+        width: 95vw;
+        max-height: 92vh;
+        border-radius: 20px;
+    }
+
+    .mpm-scroll-content {
+        padding: 24px 18px 20px;
+    }
+
+    .mpm-close {
+        top: 14px;
+        right: 14px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .mpm-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 14px;
+        padding-bottom: 18px;
+    }
+
+    .mpm-badge-row {
+        justify-content: center;
+    }
+
+    .mpm-avatar-wrapper {
+        width: 76px;
+        height: 76px;
+    }
+
+    .mpm-name {
+        font-size: 1.35rem;
+    }
+
+    .mpm-role {
+        font-size: 0.88rem;
+    }
+
+    .mpm-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin: 18px 0;
+    }
+
+    .mpm-chart-section {
+        padding: 16px 14px;
+    }
+
+    .mpm-chart-wrapper {
+        height: 270px;
+    }
+}
+
 
 
 
