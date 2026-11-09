@@ -8403,22 +8403,67 @@ html.theme-transitioning *::after {
     border: 1px solid rgba(52, 211, 153, 0.22);
 }
 
-/* Mobile Nav Drawer */
-@media (max-width: 800px) {
+/* Mobile Nav Drawer & Dropdowns — Dark Mode */
+@media (max-width: 1150px) {
     [data-theme="dark"] .nav-menu {
         background: #0d1a15 !important;
-        border-top: 1px solid rgba(52, 211, 153, 0.16) !important;
-        border-bottom: 1px solid rgba(52, 211, 153, 0.16) !important;
-        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75) !important;
+        border-top: 1px solid rgba(52, 211, 153, 0.18) !important;
+        border-bottom: 1px solid rgba(52, 211, 153, 0.18) !important;
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8) !important;
     }
 
-    [data-theme="dark"] .nav-menu a {
-        color: #d1e2da !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+    [data-theme="dark"] .nav-menu a,
+    [data-theme="dark"] .nav-dropdown-toggle {
+        color: #f0fdf7 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    [data-theme="dark"] .nav-menu a:hover,
+    [data-theme="dark"] .nav-dropdown-toggle:hover,
+    [data-theme="dark"] .nav-item.has-dropdown:hover .nav-dropdown-toggle,
+    [data-theme="dark"] .nav-item.has-dropdown.is-open .nav-dropdown-toggle {
+        color: #34d399 !important;
     }
 
     [data-theme="dark"] .nav-item.has-dropdown {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    }
+
+    [data-theme="dark"] .nav-item.has-dropdown > .nav-dropdown-toggle {
+        border-bottom: none !important;
+    }
+
+    [data-theme="dark"] .nav-item.has-dropdown .dropdown-chevron {
+        color: #34d399 !important;
+    }
+
+    /* Sub-dropdowns inside the mobile drawer in Dark Mode */
+    [data-theme="dark"] .nav-dropdown {
+        background: rgba(18, 36, 29, 0.65) !important;
+        border: none !important;
+        border-left: 2px solid #10b981 !important;
+        box-shadow: none !important;
+        border-radius: 0 10px 10px 0 !important;
+    }
+
+    [data-theme="dark"] .dropdown-item {
+        color: #d1e2da !important;
+        border-bottom: none !important;
+    }
+
+    [data-theme="dark"] .dropdown-item:hover,
+    [data-theme="dark"] .dropdown-item:active {
+        background: rgba(16, 185, 129, 0.16) !important;
+        color: #34d399 !important;
+    }
+
+    [data-theme="dark"] .nav-menu > a:last-child,
+    [data-theme="dark"] .nav-menu > .nav-item:last-child {
+        border-bottom: none !important;
+    }
+
+    [data-theme="dark"] .nav-menu .mobile-theme-row {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
     }
 }
 
