@@ -1026,6 +1026,7 @@
                      data-role="President"
                      data-district-role="District Co-Chairperson - Literacy Committee (2026-27)"
                      data-since="2023"
+                     data-join-date="2023-10-12"
                      data-past-roles="Charter Member (RY 2023-24), Secretary-Events (RY 2024-25), Public Relations Officer (RY 2024-25), Vice-President (RY 2025-26)"
                      data-awards="The Sustainable Odyssey - DRR Appreciation Citation (2025-26), Star Rotaractor of Zone 1 (2025-26)"
                      data-peace="15"
@@ -1237,6 +1238,7 @@
                      data-district-role="District Editor (2026-27)"
                      data-past-district-roles="District Joint-Editor (2025-26), District Chairperson - Peace Promotion (2025-26)"
                      data-since="2023"
+                     data-join-date="2023-10-12"
                      data-past-roles="Secretary (2025-26), Secretary - Administration (2024-25), Treasurer (2024-25), Charter Secretary - Administration (2023-24)"
                      data-awards="The Sustainable Odyssey - Keystone Secretary Honor (Community) (2025-26), The Sustainable Odyssey - DRR's Council Honor (2025-26), Best Secretary Zone 1 (2025-26), TRF Contribution Certificate (2025-26), District Best Secretary Award (2024-25), Best Secretary Zone 1 (2024-25), District Outstanding Secretary (2023-24)"
                      data-peace="29"
@@ -2363,7 +2365,7 @@
         </button>
 
         <div class="mpm-scroll-content">
-            <!-- Header: Avatar, Category Badge, Name, Club Post, District Post (Current Year only) -->
+            <!-- Header: Avatar, Category Badge, Name, Club Post, District Post (Current Year only) & Movement Tenure -->
             <div class="mpm-header">
                 <div class="mpm-avatar-wrapper">
                     <img id="mpmAvatar" src="images/members/pratisruti-dutta.jpeg" alt="Member Avatar" class="mpm-avatar" />
@@ -2379,6 +2381,36 @@
                         <span class="mpm-dp-label">District Post :</span>
                         <span class="mpm-dp-val" id="mpmDistrictRole">District Role</span>
                     </p>
+                </div>
+
+                <!-- Rotaract Movement Tenure Counter Widget -->
+                <div class="mpm-tenure-card" id="mpmTenureCard" aria-label="Time spent in the Rotaract movement">
+                    <div class="mpm-tenure-header">
+                        <span class="mpm-tenure-icon" aria-hidden="true">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </span>
+                        <span class="mpm-tenure-title">Rotaract Movement</span>
+                    </div>
+                    <div class="mpm-tenure-body">
+                        <div class="mpm-tenure-block">
+                            <span class="mpm-tenure-num" id="mpmTenureYears">0</span>
+                            <span class="mpm-tenure-unit" id="mpmTenureYearsLabel">Years</span>
+                        </div>
+                        <span class="mpm-tenure-dot" aria-hidden="true">&bull;</span>
+                        <div class="mpm-tenure-block">
+                            <span class="mpm-tenure-num" id="mpmTenureMonths">0</span>
+                            <span class="mpm-tenure-unit" id="mpmTenureMonthsLabel">Months</span>
+                        </div>
+                        <span class="mpm-tenure-dot" aria-hidden="true">&bull;</span>
+                        <div class="mpm-tenure-block">
+                            <span class="mpm-tenure-num" id="mpmTenureDays">0</span>
+                            <span class="mpm-tenure-unit" id="mpmTenureDaysLabel">Days</span>
+                        </div>
+                    </div>
+                    <div class="mpm-tenure-sub" id="mpmTenureSub">Active Movement Journey</div>
                 </div>
             </div>
 

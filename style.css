@@ -9763,8 +9763,9 @@ html.theme-transitioning *::after {
 .mpm-header {
     display: flex;
     align-items: center;
-    gap: 22px;
+    gap: 20px;
     padding-bottom: 22px;
+    padding-right: 48px; /* Clearance for the absolute-positioned close 'X' button */
     border-bottom: 1px solid var(--border);
 }
 
@@ -9855,6 +9856,94 @@ html.theme-transitioning *::after {
     border: 1px solid rgba(245, 158, 11, 0.32);
     display: inline-flex;
     align-items: center;
+}
+
+/* Rotaract Movement Tenure Widget */
+.mpm-tenure-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 244, 0.9) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    border-radius: 18px;
+    padding: 10px 16px 8px;
+    box-shadow: 0 4px 16px rgba(11, 46, 33, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.8);
+    flex-shrink: 0;
+    min-width: 200px;
+    text-align: center;
+    margin-left: auto;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.mpm-tenure-card:hover {
+    border-color: rgba(16, 185, 129, 0.45);
+    transform: translateY(-2px);
+}
+
+.mpm-tenure-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.mpm-tenure-icon {
+    display: flex;
+    align-items: center;
+    color: #10b981;
+}
+
+.mpm-tenure-title {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #047857;
+}
+
+.mpm-tenure-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 2px 0;
+}
+
+.mpm-tenure-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 36px;
+}
+
+.mpm-tenure-num {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #047857;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+}
+
+.mpm-tenure-unit {
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+}
+
+.mpm-tenure-dot {
+    color: rgba(16, 185, 129, 0.4);
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+.mpm-tenure-sub {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    margin-top: 2px;
 }
 
 /* Quick Stats Grid */
@@ -10341,6 +10430,38 @@ html.theme-transitioning *::after {
     border-color: rgba(245, 158, 11, 0.4);
 }
 
+/* Dark Mode Overrides for Movement Tenure Widget */
+[data-theme="dark"] .mpm-tenure-card {
+    background: linear-gradient(135deg, rgba(18, 36, 29, 0.95) 0%, rgba(13, 25, 21, 0.9) 100%);
+    border-color: rgba(52, 211, 153, 0.25);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(52, 211, 153, 0.1);
+}
+
+[data-theme="dark"] .mpm-tenure-icon {
+    color: #34d399;
+}
+
+[data-theme="dark"] .mpm-tenure-title {
+    color: #6ee7b7;
+}
+
+[data-theme="dark"] .mpm-tenure-num {
+    color: #34d399;
+    text-shadow: 0 0 12px rgba(52, 211, 153, 0.35);
+}
+
+[data-theme="dark"] .mpm-tenure-unit {
+    color: #8da79b;
+}
+
+[data-theme="dark"] .mpm-tenure-dot {
+    color: rgba(52, 211, 153, 0.4);
+}
+
+[data-theme="dark"] .mpm-tenure-sub {
+    color: #8da79b;
+}
+
 [data-theme="dark"] .mpm-stat-card {
     background: #12211c;
     border-color: rgba(52, 211, 153, 0.16);
@@ -10489,6 +10610,13 @@ html.theme-transitioning *::after {
         text-align: center;
         gap: 14px;
         padding-bottom: 18px;
+        padding-right: 0;
+    }
+
+    .mpm-tenure-card {
+        width: 100%;
+        max-width: 280px;
+        margin: 6px auto 0;
     }
 
     .mpm-badge-row {

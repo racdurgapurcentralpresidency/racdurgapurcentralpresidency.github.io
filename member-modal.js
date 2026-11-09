@@ -15,15 +15,18 @@
  *         Member Name
  *         Club Post
  *         District Post : Current year only (if present)
- *   4. Dynamically hides/removes sections that have no data:
+ *   4. Dynamically computes the live Rotaract Movement Tenure (Years, Months, Days)
+ *      from the member/volunteer join date up to the current calendar day, naturally
+ *      advancing by 1 day every single day!
+ *   5. Dynamically hides/removes sections that have no data:
  *         - Past Designations & Service History (hidden if empty)
  *         - District Council Designations (hidden if empty)
  *         - Awards, Citations & Honors (hidden if empty)
- *   5. Renders a native, ultra-responsive SVG Donut & Pie Chart (matching the
+ *   6. Renders a native, ultra-responsive SVG Donut & Pie Chart (matching the
  *      project pie charts from pie-chart.js) showing only areas with participation
  *      values > 0, complete with smooth arc expansion animations, animated counter,
  *      and interactive center hub & companion cards.
- *   6. Provides full WCAG accessibility: backdrop dismiss, close button, Escape key
+ *   7. Provides full WCAG accessibility: backdrop dismiss, close button, Escape key
  *      listener, focus trap, and background body scroll-locking.
  * ============================================================================
  */
@@ -120,6 +123,53 @@
     }
 
     /**
+     * Calculates exact years, months, and days elapsed between startDate and today
+     * Automatically increases by 1 day every calendar day!
+     */
+    function getMovementTenure(startDate) {
+        if (!startDate || isNaN(startDate.getTime())) return null;
+
+        var today = new Date();
+        // Use midnight today to prevent time-of-day discrepancy
+        var end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        var start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+
+        if (end < start) {
+            return { years: 0, months: 0, days: 0 };
+        }
+
+        var startYear = start.getFullYear();
+        var startMonth = start.getMonth(); // 0-indexed
+        var startDay = start.getDate();
+
+        var endYear = end.getFullYear();
+        var endMonth = end.getMonth();
+        var endDay = end.getDate();
+
+        var years = endYear - startYear;
+        var months = endMonth - startMonth;
+        var days = endDay - startDay;
+
+        if (days < 0) {
+            // Borrow days from previous month
+            var prevMonthDays = new Date(endYear, endMonth, 0).getDate();
+            days += prevMonthDays;
+            months--;
+        }
+
+        if (months < 0) {
+            months += 12;
+            years--;
+        }
+
+        return {
+            years: Math.max(0, years),
+            months: Math.max(0, months),
+            days: Math.max(0, days)
+        };
+    }
+
+    /**
      * Main Initialization on DOM Ready
      */
     function initMemberModal() {
@@ -137,6 +187,15 @@
         // District Post in Header (Current Year Only)
         var districtPostEl = document.getElementById('mpmDistrictPost');
         var districtRoleEl = document.getElementById('mpmDistrictRole');
+
+        // Rotaract Movement Tenure Elements
+        var tenureYearsEl = document.getElementById('mpmTenureYears');
+        var tenureYearsLabelEl = document.getElementById('mpmTenureYearsLabel');
+        var tenureMonthsEl = document.getElementById('mpmTenureMonths');
+        var tenureMonthsLabelEl = document.getElementById('mpmTenureMonthsLabel');
+        var tenureDaysEl = document.getElementById('mpmTenureDays');
+        var tenureDaysLabelEl = document.getElementById('mpmTenureDaysLabel');
+        var tenureSubEl = document.getElementById('mpmTenureSub');
 
         // Stats elements & boxes
         var sinceEl = document.getElementById('mpmSince');
@@ -319,6 +378,12 @@
             var since = decodeHtml(card.getAttribute('data-since') || '—');
             var pastRolesStr = card.getAttribute('data-past-roles') || '';
             var awardsStr = card.getAttribute('data-awards') || '';
+            var joinDateAttr = card.getAttribute('data-join-date');
+
+            // Category classification
+            var isVolunteer = card.closest('#volunteers') !== null || role.toLowerCase().indexOf('volunteer') !== -1;
+            var isMember = card.closest('#members') !== null || role.toLowerCase() === 'member';
+            var badgeText = isVolunteer ? 'Volunteer' : (isMember ? 'Club Member' : 'Board of Directors');
 
             // Extract Active Focus Areas (ONLY count > 0)
             var activeAreas = [];
@@ -361,11 +426,6 @@
             var avatarSrc = img ? img.src : '';
             var avatarAlt = img ? img.alt : name;
 
-            // Category badge
-            var isVolunteer = card.closest('#volunteers') !== null || role.toLowerCase().indexOf('volunteer') !== -1;
-            var isMember = card.closest('#members') !== null || role.toLowerCase() === 'member';
-            var badgeText = isVolunteer ? 'Volunteer' : (isMember ? 'Club Member' : 'Board of Directors');
-
             // 1. Populate Header
             if (avatarEl) {
                 avatarEl.src = avatarSrc;
@@ -385,13 +445,50 @@
                 }
             }
 
-            // 2. Quick Stats: Member Since & Total Events
+            // 2. Compute and Display Rotaract Movement Tenure (Days advance live every day!)
+            var startDate = null;
+            if (joinDateAttr && joinDateAttr.trim()) {
+                var parts = joinDateAttr.trim().split('-');
+                if (parts.length === 3) {
+                    startDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+                }
+            }
+
+            if (!startDate || isNaN(startDate.getTime())) {
+                if (since.indexOf('2023') !== -1) {
+                    startDate = new Date(2023, 9, 12); // Oct 12, 2023 (Club Charter date)
+                } else if (since.indexOf('2024') !== -1) {
+                    startDate = new Date(2024, 6, 1);  // July 1, 2024 (RY 2024-25)
+                } else if (since.indexOf('2025') !== -1) {
+                    startDate = new Date(2025, 6, 1);  // July 1, 2025 (RY 2025-26)
+                } else if (since.indexOf('2026') !== -1) {
+                    startDate = new Date(2026, 6, 1);  // July 1, 2026 (RY 2026-27)
+                } else {
+                    startDate = new Date(2023, 9, 12);
+                }
+            }
+
+            var tenure = getMovementTenure(startDate);
+            if (tenure) {
+                animateNumber(tenureYearsEl, tenure.years, 650);
+                animateNumber(tenureMonthsEl, tenure.months, 700);
+                animateNumber(tenureDaysEl, tenure.days, 800);
+
+                if (tenureYearsLabelEl) tenureYearsLabelEl.textContent = tenure.years === 1 ? 'Year' : 'Years';
+                if (tenureMonthsLabelEl) tenureMonthsLabelEl.textContent = tenure.months === 1 ? 'Month' : 'Months';
+                if (tenureDaysLabelEl) tenureDaysLabelEl.textContent = tenure.days === 1 ? 'Day' : 'Days';
+                if (tenureSubEl) {
+                    tenureSubEl.textContent = isVolunteer ? 'Volunteer Service Journey' : 'Active Movement Journey';
+                }
+            }
+
+            // 3. Quick Stats: Member Since & Total Events
             if (sinceEl) sinceEl.textContent = since;
             if (totalEventsEl) {
                 totalEventsEl.textContent = totalEvents + (totalEvents === 1 ? ' Event' : ' Events');
             }
 
-            // 3. Past Club Designations & Service History (Remove section if empty)
+            // 4. Past Club Designations & Service History (Remove section if empty)
             var pastRoles = parseList(pastRolesStr);
             if (pastRolesBox && pastRolesContainer) {
                 if (pastRoles.length > 0) {
@@ -408,7 +505,7 @@
                 }
             }
 
-            // 4. District Council Designations (Remove section if empty)
+            // 5. District Council Designations (Remove section if empty)
             if (pastDistrictBox && pastDistrictContainer) {
                 if (pastDistrictRoles.length > 0) {
                     pastDistrictBox.style.display = '';
@@ -424,7 +521,7 @@
                 }
             }
 
-            // 5. Awards, Citations & Honors (Remove section if empty)
+            // 6. Awards, Citations & Honors (Remove section if empty)
             var awards = parseList(awardsStr);
             if (awardsBox && awardsContainer) {
                 if (awards.length > 0) {
@@ -441,7 +538,7 @@
                 }
             }
 
-            // 6. Rotary Areas of Focus Interactive Pie Chart
+            // 7. Rotary Areas of Focus Interactive Pie Chart
             if (totalEvents > 0 && activeAreas.length > 0) {
                 if (pieContainer) pieContainer.style.display = '';
                 if (zeroStateEl) zeroStateEl.style.display = 'none';
