@@ -62,6 +62,24 @@
      */
     function animateNumber(el, target, duration) {
         if (!el) return;
+        var num = parseInt(target, 10);
+        if (isNaN(num)) {
+            el.textContent = target;
+            return;
+        }
+        if (num === 0) {
+            el.textContent = '0';
+            return;
+        }
+
+        // Set immediate target as baseline so numbers are NEVER blank or 0
+        el.textContent = String(num);
+
+        // If reduced motion is requested, retain final target without animation
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+
         var start = 0;
         var startTime = null;
         var dur = duration || 850;
@@ -71,16 +89,23 @@
             var elapsed = now - startTime;
             var progress = Math.min(elapsed / dur, 1);
             var ease = easeOutCubic(progress);
-            var current = Math.round(start + (target - start) * ease);
+            var current = Math.round(start + (num - start) * ease);
             el.textContent = current;
 
             if (progress < 1) {
                 requestAnimationFrame(frame);
             } else {
-                el.textContent = target;
+                el.textContent = num;
             }
         }
+
+        // Start smooth counter
         requestAnimationFrame(frame);
+
+        // Fail-safe timeout: ensures final number is locked in
+        setTimeout(function () {
+            el.textContent = num;
+        }, dur + 40);
     }
 
     /**
@@ -410,9 +435,9 @@
                 currentAngle += pct * 360;
 
                 // Smooth expansion animation
-                requestAnimationFrame(function () {
+                setTimeout(function () {
                     circle.style.strokeDasharray = netDash + ' ' + (CIRCUMFERENCE - netDash);
-                });
+                }, 30);
             });
 
             // 3. Setup Two-Way Interactive Hover & Focus Handlers
@@ -636,9 +661,7 @@
             if (totalEvents > 0 && activeAreas.length > 0) {
                 if (pieContainer) pieContainer.style.display = '';
                 if (zeroStateEl) zeroStateEl.style.display = 'none';
-                requestAnimationFrame(function () {
-                    renderPieChart(activeAreas, totalEvents);
-                });
+                renderPieChart(activeAreas, totalEvents);
             } else {
                 if (pieContainer) pieContainer.style.display = 'none';
                 if (zeroStateEl) zeroStateEl.style.display = 'flex';
@@ -723,30 +746,62 @@
             }
         });
 
-        // 3. Delegate Click and Keyboard Activation on Member Cards
+        // 3. Document-Level Delegation for Click and Keyboard Activation
+        // Guarantees capture on all existing and dynamically inserted cards across all pages!
         var cardSelector = '.board-card[data-name], .people-card[data-name]';
-        var memberCards = document.querySelectorAll(cardSelector);
 
-        memberCards.forEach(function (card) {
-            card.addEventListener('click', function (e) {
-                if (e.target.closest('a')) return;
-                openMemberModal(card);
-            });
-
-            card.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter' || e.keyCode === 13 || e.key === ' ' || e.keyCode === 32) {
-                    if (e.target.closest('a')) return;
+        function handleCardTrigger(target, e) {
+            if (!target) return;
+            if (e && e.target && e.target.closest('a')) return;
+            var card = target.closest(cardSelector);
+            if (card) {
+                if (e && (e.key === ' ' || e.keyCode === 32)) {
                     e.preventDefault();
-                    openMemberModal(card);
                 }
-            });
+                openMemberModal(card);
+            }
+        }
+
+        document.addEventListener('click', function (e) {
+            handleCardTrigger(e.target, e);
         });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.keyCode === 13 || e.key === ' ' || e.keyCode === 32) {
+                handleCardTrigger(e.target, e);
+            }
+        });
+
+        // Ensure pointer cursor on matching cards
+        try {
+            var memberCards = document.querySelectorAll(cardSelector);
+            memberCards.forEach(function (card) {
+                card.style.cursor = 'pointer';
+            });
+        } catch (e) {}
+
+        // Expose open and close globally for accessibility and programmatic triggers
+        window.openMemberProfileModal = openMemberModal;
+        window.closeMemberProfileModal = closeMemberModal;
     }
 
-    // Initialize when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initMemberModal);
-    } else {
-        initMemberModal();
+    // Initialize reliably when DOM is ready
+    var modalInitialized = false;
+    function safeInitModal() {
+        if (modalInitialized) return;
+        var modal = document.getElementById('memberProfileModal');
+        if (modal) {
+            modalInitialized = true;
+            initMemberModal();
+        }
     }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', safeInitModal);
+    } else {
+        safeInitModal();
+    }
+
+    // Safety fallback for deferred script lifecycles
+    window.addEventListener('load', safeInitModal);
 })();
