@@ -123,24 +123,58 @@
     }
 
     /**
-     * Calculates exact years, months, and days elapsed between startDate and today
-     * Automatically increases by 1 day every calendar day!
+     * Parses a date string in DD-MM-YYYY, YYYY-MM-DD, or standard format
      */
-    function getMovementTenure(startDate) {
-        if (!startDate || isNaN(startDate.getTime())) return null;
+    function parseDateString(str) {
+        if (!str || typeof str !== 'string') return null;
+        str = str.trim();
+        if (!str) return null;
 
-        var today = new Date();
-        // Use midnight today to prevent time-of-day discrepancy
-        var end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-        var start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+        // Check for DD-MM-YYYY or DD/MM/YYYY
+        var dmyMatch = str.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})$/);
+        if (dmyMatch) {
+            var d = parseInt(dmyMatch[1], 10);
+            var m = parseInt(dmyMatch[2], 10) - 1;
+            var y = parseInt(dmyMatch[3], 10);
+            return new Date(y, m, d);
+        }
 
-        if (end < start) {
+        // Check for YYYY-MM-DD or YYYY/MM/DD
+        var ymdMatch = str.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})$/);
+        if (ymdMatch) {
+            var y2 = parseInt(ymdMatch[1], 10);
+            var m2 = parseInt(ymdMatch[2], 10) - 1;
+            var d2 = parseInt(ymdMatch[3], 10);
+            return new Date(y2, m2, d2);
+        }
+
+        var parsed = new Date(str);
+        return isNaN(parsed.getTime()) ? null : parsed;
+    }
+
+    /**
+     * Calculates exact calendar years, months, and days elapsed between start and end
+     * Automatically advances by 1 day every calendar day!
+     */
+    function getMovementTenure(start, end) {
+        if (!start || isNaN(start.getTime())) return null;
+
+        if (!end) {
+            var today = new Date();
+            end = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        } else {
+            end = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+        }
+
+        var s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+
+        if (end < s) {
             return { years: 0, months: 0, days: 0 };
         }
 
-        var startYear = start.getFullYear();
-        var startMonth = start.getMonth(); // 0-indexed
-        var startDay = start.getDate();
+        var startYear = s.getFullYear();
+        var startMonth = s.getMonth();
+        var startDay = s.getDate();
 
         var endYear = end.getFullYear();
         var endMonth = end.getMonth();
@@ -151,7 +185,6 @@
         var days = endDay - startDay;
 
         if (days < 0) {
-            // Borrow days from previous month
             var prevMonthDays = new Date(endYear, endMonth, 0).getDate();
             days += prevMonthDays;
             months--;
@@ -167,6 +200,85 @@
             months: Math.max(0, months),
             days: Math.max(0, days)
         };
+    }
+
+    /**
+     * Computes cumulative tenure across single or multiple service periods
+     * Handles breaks in service (e.g. Sairath Das: 12-10-2023 to 30-06-2025, 10-09-2026 to present day)
+     */
+    function computeCumulativeTenure(rawDateStr, sinceFallback) {
+        var today = new Date();
+        today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+        var inputStr = (rawDateStr && rawDateStr.trim()) ? rawDateStr.trim() : (sinceFallback || '2023');
+
+        // Split by comma for multiple distinct service periods
+        var segments = inputStr.split(',');
+        var validRanges = [];
+
+        segments.forEach(function (seg) {
+            var text = seg.trim();
+            if (!text) return;
+
+            // Check if it's a range with "to" or "–" or "-"
+            var sep = null;
+            if (text.indexOf(' to ') !== -1) sep = ' to ';
+            else if (text.indexOf(' – ') !== -1) sep = ' – ';
+            else if (text.indexOf(' - ') !== -1) sep = ' - ';
+
+            if (sep) {
+                var parts = text.split(sep);
+                var startDate = parseDateString(parts[0]);
+                var endPart = parts[1] ? parts[1].trim().toLowerCase() : '';
+                var endDate;
+                if (endPart.indexOf('present') !== -1 || endPart.indexOf('today') !== -1 || endPart.indexOf('current') !== -1) {
+                    endDate = today;
+                } else {
+                    endDate = parseDateString(parts[1]);
+                }
+                if (startDate && endDate) {
+                    validRanges.push({ start: startDate, end: endDate });
+                }
+            } else {
+                var sDate = parseDateString(text);
+                if (sDate) {
+                    validRanges.push({ start: sDate, end: today });
+                }
+            }
+        });
+
+        // Fallback to year inference if no date pattern matched
+        if (validRanges.length === 0) {
+            var fbStart;
+            if (inputStr.indexOf('2023') !== -1) fbStart = new Date(2023, 9, 12);
+            else if (inputStr.indexOf('2024') !== -1) fbStart = new Date(2024, 6, 1);
+            else if (inputStr.indexOf('2025') !== -1) fbStart = new Date(2025, 6, 1);
+            else if (inputStr.indexOf('2026') !== -1) fbStart = new Date(2026, 6, 1);
+            else fbStart = new Date(2023, 9, 12);
+
+            return getMovementTenure(fbStart, today);
+        }
+
+        // Single range
+        if (validRanges.length === 1) {
+            return getMovementTenure(validRanges[0].start, validRanges[0].end);
+        }
+
+        // Multiple ranges: sort chronologically, sum inactive gap days, and adjust start date
+        validRanges.sort(function (a, b) { return a.start - b.start; });
+
+        var totalGapMs = 0;
+        for (var i = 0; i < validRanges.length - 1; i++) {
+            var gap = validRanges[i + 1].start.getTime() - validRanges[i].end.getTime();
+            if (gap > 0) {
+                totalGapMs += gap;
+            }
+        }
+
+        var adjustedStart = new Date(validRanges[0].start.getTime() + totalGapMs);
+        var finalEnd = validRanges[validRanges.length - 1].end;
+
+        return getMovementTenure(adjustedStart, finalEnd);
     }
 
     /**
@@ -446,29 +558,7 @@
             }
 
             // 2. Compute and Display Rotaract Movement Tenure (Days advance live every day!)
-            var startDate = null;
-            if (joinDateAttr && joinDateAttr.trim()) {
-                var parts = joinDateAttr.trim().split('-');
-                if (parts.length === 3) {
-                    startDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
-                }
-            }
-
-            if (!startDate || isNaN(startDate.getTime())) {
-                if (since.indexOf('2023') !== -1) {
-                    startDate = new Date(2023, 9, 12); // Oct 12, 2023 (Club Charter date)
-                } else if (since.indexOf('2024') !== -1) {
-                    startDate = new Date(2024, 6, 1);  // July 1, 2024 (RY 2024-25)
-                } else if (since.indexOf('2025') !== -1) {
-                    startDate = new Date(2025, 6, 1);  // July 1, 2025 (RY 2025-26)
-                } else if (since.indexOf('2026') !== -1) {
-                    startDate = new Date(2026, 6, 1);  // July 1, 2026 (RY 2026-27)
-                } else {
-                    startDate = new Date(2023, 9, 12);
-                }
-            }
-
-            var tenure = getMovementTenure(startDate);
+            var tenure = computeCumulativeTenure(joinDateAttr, since);
             if (tenure) {
                 animateNumber(tenureYearsEl, tenure.years, 650);
                 animateNumber(tenureMonthsEl, tenure.months, 700);
