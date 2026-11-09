@@ -1,22 +1,30 @@
 /**
  * ============================================================================
- * RAC DCP — MEMBER PROFILE MODAL & ROTARY AREAS OF FOCUS CHART (member-modal.js)
+ * RAC DCP — MEMBER PROFILE MODAL & ROTARY AREAS OF FOCUS PIE CHART
  * ============================================================================
  * 
  * WHAT THIS FILE DOES:
  *   1. Intercepts clicks and keyboard activation (Enter / Space) on all member
  *      and volunteer cards (.board-card and .people-card) on index.html.
  *   2. Extracts member metadata (HTML5 data-* attributes) including roles,
- *      tenure, honors/awards, and participation numbers across Rotary's 7 Areas
- *      of Focus.
- *   3. Populates the responsive 3D "Green Rebel" profile modal (#memberProfileModal).
- *   4. Initializes and renders an interactive Chart.js Horizontal Bar Chart
- *      visualizing the member's community impact across all 7 Rotary Areas of Focus.
- *   5. Guarantees safe chart lifecycle management: destroys previous Chart.js
- *      instances prior to re-instantiating, preventing visual overlap or memory leaks.
+ *      tenure, district council posts, honors/awards, and participation numbers
+ *      across Rotary's 7 Areas of Focus.
+ *   3. Populates the responsive 3D "Green Rebel" profile modal (#memberProfileModal)
+ *      with strict visual hierarchy:
+ *         BOARD OF DIRECTORS / CLUB MEMBER / VOLUNTEER
+ *         Member Name
+ *         Club Post
+ *         District Post : Current year only (if present)
+ *   4. Dynamically hides/removes sections that have no data:
+ *         - Past Designations & Service History (hidden if empty)
+ *         - District Council Designations (hidden if empty)
+ *         - Awards, Citations & Honors (hidden if empty)
+ *   5. Renders a native, ultra-responsive SVG Donut & Pie Chart (matching the
+ *      project pie charts from pie-chart.js) showing only areas with participation
+ *      values > 0, complete with smooth arc expansion animations, animated counter,
+ *      and interactive center hub & companion cards.
  *   6. Provides full WCAG accessibility: backdrop dismiss, close button, Escape key
  *      listener, focus trap, and background body scroll-locking.
- *   7. Automatically re-themes Chart.js colors on dark/light mode toggle.
  * ============================================================================
  */
 
@@ -25,29 +33,55 @@
 
     // Rotary's 7 Global Areas of Focus Configuration
     var FOCUS_AREAS = [
-        { key: 'peace', label: 'Peacebuilding', full: 'Peacebuilding & Conflict Prevention', color: '#0284c7', bg: 'rgba(2, 132, 199, 0.85)' },
-        { key: 'health', label: 'Disease Prevention', full: 'Disease Prevention & Treatment', color: '#ef4444', bg: 'rgba(239, 68, 68, 0.85)' },
-        { key: 'water', label: 'Water & Sanitation', full: 'Water, Sanitation & Hygiene', color: '#06b6d4', bg: 'rgba(6, 182, 212, 0.85)' },
-        { key: 'maternal', label: 'Maternal & Child Health', full: 'Maternal & Child Health', color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.85)' },
-        { key: 'education', label: 'Basic Education', full: 'Basic Education & Literacy', color: '#8b5cf6', bg: 'rgba(139, 92, 246, 0.85)' },
-        { key: 'economy', label: 'Economic Development', full: 'Community Economic Development', color: '#10b981', bg: 'rgba(16, 185, 129, 0.85)' },
-        { key: 'environment', label: 'Environment', full: 'Supporting the Environment', color: '#16a34a', bg: 'rgba(22, 163, 74, 0.85)' }
+        { key: 'peace', label: 'Peacebuilding', full: 'Peacebuilding & Conflict Prevention', icon: '🕊️', color: '#0284c7', grad: 'url(#mpmGradPeace)' },
+        { key: 'health', label: 'Disease Prevention', full: 'Disease Prevention & Treatment', icon: '🩺', color: '#ef4444', grad: 'url(#mpmGradHealth)' },
+        { key: 'water', label: 'Water & Sanitation', full: 'Water, Sanitation & Hygiene', icon: '💧', color: '#06b6d4', grad: 'url(#mpmGradWater)' },
+        { key: 'maternal', label: 'Maternal & Child Health', full: 'Maternal & Child Health', icon: '👶', color: '#f59e0b', grad: 'url(#mpmGradMaternal)' },
+        { key: 'education', label: 'Basic Education', full: 'Basic Education & Literacy', icon: '📚', color: '#8b5cf6', grad: 'url(#mpmGradEducation)' },
+        { key: 'economy', label: 'Economic Development', full: 'Community Economic Development', icon: '💼', color: '#10b981', grad: 'url(#mpmGradEconomy)' },
+        { key: 'environment', label: 'Environment', full: 'Supporting the Environment', icon: '🌱', color: '#16a34a', grad: 'url(#mpmGradEnvironment)' }
     ];
 
-    // Chart.js instance holder
-    var focusChartInstance = null;
+    // SVG Circle Circumference (r = 80) => 2 * π * 80 ≈ 502.655
+    var CIRCUMFERENCE = 2 * Math.PI * 80;
+
     var lastFocusedCard = null;
-    var activeMemberData = null;
 
     /**
-     * Helper to detect active dark mode
+     * Easing Function: easeOutCubic
      */
-    function isDarkMode() {
-        return document.documentElement.getAttribute('data-theme') === 'dark';
+    function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
     }
 
     /**
-     * Safely decodes any HTML entity strings (e.g. &amp;, &ndash;)
+     * Smoothly counts a number from 0 to target
+     */
+    function animateNumber(el, target, duration) {
+        if (!el) return;
+        var start = 0;
+        var startTime = null;
+        var dur = duration || 850;
+
+        function frame(now) {
+            if (!startTime) startTime = now;
+            var elapsed = now - startTime;
+            var progress = Math.min(elapsed / dur, 1);
+            var ease = easeOutCubic(progress);
+            var current = Math.round(start + (target - start) * ease);
+            el.textContent = current;
+
+            if (progress < 1) {
+                requestAnimationFrame(frame);
+            } else {
+                el.textContent = target;
+            }
+        }
+        requestAnimationFrame(frame);
+    }
+
+    /**
+     * Safely decodes HTML entity strings (e.g. &amp;, &ndash;)
      */
     function decodeHtml(str) {
         if (!str) return '';
@@ -62,7 +96,6 @@
     function parseList(rawStr) {
         if (!rawStr || !rawStr.trim()) return [];
         var str = decodeHtml(rawStr);
-        // Split by comma followed by optional whitespace, ignoring commas inside brackets/parentheses
         var results = [];
         var buffer = '';
         var depth = 0;
@@ -98,137 +131,176 @@
 
         var avatarEl = document.getElementById('mpmAvatar');
         var badgeEl = document.getElementById('mpmBadge');
-        var districtBadgeEl = document.getElementById('mpmDistrictBadge');
         var nameEl = document.getElementById('mpmName');
         var roleEl = document.getElementById('mpmRole');
+
+        // District Post in Header (Current Year Only)
+        var districtPostEl = document.getElementById('mpmDistrictPost');
+        var districtRoleEl = document.getElementById('mpmDistrictRole');
+
+        // Stats elements & boxes
         var sinceEl = document.getElementById('mpmSince');
         var totalEventsEl = document.getElementById('mpmTotalEvents');
+
+        var pastRolesBox = document.getElementById('mpmPastRolesBox');
         var pastRolesContainer = document.getElementById('mpmPastRoles');
+
+        var pastDistrictBox = document.getElementById('mpmPastDistrictBox');
+        var pastDistrictContainer = document.getElementById('mpmPastDistrictRoles');
+
+        var awardsBox = document.getElementById('mpmAwardsBox');
         var awardsContainer = document.getElementById('mpmAwards');
-        var chartCanvas = document.getElementById('memberFocusChart');
+
+        // Pie Chart elements
+        var pieContainer = document.getElementById('mpmPieContainer');
+        var donutSegmentsEl = document.getElementById('mpmDonutSegments');
+        var donutCenterEl = document.getElementById('mpmDonutCenter');
+        var centerNumberEl = document.getElementById('mpmCenterNumber');
+        var hoverIconEl = document.getElementById('mpmHoverIcon');
+        var hoverNumberEl = document.getElementById('mpmHoverNumber');
+        var hoverLabelEl = document.getElementById('mpmHoverLabel');
+        var hoverPercentEl = document.getElementById('mpmHoverPercent');
+        var focusListEl = document.getElementById('mpmFocusList');
+        var zeroStateEl = document.getElementById('mpmZeroState');
 
         /**
-         * Render or Update the Horizontal Bar Chart
+         * Renders the interactive SVG Donut & Pie Chart with companion cards
          */
-        function renderFocusChart(counts) {
-            if (!chartCanvas || typeof Chart === 'undefined') return;
+        function renderPieChart(activeAreas, totalEvents) {
+            if (!donutSegmentsEl || !focusListEl) return;
 
-            // Destroy previous instance to prevent overlapping canvases
-            if (focusChartInstance) {
-                focusChartInstance.destroy();
-                focusChartInstance = null;
+            donutSegmentsEl.innerHTML = '';
+            focusListEl.innerHTML = '';
+            if (donutCenterEl) {
+                donutCenterEl.classList.remove('is-hovered');
             }
 
-            var darkMode = isDarkMode();
-            var maxVal = Math.max.apply(null, counts);
-            var suggestedXMax = maxVal > 0 ? Math.ceil(maxVal * 1.25) : 5;
+            // Animate center total number
+            animateNumber(centerNumberEl, totalEvents, 850);
 
-            var labels = FOCUS_AREAS.map(function (item) { return item.label; });
-            var bgColors = FOCUS_AREAS.map(function (item) { return item.bg; });
-            var borderColors = FOCUS_AREAS.map(function (item) { return item.color; });
+            var currentAngle = -90; // Start at 12 o'clock
+            var elementsMap = {};
 
-            var textColor = darkMode ? '#d6e4dc' : '#172922';
-            var mutedColor = darkMode ? '#9cb3a7' : '#536b60';
-            var gridColor = darkMode ? 'rgba(255, 255, 255, 0.07)' : 'rgba(0, 0, 0, 0.06)';
-            var tooltipBg = darkMode ? 'rgba(17, 33, 27, 0.96)' : 'rgba(11, 46, 33, 0.95)';
+            activeAreas.forEach(function (item) {
+                var area = item.area;
+                var count = item.count;
+                var pct = count / totalEvents;
+                var percentStr = (pct * 100).toFixed(1);
+                var strokeLen = pct * CIRCUMFERENCE;
+                var gap = (activeAreas.length > 1) ? 3.5 : 0;
+                var netDash = Math.max(0, strokeLen - gap);
 
-            var ctx = chartCanvas.getContext('2d');
+                // 1. Create SVG Donut Segment
+                var circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('class', 'mpm-donut-segment');
+                circle.setAttribute('cx', '120');
+                circle.setAttribute('cy', '120');
+                circle.setAttribute('r', '80');
+                circle.setAttribute('fill', 'none');
+                circle.setAttribute('stroke', area.grad);
+                circle.setAttribute('stroke-width', '26');
+                circle.setAttribute('tabindex', '0');
+                circle.setAttribute('role', 'button');
+                circle.setAttribute('aria-label', area.full + ': ' + count + (count === 1 ? ' event, ' : ' events, ') + percentStr + '%');
+                circle.setAttribute('data-area', area.key);
+                circle.style.transformOrigin = '120px 120px';
+                circle.style.transform = 'rotate(' + currentAngle + 'deg)';
+                circle.style.strokeDasharray = '0 ' + CIRCUMFERENCE;
 
-            focusChartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Impact Events',
-                        data: counts,
-                        backgroundColor: bgColors,
-                        borderColor: borderColors,
-                        borderWidth: 1.5,
-                        borderRadius: 6,
-                        barPercentage: 0.68,
-                        categoryPercentage: 0.85
-                    }]
-                },
-                options: {
-                    indexAxis: 'y', // Renders the bar chart horizontally
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: {
-                        duration: 650,
-                        easing: 'easeOutQuart'
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            enabled: true,
-                            backgroundColor: tooltipBg,
-                            titleColor: '#ffffff',
-                            titleFont: {
-                                family: "'Plus Jakarta Sans', sans-serif",
-                                size: 13,
-                                weight: '700'
-                            },
-                            bodyColor: '#eafaf1',
-                            bodyFont: {
-                                family: "'Plus Jakarta Sans', sans-serif",
-                                size: 12,
-                                weight: '600'
-                            },
-                            borderColor: 'rgba(16, 185, 129, 0.45)',
-                            borderWidth: 1,
-                            padding: 10,
-                            displayColors: true,
-                            boxPadding: 4,
-                            cornerRadius: 8,
-                            callbacks: {
-                                title: function (tooltipItems) {
-                                    var idx = tooltipItems[0].dataIndex;
-                                    return FOCUS_AREAS[idx].full;
-                                },
-                                label: function (context) {
-                                    var count = context.parsed.x || 0;
-                                    return ' Direct Involvement: ' + count + (count === 1 ? ' Event' : ' Events');
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            suggestedMax: suggestedXMax,
-                            ticks: {
-                                precision: 0,
-                                stepSize: maxVal > 15 ? 5 : (maxVal > 8 ? 2 : 1),
-                                color: mutedColor,
-                                font: {
-                                    family: "'Plus Jakarta Sans', sans-serif",
-                                    size: 11,
-                                    weight: '600'
-                                }
-                            },
-                            grid: {
-                                color: gridColor,
-                                drawBorder: false
-                            }
-                        },
-                        y: {
-                            ticks: {
-                                color: textColor,
-                                font: {
-                                    family: "'Plus Jakarta Sans', sans-serif",
-                                    size: 12,
-                                    weight: '700'
-                                }
-                            },
-                            grid: {
-                                display: false,
-                                drawBorder: false
-                            }
-                        }
+                donutSegmentsEl.appendChild(circle);
+
+                // 2. Create Companion Card
+                var card = document.createElement('div');
+                card.className = 'mpm-focus-card';
+                card.setAttribute('data-area', area.key);
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', area.full + ': ' + count + (count === 1 ? ' event, ' : ' events, ') + percentStr + '%');
+                card.innerHTML =
+                    '<div class="mpm-fc-icon" style="background: ' + area.color + '18; color: ' + area.color + ';">' + area.icon + '</div>' +
+                    '<div class="mpm-fc-info">' +
+                        '<span class="mpm-fc-title">' + area.label + '</span>' +
+                        '<span class="mpm-fc-count">' + count + (count === 1 ? ' Event' : ' Events') + '</span>' +
+                    '</div>' +
+                    '<span class="mpm-fc-pill" style="background: ' + area.color + ';">' + percentStr + '%</span>';
+
+                focusListEl.appendChild(card);
+
+                elementsMap[area.key] = {
+                    segment: circle,
+                    card: card,
+                    area: area,
+                    count: count,
+                    percentStr: percentStr,
+                    netDash: netDash
+                };
+
+                // Advance angle clockwise
+                currentAngle += pct * 360;
+
+                // Smooth expansion animation
+                requestAnimationFrame(function () {
+                    circle.style.strokeDasharray = netDash + ' ' + (CIRCUMFERENCE - netDash);
+                });
+            });
+
+            // 3. Setup Two-Way Interactive Hover & Focus Handlers
+            function activateArea(key) {
+                var data = elementsMap[key];
+                if (!data) return;
+
+                if (donutCenterEl) {
+                    donutCenterEl.classList.add('is-hovered');
+                    if (hoverIconEl) hoverIconEl.textContent = data.area.icon;
+                    if (hoverNumberEl) hoverNumberEl.textContent = data.count;
+                    if (hoverLabelEl) hoverLabelEl.textContent = data.area.label;
+                    if (hoverPercentEl) {
+                        hoverPercentEl.textContent = data.percentStr + '%';
+                        hoverPercentEl.style.backgroundColor = data.area.color;
                     }
                 }
+
+                Object.keys(elementsMap).forEach(function (k) {
+                    var el = elementsMap[k];
+                    if (k === key) {
+                        el.segment.classList.add('active');
+                        el.segment.classList.remove('dimmed');
+                        el.card.classList.add('active');
+                        el.card.classList.remove('dimmed');
+                    } else {
+                        el.segment.classList.remove('active');
+                        el.segment.classList.add('dimmed');
+                        el.card.classList.remove('active');
+                        el.card.classList.add('dimmed');
+                    }
+                });
+            }
+
+            function resetArea() {
+                if (donutCenterEl) {
+                    donutCenterEl.classList.remove('is-hovered');
+                }
+                Object.keys(elementsMap).forEach(function (k) {
+                    var el = elementsMap[k];
+                    el.segment.classList.remove('active', 'dimmed');
+                    el.card.classList.remove('active', 'dimmed');
+                });
+            }
+
+            Object.keys(elementsMap).forEach(function (k) {
+                var item = elementsMap[k];
+
+                // Segment interactions
+                item.segment.addEventListener('mouseenter', function () { activateArea(k); });
+                item.segment.addEventListener('mouseleave', resetArea);
+                item.segment.addEventListener('focus', function () { activateArea(k); });
+                item.segment.addEventListener('blur', resetArea);
+
+                // Card interactions
+                item.card.addEventListener('mouseenter', function () { activateArea(k); });
+                item.card.addEventListener('mouseleave', resetArea);
+                item.card.addEventListener('focus', function () { activateArea(k); });
+                item.card.addEventListener('blur', resetArea);
             });
         }
 
@@ -242,58 +314,89 @@
             // Extract metadata from HTML5 data-* attributes
             var name = decodeHtml(card.getAttribute('data-name') || '');
             var role = decodeHtml(card.getAttribute('data-role') || '');
-            var districtRole = decodeHtml(card.getAttribute('data-district-role') || '');
+            var rawDistrictRole = decodeHtml(card.getAttribute('data-district-role') || '');
+            var rawPastDistrictRoles = decodeHtml(card.getAttribute('data-past-district-roles') || '');
             var since = decodeHtml(card.getAttribute('data-since') || '—');
             var pastRolesStr = card.getAttribute('data-past-roles') || '';
             var awardsStr = card.getAttribute('data-awards') || '';
 
-            // Extract counts
-            var counts = FOCUS_AREAS.map(function (item) {
-                return parseInt(card.getAttribute('data-' + item.key), 10) || 0;
+            // Extract Active Focus Areas (ONLY count > 0)
+            var activeAreas = [];
+            var totalEvents = 0;
+
+            FOCUS_AREAS.forEach(function (area) {
+                var count = parseInt(card.getAttribute('data-' + area.key), 10) || 0;
+                if (count > 0) {
+                    totalEvents += count;
+                    activeAreas.push({
+                        area: area,
+                        count: count
+                    });
+                }
             });
 
-            var totalEvents = counts.reduce(function (sum, val) { return sum + val; }, 0);
+            // Separate Current Year District Post vs Past District Posts
+            var currentDistrictRole = '';
+            var pastDistrictRoles = [];
+
+            if (rawPastDistrictRoles.trim()) {
+                pastDistrictRoles = parseList(rawPastDistrictRoles);
+                currentDistrictRole = rawDistrictRole.trim();
+            } else if (rawDistrictRole.trim()) {
+                var allDistRoles = parseList(rawDistrictRole);
+                allDistRoles.forEach(function (distItem) {
+                    if (distItem.indexOf('2026-27') !== -1 || distItem.indexOf('2026–27') !== -1) {
+                        currentDistrictRole = distItem;
+                    } else {
+                        pastDistrictRoles.push(distItem);
+                    }
+                });
+                if (!currentDistrictRole && allDistRoles.length > 0) {
+                    currentDistrictRole = allDistRoles[0];
+                }
+            }
 
             // Avatar image
             var img = card.querySelector('img');
             var avatarSrc = img ? img.src : '';
             var avatarAlt = img ? img.alt : name;
 
-            // Determine badge category
+            // Category badge
             var isVolunteer = card.closest('#volunteers') !== null || role.toLowerCase().indexOf('volunteer') !== -1;
             var isMember = card.closest('#members') !== null || role.toLowerCase() === 'member';
             var badgeText = isVolunteer ? 'Volunteer' : (isMember ? 'Club Member' : 'Board of Directors');
 
-            // Populate Text and Avatar
+            // 1. Populate Header
             if (avatarEl) {
                 avatarEl.src = avatarSrc;
                 avatarEl.alt = avatarAlt;
             }
+            if (badgeEl) badgeEl.textContent = badgeText;
             if (nameEl) nameEl.textContent = name;
             if (roleEl) roleEl.textContent = role;
-            if (badgeEl) badgeEl.textContent = badgeText;
 
-            // District Role Badge
-            if (districtBadgeEl) {
-                if (districtRole.trim()) {
-                    districtBadgeEl.textContent = '★ ' + districtRole.trim();
-                    districtBadgeEl.style.display = 'inline-flex';
+            // District Post : Current year only
+            if (districtPostEl && districtRoleEl) {
+                if (currentDistrictRole.trim()) {
+                    districtRoleEl.textContent = currentDistrictRole.trim();
+                    districtPostEl.style.display = 'inline-flex';
                 } else {
-                    districtBadgeEl.style.display = 'none';
+                    districtPostEl.style.display = 'none';
                 }
             }
 
-            // Quick Stats
+            // 2. Quick Stats: Member Since & Total Events
             if (sinceEl) sinceEl.textContent = since;
             if (totalEventsEl) {
                 totalEventsEl.textContent = totalEvents + (totalEvents === 1 ? ' Event' : ' Events');
             }
 
-            // Populate Past Roles Pills
-            if (pastRolesContainer) {
-                pastRolesContainer.innerHTML = '';
-                var pastRoles = parseList(pastRolesStr);
+            // 3. Past Club Designations & Service History (Remove section if empty)
+            var pastRoles = parseList(pastRolesStr);
+            if (pastRolesBox && pastRolesContainer) {
                 if (pastRoles.length > 0) {
+                    pastRolesBox.style.display = '';
+                    pastRolesContainer.innerHTML = '';
                     pastRoles.forEach(function (roleItem) {
                         var pill = document.createElement('span');
                         pill.className = 'mpm-pill mpm-pill-role';
@@ -301,18 +404,32 @@
                         pastRolesContainer.appendChild(pill);
                     });
                 } else {
-                    var emptySpan = document.createElement('span');
-                    emptySpan.className = 'mpm-empty-note';
-                    emptySpan.textContent = 'Charter / First-tenure leader with no prior club roles.';
-                    pastRolesContainer.appendChild(emptySpan);
+                    pastRolesBox.style.display = 'none';
                 }
             }
 
-            // Populate Awards Pills
-            if (awardsContainer) {
-                awardsContainer.innerHTML = '';
-                var awards = parseList(awardsStr);
+            // 4. District Council Designations (Remove section if empty)
+            if (pastDistrictBox && pastDistrictContainer) {
+                if (pastDistrictRoles.length > 0) {
+                    pastDistrictBox.style.display = '';
+                    pastDistrictContainer.innerHTML = '';
+                    pastDistrictRoles.forEach(function (distItem) {
+                        var pill = document.createElement('span');
+                        pill.className = 'mpm-pill mpm-pill-district';
+                        pill.textContent = distItem;
+                        pastDistrictContainer.appendChild(pill);
+                    });
+                } else {
+                    pastDistrictBox.style.display = 'none';
+                }
+            }
+
+            // 5. Awards, Citations & Honors (Remove section if empty)
+            var awards = parseList(awardsStr);
+            if (awardsBox && awardsContainer) {
                 if (awards.length > 0) {
+                    awardsBox.style.display = '';
+                    awardsContainer.innerHTML = '';
                     awards.forEach(function (awardItem) {
                         var pill = document.createElement('span');
                         pill.className = 'mpm-pill mpm-pill-award';
@@ -320,31 +437,33 @@
                         awardsContainer.appendChild(pill);
                     });
                 } else {
-                    var emptyAward = document.createElement('span');
-                    emptyAward.className = 'mpm-empty-note';
-                    emptyAward.textContent = 'No individual district or club citations recorded for this tenure.';
-                    awardsContainer.appendChild(emptyAward);
+                    awardsBox.style.display = 'none';
                 }
             }
 
-            // Cache data for theme changes
-            activeMemberData = counts;
+            // 6. Rotary Areas of Focus Interactive Pie Chart
+            if (totalEvents > 0 && activeAreas.length > 0) {
+                if (pieContainer) pieContainer.style.display = '';
+                if (zeroStateEl) zeroStateEl.style.display = 'none';
+                requestAnimationFrame(function () {
+                    renderPieChart(activeAreas, totalEvents);
+                });
+            } else {
+                if (pieContainer) pieContainer.style.display = 'none';
+                if (zeroStateEl) zeroStateEl.style.display = 'flex';
+                if (centerNumberEl) centerNumberEl.textContent = '0';
+            }
 
             // Show Modal and lock background scroll
             modal.classList.add('active');
             modal.setAttribute('aria-hidden', 'false');
             document.body.classList.add('lightbox-open');
 
-            // Render Chart after modal becomes visible (so dimensions calculate accurately)
-            requestAnimationFrame(function () {
-                renderFocusChart(counts);
-            });
-
             // Focus Close Button for accessibility
             if (closeBtn) {
                 setTimeout(function () {
                     closeBtn.focus();
-                }, 100);
+                }, 80);
             }
         }
 
@@ -357,13 +476,6 @@
             modal.classList.remove('active');
             modal.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('lightbox-open');
-
-            // Safely destroy chart instance on modal close
-            if (focusChartInstance) {
-                focusChartInstance.destroy();
-                focusChartInstance = null;
-            }
-            activeMemberData = null;
 
             // Return focus to triggering card
             if (lastFocusedCard && typeof lastFocusedCard.focus === 'function') {
@@ -425,14 +537,11 @@
         var memberCards = document.querySelectorAll(cardSelector);
 
         memberCards.forEach(function (card) {
-            // Pointer click
             card.addEventListener('click', function (e) {
-                // Ignore click if clicking an external link inside the card
                 if (e.target.closest('a')) return;
                 openMemberModal(card);
             });
 
-            // Keyboard trigger: Enter (13) or Space (32)
             card.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter' || e.keyCode === 13 || e.key === ' ' || e.keyCode === 32) {
                     if (e.target.closest('a')) return;
@@ -440,13 +549,6 @@
                     openMemberModal(card);
                 }
             });
-        });
-
-        // 4. Adapt to Dark/Light Theme Switching
-        window.addEventListener('themechange', function () {
-            if (modal.classList.contains('active') && activeMemberData) {
-                renderFocusChart(activeMemberData);
-            }
         });
     }
 

@@ -1234,7 +1234,8 @@
                      aria-label="View Rtr. Er. Debarpito Sarkar's profile and impact"
                      data-name="Rtr. Er. Debarpito Sarkar"
                      data-role="Club Learning Facilitator"
-                     data-district-role="District Editor (2026-27), District Joint-Editor (2025-26), District Chairperson - Peace Promotion (2025-26)"
+                     data-district-role="District Editor (2026-27)"
+                     data-past-district-roles="District Joint-Editor (2025-26), District Chairperson - Peace Promotion (2025-26)"
                      data-since="2023"
                      data-past-roles="Secretary (2025-26), Secretary - Administration (2024-25), Treasurer (2024-25), Charter Secretary - Administration (2023-24)"
                      data-awards="The Sustainable Odyssey - Keystone Secretary Honor (Community) (2025-26), The Sustainable Odyssey - DRR's Council Honor (2025-26), Best Secretary Zone 1 (2025-26), TRF Contribution Certificate (2025-26), District Best Secretary Award (2024-25), Best Secretary Zone 1 (2024-25), District Outstanding Secretary (2023-24)"
@@ -2362,7 +2363,7 @@
         </button>
 
         <div class="mpm-scroll-content">
-            <!-- Header: Avatar, Name, Designation, District Role -->
+            <!-- Header: Avatar, Category Badge, Name, Club Post, District Post (Current Year only) -->
             <div class="mpm-header">
                 <div class="mpm-avatar-wrapper">
                     <img id="mpmAvatar" src="images/members/pratisruti-dutta.jpeg" alt="Member Avatar" class="mpm-avatar" />
@@ -2371,17 +2372,20 @@
                 <div class="mpm-header-info">
                     <div class="mpm-badge-row">
                         <span class="mpm-badge" id="mpmBadge">Board of Directors</span>
-                        <span class="mpm-district-badge" id="mpmDistrictBadge" style="display: none;"></span>
                     </div>
                     <h3 class="mpm-name" id="mpmName">Member Name</h3>
                     <p class="mpm-role" id="mpmRole">Current Designation</p>
+                    <p class="mpm-district-post" id="mpmDistrictPost" style="display: none;">
+                        <span class="mpm-dp-label">District Post :</span>
+                        <span class="mpm-dp-val" id="mpmDistrictRole">District Role</span>
+                    </p>
                 </div>
             </div>
 
             <!-- Quick Stats Section -->
             <div class="mpm-stats-grid">
                 <!-- Member Since -->
-                <div class="mpm-stat-card">
+                <div class="mpm-stat-card" id="mpmSinceBox">
                     <div class="mpm-stat-icon" aria-hidden="true">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -2397,7 +2401,7 @@
                 </div>
 
                 <!-- Total Impact Events -->
-                <div class="mpm-stat-card mpm-stat-highlight">
+                <div class="mpm-stat-card mpm-stat-highlight" id="mpmTotalEventsBox">
                     <div class="mpm-stat-icon" aria-hidden="true">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
@@ -2410,37 +2414,107 @@
                     </div>
                 </div>
 
-                <!-- Past Designations -->
+                <!-- Past Club Designations & Service History -->
                 <div class="mpm-stat-card mpm-stat-full" id="mpmPastRolesBox">
                     <div class="mpm-stat-header">
                         <span class="mpm-stat-label">Past Designations &amp; Service History</span>
                     </div>
-                    <div class="mpm-tags-container" id="mpmPastRoles">
-                        <!-- Populated dynamically -->
-                    </div>
+                    <div class="mpm-tags-container" id="mpmPastRoles"></div>
                 </div>
 
-                <!-- Awards & Recognitions -->
+                <!-- District Council Designations -->
+                <div class="mpm-stat-card mpm-stat-full" id="mpmPastDistrictBox" style="display: none;">
+                    <div class="mpm-stat-header">
+                        <span class="mpm-stat-label">District Council Designations</span>
+                    </div>
+                    <div class="mpm-tags-container" id="mpmPastDistrictRoles"></div>
+                </div>
+
+                <!-- Awards, Citations & Honors -->
                 <div class="mpm-stat-card mpm-stat-full" id="mpmAwardsBox">
                     <div class="mpm-stat-header">
                         <span class="mpm-stat-label">Awards, Citations &amp; Honors</span>
                     </div>
-                    <div class="mpm-tags-container" id="mpmAwards">
-                        <!-- Populated dynamically -->
-                    </div>
+                    <div class="mpm-tags-container" id="mpmAwards"></div>
                 </div>
             </div>
 
-            <!-- Rotary 7 Areas of Focus Chart Section -->
+            <!-- Rotary Areas of Focus Interactive Pie Chart Section -->
             <div class="mpm-chart-section">
                 <div class="mpm-chart-header">
                     <div class="mpm-chart-title-group">
-                        <h4 class="mpm-chart-title">Participation Across 7 Areas of Focus</h4>
-                        <p class="mpm-chart-subtitle">Direct event involvement categorized under Rotary International's global causes</p>
+                        <h4 class="mpm-chart-title">Participation Across Areas of Focus</h4>
+                        <p class="mpm-chart-subtitle">Direct event involvement categorized under Rotary International's global causes. Hover or tap any slice or card to explore avenue shares.</p>
                     </div>
                 </div>
-                <div class="mpm-chart-wrapper">
-                    <canvas id="memberFocusChart" height="280" aria-label="Horizontal bar chart of 7 Rotary Areas of Focus event count"></canvas>
+
+                <div class="mpm-pie-container" id="mpmPieContainer">
+                    <!-- SVG Donut Stage -->
+                    <div class="mpm-donut-stage">
+                        <svg class="mpm-svg-donut" viewBox="0 0 240 240" role="img" aria-label="Member impact breakdown across Rotary Areas of Focus">
+                            <defs id="mpmSvgDefs">
+                                <linearGradient id="mpmGradPeace" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#0284c7"/>
+                                    <stop offset="100%" stop-color="#0369a1"/>
+                                </linearGradient>
+                                <linearGradient id="mpmGradHealth" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#ef4444"/>
+                                    <stop offset="100%" stop-color="#dc2626"/>
+                                </linearGradient>
+                                <linearGradient id="mpmGradWater" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#06b6d4"/>
+                                    <stop offset="100%" stop-color="#0891b2"/>
+                                </linearGradient>
+                                <linearGradient id="mpmGradMaternal" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#f59e0b"/>
+                                    <stop offset="100%" stop-color="#d97706"/>
+                                </linearGradient>
+                                <linearGradient id="mpmGradEducation" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#8b5cf6"/>
+                                    <stop offset="100%" stop-color="#7c3aed"/>
+                                </linearGradient>
+                                <linearGradient id="mpmGradEconomy" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#10b981"/>
+                                    <stop offset="100%" stop-color="#059669"/>
+                                </linearGradient>
+                                <linearGradient id="mpmGradEnvironment" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#16a34a"/>
+                                    <stop offset="100%" stop-color="#15803d"/>
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Donut Base Track -->
+                            <circle class="mpm-donut-track" cx="120" cy="120" r="80" fill="none" stroke-width="26" />
+
+                            <!-- Dynamic Segments Container -->
+                            <g id="mpmDonutSegments"></g>
+                        </svg>
+
+                        <!-- Center Hub -->
+                        <div class="mpm-donut-center" id="mpmDonutCenter" aria-live="polite">
+                            <div class="mpm-center-default">
+                                <span class="mpm-center-icon">🌿</span>
+                                <span class="mpm-center-number" id="mpmCenterNumber">0</span>
+                                <span class="mpm-center-label">Total Events</span>
+                                <span class="mpm-center-pill">Club Impact</span>
+                            </div>
+                            <div class="mpm-center-hover" aria-hidden="true">
+                                <span class="mpm-hover-icon" id="mpmHoverIcon"></span>
+                                <span class="mpm-hover-number" id="mpmHoverNumber">0</span>
+                                <span class="mpm-hover-label" id="mpmHoverLabel"></span>
+                                <span class="mpm-hover-percent" id="mpmHoverPercent"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Companion Category Cards (Only categories with value > 0) -->
+                    <div class="mpm-focus-list" id="mpmFocusList" role="list"></div>
+                </div>
+
+                <!-- Empty state when member has 0 total events -->
+                <div class="mpm-zero-state" id="mpmZeroState" style="display: none;">
+                    <span class="mpm-zero-icon">🌱</span>
+                    <p class="mpm-zero-text">Recently joined the team &mdash; first community initiatives and service projects are currently in progress!</p>
                 </div>
             </div>
         </div>
@@ -2493,13 +2567,11 @@
      ==========================================================================
      The scripts are loaded in a specific, deliberate order using 'defer' so
      the webpage HTML parses instantly without waiting for network downloads:
-       1. chart.js: CDN library for rendering interactive horizontal bar charts.
-       2. motion.js: Loaded to establish the 3D compositor & window.MOTION3D.
-       3. script.js: Core website features (preloader, menu, lightboxes, counters).
-       4. enhance.js: Loaded to wrap modals, add focus traps, and project filters.
-       5. member-modal.js: Interactive member profile modal and impact graph.
+       1. motion.js: Loaded to establish the 3D compositor & window.MOTION3D.
+       2. script.js: Core website features (preloader, menu, lightboxes, counters).
+       3. enhance.js: Loaded to wrap modals, add focus traps, and project filters.
+       4. member-modal.js: Interactive member profile modal and Rotary Areas of Focus pie chart.
      ========================================================================== -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 <script src="motion.js" defer></script>
 <script src="script.js" defer></script>
 <script src="enhance.js" defer></script>

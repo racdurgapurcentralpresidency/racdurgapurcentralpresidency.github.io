@@ -9683,7 +9683,7 @@ html.theme-transitioning *::after {
 .mpm-panel {
     position: relative;
     z-index: 2;
-    width: min(780px, 94vw);
+    width: min(800px, 94vw);
     max-height: 90vh;
     background: #ffffff;
     border-radius: 26px;
@@ -9770,8 +9770,8 @@ html.theme-transitioning *::after {
 
 .mpm-avatar-wrapper {
     position: relative;
-    width: 86px;
-    height: 86px;
+    width: 88px;
+    height: 88px;
     flex-shrink: 0;
     border-radius: 50%;
     padding: 3px;
@@ -9798,7 +9798,7 @@ html.theme-transitioning *::after {
     flex-wrap: wrap;
     align-items: center;
     gap: 8px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
 
 .mpm-badge {
@@ -9813,25 +9813,12 @@ html.theme-transitioning *::after {
     border: 1px solid rgba(16, 185, 129, 0.28);
 }
 
-.mpm-district-badge {
-    font-size: 0.74rem;
-    font-weight: 700;
-    padding: 3px 10px;
-    border-radius: 999px;
-    background: rgba(245, 158, 11, 0.12);
-    color: #b45309;
-    border: 1px solid rgba(245, 158, 11, 0.35);
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-}
-
 .mpm-name {
     font-size: 1.55rem;
     font-weight: 800;
     color: var(--navy);
     line-height: 1.2;
-    margin: 0 0 4px;
+    margin: 4px 0 2px;
 }
 
 .mpm-role {
@@ -9839,6 +9826,35 @@ html.theme-transitioning *::after {
     font-weight: 700;
     color: #059669;
     margin: 0;
+}
+
+/* District Post in Header (Current Year Only) */
+.mpm-district-post {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 6px 0 0;
+    font-size: 0.86rem;
+}
+
+.mpm-dp-label {
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+}
+
+.mpm-dp-val {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #b45309;
+    background: rgba(245, 158, 11, 0.12);
+    padding: 2px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(245, 158, 11, 0.32);
+    display: inline-flex;
+    align-items: center;
 }
 
 /* Quick Stats Grid */
@@ -9915,7 +9931,7 @@ html.theme-transitioning *::after {
     color: #047857;
 }
 
-/* Full Width Stat Cards (Past Roles & Awards) */
+/* Full Width Stat Cards (Past Roles, District Positions, Awards) */
 .mpm-stat-card.mpm-stat-full {
     grid-column: 1 / -1;
     flex-direction: column;
@@ -9958,6 +9974,14 @@ html.theme-transitioning *::after {
     border: 1px solid rgba(16, 185, 129, 0.28);
 }
 
+.mpm-pill-district {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(217, 119, 6, 0.08) 100%);
+    color: #92400e;
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(245, 158, 11, 0.1);
+}
+
 .mpm-pill-award {
     background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
     color: #92400e;
@@ -9966,17 +9990,14 @@ html.theme-transitioning *::after {
     box-shadow: 0 2px 6px rgba(245, 158, 11, 0.15);
 }
 
-.mpm-empty-note {
-    font-size: 0.82rem;
-    color: var(--muted);
-    font-style: italic;
-}
+/* ============================================================================
+   ROTARY AREAS OF FOCUS INTERACTIVE PIE CHART
+   ============================================================================ */
 
-/* Rotary 7 Areas of Focus Chart Section */
 .mpm-chart-section {
     background: #ffffff;
     border: 1px solid #e2ece6;
-    border-radius: 20px;
+    border-radius: 22px;
     padding: 22px 24px;
     margin-top: 10px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
@@ -9987,7 +10008,7 @@ html.theme-transitioning *::after {
 }
 
 .mpm-chart-title {
-    font-size: 1.1rem;
+    font-size: 1.12rem;
     font-weight: 800;
     color: var(--navy);
     margin: 0;
@@ -9998,12 +10019,271 @@ html.theme-transitioning *::after {
     font-size: 0.82rem;
     color: var(--muted);
     margin: 3px 0 0;
+    line-height: 1.45;
 }
 
-.mpm-chart-wrapper {
+/* Pie Chart Container */
+.mpm-pie-container {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    align-items: center;
+    gap: 28px;
+    margin-top: 14px;
+}
+
+/* Donut Stage */
+.mpm-donut-stage {
     position: relative;
-    height: 300px;
+    width: 230px;
+    height: 230px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.mpm-svg-donut {
     width: 100%;
+    height: 100%;
+    overflow: visible;
+    filter: drop-shadow(0 10px 20px rgba(11, 46, 33, 0.08));
+}
+
+.mpm-donut-track {
+    stroke: rgba(11, 46, 33, 0.07);
+}
+
+.mpm-donut-segment {
+    cursor: pointer;
+    transform-origin: 120px 120px;
+    transition: stroke-dasharray 1.1s cubic-bezier(0.16, 1, 0.3, 1),
+                stroke-width 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.28s ease,
+                opacity 0.25s ease;
+    outline: none;
+}
+
+.mpm-donut-segment:hover,
+.mpm-donut-segment.active {
+    stroke-width: 31px;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.25));
+}
+
+.mpm-donut-segment.dimmed {
+    opacity: 0.3;
+}
+
+/* Center Hub */
+.mpm-donut-center {
+    position: absolute;
+    width: 124px;
+    height: 124px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(11, 46, 33, 0.1), inset 0 0 0 1px rgba(16, 185, 129, 0.16);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: none;
+    z-index: 2;
+    padding: 6px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mpm-center-default,
+.mpm-center-hover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mpm-center-hover {
+    position: absolute;
+    opacity: 0;
+    transform: scale(0.88);
+    pointer-events: none;
+}
+
+.mpm-donut-center.is-hovered .mpm-center-default {
+    opacity: 0;
+    transform: scale(0.88);
+}
+
+.mpm-donut-center.is-hovered .mpm-center-hover {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.mpm-center-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.mpm-center-number {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.mpm-center-label {
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+}
+
+.mpm-center-pill {
+    font-size: 0.56rem;
+    font-weight: 700;
+    color: #047857;
+    background: rgba(16, 185, 129, 0.12);
+    padding: 2px 7px;
+    border-radius: 999px;
+    margin-top: 3px;
+    letter-spacing: 0.02em;
+}
+
+.mpm-hover-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.mpm-hover-number {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+.mpm-hover-label {
+    font-size: 0.62rem;
+    font-weight: 800;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+    max-width: 108px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mpm-hover-percent {
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-top: 3px;
+    color: #ffffff;
+}
+
+/* Companion Focus Cards List */
+.mpm-focus-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    width: 100%;
+}
+
+.mpm-focus-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8faf9;
+    border: 1px solid #e2ece6;
+    border-radius: 14px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    outline: none;
+}
+
+.mpm-focus-card:hover,
+.mpm-focus-card.active,
+.mpm-focus-card:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.12);
+}
+
+.mpm-focus-card.dimmed {
+    opacity: 0.35;
+}
+
+.mpm-fc-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.mpm-fc-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.mpm-fc-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--navy);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mpm-fc-count {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.mpm-fc-pill {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #ffffff;
+    padding: 3px 8px;
+    border-radius: 999px;
+    flex-shrink: 0;
+}
+
+/* Zero State */
+.mpm-zero-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 18px;
+}
+
+.mpm-zero-icon {
+    font-size: 2.2rem;
+    margin-bottom: 8px;
+}
+
+.mpm-zero-text {
+    font-size: 0.88rem;
+    color: var(--muted);
+    max-width: 420px;
+    line-height: 1.5;
 }
 
 /* ============================================================================
@@ -10043,18 +10323,22 @@ html.theme-transitioning *::after {
     border-color: rgba(52, 211, 153, 0.32);
 }
 
-[data-theme="dark"] .mpm-district-badge {
-    background: rgba(245, 158, 11, 0.16);
-    color: #fcd34d;
-    border-color: rgba(245, 158, 11, 0.4);
-}
-
 [data-theme="dark"] .mpm-name {
     color: #f0fbf5;
 }
 
 [data-theme="dark"] .mpm-role {
     color: #34d399;
+}
+
+[data-theme="dark"] .mpm-dp-label {
+    color: #8da79b;
+}
+
+[data-theme="dark"] .mpm-dp-val {
+    color: #fde68a;
+    background: rgba(245, 158, 11, 0.16);
+    border-color: rgba(245, 158, 11, 0.4);
 }
 
 [data-theme="dark"] .mpm-stat-card {
@@ -10096,15 +10380,18 @@ html.theme-transitioning *::after {
     border-color: rgba(52, 211, 153, 0.28);
 }
 
-[data-theme="dark"] .mpm-pill-award {
+[data-theme="dark"] .mpm-pill-district {
     background: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(245, 158, 11, 0.1) 100%);
     color: #fde68a;
     border-color: rgba(245, 158, 11, 0.45);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-[data-theme="dark"] .mpm-empty-note {
-    color: #8da79b;
+[data-theme="dark"] .mpm-pill-award {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(245, 158, 11, 0.1) 100%);
+    color: #fde68a;
+    border-color: rgba(245, 158, 11, 0.45);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] .mpm-chart-section {
@@ -10118,6 +10405,60 @@ html.theme-transitioning *::after {
 }
 
 [data-theme="dark"] .mpm-chart-subtitle {
+    color: #8da79b;
+}
+
+[data-theme="dark"] .mpm-donut-track {
+    stroke: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .mpm-donut-center {
+    background: #0d1915;
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(52, 211, 153, 0.22);
+}
+
+[data-theme="dark"] .mpm-center-number {
+    color: #f0fbf5;
+}
+
+[data-theme="dark"] .mpm-center-label {
+    color: #8da79b;
+}
+
+[data-theme="dark"] .mpm-center-pill {
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.14);
+}
+
+[data-theme="dark"] .mpm-hover-number {
+    color: #f0fbf5;
+}
+
+[data-theme="dark"] .mpm-hover-label {
+    color: #f0fbf5;
+}
+
+[data-theme="dark"] .mpm-focus-card {
+    background: #12211c;
+    border-color: rgba(52, 211, 153, 0.16);
+}
+
+[data-theme="dark"] .mpm-focus-card:hover,
+[data-theme="dark"] .mpm-focus-card.active,
+[data-theme="dark"] .mpm-focus-card:focus-visible {
+    border-color: rgba(52, 211, 153, 0.55);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .mpm-fc-title {
+    color: #f0fbf5;
+}
+
+[data-theme="dark"] .mpm-fc-count {
+    color: #8da79b;
+}
+
+[data-theme="dark"] .mpm-zero-text {
     color: #8da79b;
 }
 
@@ -10154,6 +10495,10 @@ html.theme-transitioning *::after {
         justify-content: center;
     }
 
+    .mpm-district-post {
+        justify-content: center;
+    }
+
     .mpm-avatar-wrapper {
         width: 76px;
         height: 76px;
@@ -10177,8 +10522,13 @@ html.theme-transitioning *::after {
         padding: 16px 14px;
     }
 
-    .mpm-chart-wrapper {
-        height: 270px;
+    .mpm-pie-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .mpm-focus-list {
+        grid-template-columns: 1fr;
     }
 }
 
