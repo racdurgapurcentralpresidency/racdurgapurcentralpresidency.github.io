@@ -169,16 +169,23 @@
 const menuToggle = document.querySelector(".menu-toggle");
 const navMenu = document.querySelector(".nav-menu");
 
+const MENU_ICON_SVG = '<svg class="icon menu-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>';
+const CLOSE_ICON_SVG = '<svg class="icon menu-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
+
+function setMenuToggleState(isOpen) {
+    if (!menuToggle) return;
+    menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    menuToggle.innerHTML = isOpen ? CLOSE_ICON_SVG : MENU_ICON_SVG;
+}
+
 if (menuToggle && navMenu) {
 
     // Toggle mobile menu drawer open/closed
     menuToggle.addEventListener("click", function () {
-        navMenu.classList.toggle("active");
+        const isOpen = navMenu.classList.toggle("active");
+        setMenuToggleState(isOpen);
 
-        if (navMenu.classList.contains("active")) {
-            menuToggle.textContent = "✕"; // Show close icon
-        } else {
-            menuToggle.textContent = "☰"; // Show hamburger icon
+        if (!isOpen) {
             // Close any open mobile dropdowns
             document.querySelectorAll(".nav-item.has-dropdown.is-open").forEach(function (item) {
                 item.classList.remove("is-open");
@@ -194,7 +201,7 @@ if (menuToggle && navMenu) {
     navLeafLinks.forEach(function (link) {
         link.addEventListener("click", function () {
             navMenu.classList.remove("active");
-            menuToggle.textContent = "☰";
+            setMenuToggleState(false);
 
             document.querySelectorAll(".nav-item.has-dropdown.is-open").forEach(function (item) {
                 item.classList.remove("is-open");

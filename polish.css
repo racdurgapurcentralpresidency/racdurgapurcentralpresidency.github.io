@@ -264,8 +264,21 @@
     justify-content: center;
     border-radius: 12px;
     border: 1px solid var(--border);
-    font-size: 0 !important;
-    line-height: 0;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--navy);
+    background: transparent;
+    cursor: pointer;
+}
+
+[data-theme="dark"] .menu-toggle {
+    color: #f0fdf7 !important;
+    border-color: rgba(52, 211, 153, 0.25) !important;
+}
+
+.menu-toggle .menu-icon {
+    stroke: currentColor;
+    display: block;
 }
 
 @media (max-width: 1150px) {
