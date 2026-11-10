@@ -1416,6 +1416,222 @@ html.motion-on .scroll-top-dial .rotary-gear {
 }
 
 
+/* =========================================================
+   ACHIEVEMENTS & RECOGNITIONS ENHANCED PRESENTATION
+   100% visible uncropped trophies & certificates
+   ========================================================= */
+
+.achievements-section .achievement-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 28px !important;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.achievements-section .achievement-grid.is-deck {
+    display: grid !important;
+    max-width: 1200px !important;
+}
+
+.achievements-section .achievement-card {
+    display: flex !important;
+    flex-direction: column !important;
+    background: #ffffff;
+    border: 1px solid rgba(16, 185, 129, 0.18);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s ease;
+}
+
+.achievements-section .achievement-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.14), 0 0 20px rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.45);
+}
+
+/* Pedestal Stage: full uncropped trophies and certificates */
+.achievements-section .achievement-image {
+    width: 100% !important;
+    height: 310px !important;
+    aspect-ratio: auto !important;
+    background: radial-gradient(circle at 50% 35%, #f4fbf7 0%, #e1ede6 100%) !important;
+    padding: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(16, 185, 129, 0.15) !important;
+}
+
+.achievements-section .achievement-image img {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important; /* CRITICAL: Entire trophy/certificate 100% visible */
+    object-position: center center !important;
+    display: block !important;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+}
+
+.achievements-section .achievement-card:hover .achievement-image img {
+    transform: scale(1.04) translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 16px rgba(16, 185, 129, 0.2);
+}
+
+.achievements-section .achievement-image::after {
+    content: "🔍 View Full Award";
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(4, 14, 10, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: #6ee7b7;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 999px;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.achievements-section .achievement-card:hover .achievement-image::after {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Card Content */
+.achievements-section .achievement-content {
+    padding: 22px 24px 26px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    flex: 1 !important;
+    background: transparent !important;
+}
+
+.achievements-section .achievement-type {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    color: #047857 !important;
+    background: rgba(16, 185, 129, 0.12) !important;
+    border: 1px solid rgba(16, 185, 129, 0.28) !important;
+    font-size: 0.65rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.08em !important;
+    padding: 4px 10px !important;
+    border-radius: 999px !important;
+    margin-bottom: 10px !important;
+    width: fit-content !important;
+    text-transform: uppercase !important;
+}
+
+.achievements-section .achievement-content h4 {
+    font-size: 1.15rem !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+    color: var(--navy, #0b2e21) !important;
+    margin: 0 0 6px 0 !important;
+    letter-spacing: -0.01em !important;
+}
+
+.achievements-section .achievement-content p {
+    font-size: 0.88rem !important;
+    color: #4b5563 !important;
+    font-weight: 600 !important;
+    margin: 4px 0 0 !important;
+}
+
+/* Legacy Featured Card (Club Excellence Award from Rotary International) */
+.achievements-section .legacy-featured {
+    grid-column: span 2 !important;
+}
+
+.achievements-section .legacy-featured .achievement-image {
+    height: 330px !important;
+}
+
+/* Dark Mode Overrides for Achievements */
+[data-theme="dark"] .achievements-section .achievement-card {
+    background: #0d1a15 !important;
+    border-color: rgba(52, 211, 153, 0.22) !important;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.55), 0 0 20px rgba(16, 185, 129, 0.05) !important;
+}
+
+[data-theme="dark"] .achievements-section .achievement-card:hover {
+    background: #11221b !important;
+    border-color: rgba(52, 211, 153, 0.45) !important;
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.7), 0 0 28px rgba(52, 211, 153, 0.16) !important;
+}
+
+[data-theme="dark"] .achievements-section .achievement-image {
+    background: radial-gradient(circle at 50% 35%, #183329 0%, #071510 100%) !important;
+    border-bottom-color: rgba(52, 211, 153, 0.18) !important;
+}
+
+[data-theme="dark"] .achievements-section .achievement-image img {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="dark"] .achievements-section .achievement-card:hover .achievement-image img {
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.75), 0 0 20px rgba(52, 211, 153, 0.3) !important;
+}
+
+[data-theme="dark"] .achievements-section .achievement-type {
+    color: #6ee7b7 !important;
+    background: rgba(52, 211, 153, 0.12) !important;
+    border-color: rgba(52, 211, 153, 0.3) !important;
+}
+
+[data-theme="dark"] .achievements-section .achievement-content h4 {
+    color: #f0fbf5 !important;
+}
+
+[data-theme="dark"] .achievements-section .achievement-content p {
+    color: #a7f3d0 !important;
+}
+
+/* Responsive Grid for Achievements */
+@media (max-width: 1040px) {
+    .achievements-section .achievement-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 22px !important;
+    }
+
+    .achievements-section .legacy-featured {
+        grid-column: span 2 !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .achievements-section .achievement-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    .achievements-section .legacy-featured {
+        grid-column: span 1 !important;
+    }
+
+    .achievements-section .achievement-image {
+        height: 270px !important;
+    }
+}
+
+
 /* Respect "reduce motion" for everything added here. */
 @media (prefers-reduced-motion: reduce) {
     .summary-chevron,

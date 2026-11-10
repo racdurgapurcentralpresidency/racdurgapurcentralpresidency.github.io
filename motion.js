@@ -1197,6 +1197,7 @@
 
     /* --- Scene 3: Awards Stack Into a Physical Deck --- */
     function initDeck() {
+        return; // Disabled: awards are showcased in a full visual 3D grid with 100% visible uncropped trophies & certificates
         var grid = document.querySelector('.achievement-grid');
         if (!grid || !sceneOn('stack')) { return; }
 
