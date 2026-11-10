@@ -1251,3 +1251,73 @@ if (document.readyState === "loading") {
 } else {
     startSectionMinimap();
 }
+
+/* =========================================================
+   SAKSHAM EVENT LIVE COUNTDOWN TIMER
+   Countdown target: 4th December 2026 at 12:00 PM IST (UTC+5:30)
+   ========================================================= */
+function initEventCountdown() {
+    var cdContainer = document.getElementById("sakshamCountdown");
+    if (!cdContainer) return;
+
+    var daysEl = document.getElementById("cdDays");
+    var hoursEl = document.getElementById("cdHours");
+    var minsEl = document.getElementById("cdMins");
+    var secsEl = document.getElementById("cdSecs");
+
+    if (!daysEl || !hoursEl || !minsEl || !secsEl) return;
+
+    // Target: 4th December 2026 at 12:00 PM IST (UTC+5:30)
+    var targetIso = cdContainer.getAttribute("data-target") || "2026-12-04T12:00:00+05:30";
+    var targetTime = new Date(targetIso).getTime();
+
+    function padZero(num) {
+        return num < 10 ? "0" + num : String(num);
+    }
+
+    function updateCountdown() {
+        var now = Date.now();
+        var diff = targetTime - now;
+
+        if (diff <= 0) {
+            daysEl.textContent = "00";
+            hoursEl.textContent = "00";
+            minsEl.textContent = "00";
+            secsEl.textContent = "00";
+            var headerBadge = cdContainer.querySelector(".saksham-cd-badge span:last-child");
+            if (headerBadge) {
+                headerBadge.textContent = "EVENT IS LIVE NOW!";
+            }
+            return;
+        }
+
+        var totalSeconds = Math.floor(diff / 1000);
+        var days = Math.floor(totalSeconds / 86400);
+        var hours = Math.floor((totalSeconds % 86400) / 3600);
+        var minutes = Math.floor((totalSeconds % 3600) / 60);
+        var seconds = totalSeconds % 60;
+
+        daysEl.textContent = padZero(days);
+        hoursEl.textContent = padZero(hours);
+        minsEl.textContent = padZero(minutes);
+        secsEl.textContent = padZero(seconds);
+    }
+
+    // Run immediately so digits are rendered on first paint
+    updateCountdown();
+
+    // Tick every second
+    var intervalId = setInterval(updateCountdown, 1000);
+
+    // Stop interval if page is hidden/navigated away
+    window.addEventListener("pagehide", function () {
+        clearInterval(intervalId);
+    });
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initEventCountdown);
+} else {
+    initEventCountdown();
+}
+

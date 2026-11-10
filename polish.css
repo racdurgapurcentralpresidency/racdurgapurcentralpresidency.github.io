@@ -746,6 +746,564 @@ html.motion-on .scroll-top-dial .rotary-gear {
 }
 
 
+/* =========================================================
+   UPCOMING EVENT SHOWCASE & SAKSHAM COUNTDOWN
+   ========================================================= */
+
+.events-section .events-grid.single-event-view,
+.events-section .events-grid {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.events-section .event-saksham-showcase {
+    display: grid;
+    grid-template-columns: 460px 1fr;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid rgba(16, 185, 129, 0.22);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), 0 2px 10px rgba(16, 185, 129, 0.06);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.3s ease;
+}
+
+.events-section .event-saksham-showcase:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.12), 0 0 24px rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.45);
+}
+
+/* Poster column: fits 100% of the poster, absolutely zero cropping */
+.events-section .event-saksham-showcase .event-poster {
+    width: 100%;
+    height: 100%;
+    min-height: 540px;
+    background: #040e0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-right: 1px solid rgba(16, 185, 129, 0.18);
+    padding: 0;
+}
+
+.events-section .event-poster-link {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: zoom-in;
+    text-decoration: none;
+}
+
+.events-section .event-poster-link picture {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.events-section .event-poster-img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important; /* CRITICAL: Entire poster visible without any cropping */
+    object-position: center center !important;
+    display: block !important;
+    transition: transform 0.4s ease;
+}
+
+.events-section .event-poster-link:hover .event-poster-img {
+    transform: scale(1.02);
+}
+
+.poster-expand-pill {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    background: rgba(4, 13, 9, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    color: #6ee7b7;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    opacity: 0.9;
+    transition: opacity 0.25s ease, transform 0.25s ease, background 0.25s ease;
+    pointer-events: none;
+}
+
+.events-section .event-poster-link:hover .poster-expand-pill {
+    opacity: 1;
+    transform: translateY(-2px);
+    background: #10b981;
+    color: #032115;
+    font-weight: 800;
+}
+
+/* Event Content Column */
+.events-section .event-saksham-showcase .event-content {
+    padding: 36px 36px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    background: transparent;
+}
+
+.event-meta-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.event-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 5px 12px;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+
+.status-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    display: inline-block;
+    animation: statusPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes statusPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(0.7);
+        opacity: 0.4;
+    }
+}
+
+.event-area-tag {
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: #64748b;
+    background: rgba(100, 116, 139, 0.1);
+    padding: 5px 10px;
+    border-radius: 6px;
+}
+
+.event-showcase-title {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--navy, #0b2e21);
+    line-height: 1.28;
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+/* Event Meta Badges */
+.event-meta-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.05);
+    border: 1px solid rgba(16, 185, 129, 0.14);
+    border-radius: 12px;
+    padding: 12px 14px;
+}
+
+.meta-badge-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.84rem;
+    color: #334155;
+}
+
+.meta-badge-item strong {
+    color: var(--navy, #0b2e21);
+}
+
+.meta-badge-icon {
+    flex-shrink: 0;
+    color: #10b981;
+}
+
+/* Countdown Card */
+.saksham-countdown-card {
+    background: #f0fdf4;
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    border-radius: 16px;
+    padding: 16px 18px;
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.06);
+}
+
+.saksham-cd-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.saksham-cd-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    color: #047857;
+    text-transform: uppercase;
+}
+
+.pulse-beacon {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
+    animation: beaconPulse 1.4s infinite ease-in-out;
+}
+
+@keyframes beaconPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(0.65);
+        opacity: 0.35;
+    }
+}
+
+.saksham-cd-target-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #065f46;
+}
+
+.saksham-timer-grid {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.saksham-timer-box {
+    flex: 1;
+    min-width: 0;
+    background: #ffffff;
+    border: 1px solid rgba(16, 185, 129, 0.24);
+    border-radius: 10px;
+    padding: 8px 4px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.saksham-timer-val {
+    display: block;
+    font-size: 1.65rem;
+    font-weight: 800;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: var(--navy, #0b2e21);
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+}
+
+.saksham-timer-label {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #059669;
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+
+.saksham-timer-colon {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #10b981;
+    opacity: 0.75;
+    margin-bottom: 12px;
+}
+
+.event-showcase-desc {
+    color: var(--muted, #4b5563);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.event-organisers-box {
+    border-top: 1px dashed rgba(16, 185, 129, 0.22);
+    padding-top: 12px;
+}
+
+.organisers-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: #059669;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.organisers-list {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #4b5563;
+    margin: 0;
+}
+
+.organisers-list strong {
+    color: var(--navy, #0b2e21);
+}
+
+/* Actions Row */
+.event-actions-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 4px;
+}
+
+.event-primary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #10b981;
+    color: #032115 !important;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.28);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.event-primary-btn:hover {
+    background: #34d399;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+}
+
+.event-secondary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--navy, #0b2e21) !important;
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    padding: 9px 18px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.event-secondary-btn:hover {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: #10b981;
+    color: #047857 !important;
+}
+
+/* =========================================================
+   DARK MODE ADJUSTMENTS FOR SAKSHAM SHOWCASE
+   ========================================================= */
+
+[data-theme="dark"] .events-section .event-saksham-showcase {
+    background: #0d1a15;
+    border-color: rgba(52, 211, 153, 0.22);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 0 24px rgba(16, 185, 129, 0.08);
+}
+
+[data-theme="dark"] .events-section .event-saksham-showcase:hover {
+    border-color: rgba(52, 211, 153, 0.45);
+    box-shadow: 0 26px 58px rgba(0, 0, 0, 0.65), 0 0 32px rgba(52, 211, 153, 0.18);
+}
+
+[data-theme="dark"] .events-section .event-saksham-showcase .event-poster {
+    background: #050d09;
+    border-right-color: rgba(52, 211, 153, 0.16);
+}
+
+[data-theme="dark"] .event-showcase-title {
+    color: #f0fbf5 !important;
+}
+
+[data-theme="dark"] .event-status-pill {
+    background: rgba(52, 211, 153, 0.12);
+    color: #6ee7b7;
+    border-color: rgba(52, 211, 153, 0.3);
+}
+
+[data-theme="dark"] .event-area-tag {
+    background: rgba(52, 211, 153, 0.08);
+    color: #a7f3d0;
+}
+
+[data-theme="dark"] .event-meta-badges {
+    background: rgba(16, 185, 129, 0.06);
+    border-color: rgba(52, 211, 153, 0.18);
+}
+
+[data-theme="dark"] .meta-badge-item {
+    color: #cbdad2;
+}
+
+[data-theme="dark"] .meta-badge-item strong {
+    color: #f0fbf5;
+}
+
+[data-theme="dark"] .meta-badge-icon {
+    color: #34d399;
+}
+
+[data-theme="dark"] .saksham-countdown-card {
+    background: rgba(16, 185, 129, 0.06);
+    border-color: rgba(52, 211, 153, 0.28);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .saksham-cd-badge {
+    color: #6ee7b7;
+}
+
+[data-theme="dark"] .saksham-cd-target-label {
+    color: #9cb3a7;
+}
+
+[data-theme="dark"] .saksham-timer-box {
+    background: #08140f;
+    border-color: rgba(52, 211, 153, 0.24);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 0 12px rgba(16, 185, 129, 0.05);
+}
+
+[data-theme="dark"] .saksham-timer-val {
+    color: #6ee7b7;
+    text-shadow: 0 0 12px rgba(52, 211, 153, 0.35);
+}
+
+[data-theme="dark"] .saksham-timer-label {
+    color: #34d399;
+}
+
+[data-theme="dark"] .saksham-timer-colon {
+    color: #34d399;
+    opacity: 0.8;
+    text-shadow: 0 0 8px rgba(52, 211, 153, 0.4);
+}
+
+[data-theme="dark"] .event-showcase-desc {
+    color: #9cb3a7 !important;
+}
+
+[data-theme="dark"] .event-organisers-box {
+    border-top-color: rgba(52, 211, 153, 0.2);
+}
+
+[data-theme="dark"] .organisers-label {
+    color: #34d399;
+}
+
+[data-theme="dark"] .organisers-list {
+    color: #cbdad2;
+}
+
+[data-theme="dark"] .organisers-list strong {
+    color: #f0fbf5;
+}
+
+[data-theme="dark"] .event-secondary-btn {
+    color: #f0fbf5 !important;
+    border-color: rgba(52, 211, 153, 0.35);
+}
+
+[data-theme="dark"] .event-secondary-btn:hover {
+    background: rgba(52, 211, 153, 0.12);
+    border-color: #34d399;
+    color: #6ee7b7 !important;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 980px) {
+    .events-section .event-saksham-showcase {
+        grid-template-columns: 1fr !important;
+        max-width: 600px !important;
+        margin: 0 auto !important;
+    }
+
+    .events-section .event-saksham-showcase .event-poster {
+        width: 100% !important;
+        min-height: unset !important;
+        aspect-ratio: 4 / 5 !important; /* Exact poster ratio */
+        border-right: none !important;
+        border-bottom: 1px solid rgba(16, 185, 129, 0.18) !important;
+    }
+
+    [data-theme="dark"] .events-section .event-saksham-showcase .event-poster {
+        border-bottom-color: rgba(52, 211, 153, 0.16) !important;
+    }
+
+    .events-section .event-saksham-showcase .event-content {
+        padding: 28px 24px;
+    }
+}
+
+@media (max-width: 540px) {
+    .events-section .event-saksham-showcase .event-content {
+        padding: 22px 18px;
+    }
+
+    .event-showcase-title {
+        font-size: 1.35rem;
+    }
+
+    .saksham-timer-val {
+        font-size: 1.35rem;
+    }
+
+    .saksham-timer-colon {
+        font-size: 1.15rem;
+    }
+}
+
+
 /* Respect "reduce motion" for everything added here. */
 @media (prefers-reduced-motion: reduce) {
     .summary-chevron,
