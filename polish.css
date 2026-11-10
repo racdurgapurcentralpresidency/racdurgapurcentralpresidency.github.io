@@ -631,6 +631,118 @@ html.motion-on .scroll-top-dial .rotary-gear {
     color: var(--emerald-text);
 }
 
+/* Click hint pill on bookshelf */
+.shelf-hint-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(52, 211, 153, 0.15);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    color: #6ee7b7;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 999px;
+    width: fit-content;
+    margin-top: 8px;
+    letter-spacing: 0.03em;
+}
+
+.shelf-hint-pill svg {
+    color: #34d399;
+    flex-shrink: 0;
+}
+
+/* Bulletin 3D Bookshelf Box */
+.bulletin-shelf-box {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 28px !important;
+    padding: 36px 32px !important;
+}
+
+.bulletin-shelf-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.bulletin-shelf-titles {
+    flex: 1;
+}
+
+.bulletin-shelf-badge {
+    display: inline-block;
+    background: rgba(52, 211, 153, 0.16);
+    color: #6ee7b7;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.bulletin-shelf-titles h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.45rem;
+    color: #ffffff;
+}
+
+.bulletin-shelf-titles p {
+    margin: 0 0 10px 0;
+    font-size: 0.94rem;
+    color: #b9d4c6;
+    line-height: 1.55;
+}
+
+.bulletin-book-shelf {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 36px 20px !important;
+    align-items: end !important;
+    width: 100% !important;
+    padding-top: 14px !important;
+}
+
+@media (max-width: 1040px) {
+    .bulletin-book-shelf {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 28px 16px !important;
+    }
+}
+
+@media (max-width: 780px) {
+    .bulletin-shelf-box {
+        padding: 24px 20px !important;
+    }
+
+    .bulletin-shelf-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .bulletin-book-shelf {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        gap: 24px 12px !important;
+    }
+}
+
+@media (max-width: 520px) {
+    .bulletin-book-shelf {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 22px 10px !important;
+    }
+}
+
+[data-theme="dark"] .bulletin-shelf-box {
+    background: #12211c;
+    border: 1px solid rgba(52, 211, 153, 0.25);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
 /* Report books panel spans the full row under the awards */
 .proof-reports {
     grid-column: 1 / -1;

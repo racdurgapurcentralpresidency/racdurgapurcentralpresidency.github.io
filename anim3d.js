@@ -42,8 +42,7 @@
             }
         });
     }, { threshold: 0.3 });
-    ['.impact-grid', '.book-shelf'].forEach(function (sel) {
-        var el = document.querySelector(sel);
+    document.querySelectorAll('.impact-grid, .book-shelf').forEach(function (el) {
         if (el) { once.observe(el); }
     });
 

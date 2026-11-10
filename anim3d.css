@@ -151,8 +151,15 @@ html.anim3d .book-shelf:not(.in-view) .book-3d {
     translate: 0 16px;
 }
 
-html.anim3d .book-shelf.in-view li:nth-child(2) .book-3d { transition-delay: 0.1s; }
-html.anim3d .book-shelf.in-view li:nth-child(3) .book-3d { transition-delay: 0.2s; }
+html.anim3d .book-shelf.in-view li:nth-child(2) .book-3d { transition-delay: 0.06s; }
+html.anim3d .book-shelf.in-view li:nth-child(3) .book-3d { transition-delay: 0.12s; }
+html.anim3d .book-shelf.in-view li:nth-child(4) .book-3d { transition-delay: 0.18s; }
+html.anim3d .book-shelf.in-view li:nth-child(5) .book-3d { transition-delay: 0.24s; }
+html.anim3d .book-shelf.in-view li:nth-child(6) .book-3d { transition-delay: 0.30s; }
+html.anim3d .book-shelf.in-view li:nth-child(7) .book-3d { transition-delay: 0.36s; }
+html.anim3d .book-shelf.in-view li:nth-child(8) .book-3d { transition-delay: 0.42s; }
+html.anim3d .book-shelf.in-view li:nth-child(9) .book-3d { transition-delay: 0.48s; }
+html.anim3d .book-shelf.in-view li:nth-child(10) .book-3d { transition-delay: 0.54s; }
 html.anim3d .book-shelf.in-view .book:hover .book-3d { transition-delay: 0s; }
 
 @media (max-width: 900px) {
