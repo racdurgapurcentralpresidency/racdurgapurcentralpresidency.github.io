@@ -1,0 +1,228 @@
+/* Concept: The Folding Map (see x-foldmap.js) */
+
+.hero.x-fd-hidden { display: none !important; }
+
+.x-fold { position: relative; }
+
+.x-fd-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    /* a wooden desk under a warm lamp */
+    background:
+        radial-gradient(ellipse 55% 50% at 55% 45%, rgba(255, 220, 160, 0.22), rgba(255, 220, 160, 0) 70%),
+        repeating-linear-gradient(92deg, rgba(0, 0, 0, 0.05) 0 2px, rgba(0, 0, 0, 0) 2px 14px),
+        linear-gradient(180deg, #3a2516, #20140b);
+    color: #ffffff;
+}
+
+.x-fd-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.x-fd-intro {
+    position: absolute;
+    left: max(32px, 7vw);
+    top: 50%;
+    translate: 0 -50%;
+    transition: opacity 0.5s, translate 0.6s;
+    pointer-events: none;
+}
+
+.x-fd-intro.is-off {
+    opacity: 0;
+    translate: -20px -50%;
+}
+
+.x-fd-eyebrow {
+    margin: 0 0 12px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fcd68a;
+}
+
+.x-fd-intro h2 {
+    margin: 0;
+    font-size: clamp(2.6rem, 5.5vw, 4.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    text-shadow: 0 6px 30px rgba(0, 0, 0, 0.5);
+}
+
+.x-fd-intro h2 span { color: #34d399; }
+
+.x-fd-hint {
+    margin: 18px 0 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* pin cards */
+.x-fd-card {
+    position: absolute;
+    left: max(32px, 6vw);
+    top: 50%;
+    width: min(380px, 36vw);
+    padding: 22px 24px;
+    border-radius: 18px;
+    background: rgba(250, 243, 226, 0.96);
+    color: #2c2112;
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4);
+    translate: -16px -50%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.45s, translate 0.55s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s linear 0.45s;
+}
+
+.x-fd-card.is-on {
+    opacity: 1;
+    visibility: visible;
+    translate: 0 -50%;
+    transition: opacity 0.45s 0.15s, translate 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s, visibility 0s;
+}
+
+.x-fd-card .x-fd-eyebrow { color: #a16207; }
+
+.x-fd-card h3 {
+    margin: 0 0 8px;
+    font-size: 2rem;
+    line-height: 1.1;
+    color: #1c140a;
+}
+
+.x-fd-card p { margin: 0; font-size: 1rem; line-height: 1.6; }
+
+.x-fd-card a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    margin-top: 10px;
+    font-weight: 700;
+    color: #047857 !important;
+}
+
+.x-fd-end {
+    position: absolute;
+    left: 50%;
+    bottom: 56px;
+    translate: -50% 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px 24px;
+    padding: 12px 18px;
+    border-radius: 9999px;
+    background: rgba(20, 12, 6, 0.75);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s, translate 0.5s, visibility 0s linear 0.4s;
+}
+
+.x-fd-end.is-on {
+    opacity: 1;
+    visibility: visible;
+    translate: -50% 0;
+    transition: opacity 0.4s, translate 0.5s, visibility 0s;
+}
+
+.x-fd-skip {
+    position: absolute;
+    right: max(20px, 3vw);
+    top: 96px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.4);
+    color: #ffffff !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+@media (max-width: 760px) {
+    .x-fd-intro { top: 110px; translate: none; }
+    .x-fd-intro.is-off { translate: -20px 0; }
+
+    .x-fd-card {
+        left: 16px;
+        right: 16px;
+        top: auto;
+        bottom: 20px;
+        width: auto;
+        padding: 16px 18px;
+        translate: 0 16px;
+    }
+
+    .x-fd-card.is-on { translate: 0 0; }
+    .x-fd-card h3 { font-size: 1.5rem; }
+    .x-fd-card p { font-size: 0.95rem; }
+
+    .x-fd-end { width: calc(100% - 32px); border-radius: 20px; bottom: 60px; }
+    .x-fd-skip { top: auto; bottom: 8px; right: 12px; }
+}
+
+/* The site's dark theme lightens headings and paragraphs; cards are paper, so keep ink dark */
+.x-fd-card h3 { color: #1c140a !important; }
+.x-fd-card p:not(.x-fd-eyebrow) { color: #3b2e1a !important; }
+.x-fd-card .x-fd-eyebrow { color: #92400e !important; }
+
+
+/* Unfold Map button in #about location card */
+.map-unfold-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: rgba(16, 185, 129, 0.14);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #047857 !important;
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    width: fit-content;
+}
+
+.map-unfold-btn:hover {
+    background: #10b981;
+    color: #ffffff !important;
+    border-color: #10b981;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+}
+
+[data-theme="dark"] .map-unfold-btn {
+    background: rgba(52, 211, 153, 0.16);
+    border-color: rgba(52, 211, 153, 0.4);
+    color: #6ee7b7 !important;
+}
+
+[data-theme="dark"] .map-unfold-btn:hover {
+    background: #10b981;
+    color: #05140e !important;
+    box-shadow: 0 10px 26px rgba(16, 185, 129, 0.45);
+}
+
+/* Dark mode palette for folding map stage desk */
+[data-theme="dark"] .x-fd-stage {
+    background:
+        radial-gradient(ellipse 55% 50% at 55% 45%, rgba(52, 211, 153, 0.15), rgba(0, 0, 0, 0) 70%),
+        repeating-linear-gradient(92deg, rgba(0, 0, 0, 0.18) 0 2px, rgba(0, 0, 0, 0) 2px 14px),
+        linear-gradient(180deg, #182b23, #09140f);
+}
