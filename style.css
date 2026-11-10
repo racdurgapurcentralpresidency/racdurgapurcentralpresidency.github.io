@@ -879,6 +879,55 @@ a, button, input, select, textarea,
 
 
 /* =========================================================
+   6. ABOUT & WHO WE ARE SECTION
+   ========================================================= */
+
+.about-section {
+    position: relative;
+    padding: 100px 0;
+}
+
+.about-section .section-heading {
+    max-width: 780px;
+    margin-bottom: 36px;
+}
+
+.about-section .section-label {
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.about-section .section-heading h2 {
+    margin: 0;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.about-text {
+    max-width: 860px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.about-text p {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--muted);
+    letter-spacing: -0.01em;
+}
+
+[data-theme="dark"] .about-text p {
+    color: #a4bbb0 !important;
+}
+
+
+/* =========================================================
    ABOUT — DISTRICT & LOCATION CARD
    ========================================================= */
 
@@ -4062,8 +4111,25 @@ body.lightbox-open {
 
     /* About */
 
+    .about-section {
+        padding: 65px 0;
+    }
+
+    .about-section .section-heading {
+        margin-bottom: 24px;
+    }
+
     .about-content {
-        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .about-text {
+        gap: 14px;
+    }
+
+    .about-text p {
+        font-size: 1rem !important;
+        line-height: 1.65 !important;
     }
 
     .about-highlight {
