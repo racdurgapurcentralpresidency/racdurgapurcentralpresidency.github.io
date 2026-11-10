@@ -400,7 +400,7 @@ html.motion-on .scroll-top-dial .rotary-gear {
     border-radius: 14px;
     background: rgba(16, 185, 129, 0.12);
     color: #047857;
-    font-size: 0 !important;
+    font-size: 1.8rem;
 }
 
 .wash-roadmap-icon {
