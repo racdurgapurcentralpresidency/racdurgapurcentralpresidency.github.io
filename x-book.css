@@ -1,0 +1,143 @@
+/* Concept: The Report Book (see x-book.js) */
+
+.hero.x-bk-hidden {
+    display: none !important;
+}
+
+.x-book {
+    position: relative;
+}
+
+.x-bk-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    /* a warm spotlight on a dark desk */
+    background:
+        radial-gradient(ellipse 60% 55% at 50% 45%, rgba(255, 236, 200, 0.16), rgba(255, 236, 200, 0) 70%),
+        radial-gradient(ellipse at 50% 120%, #0b2e21 0%, #050b08 60%);
+}
+
+[data-theme="light"] .x-bk-stage {
+    background:
+        radial-gradient(ellipse 60% 55% at 50% 45%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 70%),
+        radial-gradient(ellipse at 50% 120%, #cfe3d8 0%, #e9f0ec 60%);
+}
+
+.x-bk-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.x-bk-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 34px;
+    translate: -50% 0;
+    margin: 0;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+    animation: x-bk-bob 1.8s ease-in-out infinite;
+    transition: opacity 0.4s;
+}
+
+[data-theme="light"] .x-bk-hint {
+    color: #33443c;
+}
+
+.x-bk-hint.is-off {
+    opacity: 0;
+}
+
+@keyframes x-bk-bob {
+    50% { translate: -50% 6px; }
+}
+
+.x-bk-progress {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    width: min(260px, 50vw);
+    height: 3px;
+    translate: -50% 0;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.18);
+    overflow: hidden;
+}
+
+.x-bk-progress span {
+    display: block;
+    height: 100%;
+    background: #34d399;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+}
+
+.x-bk-skip {
+    position: absolute;
+    right: max(20px, 3vw);
+    bottom: 22px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.35);
+    color: #ffffff !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.x-bk-end {
+    position: absolute;
+    left: 50%;
+    bottom: 64px;
+    translate: -50% 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 12px 24px;
+    padding: 12px 18px;
+    border-radius: 9999px;
+    background: rgba(3, 12, 8, 0.72);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s, translate 0.5s, visibility 0s linear 0.4s;
+}
+
+.x-bk-end.is-on {
+    opacity: 1;
+    visibility: visible;
+    translate: -50% 0;
+    transition: opacity 0.4s, translate 0.5s, visibility 0s;
+}
+
+@media (max-width: 760px) {
+    .x-bk-end {
+        width: calc(100% - 32px);
+        border-radius: 20px;
+        bottom: 70px;
+    }
+
+    .x-bk-skip {
+        bottom: 14px;
+    }
+
+    .x-bk-hint {
+        bottom: 40px;
+    }
+}
+
+/* Desktop: keep "Skip" clear of the floating buttons at the bottom right */
+@media (min-width: 761px) {
+    .x-bk-skip, .x-ph-skip { top: 96px; bottom: auto; }
+}

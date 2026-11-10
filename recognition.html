@@ -73,6 +73,11 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="motion.css" media="(min-width: 1024px)">
+    <link rel="stylesheet" href="polish.css">
+    <link rel="stylesheet" href="anim3d.css">
+    <link rel="stylesheet" href="x-transitions.css">
+    <script src="x-transitions.js"></script>
+    <link rel="stylesheet" href="x-live.css">
 </head>
 
 <body class="preloader-active">
@@ -1318,12 +1323,59 @@
 
         <!-- REPORT BOOKS -->
 
-        <div class="publication-group">
+        <div class="publication-group" id="report-books-group">
 
             <div class="publication-group-heading">
                 <span class="publication-group-line"></span>
                 <h3>Report Books</h3>
                 <span class="publication-group-line"></span>
+            </div>
+
+            <div class="proof-reports" style="margin: 0 auto 30px; max-width: 980px;">
+                <span class="proof-reports-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span>
+                <h3>Interactive 3D Report Bookshelf</h3>
+                <p>Explore complete annual documentation for each Rotary year. Hover or tap to open and browse each publication.</p>
+                <ul class="book-shelf">
+                    <li>
+                        <a class="book" href="publications/reports/report-book-2025-26.pdf" target="_blank" rel="noopener noreferrer" aria-label="Report book RY 2025-26, PDF, 2.3 MB" style="--spine:#7f1d1d">
+                            <span class="book-3d">
+                                <span class="book-back"></span>
+                                <span class="book-spine"></span>
+                                <span class="book-edge"></span>
+                                <span class="book-page"></span>
+                                <span class="book-cover"><img src="images/reports/report-book-2025-26-cover.webp" alt="RY 2025–26 Report Book Cover" width="360" height="509" loading="lazy" decoding="async"></span>
+                            </span>
+                            <span class="book-label">RY 2025&ndash;26</span>
+                            <span class="book-meta">PDF &middot; 2.3 MB</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="book" href="publications/reports/report-book-2024-25.pdf" target="_blank" rel="noopener noreferrer" aria-label="Report book RY 2024-25, PDF, 3.7 MB" style="--spine:#1f1f1f">
+                            <span class="book-3d">
+                                <span class="book-back"></span>
+                                <span class="book-spine"></span>
+                                <span class="book-edge"></span>
+                                <span class="book-page"></span>
+                                <span class="book-cover"><img src="images/reports/report-book-2024-25-cover.webp" alt="RY 2024–25 Report Book Cover" width="360" height="509" loading="lazy" decoding="async"></span>
+                            </span>
+                            <span class="book-label">RY 2024&ndash;25</span>
+                            <span class="book-meta">PDF &middot; 3.7 MB</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="book" href="publications/reports/report-book-2023-24.pdf" target="_blank" rel="noopener noreferrer" aria-label="Report book RY 2023-24, PDF, 6.7 MB" style="--spine:#4a1d3a">
+                            <span class="book-3d">
+                                <span class="book-back"></span>
+                                <span class="book-spine"></span>
+                                <span class="book-edge"></span>
+                                <span class="book-page"></span>
+                                <span class="book-cover"><img src="images/reports/report-book-2023-24-cover.webp" alt="RY 2023–24 Report Book Cover" width="360" height="509" loading="lazy" decoding="async"></span>
+                            </span>
+                            <span class="book-label">RY 2023&ndash;24</span>
+                            <span class="book-meta">PDF &middot; 6.7 MB</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
 
             <div class="publication-grid">
@@ -1601,5 +1653,7 @@
 <script src="motion.js" defer></script>
 <script src="script.js" defer></script>
 <script src="enhance.js" defer></script>
+<script src="anim3d.js" defer></script>
+<script src="x-live.js" defer></script>
 </body>
 </html>

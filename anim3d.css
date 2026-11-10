@@ -1,0 +1,443 @@
+/* =========================================================
+   anim3d.css — six 3D animations for the homepage (October 2026)
+
+     1. Report books are real 3D books that turn and open on hover
+     2. The district map rises as you scroll, then a pin drops on Durgapur
+     3. Impact cards tip up one after another as they scroll in
+     4. Award cards flip over (hover, tap or keyboard) to show the citation
+     5. "Show projects" lists unfold like a hinged panel
+     6. "Join" buttons lean toward the mouse and press in (desktop only)
+
+   Rules:
+   - Motion only runs when anim3d.js adds html.anim3d. It doesn't for
+     people who turned on "reduce motion", and the page is complete
+     and usable without it.
+   - Only rotate / translate / scale / opacity are animated. The separate
+     rotate/translate/scale properties are used on purpose: they stack
+     with the `transform` that motion.js already writes on cards.
+   ========================================================= */
+
+
+/* 1. 3D report books -------------------------------------------- */
+
+.book-shelf {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    align-items: end;
+}
+
+.book {
+    --d: 16px;                 /* book thickness */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    perspective: 900px;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    outline-offset: 6px;
+}
+
+.book-3d {
+    position: relative;
+    display: block;
+    width: min(100%, 150px);
+    aspect-ratio: 360 / 509;
+    margin-bottom: 12px;
+    transform-style: preserve-3d;
+    rotate: y 24deg;           /* resting pose shows the spine */
+}
+
+.book-3d > span {
+    position: absolute;
+    display: block;
+}
+
+.book-back {
+    inset: 0;
+    background: var(--spine, #1f2937);
+    border-radius: 2px 6px 6px 2px;
+    transform: translateZ(calc(var(--d) / -2));
+    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.45);
+}
+
+.book-spine {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--d);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.35), rgba(255, 255, 255, 0.12) 45%, rgba(0, 0, 0, 0.25)), var(--spine, #1f2937);
+    transform: translateX(calc(var(--d) / -2)) rotateY(-90deg);
+}
+
+.book-edge {
+    top: 3px;
+    bottom: 3px;
+    right: 0;
+    width: calc(var(--d) - 2px);
+    background: repeating-linear-gradient(90deg, #f4efe4 0 1px, #d9d2c3 1px 2px);
+    transform: translateX(calc(var(--d) / 2 - 1px)) rotateY(90deg);
+}
+
+.book-page {
+    inset: 2px 2px 2px 0;
+    background: linear-gradient(90deg, #e9e2d3, #fbf8f1 18%);
+    border-radius: 0 4px 4px 0;
+    transform: translateZ(calc(var(--d) / 2 - 1px));
+}
+
+.book-cover {
+    inset: 0;
+    border-radius: 2px 6px 6px 2px;
+    overflow: hidden;
+    transform-origin: left center;
+    transform: translateZ(calc(var(--d) / 2));
+    box-shadow: inset 4px 0 6px -2px rgba(0, 0, 0, 0.35);
+}
+
+.book-cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* crease near the spine */
+.book-cover::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 6px;
+    width: 3px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.25));
+}
+
+.book-label {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.book-meta {
+    font-size: 0.8125rem;
+    color: #b9d4c6;
+}
+
+html.anim3d .book-3d {
+    transition: rotate 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), translate 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+html.anim3d .book-cover {
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+html.anim3d .book:hover .book-3d,
+html.anim3d .book:focus-visible .book-3d {
+    rotate: y 4deg;
+    translate: 0 -8px;
+}
+
+html.anim3d .book:hover .book-cover,
+html.anim3d .book:focus-visible .book-cover {
+    transform: translateZ(calc(var(--d) / 2)) rotateY(-34deg);
+}
+
+/* Books swing in from edge-on when the shelf scrolls into view */
+html.anim3d .book-shelf:not(.in-view) .book-3d {
+    rotate: y 80deg;
+    translate: 0 16px;
+}
+
+html.anim3d .book-shelf.in-view li:nth-child(2) .book-3d { transition-delay: 0.1s; }
+html.anim3d .book-shelf.in-view li:nth-child(3) .book-3d { transition-delay: 0.2s; }
+html.anim3d .book-shelf.in-view .book:hover .book-3d { transition-delay: 0s; }
+
+@media (max-width: 900px) {
+    .book-shelf {
+        gap: 14px;
+    }
+
+    .book {
+        --d: 12px;
+    }
+}
+
+
+/* 2. Map rises, pin drops ---------------------------------------- */
+
+.map-stage {
+    perspective: 1200px;
+}
+
+.map-plane {
+    position: relative;
+    transform-origin: 50% 100%;
+}
+
+.map-plane img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+html.anim3d .map-plane {
+    rotate: x calc(var(--map-tilt, 0) * 1deg);
+}
+
+.map-pin {
+    position: absolute;
+    z-index: 3;                /* the map image sits at z-index 2 in style.css */
+    left: 21.45%;
+    top: 86.46%;
+    width: 6.6%;
+    aspect-ratio: 56 / 92;
+    translate: -50% -97.8%;
+    pointer-events: none;
+}
+
+.map-pin-body {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    transform-origin: 50% 100%;
+}
+
+.map-pin-shadow,
+.map-pin-pulse {
+    position: absolute;
+    left: 50%;
+    top: 97.8%;
+    width: 46%;
+    aspect-ratio: 13 / 5;
+    translate: -50% -50%;
+    border-radius: 50%;
+}
+
+.map-pin-shadow {
+    background: #f5c542;
+    border: 1px solid #1a1a1a;
+}
+
+.map-pin-pulse {
+    border: 2px solid #ed1c24;
+    opacity: 0;
+}
+
+html.anim3d .map-stage:not(.pin-dropped) .map-pin-body {
+    translate: 0 -260%;
+    opacity: 0;
+}
+
+html.anim3d .map-stage:not(.pin-dropped) .map-pin-shadow {
+    scale: 0;
+}
+
+html.anim3d .map-stage.pin-dropped .map-pin-body {
+    animation: anim3d-pin-drop 0.75s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+}
+
+html.anim3d .map-stage.pin-dropped .map-pin-shadow {
+    animation: anim3d-pin-shadow 0.75s ease-out both;
+}
+
+html.anim3d .map-stage.pin-dropped .map-pin-pulse {
+    animation: anim3d-pin-pulse 1.6s 0.6s ease-out 3;
+}
+
+@keyframes anim3d-pin-drop {
+    0%   { translate: 0 -260%; opacity: 0; scale: 1 1; }
+    15%  { opacity: 1; }
+    55%  { translate: 0 0; scale: 1 1; }
+    68%  { translate: 0 0; scale: 1.12 0.86; }
+    82%  { translate: 0 -12%; scale: 0.96 1.04; }
+    100% { translate: 0 0; scale: 1 1; opacity: 1; }
+}
+
+@keyframes anim3d-pin-shadow {
+    0%   { scale: 0; }
+    55%  { scale: 1.25; }
+    100% { scale: 1; }
+}
+
+@keyframes anim3d-pin-pulse {
+    0%   { scale: 1; opacity: 0.85; }
+    100% { scale: 4.5; opacity: 0; }
+}
+
+
+/* 3. Impact cards tip up ------------------------------------------ */
+
+html.anim3d .impact-grid {
+    perspective: 1100px;
+}
+
+html.anim3d .impact-card {
+    transform-origin: 50% 100%;
+    transition:
+        rotate 0.95s cubic-bezier(0.2, 0.9, 0.25, 1.18) var(--tip-delay, 0s),
+        translate 0.95s cubic-bezier(0.2, 0.9, 0.3, 1) var(--tip-delay, 0s);
+}
+
+html.anim3d .impact-grid:not(.in-view) .impact-card {
+    rotate: x 72deg;
+    translate: 0 40px;
+}
+
+
+/* 4. Award cards flip -------------------------------------------- */
+
+.flip-card {
+    position: relative;
+    perspective: 1400px;
+}
+
+.flip-inner {
+    display: grid;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.flip-face {
+    grid-area: 1 / 1;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.flip-back {
+    rotate: y 180deg;
+    pointer-events: none;
+}
+
+.flip-card.is-flipped .flip-inner {
+    rotate: y 180deg;
+}
+
+.flip-card.is-flipped .flip-back { pointer-events: auto; }
+.flip-card.is-flipped .flip-front { pointer-events: none; }
+
+html.anim3d .flip-inner {
+    transition: rotate 0.75s cubic-bezier(0.3, 1.2, 0.4, 1);
+}
+
+.flip-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 8px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--emerald-text);
+}
+
+/* The button covers the front so the whole card is one big tap target. */
+.flip-btn {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border: 0;
+    border-radius: 20px;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+.flip-btn:focus-visible {
+    outline: 3px solid var(--emerald-text);
+    outline-offset: 3px;
+}
+
+.flip-btn-back {
+    display: none;
+}
+
+/* Once flipped, it shrinks to a small "flip back" button in the corner. */
+.flip-card.is-flipped .flip-btn {
+    inset: 12px 12px auto auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    background: var(--cta-bg, #047857);
+    color: var(--cta-fg, #ffffff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flip-card.is-flipped .flip-btn-back {
+    display: inline-flex;
+}
+
+/* Mouse users: hovering flips the card; clicks go to the link on the back. */
+@media (hover: hover) and (pointer: fine) {
+    .flip-card:hover .flip-inner { rotate: y 180deg; }
+    .flip-card:hover .flip-back { pointer-events: auto; }
+    .flip-card:hover .flip-front { pointer-events: none; }
+    .flip-card:hover .flip-btn { pointer-events: none; }
+}
+
+
+/* 5. Project lists unfold like a hinge ------------------------------ */
+
+html.anim3d .focus-projects-toggle {
+    perspective: 1000px;
+}
+
+html.anim3d .focus-projects-toggle[open] .focus-projects-container {
+    transform-origin: 50% 0;
+    animation: anim3d-hinge 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+}
+
+html.anim3d .focus-projects-toggle[open] .focus-project-item {
+    animation: anim3d-item-in 0.45s ease-out both;
+}
+
+html.anim3d .focus-projects-toggle[open] .focus-project-item:nth-child(2) { animation-delay: 0.08s; }
+html.anim3d .focus-projects-toggle[open] .focus-project-item:nth-child(3) { animation-delay: 0.16s; }
+html.anim3d .focus-projects-toggle[open] .focus-project-item:nth-child(4) { animation-delay: 0.24s; }
+
+@keyframes anim3d-hinge {
+    from { rotate: x -85deg; opacity: 0; }
+    to   { rotate: x 0deg; opacity: 1; }
+}
+
+@keyframes anim3d-item-in {
+    from { translate: 0 -10px; opacity: 0; }
+    to   { translate: 0 0; opacity: 1; }
+}
+
+
+/* 6. Magnetic buttons (class added by anim3d.js on mouse devices) -- */
+
+.hero-buttons,
+.join-text {
+    perspective: 600px;
+}
+
+.magnetic {
+    transition:
+        translate 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+        rotate 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+        scale 0.15s ease;
+    will-change: translate, rotate;
+}
+
+.magnetic:active {
+    scale: 0.94;
+}
+
+
+/* Safety net: no motion for people who asked for less. */
+@media (prefers-reduced-motion: reduce) {
+    .flip-inner,
+    .book-3d,
+    .book-cover,
+    .magnetic {
+        transition: none !important;
+    }
+}

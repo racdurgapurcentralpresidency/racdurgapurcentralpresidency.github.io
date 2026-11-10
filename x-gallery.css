@@ -1,0 +1,172 @@
+/* Idea F — 3D photo wall (see x-gallery.js) */
+
+.x-wall {
+    position: relative;
+    background: var(--light);
+    overflow: clip;
+}
+
+[data-theme="dark"] .x-wall {
+    background: #0b1611;
+}
+
+.x-wall-head {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 28px;
+    padding: 0 16px;
+}
+
+.x-wall-head h2 {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--navy);
+}
+
+.x-wall-head h2 span {
+    color: var(--emerald-text);
+}
+
+.x-wall-hint {
+    margin-top: 10px;
+    color: var(--muted);
+}
+
+/* ---------- Phones: swipeable cover-flow row ---------- */
+.x-wall-view {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 0 30px;
+    perspective: 900px;
+    scrollbar-width: none;
+}
+
+.x-wall-view::-webkit-scrollbar {
+    display: none;
+}
+
+.x-wall-ring {
+    display: flex;
+    gap: 14px;
+    padding: 0 calc(50% - 130px);
+    width: max-content;
+    transform-style: preserve-3d;
+}
+
+.x-wall-tile {
+    position: relative;
+    width: 260px;
+    height: 180px;
+    flex: none;
+    padding: 0;
+    border: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    scroll-snap-align: center;
+    background: #0b2e21;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+    backface-visibility: hidden;
+}
+
+.x-wall-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.x-wall-cap {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 28px 12px 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    color: #ffffff;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.78));
+}
+
+.x-wall-cap strong {
+    font-size: 0.9rem;
+    line-height: 1.25;
+}
+
+.x-wall-cap small {
+    font-size: 0.75rem;
+    opacity: 0.85;
+}
+
+.x-wall-tile:focus-visible {
+    outline: 3px solid #34d399;
+    outline-offset: 3px;
+}
+
+/* Cover-flow tilt as tiles slide past the centre (supported browsers) */
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .x-wall:not(.x-wall-on) .x-wall-tile {
+            animation: x-wall-flow linear both;
+            animation-timeline: view(inline);
+        }
+    }
+
+    @keyframes x-wall-flow {
+        0%   { transform: rotateY(48deg) scale(0.86); opacity: 0.6; }
+        50%  { transform: none; opacity: 1; }
+        100% { transform: rotateY(-48deg) scale(0.86); opacity: 0.6; }
+    }
+}
+
+/* ---------- Wide screens: pinned 3D ring ---------- */
+.x-wall.x-wall-on {
+    padding: 0;
+}
+
+.x-wall-on .x-wall-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.x-wall-on .x-wall-view {
+    overflow: visible;
+    padding: 0;
+    height: 470px;
+    perspective: 1500px;
+    perspective-origin: 50% 40%;
+    position: relative;
+}
+
+.x-wall-on .x-wall-ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    padding: 0;
+    display: block;
+    will-change: transform;
+}
+
+.x-wall-on .x-wall-tile {
+    position: absolute;
+    width: 250px;
+    height: 172px;
+    margin: -86px 0 0 -125px;
+}
+
+.x-wall-on .x-wall-tile:hover img {
+    filter: brightness(1.12);
+}
+
+/* Clear the fixed header and the year page's sticky sub-menu */
+.x-wall-on .x-wall-stage {
+    padding-top: 110px;
+}

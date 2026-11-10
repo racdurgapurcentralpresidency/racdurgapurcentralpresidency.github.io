@@ -1,0 +1,743 @@
+/* =========================================================
+   polish.css — UI/UX review fixes (October 2026)
+   Loaded last on every page so these rules win over style.css.
+   Sections:
+     1. Shared icon style
+     2. Accessible button colours (WCAG AA 4.5:1)
+     3. Readable text sizes on phones
+     4. Hero: one headline, one sentence, one main button
+     5. Header menu button + "What's new" menu item
+     6. Floating buttons (bell, back to top)
+     7. Icons that replaced emojis
+     8. Areas of Focus: folded project lists
+     9. Track record section
+   ========================================================= */
+
+
+/* 1. Shared icon style ------------------------------------ */
+
+.icon {
+    display: inline-block;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+
+/* 2. Accessible button colours -----------------------------
+   Light: white on #047857 = 5.5:1. Dark: near-black on #10b981 = 7.5:1. */
+
+:root {
+    --cta-bg: #047857;
+    --cta-bg-hover: #065f46;
+    --cta-fg: #ffffff;
+}
+
+[data-theme="dark"] {
+    --cta-bg: #10b981;
+    --cta-bg-hover: #34d399;
+    --cta-fg: #04140d;
+}
+
+.btn-rebel-primary,
+.nav-cta-btn,
+.focus-project-btn,
+.join-button,
+.wash-modal-cta {
+    background: var(--cta-bg) !important;
+    background-image: none !important;
+    color: var(--cta-fg) !important;
+}
+
+.btn-rebel-primary:hover,
+.nav-cta-btn:hover,
+.focus-project-btn:hover,
+.join-button:hover,
+.wash-modal-cta:hover {
+    background: var(--cta-bg-hover) !important;
+    color: var(--cta-fg) !important;
+}
+
+.btn-rebel-primary *,
+.nav-cta-btn *,
+.focus-project-btn *,
+.join-button * {
+    color: inherit !important;
+}
+
+
+/* 3. Readable text sizes on phones (16px body text) -------- */
+
+@media (min-width: 769px) {
+    .focus-project-desc,
+    .area-intro-desc,
+    .join-highlight p,
+    .contact-info p {
+        font-size: 0.95rem !important;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-text p,
+    .section-intro,
+    .area-intro-desc,
+    .focus-project-desc,
+    .join-description,
+    .join-highlight p,
+    .contact-info p,
+    .wash-teaser-text,
+    .wash-roadmap-card p,
+    .wash-modal-body p,
+    .wash-modal-callout p,
+    .proof-reports p {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+    }
+
+    .focus-project-title {
+        font-size: 1.06rem !important;
+    }
+
+    .people-info h4 {
+        font-size: 0.95rem !important;
+    }
+
+    .contact-info a {
+        font-size: 0.95rem !important;
+        overflow-wrap: anywhere;
+    }
+
+    /* Small uppercase labels: 12px minimum */
+    .rebel-badge,
+    .wash-teaser-badge,
+    .map-label,
+    .member-role,
+    .category-label,
+    .contact-type,
+    .section-label {
+        font-size: 0.75rem !important;
+    }
+
+    .category-action {
+        font-size: 0.875rem !important;
+    }
+
+    .btn-rebel-primary,
+    .btn-rebel-outline,
+    .btn-quiet {
+        font-size: 1rem !important;
+    }
+
+    .join-button,
+    .focus-project-btn {
+        font-size: 0.85rem !important;
+    }
+
+    .footer-bottom p {
+        font-size: 0.8125rem !important;
+    }
+
+    .footer-tagline {
+        font-size: 0.875rem !important;
+    }
+}
+
+
+/* 4. Hero ---------------------------------------------------- */
+
+.hero-eyebrow {
+    margin: 0 0 8px;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* Dark mode: the collaboration panel sat on a white band. */
+[data-theme="dark"] .rebel-callout-section {
+    background: transparent !important;
+}
+
+.hero-statement {
+    min-height: 0 !important;
+    margin: 18px 0 6px !important;
+}
+
+.hero-statement .hero-slide {
+    position: relative !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.hero-statement .hero-slide-title {
+    margin: 0;
+    color: #ffffff !important;
+}
+
+/* Second line is green. motion.js wraps each word in .mw spans, so only
+   colour the line's own wrapper span and let the word spans inherit. */
+.hero-statement .hero-slide-title .mw,
+.hero-statement .hero-slide-title .mwi {
+    color: inherit !important;
+}
+
+.hero-statement .hero-slide-title > span:not(.mw) {
+    color: #34d399 !important;
+}
+
+/* Balanced line breaks for short headings (no single orphaned word). */
+.section-heading h2,
+.impact-heading h2,
+.join-text h2 {
+    text-wrap: balance;
+}
+
+.hero-buttons {
+    align-items: center;
+    gap: 16px 28px !important;
+    margin-top: 28px;
+}
+
+.hero-text-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 4px;
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.5);
+    text-underline-offset: 5px;
+    text-decoration-thickness: 1.5px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.hero-text-link:hover {
+    color: #a7f3d0 !important;
+    text-decoration-color: #a7f3d0;
+}
+
+.hero-sponsor {
+    margin: 28px 0 0 !important;
+    font-size: 0.875rem !important;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+@media (max-width: 768px) {
+    .hero-content {
+        padding-top: 64px !important;
+        padding-bottom: 56px !important;
+    }
+
+    .hero-description {
+        font-size: 1rem !important;
+        line-height: 1.65 !important;
+    }
+
+    .hero-eyebrow {
+        padding: 6px 12px !important;
+        letter-spacing: 0.06em !important;
+    }
+
+    /* Keep buttons aligned with the left-aligned text above them */
+    .hero-buttons {
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: flex-start !important;
+        align-items: center !important;
+    }
+
+    .hero-buttons .btn-rebel-primary {
+        width: auto !important;
+    }
+}
+
+
+/* 5. Header menu button + "What's new" ------------------------ */
+
+.menu-toggle {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    font-size: 0 !important;
+    line-height: 0;
+}
+
+@media (max-width: 1150px) {
+    .menu-toggle {
+        display: inline-flex !important;
+    }
+}
+
+.mobile-updates-link {
+    display: none;
+}
+
+@media (max-width: 1150px) {
+    .nav-menu .mobile-updates-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        min-height: 48px;
+        margin-top: 4px;
+        padding: 12px 4px;
+        border: 0;
+        background: none;
+        font: inherit;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+        text-align: left;
+        cursor: pointer;
+    }
+
+    [data-theme="dark"] .nav-menu .mobile-updates-link {
+        color: #f0fbf5;
+    }
+
+    .mobile-updates-icon {
+        color: var(--emerald-text);
+    }
+
+    .mobile-updates-count {
+        margin-left: auto;
+        min-width: 22px;
+        height: 22px;
+        padding: 0 7px;
+        border-radius: 9999px;
+        background: #b91c1c;
+        color: #ffffff;
+        font-size: 0.75rem;
+        font-weight: 800;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Bigger, easier-to-tap menu rows */
+    .nav-menu.active > a,
+    .nav-menu.active .nav-dropdown-toggle {
+        font-size: 1rem !important;
+        min-height: 48px;
+        display: flex !important;
+        align-items: center;
+    }
+}
+
+
+/* 6. Floating buttons ------------------------------------------ */
+
+/* The bell stops bobbing up and down; motion should mean something. */
+.notification-button {
+    animation: none !important;
+}
+
+.notification-bell {
+    display: inline-flex;
+}
+
+/* Light mode: the bell was blue, the only off-brand colour on the page. */
+:root:not([data-theme="dark"]) .notification-button {
+    background: #047857 !important;
+    box-shadow: 0 10px 24px rgba(4, 120, 87, 0.35) !important;
+}
+
+/* On phones and tablets the bell lives in the menu ("What's new"). */
+@media (max-width: 1150px) {
+    .notification-button {
+        display: none !important;
+    }
+
+    .scroll-top-dial {
+        right: 16px !important;
+        bottom: 16px !important;
+        width: 48px !important;
+        height: 48px !important;
+    }
+}
+
+/* Back to top: the arrow sat underneath the ring's dark fill in dark mode. */
+.dial-arrow {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #047857;
+}
+
+/* On desktop the motion layer hid the arrow until hover, leaving an empty
+   ring. Keep the arrow visible and the decorative gear faded behind it. */
+html.motion-on .scroll-top-dial .dial-arrow {
+    opacity: 1 !important;
+}
+
+html.motion-on .scroll-top-dial .rotary-gear {
+    opacity: 0.18 !important;
+}
+
+[data-theme="dark"] .scroll-top-dial {
+    background: #12211c !important;
+    box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.25), 0 10px 28px rgba(0, 0, 0, 0.5) !important;
+}
+
+
+/* 7. Icons that replaced emojis -------------------------------- */
+
+.rebel-menu-icon,
+.wash-modal-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+    font-size: 0 !important;
+}
+
+.wash-roadmap-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+}
+
+.category-icon,
+.contact-icon {
+    color: #047857;
+}
+
+[data-theme="dark"] .rebel-menu-icon,
+[data-theme="dark"] .wash-modal-icon,
+[data-theme="dark"] .wash-roadmap-icon {
+    background: rgba(52, 211, 153, 0.12);
+    color: #34d399;
+}
+
+[data-theme="dark"] .category-icon,
+[data-theme="dark"] .contact-icon {
+    color: #34d399 !important;
+}
+
+.map-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+
+/* 8. Areas of Focus: folded project lists ----------------------- */
+
+/* Equal-height cards per row, with the "Show projects" button at the bottom. */
+.rebel-menu-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.focus-projects-toggle {
+    margin-top: auto;
+    padding-top: 18px;
+}
+
+.focus-projects-toggle > summary {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 18px;
+    border-radius: 9999px;
+    border: 1.5px solid var(--border);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--emerald-text);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.focus-projects-toggle > summary::-webkit-details-marker {
+    display: none;
+}
+
+.focus-projects-toggle > summary:hover {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: var(--emerald-text);
+}
+
+.focus-projects-toggle > summary:focus-visible {
+    outline: 3px solid var(--emerald-text);
+    outline-offset: 3px;
+}
+
+.focus-projects-toggle .when-open {
+    display: none;
+}
+
+.focus-projects-toggle[open] .when-open {
+    display: inline;
+}
+
+.focus-projects-toggle[open] .when-closed {
+    display: none;
+}
+
+.summary-chevron {
+    transition: transform 0.2s ease;
+}
+
+.focus-projects-toggle[open] .summary-chevron {
+    transform: rotate(180deg);
+}
+
+.focus-projects-toggle[open] > summary {
+    margin-bottom: 16px;
+}
+
+.focus-see-all {
+    margin-top: 44px;
+    text-align: center;
+}
+
+.btn-quiet {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 12px 28px;
+    border-radius: 9999px;
+    border: 1.5px solid currentColor;
+    background: transparent;
+    color: var(--emerald-text) !important;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: background 0.2s ease;
+}
+
+.btn-quiet:hover {
+    background: rgba(16, 185, 129, 0.1);
+}
+
+
+/* 9. Track record section ---------------------------------------- */
+
+.impact-asof {
+    margin-top: 6px;
+    font-size: 0.8125rem;
+    color: var(--muted);
+}
+
+.proof-section .section-heading {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.proof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: stretch;
+}
+
+/* Award card faces (the flip itself lives in anim3d.css) */
+.flip-face {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 14px 18px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    box-shadow: var(--shadow-3d);
+}
+
+.flip-front img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+    border-radius: 12px;
+    background: var(--light);
+    margin-bottom: 8px;
+}
+
+.proof-award-meta {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--emerald-text);
+}
+
+.proof-award-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--navy);
+}
+
+.proof-award-year {
+    padding-top: 4px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.flip-citation {
+    margin: 8px 0 0;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--text);
+}
+
+.flip-source {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+.flip-link {
+    margin-top: auto;
+    padding-top: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--emerald-text);
+}
+
+/* Report books panel spans the full row under the awards */
+.proof-reports {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    grid-template-areas:
+        "icon  shelf"
+        "title shelf"
+        "text  shelf"
+        "more  shelf";
+    align-content: center;
+    column-gap: 40px;
+    row-gap: 10px;
+    padding: 32px;
+    border-radius: 20px;
+    background: #0b2e21;
+    color: #e6f4ec;
+}
+
+.proof-reports-icon { grid-area: icon; }
+.proof-reports h3 { grid-area: title; }
+.proof-reports > p { grid-area: text; }
+.proof-reports .book-shelf { grid-area: shelf; }
+.proof-reports .proof-more { grid-area: more; }
+
+.proof-reports h3 {
+    margin: 4px 0 0;
+    font-size: 1.3rem;
+    color: #ffffff;
+}
+
+.proof-reports > p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #b9d4c6;
+}
+
+.proof-reports-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(52, 211, 153, 0.16);
+    color: #6ee7b7;
+}
+
+.proof-more {
+    padding-top: 6px;
+    color: #6ee7b7;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.proof-sponsor {
+    margin: 32px auto 0;
+    max-width: 760px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+[data-theme="dark"] .flip-face {
+    background: #12211c;
+    border-color: rgba(52, 211, 153, 0.16);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .flip-front img {
+    background: #0d1915;
+}
+
+[data-theme="dark"] .proof-reports {
+    background: #12211c;
+    border: 1px solid rgba(52, 211, 153, 0.25);
+}
+
+@media (max-width: 900px) {
+    .proof-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .proof-reports {
+        grid-template-columns: 1fr;
+        grid-template-areas: "icon" "title" "text" "shelf" "more";
+        padding: 24px 20px;
+    }
+
+    /* Compact award rows on phones: small thumbnail beside the text. */
+    .flip-front {
+        display: grid;
+        grid-template-columns: 84px 1fr;
+        grid-auto-rows: min-content;
+        column-gap: 14px;
+        row-gap: 2px;
+        padding: 12px;
+        align-content: center;
+    }
+
+    .flip-front img {
+        grid-row: 1 / span 4;
+        width: 84px;
+        aspect-ratio: 1 / 1;
+        margin: 0;
+        align-self: center;
+    }
+
+    .proof-award-title {
+        font-size: 1rem;
+    }
+}
+
+
+/* Respect "reduce motion" for everything added here. */
+@media (prefers-reduced-motion: reduce) {
+    .summary-chevron,
+    .hero-text-link,
+    .btn-quiet {
+        transition: none !important;
+    }
+}

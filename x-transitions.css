@@ -1,0 +1,83 @@
+/* =========================================================
+   Idea B — Page-to-page 3D transitions
+   Uses the browser's built-in cross-page View Transitions
+   (Chrome/Edge 126+, Safari 18.2+). Other browsers simply load the
+   next page as before. The header stays put while the page behind it
+   sinks away and the new page grows out of the spot you clicked.
+   Back reverses the motion. Off for "reduce motion".
+   ========================================================= */
+
+@view-transition {
+    navigation: auto;
+}
+
+.navbar {
+    view-transition-name: x-header;
+}
+
+::view-transition-group(x-header) {
+    animation-duration: 0.3s;
+    z-index: 10;
+}
+
+::view-transition-old(root) {
+    animation: x-vt-old 0.5s cubic-bezier(0.55, 0, 0.6, 0.2) both;
+}
+
+::view-transition-new(root) {
+    animation: x-vt-new 0.75s cubic-bezier(0.18, 0.85, 0.22, 1) both;
+    transform-origin: var(--x-vt-ox, 50%) var(--x-vt-oy, 40%);
+}
+
+/* Something dark behind both pages while they move */
+::view-transition {
+    background: #030806;
+}
+
+html[data-theme="light"]::view-transition {
+    background: #dfe9e3;
+}
+
+@keyframes x-vt-old {
+    to {
+        opacity: 0;
+        transform: perspective(1200px) translate3d(0, 30px, -320px) rotateX(9deg);
+    }
+}
+
+@keyframes x-vt-new {
+    from {
+        opacity: 0;
+        transform: perspective(1200px) scale(0.18) rotateY(-14deg);
+    }
+}
+
+/* Going back: the current page shrinks away, the previous one comes forward */
+html.x-vt-back::view-transition-old(root) {
+    animation-name: x-vt-old-back;
+    transform-origin: 50% 40%;
+}
+
+html.x-vt-back::view-transition-new(root) {
+    animation-name: x-vt-new-back;
+}
+
+@keyframes x-vt-old-back {
+    to {
+        opacity: 0;
+        transform: perspective(1200px) scale(0.2) rotateY(14deg);
+    }
+}
+
+@keyframes x-vt-new-back {
+    from {
+        opacity: 0;
+        transform: perspective(1200px) translate3d(0, 30px, -320px) rotateX(9deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    @view-transition {
+        navigation: none;
+    }
+}
