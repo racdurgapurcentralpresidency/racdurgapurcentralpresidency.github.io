@@ -20,9 +20,7 @@ import * as THREE from './vendor/three.module.min.js';
     var PINS = [
         { name: 'Durgapur', at: [0.2145, 0.8646], kicker: 'Home', text: 'Where the club was chartered on 12 October 2023, sponsored by the Rotary Club of Durgapur Central.', link: ['#about', 'About the club'] },
         { name: 'Naihati', at: [0.278, 0.893], kicker: 'Muktodhara & Ganga Brick Factory', text: 'Unmute menstrual health drive for 30+ girls, TRIVA Independence Day with children, and lunch for 40+ children of brick factory workers.', link: ['our-work.html', 'See the projects'] },
-        { name: 'Kolkata', at: [0.287, 0.925], kicker: 'Our presence', text: 'Members and activities in Kolkata, alongside our home in Durgapur.', link: ['#people', 'Meet our people'] },
-        { name: 'Malda', at: [0.305, 0.565], kicker: 'District Installation', text: 'Symphony, the 36th Rotaract District Installation, hosted by RAC Malda Central on 12–13 July 2025.', link: ['ry-2025-26.html', 'RY 2025–26 records'] },
-        { name: 'Unakoti', at: [0.558, 0.665], kicker: 'Heritage & eco-stewardship', text: 'A fellowship trip to the historic rock carvings of Unakoti, promoting heritage conservation.', link: ['our-work.html', 'See the projects'] }
+        { name: 'Kolkata', at: [0.287, 0.925], kicker: 'Our presence', text: 'Members and activities in Kolkata, alongside our home in Durgapur.', link: ['#people', 'Meet our people'] }
     ];
 
     /* ---------- page structure ---------- */
