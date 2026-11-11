@@ -59,11 +59,18 @@
                 document.documentElement.setAttribute('data-theme', 'light');
                 document.documentElement.classList.remove('dark-theme');
             }
-            // Mobile & Repeat Visit Fast-Boot: skip preloader screen lock immediately
-            var introSeen = sessionStorage.getItem('racdcp-intro-seen');
+            // Low-End Hardware & Mobile Optimization (detect synchronously to prevent layout shifts)
             var prefersLessMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             var lowData = navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType));
-            if (introSeen || prefersLessMotion || lowData) {
+            var isLowEnd = (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+                           (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                           (window.innerWidth < 1024);
+            if (isLowEnd) {
+                document.documentElement.classList.add('low-spec');
+            }
+            // Mobile & Repeat Visit Fast-Boot: skip preloader screen lock immediately
+            var introSeen = sessionStorage.getItem('racdcp-intro-seen');
+            if (introSeen || prefersLessMotion || lowData || isLowEnd) {
                 document.documentElement.classList.add('racdcp-fast-boot');
             }
         } catch (e) {}

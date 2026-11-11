@@ -100,8 +100,18 @@ import * as THREE from './vendor/three.module.min.js';
     if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { printSheet(mapImg.complete ? mapImg : null); }); }
 
     /* ---------- three.js ---------- */
-    var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, isPhone ? 2 : 1.75));
+    var isLowEnd = document.documentElement.classList.contains('low-spec') ||
+                   (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+                   (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                   (navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType)));
+    var maxDpr = isLowEnd ? 1.0 : (isPhone ? 1.25 : 1.5);
+    var renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: !isLowEnd && !isPhone,
+        alpha: true,
+        powerPreference: isLowEnd ? 'default' : 'high-performance'
+    });
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, maxDpr));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(isPhone ? 46 : 38, 1, 0.1, 200);
@@ -188,19 +198,36 @@ import * as THREE from './vendor/three.module.min.js';
     var box = new THREE.Box3(), ctr = new THREE.Vector3(), tmp = new THREE.Vector3();
     var camPos = new THREE.Vector3(0, -6, 20), camLook = new THREE.Vector3();
     var mx = 0, my = 0, tmx = 0, tmy = 0, clock = new THREE.Clock(), visible = true, running = true, active = -2;
+    var scrollDirty = true, lastComputedU = 0;
+    function computeU() {
+        var r = section.getBoundingClientRect();
+        return clamp01(-r.top / Math.max(1, section.offsetHeight - innerHeight)) * units;
+    }
+    window.addEventListener('scroll', function () { scrollDirty = true; }, { passive: true });
     window.addEventListener('pointermove', function (e) {
         if (e.pointerType !== 'mouse') { return; }
         tmx = e.clientX / innerWidth * 2 - 1; tmy = e.clientY / innerHeight * 2 - 1;
     }, { passive: true });
-    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) { requestAnimationFrame(loop); } }).observe(section);
-    document.addEventListener('visibilitychange', function () { running = !document.hidden; if (running) { clock.getDelta(); requestAnimationFrame(loop); } });
+    new IntersectionObserver(function (es) {
+        visible = es[0].isIntersecting;
+        if (visible) { scrollDirty = true; requestAnimationFrame(loop); }
+    }).observe(section);
+    document.addEventListener('visibilitychange', function () {
+        running = !document.hidden;
+        if (running) { clock.getDelta(); scrollDirty = true; requestAnimationFrame(loop); }
+    });
 
     function loop() {
         if (!running || !visible) { return; }
         requestAnimationFrame(loop);
         var dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
-        var r = section.getBoundingClientRect();
-        var u = clamp01(-r.top / Math.max(1, section.offsetHeight - innerHeight)) * units;
+        if (scrollDirty) {
+            lastComputedU = computeU();
+            scrollDirty = false;
+        }
+        var u = lastComputedU;
+        mx += (tmx - mx) * 0.08;
+        my += (tmy - my) * 0.08;
 
         var lift = smooth(clamp01(u / LIFT));
         var unfoldU = clamp01((u - LIFT) / UNFOLD);
@@ -219,10 +246,16 @@ import * as THREE from './vendor/three.module.min.js';
         root.rotation.x = -1.15 * (1 - lift) - 0.42 * flat + my * 0.05;
         root.rotation.y = mx * 0.06;
         root.rotation.z = (1 - lift) * 0.12;
-        // keep the folded/unfolding sheet centred
+        // keep the folded/unfolding sheet centred (cache bounds once flat to eliminate vertex traversal)
         root.position.set(0, 0, 0);
-        root.updateMatrixWorld(true);
-        box.setFromObject(root); box.getCenter(ctr);
+        if (flat < 0.999) {
+            root.updateMatrixWorld(true);
+            box.setFromObject(root); box.getCenter(ctr);
+        } else {
+            box.min.set(-MW / 2, -MH / 2, 0);
+            box.max.set(MW / 2, MH / 2, 0);
+            ctr.set(0, 0, 0);
+        }
         root.position.x = -ctr.x; root.position.y = -ctr.y * 0.6;
         shadow.position.set(0, -MH * 0.55, -1.2);
         shadow.scale.set((box.max.x - box.min.x) * 1.4 + 2, 3, 1);

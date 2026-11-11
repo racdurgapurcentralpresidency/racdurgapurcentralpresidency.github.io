@@ -448,3 +448,60 @@ html.anim3d .focus-projects-toggle[open] .focus-project-item:nth-child(4) { anim
         transition: none !important;
     }
 }
+
+/* =========================================================
+   7. LOW-END & MOBILE PERFORMANCE ACCELERATION
+   Reduces 3D compositing overhead on low-spec hardware & phones
+   ========================================================= */
+
+html.low-spec .book-3d,
+@media (max-width: 768px) {
+    .book-3d {
+        transform-style: flat !important;
+        rotate: none !important;
+    }
+
+    .book-spine,
+    .book-edge,
+    .book-page,
+    .book-back {
+        display: none !important;
+    }
+
+    .book-cover {
+        position: relative !important;
+        transform: none !important;
+        border-radius: 8px !important;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35) !important;
+    }
+
+    html.anim3d .book:hover .book-3d,
+    html.anim3d .book:focus-visible .book-3d {
+        rotate: none !important;
+        translate: 0 -6px !important;
+    }
+
+    html.anim3d .book:hover .book-cover,
+    html.anim3d .book:focus-visible .book-cover {
+        transform: none !important;
+    }
+
+    html.anim3d .book-shelf:not(.in-view) .book-3d {
+        rotate: none !important;
+        translate: none !important;
+    }
+
+    .map-stage {
+        perspective: none !important;
+    }
+
+    .map-plane {
+        rotate: none !important;
+        transform: none !important;
+    }
+
+    .magnetic {
+        will-change: auto !important;
+        transition: transform 0.2s ease !important;
+    }
+}

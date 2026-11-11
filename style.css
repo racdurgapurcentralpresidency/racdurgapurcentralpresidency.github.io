@@ -6549,6 +6549,16 @@ html.racdcp-fast-boot .site-preloader {
     }
 }
 
+/* =========================================================
+   LOW-END HARDWARE & MOBILE PERFORMANCE ENGINE
+   Drastically cuts GPU memory, composite layers, and fill-rate
+   ========================================================= */
+
+/* Fast touch response: eliminates 300ms tap delay on mobile */
+a, button, input, select, textarea, .flip-card, .minimap-dot, .theme-toggle {
+    touch-action: manipulation;
+}
+
 /* Disable GPU-heavy effects on mobile, low-spec devices, and battery savers */
 @media (max-width: 1024px) {
     .ambient-orb {
@@ -6560,7 +6570,17 @@ html.racdcp-fast-boot .site-preloader {
     .navbar,
     .section-minimap,
     .nav-dropdown,
-    .hero-floating-badge {
+    .hero-floating-badge,
+    .x-live,
+    .scroll-top-dial,
+    .glass-panel,
+    .glass-pill,
+    .year-subnav-wrapper,
+    .rebel-menu-drawer,
+    .project-modal-panel,
+    .lightbox-backdrop,
+    .pm-lightbox-modal,
+    .toast-notification {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
     }
@@ -6580,6 +6600,23 @@ html.racdcp-fast-boot .site-preloader {
         transform: scale(1.03) !important;
         will-change: auto !important;
     }
+    .x-live-dot {
+        animation: none !important;
+    }
+    /* Flatten 3D composite contexts on mobile to eliminate dozens of heavy GPU layers */
+    .project-card,
+    .board-card,
+    .achievement-card,
+    .publication-card,
+    .website-creator-card,
+    .people-card,
+    .impact-card,
+    .event-card,
+    .flip-card-inner {
+        transform-style: flat !important;
+        perspective: none !important;
+        will-change: auto !important;
+    }
 }
 
 html.low-spec .ambient-orb {
@@ -6591,15 +6628,60 @@ html.low-spec .site-header,
 html.low-spec .navbar,
 html.low-spec .section-minimap,
 html.low-spec .nav-dropdown,
-html.low-spec .hero-floating-badge {
+html.low-spec .hero-floating-badge,
+html.low-spec .x-live,
+html.low-spec .scroll-top-dial,
+html.low-spec .glass-panel,
+html.low-spec .glass-pill,
+html.low-spec .year-subnav-wrapper,
+html.low-spec .rebel-menu-drawer,
+html.low-spec .project-modal-panel,
+html.low-spec .lightbox-backdrop,
+html.low-spec .pm-lightbox-modal,
+html.low-spec .toast-notification {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
 
 html.low-spec .hero-backdrop-img {
     animation: none !important;
-    transform: scale(1.03) !important;
+    transform: scale(1.02) !important;
     will-change: auto !important;
+}
+
+html.low-spec .x-live-dot {
+    animation: none !important;
+}
+
+/* Low-spec simplified composite layers & crisp low-overhead shadows */
+html.low-spec .project-card,
+html.low-spec .board-card,
+html.low-spec .achievement-card,
+html.low-spec .publication-card,
+html.low-spec .website-creator-card,
+html.low-spec .people-card,
+html.low-spec .impact-card,
+html.low-spec .event-card,
+html.low-spec .contact-card,
+html.low-spec .flip-card,
+html.low-spec .flip-card-inner {
+    transform-style: flat !important;
+    perspective: none !important;
+    will-change: auto !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06) !important;
+}
+
+html.low-spec .project-card:hover,
+html.low-spec .board-card:hover,
+html.low-spec .achievement-card:hover,
+html.low-spec .publication-card:hover,
+html.low-spec .website-creator-card:hover,
+html.low-spec .people-card:hover,
+html.low-spec .impact-card:hover,
+html.low-spec .event-card:hover,
+html.low-spec .contact-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Image rendering optimizations */

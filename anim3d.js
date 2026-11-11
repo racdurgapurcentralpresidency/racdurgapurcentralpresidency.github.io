@@ -46,50 +46,66 @@
         if (el) { once.observe(el); }
     });
 
+    var isLowEnd = root.classList.contains('low-spec') ||
+                   (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+                   (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                   window.innerWidth < 1024;
+
     /* 2. Map tilts up with the scroll, then the pin drops */
     var stage = document.querySelector('.map-stage');
     if (stage) {
         var plane = stage.querySelector('.map-plane');
-        var ticking = false;
-        var listening = false;
-
-        var update = function () {
-            ticking = false;
-            var rect = stage.getBoundingClientRect();
-            var vh = window.innerHeight || 800;
-            // 0 when the map's top is at the bottom of the screen,
-            // 1 when it has risen to 35% from the top.
-            var progress = (vh - rect.top) / (vh * 0.65);
-            progress = Math.max(0, Math.min(1, progress));
-            var eased = 1 - Math.pow(1 - progress, 3);
-            plane.style.setProperty('--map-tilt', (58 * (1 - eased)).toFixed(2));
-            if (progress >= 0.85 && !stage.classList.contains('pin-dropped')) {
-                stage.classList.add('pin-dropped');
-            }
-        };
-        var onScroll = function () {
-            if (!ticking) { ticking = true; requestAnimationFrame(update); }
-        };
-
-        // Only listen to scrolling while the map is on screen.
-        new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting && !listening) {
-                    listening = true;
-                    window.addEventListener('scroll', onScroll, { passive: true });
-                    update();
-                } else if (!entry.isIntersecting && listening) {
-                    listening = false;
-                    window.removeEventListener('scroll', onScroll);
-                    update();
+        if (isLowEnd) {
+            // Low-spec & mobile optimization: keep map flat, drop pin when in view without scroll-listener reflows
+            if (plane) { plane.style.setProperty('--map-tilt', '0'); }
+            new IntersectionObserver(function (entries, observer) {
+                if (entries[0].isIntersecting) {
+                    stage.classList.add('pin-dropped');
+                    observer.disconnect();
                 }
-            });
-        }).observe(stage);
-        update();
+            }, { threshold: 0.2 }).observe(stage);
+        } else {
+            var ticking = false;
+            var listening = false;
+
+            var update = function () {
+                ticking = false;
+                var rect = stage.getBoundingClientRect();
+                var vh = window.innerHeight || 800;
+                // 0 when the map's top is at the bottom of the screen,
+                // 1 when it has risen to 35% from the top.
+                var progress = (vh - rect.top) / (vh * 0.65);
+                progress = Math.max(0, Math.min(1, progress));
+                var eased = 1 - Math.pow(1 - progress, 3);
+                plane.style.setProperty('--map-tilt', (58 * (1 - eased)).toFixed(2));
+                if (progress >= 0.85 && !stage.classList.contains('pin-dropped')) {
+                    stage.classList.add('pin-dropped');
+                }
+            };
+            var onScroll = function () {
+                if (!ticking) { ticking = true; requestAnimationFrame(update); }
+            };
+
+            // Only listen to scrolling while the map is on screen.
+            new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting && !listening) {
+                        listening = true;
+                        window.addEventListener('scroll', onScroll, { passive: true });
+                        update();
+                    } else if (!entry.isIntersecting && listening) {
+                        listening = false;
+                        window.removeEventListener('scroll', onScroll);
+                        update();
+                    }
+                });
+            }).observe(stage);
+            update();
+        }
     }
 
-    /* 6. Magnetic buttons — mouse devices only */
-    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    /* 6. Magnetic buttons — high-end mouse devices only */
+    if (!isLowEnd && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
         document.querySelectorAll('.hero-buttons .btn-rebel-primary, .join-button').forEach(function (btn) {
             var frame = 0;
             btn.classList.add('magnetic');

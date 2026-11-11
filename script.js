@@ -955,8 +955,11 @@ if (document.readyState === "loading") {
 function init3DCardTilt() {
     if (window.MOTION3D && window.MOTION3D.enabled) { return; } // motion.js owns card tilt
     const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (isTouch) {
-        return; // Don't run mouse tilt on touch screens
+    const isLowEnd = document.documentElement.classList.contains('low-spec') ||
+                     (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
+                     (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+    if (isTouch || isLowEnd) {
+        return; // Don't run mouse tilt on touch screens or low-spec devices
     }
 
     const cards = document.querySelectorAll(
