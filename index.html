@@ -65,9 +65,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"></noscript>
 
+    <!-- Synchronous Pre-Paint Detection:
+         Applies saved theme (light/dark), checks if device has limited RAM/CPU/network
+         or narrow screen ('low-spec'), and skips the loading curtain ('racdcp-fast-boot')
+         immediately before the first frame renders. -->
     <script>
     (function () {
         try {
+            // 1. Load saved user theme preference, or fall back to OS color scheme
             var t = localStorage.getItem('racdcp-theme');
             if (!t) {
                 t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -79,7 +84,7 @@
                 document.documentElement.setAttribute('data-theme', 'light');
                 document.documentElement.classList.remove('dark-theme');
             }
-            // Low-End Hardware & Mobile Optimization (detect synchronously to prevent layout shifts)
+            // 2. Low-End Hardware & Mobile Optimization (detect synchronously to prevent layout shifts)
             var prefersLessMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             var lowData = navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType));
             var isLowEnd = (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
@@ -88,7 +93,7 @@
             if (isLowEnd) {
                 document.documentElement.classList.add('low-spec');
             }
-            // Mobile & Repeat Visit Fast-Boot: skip preloader screen lock immediately
+            // 3. Mobile & Repeat Visit Fast-Boot: skip preloader screen lock immediately
             var introSeen = sessionStorage.getItem('racdcp-intro-seen');
             if (introSeen || prefersLessMotion || lowData || isLowEnd) {
                 document.documentElement.classList.add('racdcp-fast-boot');
@@ -2336,6 +2341,10 @@
 </section>
 
     </main>
+<!-- =====================================================
+     WEBSITE & DIGITAL PRESENCE — DESIGNED & DEVELOPED BY
+     Two-column grid featuring Lead Developer & Backend Developer.
+====================================================== -->
 <section class="website-creator-section">
 
     <div class="section-container">
@@ -2870,6 +2879,7 @@
        4. anim3d.js: 3D interactive bookshelf, tilt & flip animations.
        5. x-live.js: Live club presence signals & dynamic UI effects.
        6. member-modal.js: Interactive member profile modal and Rotary Areas of Focus pie chart.
+       7. x-foldmap.js: ES Module powering the Three.js 3D Folding Map section (#map).
      ========================================================================== -->
 <script src="motion.js" defer></script>
 <script src="script.js" defer></script>

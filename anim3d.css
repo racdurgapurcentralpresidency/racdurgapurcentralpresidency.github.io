@@ -58,6 +58,7 @@
     display: block;
 }
 
+/* Back hardcover board pushed halfway back along the Z axis */
 .book-back {
     inset: 0;
     background: var(--spine, #1f2937);
@@ -66,6 +67,7 @@
     box-shadow: 0 18px 30px rgba(0, 0, 0, 0.45);
 }
 
+/* Left book spine rotated 90 degrees to form the side edge */
 .book-spine {
     top: 0;
     bottom: 0;
@@ -75,6 +77,7 @@
     transform: translateX(calc(var(--d) / -2)) rotateY(-90deg);
 }
 
+/* Right striped paper page edges visible from an angle */
 .book-edge {
     top: 3px;
     bottom: 3px;
@@ -84,6 +87,7 @@
     transform: translateX(calc(var(--d) / 2 - 1px)) rotateY(90deg);
 }
 
+/* Cream interior first page revealed when the front cover opens */
 .book-page {
     inset: 2px 2px 2px 0;
     background: linear-gradient(90deg, #e9e2d3, #fbf8f1 18%);
@@ -91,6 +95,7 @@
     transform: translateZ(calc(var(--d) / 2 - 1px));
 }
 
+/* Front cover hinged along the left spine edge so it swings open on hover */
 .book-cover {
     inset: 0;
     border-radius: 2px 6px 6px 2px;

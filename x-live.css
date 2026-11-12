@@ -1,5 +1,17 @@
-/* Idea C — "Live site" signals (see x-live.js) */
+/* ============================================================================
+   RAC DCP — LIVE CLUB STATUS & CURSOR GLOW STYLING (x-live.css)
+   ============================================================================
+   
+   WHAT THIS FILE STYLES:
+   1. Hero Live Status Pill (.x-live) displaying Rotary Year & service days.
+   2. Animated emerald "Live" indicator dot (.x-live-dot).
+   3. Footer "Website updated" timestamp (.x-updated).
+   4. Soft radial cursor spotlight glow (.x-light) that glides behind the mouse.
+   ============================================================================ */
 
+/* ----------------------------------------------------------------------------
+   1. HERO LIVE STATUS WIDGET
+   ---------------------------------------------------------------------------- */
 .x-live {
     margin-top: 26px;
     display: grid;

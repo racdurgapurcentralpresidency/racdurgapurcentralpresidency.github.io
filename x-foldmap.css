@@ -1,16 +1,31 @@
-/* Concept: The Folding Map (see x-foldmap.js) */
+/* ============================================================================
+   RAC DCP — 3D FOLDING MAP STYLING (x-foldmap.css)
+   ============================================================================
+   
+   WHAT THIS FILE STYLES:
+   1. Sticky fullscreen desk background (.x-fd-stage) supporting Light & Dark themes.
+   2. Three.js WebGL canvas layer (.x-fd-canvas).
+   3. Intro headline overlay (.x-fd-intro) that fades out as the brochure unfolds.
+   4. Vintage parchment pin story cards (.x-fd-card) appearing beside each 3D pin.
+   5. Final action pill (.x-fd-end), Skip button (.x-fd-skip), and "Unfold" button.
+   ============================================================================ */
 
+/* Hide fallback static hero if requested */
 .hero.x-fd-hidden { display: none !important; }
 
 .x-fold { position: relative; }
 
+/* ----------------------------------------------------------------------------
+   1. STICKY STAGE & WOODEN DESK BACKGROUND
+   ---------------------------------------------------------------------------- */
+/* Pins the 3D scene to the viewport while the visitor scrolls through the tall section */
 .x-fd-stage {
     position: sticky;
     top: 0;
     height: 100vh;
     height: 100dvh;
     overflow: hidden;
-    /* a wooden desk under a warm lamp */
+    /* Warm wooden desk texture lit by an overhead spotlight */
     background:
         radial-gradient(ellipse 55% 50% at 55% 45%, rgba(255, 220, 160, 0.22), rgba(255, 220, 160, 0) 70%),
         repeating-linear-gradient(92deg, rgba(0, 0, 0, 0.05) 0 2px, rgba(0, 0, 0, 0) 2px 14px),
@@ -18,6 +33,7 @@
     color: #ffffff;
 }
 
+/* Full-bleed WebGL canvas displaying the 3D paper sheet and pushpins */
 .x-fd-canvas {
     position: absolute;
     inset: 0;
@@ -26,6 +42,9 @@
     display: block;
 }
 
+/* ----------------------------------------------------------------------------
+   2. INTRO TITLE OVERLAY (Visible before unfolding begins)
+   ---------------------------------------------------------------------------- */
 .x-fd-intro {
     position: absolute;
     left: max(32px, 7vw);
@@ -68,7 +87,9 @@
     color: rgba(255, 255, 255, 0.75);
 }
 
-/* pin cards */
+/* ----------------------------------------------------------------------------
+   3. STORY CARDS FOR EACH MAP PIN (Durgapur, Naihati, Kolkata)
+   ---------------------------------------------------------------------------- */
 .x-fd-card {
     position: absolute;
     left: max(32px, 6vw);
