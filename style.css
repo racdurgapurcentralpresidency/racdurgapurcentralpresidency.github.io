@@ -928,6 +928,167 @@ a, button, input, select, textarea,
 
 
 /* =========================================================
+   ABOUT — OFFICIAL CLUB CHARTER & AFFILIATION SHOWCASE
+   ========================================================= */
+
+.about-credentials-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+
+.credential-card {
+    position: relative;
+    background: linear-gradient(145deg, #ffffff 0%, #f4fbf7 100%);
+    border: 1px solid rgba(16, 185, 129, 0.24);
+    border-radius: 20px;
+    padding: 24px 22px;
+    box-shadow: 0 10px 28px -6px rgba(11, 46, 33, 0.08), 0 2px 6px rgba(16, 185, 129, 0.04);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.28s ease,
+                box-shadow 0.28s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Subtle glowing accent line at the top of each card */
+.credential-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #10b981 0%, #06b6d4 50%, #10b981 100%);
+    opacity: 0.85;
+    transition: opacity 0.25s ease;
+}
+
+.credential-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(16, 185, 129, 0.55);
+    box-shadow: 0 20px 40px -8px rgba(16, 185, 129, 0.22), 0 0 20px rgba(16, 185, 129, 0.12);
+}
+
+.credential-card:hover::before {
+    opacity: 1;
+}
+
+.credential-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.credential-icon-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.22);
+    transition: transform 0.28s ease, background 0.28s ease;
+}
+
+.credential-card:hover .credential-icon-badge {
+    transform: scale(1.08) rotate(-3deg);
+    background: rgba(16, 185, 129, 0.2);
+    color: #065f46;
+}
+
+.credential-badge {
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #047857;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 20px;
+    padding: 4px 10px;
+    line-height: 1;
+}
+
+.credential-value {
+    font-size: 1.1875rem;
+    font-weight: 800;
+    color: #0d281c;
+    line-height: 1.35;
+    margin-bottom: 6px;
+    letter-spacing: -0.015em;
+}
+
+.credential-sub {
+    font-size: 0.8125rem;
+    color: var(--muted);
+    line-height: 1.45;
+    margin: 0;
+    margin-top: auto;
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] .credential-card {
+    background: linear-gradient(145deg, rgba(14, 28, 22, 0.95) 0%, rgba(8, 18, 14, 0.98) 100%);
+    border-color: rgba(52, 211, 153, 0.22);
+    box-shadow: 0 14px 36px -6px rgba(0, 0, 0, 0.55), 0 0 15px rgba(16, 185, 129, 0.08);
+}
+
+[data-theme="dark"] .credential-card:hover {
+    border-color: rgba(52, 211, 153, 0.5);
+    box-shadow: 0 20px 44px -8px rgba(0, 0, 0, 0.7), 0 0 26px rgba(16, 185, 129, 0.2);
+}
+
+[data-theme="dark"] .credential-icon-badge {
+    background: rgba(16, 185, 129, 0.16);
+    color: #34d399;
+    border-color: rgba(52, 211, 153, 0.25);
+}
+
+[data-theme="dark"] .credential-card:hover .credential-icon-badge {
+    background: rgba(16, 185, 129, 0.26);
+    color: #6ee7b7;
+}
+
+[data-theme="dark"] .credential-badge {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.14);
+    border-color: rgba(52, 211, 153, 0.28);
+}
+
+[data-theme="dark"] .credential-value {
+    color: #f2fcf7;
+}
+
+[data-theme="dark"] .credential-sub {
+    color: #9cb8aa;
+}
+
+@media (max-width: 1024px) {
+    .about-credentials-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .about-credentials-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .credential-card {
+        padding: 20px 18px;
+    }
+}
+
+
+/* =========================================================
    ABOUT — DISTRICT & LOCATION CARD
    ========================================================= */
 

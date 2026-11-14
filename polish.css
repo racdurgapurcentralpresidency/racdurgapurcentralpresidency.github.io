@@ -798,14 +798,6 @@ html.motion-on .scroll-top-dial .rotary-gear {
     font-size: 0.9rem;
 }
 
-.proof-sponsor {
-    margin: 32px auto 0;
-    max-width: 760px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--muted);
-}
-
 [data-theme="dark"] .flip-face {
     background: #12211c;
     border-color: rgba(52, 211, 153, 0.16);
