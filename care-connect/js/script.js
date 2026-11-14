@@ -153,7 +153,7 @@
     function initTheme() {
         let currentTheme = localStorage.getItem(CONFIG.STORAGE_THEME_KEY);
         if (!currentTheme) {
-            currentTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            currentTheme = DOM.html.getAttribute('data-theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         }
         applyTheme(currentTheme);
 
@@ -188,7 +188,7 @@
                 }
             });
 
-            const links = DOM.navMenu.querySelectorAll('.nav-link');
+            const links = DOM.navMenu.querySelectorAll('.nav-link, .mobile-drawer-site-link, .mobile-drawer-cta-btn');
             links.forEach(function (link) {
                 link.addEventListener('click', function () {
                     DOM.navMenu.classList.remove('mobile-open');
