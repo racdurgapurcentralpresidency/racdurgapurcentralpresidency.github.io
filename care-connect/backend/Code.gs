@@ -32,6 +32,7 @@
 // Target Spreadsheet ID & Sheet Configuration
 var TARGET_SPREADSHEET_ID = "1M1PIsf5CTpsMzjVZmit2sStD7gFfPIY2aToMIHed6xg";
 var TARGET_SHEET_NAME = "Website Requests";
+var FEEDBACK_SHEET_NAME = "Website Feedback";
 
 // Club Notification Email for instant alerts
 var NOTIFICATION_EMAIL = "rcdurgapurpresidency.3240@gmail.com";
@@ -100,6 +101,12 @@ function doPost(e) {
     var data = JSON.parse(rawData);
 
     var ss = getTargetSpreadsheet();
+
+    // Check if this submission is Website Feedback
+    if (data.intent === "website_feedback" || data.intent === "feedback") {
+      return handleWebsiteFeedbackSubmission(ss, data);
+    }
+
     var sheet = ss.getSheetByName(TARGET_SHEET_NAME);
 
     // If sheet doesn't exist or is blank, initialize columns
@@ -368,6 +375,133 @@ function sendEmailNotification(data, refId) {
     "Rotary International District 3240";
 
   MailApp.sendEmail(NOTIFICATION_EMAIL, subject, body);
+}
+
+/**
+ * ONE-CLICK SETUP FUNCTION FOR WEBSITE FEEDBACK:
+ * Run this function from the Apps Script editor to create the "Website Feedback" tab
+ * with formatted columns, styling, dropdown validation, and column widths.
+ */
+function createWebsiteFeedbackTable() {
+  var ss = getTargetSpreadsheet();
+  var sheet = ss.getSheetByName(FEEDBACK_SHEET_NAME);
+
+  if (!sheet) {
+    sheet = ss.insertSheet(FEEDBACK_SHEET_NAME);
+    Logger.log("Created new sheet tab: " + FEEDBACK_SHEET_NAME);
+  } else {
+    Logger.log("Configuring existing sheet tab: " + FEEDBACK_SHEET_NAME);
+  }
+
+  setupFeedbackTableColumnsAndFormatting(sheet);
+  Logger.log("Website Feedback table and columns created successfully!");
+}
+
+/**
+ * Handle Website Feedback Submissions (Dispatched from index.html feedback portal)
+ */
+function handleWebsiteFeedbackSubmission(ss, data) {
+  var sheet = ss.getSheetByName(FEEDBACK_SHEET_NAME);
+
+  if (!sheet) {
+    sheet = ss.insertSheet(FEEDBACK_SHEET_NAME);
+    setupFeedbackTableColumnsAndFormatting(sheet);
+  } else if (sheet.getLastRow() === 0) {
+    setupFeedbackTableColumnsAndFormatting(sheet);
+  }
+
+  var refId = data.reference_id || ("WFB-" + new Date().getFullYear() + "-" + Math.floor(1000 + Math.random() * 9000));
+  var submissionDate = data.formatted_date || new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+  var rating = data.rating || "5";
+  var starsDisplay = rating + " " + "★".repeat(parseInt(rating, 10) || 5);
+  var sentiment = data.sentiment || "Exceptional & Inspiring!";
+  var focusTags = data.tags || data.category || "General Feedback";
+  var visitorName = data.name || "Anonymous Visitor";
+  var visitorRole = data.role || "Community Guest";
+  var visitorEmail = data.email || "N/A";
+  var message = data.message || data.description || "N/A";
+  var deviceInfo = data.device_info || "Desktop / Mobile Web";
+  var reviewStatus = "New Feedback";
+
+  sheet.appendRow([
+    refId,
+    submissionDate,
+    starsDisplay,
+    sentiment,
+    focusTags,
+    visitorName,
+    visitorRole,
+    visitorEmail,
+    message,
+    deviceInfo,
+    reviewStatus
+  ]);
+
+  var newRow = sheet.getLastRow();
+  var rowRange = sheet.getRange(newRow, 1, 1, 11);
+  rowRange.setVerticalAlignment("middle");
+  rowRange.setFontFamily("Arial");
+  rowRange.setFontSize(10);
+  sheet.setRowHeight(newRow, 28);
+
+  // Center alignments
+  sheet.getRange(newRow, 1).setHorizontalAlignment("center").setFontWeight("bold");
+  sheet.getRange(newRow, 2).setHorizontalAlignment("center");
+  sheet.getRange(newRow, 3).setHorizontalAlignment("center").setFontWeight("bold");
+  sheet.getRange(newRow, 11).setHorizontalAlignment("center");
+
+  rowRange.setBackground(newRow % 2 === 0 ? "#f8fafc" : "#ffffff");
+
+  return ContentService.createTextOutput(JSON.stringify({
+    "status": "success",
+    "reference_id": refId,
+    "message": "Website feedback successfully recorded in Google Sheets."
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Configure 11 columns for the "Website Feedback" table
+ */
+function setupFeedbackTableColumnsAndFormatting(sheet) {
+  var headers = [
+    "Feedback ID",
+    "Timestamp (IST)",
+    "Rating (Stars)",
+    "Sentiment",
+    "Focus Areas / Tags",
+    "Visitor Name",
+    "Visitor Role",
+    "Email Address",
+    "Feedback Message",
+    "Device / Platform",
+    "Review Status"
+  ];
+
+  sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+
+  var headerRange = sheet.getRange(1, 1, 1, headers.length);
+  headerRange.setBackground("#0b2e21"); // RAC DCP Forest Navy
+  headerRange.setFontColor("#ffffff");
+  headerRange.setFontWeight("bold");
+  headerRange.setFontFamily("Arial");
+  headerRange.setFontSize(10);
+  headerRange.setHorizontalAlignment("center");
+  headerRange.setVerticalAlignment("middle");
+
+  sheet.setRowHeight(1, 38);
+  sheet.setFrozenRows(1);
+
+  var widths = [130, 160, 110, 190, 220, 170, 160, 190, 360, 160, 130];
+  for (var i = 0; i < widths.length; i++) {
+    sheet.setColumnWidth(i + 1, widths[i]);
+  }
+
+  // Dropdown for Review Status
+  var statusRule = SpreadsheetApp.newDataValidation()
+    .requireValueInList(["New Feedback", "Reviewed", "Action Item", "Compliment", "Addressed"], true)
+    .setAllowInvalid(false)
+    .build();
+  sheet.getRange("K2:K500").setDataValidation(statusRule);
 }
 
 /**

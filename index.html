@@ -2502,6 +2502,326 @@
 
 </section>
 
+<!-- =====================================================
+     WEBSITE FEEDBACK & DEVELOPER NOTE SECTION
+     Interactive Community Feedback Portal & Developer Letter
+====================================================== -->
+<section id="feedback" class="section feedback-section" aria-labelledby="feedbackTitle">
+
+    <div class="section-container">
+
+        <!-- Section Heading -->
+        <div class="section-heading centered">
+            <p class="section-label">COMMUNITY PERSPECTIVE &amp; REFLECTION</p>
+            <h2 id="feedbackTitle">Help Us Elevate Our <span>Digital Home</span></h2>
+            <p class="section-intro">
+                Your thoughts, ideas, and honest impressions empower us to continually refine this website.
+                Share your feedback below and read a personal message from our development team.
+            </p>
+        </div>
+
+        <!-- 2-Column Bento Grid Layout -->
+        <div class="feedback-layout-grid">
+
+            <!-- COLUMN 1: Interactive Feedback Form Portal -->
+            <div class="feedback-card feedback-form-card" id="feedbackFormCard">
+
+                <div class="card-header-badge">
+                    <span class="badge-dot"></span>
+                    <span>COMMUNITY FEEDBACK PORTAL</span>
+                </div>
+
+                <form id="websiteFeedbackForm" class="feedback-form" novalidate>
+
+                    <!-- Anti-spam Honeypot -->
+                    <div style="position:absolute; left:-9999px; top:-9999px; opacity:0; pointer-events:none;" aria-hidden="true">
+                        <label for="feedback_hp">Leave empty</label>
+                        <input type="text" name="feedback_hp" id="feedback_hp" tabindex="-1" autocomplete="off">
+                    </div>
+
+                    <!-- 1. Star Rating Experience -->
+                    <div class="feedback-form-group rating-experience-group">
+                        <label class="feedback-form-label" id="starRatingLabel">
+                            Overall Browsing Experience <span class="required-asterisk">*</span>
+                        </label>
+
+                        <div class="rating-stars-wrap" role="radiogroup" aria-labelledby="starRatingLabel">
+                            <button type="button" class="star-btn is-active" data-value="1" aria-label="1 star - Needs Improvement" role="radio" aria-checked="false">
+                                <svg class="star-icon" viewBox="0 0 24 24" width="30" height="30">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            </button>
+                            <button type="button" class="star-btn is-active" data-value="2" aria-label="2 stars - Fair" role="radio" aria-checked="false">
+                                <svg class="star-icon" viewBox="0 0 24 24" width="30" height="30">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            </button>
+                            <button type="button" class="star-btn is-active" data-value="3" aria-label="3 stars - Good" role="radio" aria-checked="false">
+                                <svg class="star-icon" viewBox="0 0 24 24" width="30" height="30">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            </button>
+                            <button type="button" class="star-btn is-active" data-value="4" aria-label="4 stars - Great" role="radio" aria-checked="false">
+                                <svg class="star-icon" viewBox="0 0 24 24" width="30" height="30">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            </button>
+                            <button type="button" class="star-btn is-active" data-value="5" aria-label="5 stars - Outstanding" role="radio" aria-checked="true">
+                                <svg class="star-icon" viewBox="0 0 24 24" width="30" height="30">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="rating" id="ratingInput" value="5">
+
+                        <div class="rating-feedback-label" id="ratingFeedbackLabel" aria-live="polite">
+                            ★★★★★ (5/5) — Exceptional &amp; Inspiring! 🚀
+                        </div>
+                    </div>
+
+                    <!-- 2. Focus Topic Chips (Interactive Multi-select) -->
+                    <div class="feedback-form-group">
+                        <label class="feedback-form-label">
+                            What would you like to highlight? <span class="form-label-hint">(Select any that apply)</span>
+                        </label>
+
+                        <div class="feedback-chips-grid" id="feedbackChipsGrid">
+                            <button type="button" class="feedback-chip is-selected" data-tag="Visual Design &amp; UI" aria-pressed="true">
+                                <span class="chip-icon">🎨</span> Visual Design &amp; UI
+                            </button>
+                            <button type="button" class="feedback-chip" data-tag="Speed &amp; Performance" aria-pressed="false">
+                                <span class="chip-icon">⚡</span> Speed &amp; Performance
+                            </button>
+                            <button type="button" class="feedback-chip" data-tag="Mobile Responsiveness" aria-pressed="false">
+                                <span class="chip-icon">📱</span> Mobile Experience
+                            </button>
+                            <button type="button" class="feedback-chip" data-tag="Projects &amp; Records" aria-pressed="false">
+                                <span class="chip-icon">📖</span> Projects &amp; Archives
+                            </button>
+                            <button type="button" class="feedback-chip" data-tag="Care Connect Portal" aria-pressed="false">
+                                <span class="chip-icon">🤝</span> Care Connect Portal
+                            </button>
+                            <button type="button" class="feedback-chip" data-tag="Feature Suggestion" aria-pressed="false">
+                                <span class="chip-icon">💡</span> Feature / Idea
+                            </button>
+                            <button type="button" class="feedback-chip" data-tag="Bug / Technical Glitch" aria-pressed="false">
+                                <span class="chip-icon">🐛</span> Report a Glitch
+                            </button>
+                            <button type="button" class="feedback-chip" data-tag="General Appreciation" aria-pressed="false">
+                                <span class="chip-icon">❤️</span> Appreciation
+                            </button>
+                        </div>
+
+                        <input type="hidden" name="tags" id="selectedTagsInput" value="Visual Design &amp; UI">
+                    </div>
+
+                    <!-- 3. Visitor Identity (Optional) -->
+                    <div class="form-row-2col">
+                        <div class="feedback-form-group">
+                            <label for="feedbackName" class="feedback-form-label">
+                                Your Name <span class="form-label-hint">(Optional)</span>
+                            </label>
+                            <input type="text" id="feedbackName" class="feedback-input" placeholder="e.g. Rtr. Rahul / Guest" maxlength="80">
+                        </div>
+
+                        <div class="feedback-form-group">
+                            <label for="feedbackRole" class="feedback-form-label">
+                                You are visiting as
+                            </label>
+                            <div class="select-wrapper">
+                                <select id="feedbackRole" class="feedback-select">
+                                    <option value="Rotaract Member">Rotaract Member (Club / District 3240)</option>
+                                    <option value="Rotarian">Rotarian / Rotary Club Member</option>
+                                    <option value="Partner NGO / Institution">Partner NGO / Institution</option>
+                                    <option value="Student / Youth Leader">Student / Youth Leader</option>
+                                    <option value="Community Guest" selected>Community Guest / Well-wisher</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feedback-form-group">
+                        <label for="feedbackEmail" class="feedback-form-label">
+                            Email Address <span class="form-label-hint">(Optional — only if you would like a developer reply)</span>
+                        </label>
+                        <input type="email" id="feedbackEmail" class="feedback-input" placeholder="e.g. name@example.com" maxlength="120">
+                    </div>
+
+                    <!-- 4. Detailed Feedback Textarea with Quick Prompts & Character Count -->
+                    <div class="feedback-form-group">
+                        <div class="label-with-charcount">
+                            <label for="feedbackMessage" class="feedback-form-label">
+                                Your Feedback &amp; Suggestions <span class="required-asterisk">*</span>
+                            </label>
+                            <span class="char-counter" id="charCounter">0 / 1000</span>
+                        </div>
+
+                        <!-- One-Click Prompt Starters -->
+                        <div class="quick-prompts-wrap">
+                            <span class="quick-prompts-label">Quick Ideas:</span>
+                            <button type="button" class="quick-prompt-btn" data-insert="The new design is clean, fast, and very easy to navigate!">✨ Clean &amp; Fast</button>
+                            <button type="button" class="quick-prompt-btn" data-insert="Really loved the Care Connect community portal initiative.">🤝 Care Connect</button>
+                            <button type="button" class="quick-prompt-btn" data-insert="Great experience on mobile phone, smooth transitions and responsive layout.">📱 Mobile Friendly</button>
+                        </div>
+
+                        <textarea id="feedbackMessage" class="feedback-textarea" rows="4" maxlength="1000" placeholder="Tell us what stood out to you, what could be improved, or any features you would love to see next..." required></textarea>
+                    </div>
+
+                    <!-- Submit Actions -->
+                    <div class="form-actions-wrap">
+                        <button type="submit" class="feedback-submit-btn" id="feedbackSubmitBtn">
+                            <span class="btn-text">Submit Valuable Feedback</span>
+                            <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                        <p class="privacy-note">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px; margin-right:4px;">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            Your feedback is reviewed with care by our web development team.
+                        </p>
+                    </div>
+
+                </form>
+
+                <!-- Interactive Success Card (Appears after submission) -->
+                <div class="feedback-success-card" id="feedbackSuccessCard" style="display: none;" aria-live="polite">
+                    <div class="success-icon-badge">
+                        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+
+                    <h3 class="success-title">Thank You for Your Valuable Feedback!</h3>
+
+                    <p class="success-desc">
+                        Your perspective has been successfully received and delivered directly to our webmaster and backend developers.
+                        Every observation helps us build a more accessible, lightning-fast digital home for our community.
+                    </p>
+
+                    <div class="success-summary-box">
+                        <div class="summary-item">
+                            <span class="summary-label">Rating Submitted</span>
+                            <span class="summary-value" id="summaryRating">★★★★★ (5/5)</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Focus Area</span>
+                            <span class="summary-value" id="summaryTags">Visual Design &amp; UI</span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-reset-feedback" id="btnResetFeedback">
+                        Submit Another Response →
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- COLUMN 2: Dedicated Note from the Developers -->
+            <div class="feedback-card developer-note-card">
+
+                <div class="card-header-badge note-badge">
+                    <span class="badge-icon">💌</span>
+                    <span>A NOTE FROM THE DEVELOPERS</span>
+                </div>
+
+                <div class="note-quote-decoration" aria-hidden="true">“</div>
+
+                <h3 class="developer-note-title">
+                    Building With Passion, Purpose &amp; Fellowship
+                </h3>
+
+                <p class="developer-note-subtitle">
+                    A personal reflection from the team behind the screen
+                </p>
+
+                <div class="developer-letter-body">
+                    <p>
+                        To every <strong>Rotaractor, Rotarian, community partner, and respected visitor</strong> who has spent time exploring our website: <em>thank you.</em>
+                    </p>
+
+                    <p>
+                        When we set out to design and engineer the official digital presence for the <strong>Rotaract Club of Durgapur Central Presidency (RI District 3240)</strong>, our aspiration was never to assemble just a promotional catalog. We set out to construct an authentic, living platform — one that honors the grassroots service rendered by our members, chronicles our milestones across Rotary years, and opens real avenues of assistance through our newly inaugurated <strong>Care Connect</strong> portal.
+                    </p>
+
+                    <p>
+                        Every interactive card, color contrast ratio, responsive fluid layout, and low-spec optimization for older mobile devices was crafted with meticulous intention so that every visitor feels welcomed and empowered.
+                    </p>
+
+                    <p>
+                        Digital craftsmanship thrives on genuine feedback. Your voice is our compass. Whether you have pointed out a small detail to refine, proposed an exciting new capability, or simply left an encouraging word, please know that we read every reflection with heartfelt appreciation.
+                    </p>
+
+                    <p class="letter-closing">
+                        Thank you for walking with us and for championing the spirit of youth-led service.
+                    </p>
+                </div>
+
+                <!-- Developer Signatures & Badges -->
+                <div class="developer-signatures-grid">
+
+                    <!-- Lead Developer: Rtr. Er. Debarpito Sarkar -->
+                    <div class="dev-signature-card">
+                        <div class="dev-avatar-wrap">
+                            <img src="images/members/debarpito-sarkar.jpeg" alt="Rtr. Er. Debarpito Sarkar" loading="lazy" decoding="async">
+                        </div>
+                        <div class="dev-signature-info">
+                            <h4 class="dev-name">Rtr. Er. Debarpito Sarkar</h4>
+                            <p class="dev-title">Webmaster &amp; Lead Developer</p>
+                            <span class="dev-tag">Club Learning Facilitator • RY 2026–27</span>
+                        </div>
+                    </div>
+
+                    <!-- Backend Developer: Shounak Banerjee -->
+                    <div class="dev-signature-card">
+                        <div class="dev-avatar-wrap">
+                            <img src="images/members/shounak-banerjee.jpg" alt="Shounak Banerjee" loading="lazy" decoding="async" style="object-position: center 18%;">
+                        </div>
+                        <div class="dev-signature-info">
+                            <h4 class="dev-name">Shounak Banerjee</h4>
+                            <p class="dev-title">Backend Developer</p>
+                            <span class="dev-tag">Technical Architecture</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Club Identity & Motto Bar -->
+                <div class="developer-card-footer">
+                    <div class="card-footer-branding">
+                        <img src="club-logo.png" alt="RAC DCP Logo" width="40" height="40" loading="lazy">
+                        <div>
+                            <strong>Rotaract Club of Durgapur Central Presidency</strong>
+                            <span>Rotary International District 3240 • Club ID: 8825991</span>
+                        </div>
+                    </div>
+                    <div class="card-footer-motto">
+                        “Together We Serve, Together We Succeed.”
+                    </div>
+                </div>
+
+                <!-- Direct Technical Contact Hint -->
+                <div class="developer-contact-hint">
+                    <span>Have a direct technical question or collaboration idea?</span>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=rcdurgapurpresidency.3240@gmail.com&su=Website%20Technical%20Feedback%20-%20Webmaster" target="_blank" rel="noopener noreferrer">
+                        Write to Our Developers ↗
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
     <!-- =====================================================
      FOOTER
 ====================================================== -->
@@ -2553,6 +2873,7 @@
                 <a href="ry-2023-24.html">RY 2023–24</a>
                 <a href="#join">Join Us</a>
                 <a href="#contact">Contact</a>
+                <a href="#feedback">Feedback</a>
 
             </div>
 
@@ -2944,6 +3265,9 @@
     </a>
     <a href="#contact" class="minimap-dot" data-section="contact" aria-label="Contact">
         <span class="minimap-tooltip">Contact</span>
+    </a>
+    <a href="#feedback" class="minimap-dot" data-section="feedback" aria-label="Feedback">
+        <span class="minimap-tooltip">Feedback</span>
     </a>
 </nav>
 

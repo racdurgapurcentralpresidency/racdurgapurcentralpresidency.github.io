@@ -1324,3 +1324,287 @@ if (document.readyState === "loading") {
     initEventCountdown();
 }
 
+/* ==========================================================================
+   13. INTERACTIVE WEBSITE FEEDBACK & DEVELOPER NOTE CONTROLLER
+   ========================================================================== */
+function initWebsiteFeedback() {
+    var form = document.getElementById("websiteFeedbackForm");
+    if (!form) return;
+
+    var ratingInput = document.getElementById("ratingInput");
+    var ratingLabel = document.getElementById("ratingFeedbackLabel");
+    var starBtns = Array.from(form.querySelectorAll(".star-btn"));
+    var starsWrap = form.querySelector(".rating-stars-wrap");
+    var chipBtns = Array.from(form.querySelectorAll(".feedback-chip"));
+    var selectedTagsInput = document.getElementById("selectedTagsInput");
+    var nameInput = document.getElementById("feedbackName");
+    var roleSelect = document.getElementById("feedbackRole");
+    var emailInput = document.getElementById("feedbackEmail");
+    var messageTextarea = document.getElementById("feedbackMessage");
+    var charCounter = document.getElementById("charCounter");
+    var quickPromptBtns = Array.from(form.querySelectorAll(".quick-prompt-btn"));
+    var submitBtn = document.getElementById("feedbackSubmitBtn");
+    var successCard = document.getElementById("feedbackSuccessCard");
+    var summaryRating = document.getElementById("summaryRating");
+    var summaryTags = document.getElementById("summaryTags");
+    var btnReset = document.getElementById("btnResetFeedback");
+    var honeypot = document.getElementById("feedback_hp");
+
+    var BACKEND_URL = "https://script.google.com/macros/s/AKfycbws2UTYy2IoMNSsWF-0BkC37E93SZF6yqwVGUfz1P5gbvp0N0Me9UnykHZ3VzF0AzUyGg/exec";
+
+    var sentiments = {
+        1: "★☆☆☆☆ (1/5) — Needs Improvement 🛠️",
+        2: "★★☆☆☆ (2/5) — Fair, Room to Grow 📈",
+        3: "★★★☆☆ (3/5) — Good Experience 👍",
+        4: "★★★★☆ (4/5) — Great & Smooth! 🌟",
+        5: "★★★★★ (5/5) — Exceptional & Inspiring! 🚀"
+    };
+
+    var currentRating = 5;
+
+    // A. Star Rating Interactions
+    function renderStars(rating, isHover) {
+        starBtns.forEach(function (btn) {
+            var val = parseInt(btn.dataset.value, 10);
+            if (isHover) {
+                if (val <= rating) {
+                    btn.classList.add("is-hover");
+                } else {
+                    btn.classList.remove("is-hover");
+                }
+            } else {
+                btn.classList.remove("is-hover");
+                if (val <= rating) {
+                    btn.classList.add("is-active");
+                    btn.setAttribute("aria-checked", "true");
+                } else {
+                    btn.classList.remove("is-active");
+                    btn.setAttribute("aria-checked", "false");
+                }
+            }
+        });
+    }
+
+    starBtns.forEach(function (btn) {
+        var val = parseInt(btn.dataset.value, 10);
+
+        btn.addEventListener("pointerenter", function () {
+            renderStars(val, true);
+            if (ratingLabel) {
+                ratingLabel.textContent = sentiments[val] || (val + " Stars");
+            }
+        });
+
+        btn.addEventListener("click", function () {
+            currentRating = val;
+            if (ratingInput) ratingInput.value = currentRating;
+            renderStars(currentRating, false);
+            if (ratingLabel) {
+                ratingLabel.textContent = sentiments[currentRating] || (currentRating + " Stars");
+            }
+        });
+    });
+
+    if (starsWrap) {
+        starsWrap.addEventListener("pointerleave", function () {
+            renderStars(currentRating, false);
+            if (ratingLabel) {
+                ratingLabel.textContent = sentiments[currentRating] || (currentRating + " Stars");
+            }
+        });
+    }
+
+    // B. Interactive Topic Chips
+    function updateSelectedTags() {
+        var selected = chipBtns.filter(function (btn) {
+            return btn.classList.contains("is-selected");
+        }).map(function (btn) {
+            return btn.dataset.tag;
+        });
+
+        if (selectedTagsInput) {
+            selectedTagsInput.value = selected.length > 0 ? selected.join(", ") : "General Feedback";
+        }
+    }
+
+    chipBtns.forEach(function (chip) {
+        chip.addEventListener("click", function () {
+            var isSel = chip.classList.toggle("is-selected");
+            chip.setAttribute("aria-pressed", isSel ? "true" : "false");
+            updateSelectedTags();
+        });
+    });
+
+    // C. Quick Inspiration Prompts
+    quickPromptBtns.forEach(function (promptBtn) {
+        promptBtn.addEventListener("click", function () {
+            var insertText = promptBtn.dataset.insert;
+            if (!insertText || !messageTextarea) return;
+
+            if (messageTextarea.value.trim() === "") {
+                messageTextarea.value = insertText;
+            } else {
+                messageTextarea.value = messageTextarea.value.trim() + " " + insertText;
+            }
+
+            messageTextarea.focus();
+            updateCharCounter();
+        });
+    });
+
+    // D. Character Counter
+    function updateCharCounter() {
+        if (!messageTextarea || !charCounter) return;
+        var len = messageTextarea.value.length;
+        charCounter.textContent = len + " / 1000";
+
+        if (len >= 950) {
+            charCounter.style.color = "#ef4444";
+        } else if (len >= 800) {
+            charCounter.style.color = "#f59e0b";
+        } else {
+            charCounter.style.color = "";
+        }
+    }
+
+    if (messageTextarea) {
+        messageTextarea.addEventListener("input", updateCharCounter);
+    }
+
+    // E. Device / Browser Info Detection (clean and lightweight)
+    function detectPlatform() {
+        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        var platform = isMobile ? "Mobile" : "Desktop";
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        return platform + " (" + width + "px)";
+    }
+
+    // F. Form Submission Handling
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Anti-spam check
+        if (honeypot && honeypot.value.trim() !== "") {
+            // Fake success for bots
+            showSuccessState(currentRating, "General Feedback");
+            return;
+        }
+
+        var messageVal = messageTextarea ? messageTextarea.value.trim() : "";
+        if (!messageVal) {
+            if (messageTextarea) {
+                messageTextarea.focus();
+                messageTextarea.style.borderColor = "#ef4444";
+                setTimeout(function () {
+                    messageTextarea.style.borderColor = "";
+                }, 3000);
+            }
+            return;
+        }
+
+        var nameVal = nameInput ? nameInput.value.trim() : "";
+        var roleVal = roleSelect ? roleSelect.value : "Community Guest";
+        var emailVal = emailInput ? emailInput.value.trim() : "";
+        var tagsVal = selectedTagsInput ? selectedTagsInput.value : "General Feedback";
+
+        var payload = {
+            reference_id: "WFB-" + new Date().getFullYear() + "-" + Math.floor(1000 + Math.random() * 9000),
+            formatted_date: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+            intent: "website_feedback",
+            rating: String(currentRating),
+            sentiment: sentiments[currentRating] || (currentRating + " Stars"),
+            category: tagsVal,
+            tags: tagsVal,
+            name: nameVal || "Anonymous Visitor",
+            org_name: roleVal,
+            role: roleVal,
+            phone: "-",
+            email: emailVal || "N/A",
+            message: messageVal,
+            description: messageVal,
+            location: detectPlatform(),
+            device_info: detectPlatform(),
+            applicant_type: "Rating: " + currentRating + " Stars",
+            beneficiaries: currentRating + " Stars",
+            timeline: "Website Feedback",
+            resources_offered: "Focus: " + tagsVal,
+            risk_score: 0,
+            risk_flags: "CLEAN_FEEDBACK"
+        };
+
+        // Cache submission locally in browser
+        try {
+            var cached = JSON.parse(localStorage.getItem("racdcp_website_feedback") || "[]");
+            cached.unshift(payload);
+            localStorage.setItem("racdcp_website_feedback", JSON.stringify(cached.slice(0, 15)));
+        } catch (err) {}
+
+        // UI Loading state
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            var originalBtnHtml = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="btn-text">Recording Feedback...</span>';
+        }
+
+        // Asynchronously post to Google Apps Script Web App
+        fetch(BACKEND_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify(payload)
+        }).catch(function (fetchErr) {
+            console.log("Feedback dispatched offline/locally:", fetchErr);
+        }).finally(function () {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnHtml;
+            }
+            showSuccessState(currentRating, tagsVal);
+        });
+    });
+
+    function showSuccessState(rating, tags) {
+        if (summaryRating) {
+            summaryRating.textContent = sentiments[rating] || (rating + " Stars");
+        }
+        if (summaryTags) {
+            summaryTags.textContent = tags || "General Feedback";
+        }
+        form.style.display = "none";
+        if (successCard) {
+            successCard.style.display = "flex";
+        }
+    }
+
+    if (btnReset) {
+        btnReset.addEventListener("click", function () {
+            form.reset();
+            currentRating = 5;
+            if (ratingInput) ratingInput.value = 5;
+            renderStars(5, false);
+            if (ratingLabel) ratingLabel.textContent = sentiments[5];
+            chipBtns.forEach(function (c, idx) {
+                if (idx === 0) {
+                    c.classList.add("is-selected");
+                    c.setAttribute("aria-pressed", "true");
+                } else {
+                    c.classList.remove("is-selected");
+                    c.setAttribute("aria-pressed", "false");
+                }
+            });
+            updateSelectedTags();
+            updateCharCounter();
+            if (successCard) successCard.style.display = "none";
+            form.style.display = "block";
+        });
+    }
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initWebsiteFeedback);
+} else {
+    initWebsiteFeedback();
+}
+

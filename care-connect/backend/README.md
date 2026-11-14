@@ -27,6 +27,7 @@ This guide connects all Care Connect website request submissions directly to you
    - Click **Advanced** (small link at bottom left) &rarr; **Go to Untitled project (unsafe)**.
    - Click **Allow**.
 5. Return to your spreadsheet: **You will immediately see the new `Website Requests` tab created with all 18 formatted columns, deep navy header, dropdowns, and formatting!**
+6. *(Optional & Recommended)*: Also select **`createWebsiteFeedbackTable`** in the function dropdown and click **Run** to generate the **`Website Feedback`** tab for ratings and notes submitted from the main page!
 
 *(Optional test)*: In the Apps Script dropdown, select **`testAddSampleSubmission`** and click **Run** to see an immediate sample submission appear in the sheet!
 
