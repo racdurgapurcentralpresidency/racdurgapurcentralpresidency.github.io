@@ -1,42 +1,46 @@
-# RAC DCP CARE CONNECT &mdash; Backend Deployment Guide
+# RAC DCP CARE CONNECT &mdash; Google Sheets Integration Guide
 
-This directory contains the Google Apps Script backend code for **RAC DCP CARE CONNECT**.
-
-With Google Apps Script, you can collect submissions directly into a dedicated **Google Sheet** without needing any paid server hosting or database fees.
-
----
-
-## 🚀 3-Minute Setup Guide
-
-### Step 1: Create a Google Sheet
-1. Open [Google Sheets](https://sheets.google.com/) while logged into your official club Google account (`rcdurgapurpresidency.3240@gmail.com`).
-2. Create a new spreadsheet named:  
-   **`RAC DCP Care Connect Submissions`**
+This guide connects all Care Connect website request submissions directly to your official Google Sheet:  
+📊 **[Secretary Documents 2026-27](https://docs.google.com/spreadsheets/d/1M1PIsf5CTpsMzjVZmit2sStD7gFfPIY2aToMIHed6xg/edit)**  
+📑 **Sheet Tab Name:** `Website Requests`
 
 ---
 
-### Step 2: Open Google Apps Script
-1. Inside your newly created Google Sheet, click **Extensions** in the top menu &rarr; **Apps Script**.
-2. An Apps Script editor tab will open.
-3. Rename the project to **`RAC DCP Care Connect Web App`** at the top left.
-4. Replace all code in `Code.gs` with the complete contents of [`Code.gs`](./Code.gs) in this directory.
+## ⚡ 2-Minute Setup Instructions
+
+### Step 1: Open Apps Script inside Secretary Documents 2026-27
+1. Open the spreadsheet in your browser:  
+   👉 **[Secretary Documents 2026-27](https://docs.google.com/spreadsheets/d/1M1PIsf5CTpsMzjVZmit2sStD7gFfPIY2aToMIHed6xg/edit)**
+2. In the top menu, click **Extensions** &rarr; **Apps Script**.
+3. A new Apps Script editor tab will open.
+4. Delete any default code in `Code.gs` and paste the entire code from [`care-connect/backend/Code.gs`](./Code.gs).
+5. Click the **Save** icon (diskette icon) or press `Ctrl + S`.
 
 ---
 
-### Step 3: Deploy as Web App
-1. In the Apps Script editor, click the blue **Deploy** button at the top right &rarr; **New deployment**.
-2. Click the gear icon (**Select type**) &rarr; choose **Web app**.
+### Step 2: One-Click Table & Column Creation
+1. In the toolbar at the top of Apps Script, find the function dropdown (it usually says `myFunction` or `doGet`).
+2. Select **`createWebsiteRequestsTable`**.
+3. Click **Run**.
+4. Google will ask for permission on your first run:
+   - Click **Review permissions** &rarr; choose your account (`rcdurgapurpresidency.3240@gmail.com`).
+   - Click **Advanced** (small link at bottom left) &rarr; **Go to Untitled project (unsafe)**.
+   - Click **Allow**.
+5. Return to your spreadsheet: **You will immediately see the new `Website Requests` tab created with all 18 formatted columns, deep navy header, dropdowns, and formatting!**
+
+*(Optional test)*: In the Apps Script dropdown, select **`testAddSampleSubmission`** and click **Run** to see an immediate sample submission appear in the sheet!
+
+---
+
+### Step 3: Deploy as Web App for the Website
+1. In the Apps Script editor, click the blue **Deploy** button (top right) &rarr; **New deployment**.
+2. Click the gear icon next to *Select type* &rarr; choose **Web app**.
 3. Fill in the fields:
-   - **Description**: `RAC DCP Care Connect Web App`
-   - **Execute as**: `Me (your-email@gmail.com)`
-   - **Who has access**: `Anyone` *(Crucial: allows visitors on the website to submit their requests)*
+   - **Description:** `RAC DCP Care Connect Web App`
+   - **Execute as:** `Me (your-email@gmail.com)`
+   - **Who has access:** `Anyone` *(Crucial: allows visitors on the website to submit forms)*
 4. Click **Deploy**.
-5. Google will ask you to **Authorize access**:
-   - Click *Review permissions*.
-   - Choose your Google account.
-   - Click *Advanced* (small link at bottom left) &rarr; *Go to RAC DCP Care Connect Web App (unsafe)*.
-   - Click *Allow*.
-6. Copy the **Web App URL** provided (it looks like `https://script.google.com/macros/s/AKfycb.../exec`).
+5. Copy the **Web App URL** generated (e.g. `https://script.google.com/macros/s/AKfycb.../exec`).
 
 ---
 
@@ -47,18 +51,34 @@ With Google Apps Script, you can collect submissions directly into a dedicated *
    const CONFIG = {
        BACKEND_URL: '', // Paste your Web App URL here
    ```
-3. Paste your URL between the quotes:
+3. Paste your Web App URL between the quotes:
    ```javascript
    const CONFIG = {
        BACKEND_URL: 'https://script.google.com/macros/s/AKfycb.../exec',
    ```
-4. Save and commit to GitHub!
+4. Save and push to GitHub!
 
 ---
 
-## 📊 Features Included in Backend
-- **Automatic Sheet & Header Setup**: When the first submission arrives, the script automatically formats 18 professional columns with club navy colors and fixed column widths.
-- **Reference ID Tracking**: Maintains the official `CCD-YYYY-XXXX` format.
-- **Automated Email Notifications**: Instantly sends an alert email to `rcdurgapurpresidency.3240@gmail.com` with applicant details and request summary.
-- **Risk Score Highlighting**: Submissions flagged with a risk score &ge; 60 are automatically highlighted with a light red tint for board review.
-- **Concurrency Protection**: Uses Google Apps Script `LockService` to prevent lost rows when multiple people submit at the same time.
+## 📋 Table Structure in "Website Requests"
+
+| # | Column Header | Description |
+|---|---|---|
+| **A** | `Reference ID` | Unique ID format (`CCD-2026-XXXX`), bold centered |
+| **B** | `Timestamp (IST)` | Indian Standard Time of submission |
+| **C** | `Intent` | `Request Assistance` or `Collaborate With Us` |
+| **D** | `Category` | Education, Healthcare, Food, NGO Collab, CSR, etc. |
+| **E** | `Applicant / Contact Person` | Full name of applicant or representative |
+| **F** | `Organisation / Entity Name` | Organisation name (or N/A for individuals) |
+| **G** | `Mobile Number` | 10-digit phone number (plain text preserved) |
+| **H** | `Email Address` | Email address (or N/A) |
+| **I** | `Location / Locality` | City, District & State |
+| **J** | `Applicant / Org Type` | Individual, Family, NGO, College, Corporate, etc. |
+| **K** | `People Benefited` | Approximate beneficiary count |
+| **L** | `Preferred Timeline / Urgency` | Flexible / Within 2-3 weeks / Urgent / Critical |
+| **M** | `Requirement / Proposal Description` | Detailed description (with text wrapping) |
+| **N** | `Resources / Support Offered` | Resources offered for collaboration |
+| **O** | `Risk Score` | Anti-spam heuristic risk score (0 - 100) |
+| **P** | `Risk Flags` | Bot detection flags or `CLEAN` |
+| **Q** | `Review Status` | Interactive color-coded dropdown: *Pending Review, Under Ground Verification, Approved - Action In Progress, Collaboration Finalized, Closed / Completed, Declined / Ineligible* |
+| **R** | `Board Remarks & Assigned Director` | Notes for board review & follow-ups |
