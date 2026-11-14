@@ -348,89 +348,89 @@
     // High-resolution photo catalog for project detail slideshows
     var projectPhotoCatalog = {
         'doctors-day': [
-            { src: 'images/gallery/doctors-day-1.jpg', alt: "Doctor's Day", w: 900, h: 1600 },
-            { src: 'images/gallery/doctors-day-2.jpeg', alt: "Doctor's Day", w: 1600, h: 1200 },
-            { src: 'images/gallery/doctors-day-3.jpeg', alt: "Doctor's Day", w: 1600, h: 1200 }
+            { src: 'images/gallery/2026-27/doctors-day-1.jpg', alt: "Doctor's Day", w: 900, h: 1600 },
+            { src: 'images/gallery/2026-27/doctors-day-2.jpeg', alt: "Doctor's Day", w: 1600, h: 1200 },
+            { src: 'images/gallery/2026-27/doctors-day-3.jpeg', alt: "Doctor's Day", w: 1600, h: 1200 }
         ],
         'club-installation': [
-            { src: 'images/gallery/club-installation-1.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
-            { src: 'images/gallery/club-installation-4.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
-            { src: 'images/gallery/club-installation-7.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
-            { src: 'images/gallery/club-installation-10.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
-            { src: 'images/gallery/club-installation-14.jpg', alt: "4th Club Installation", w: 1600, h: 1067 }
+            { src: 'images/gallery/2026-27/club-installation-1.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/2026-27/club-installation-4.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/2026-27/club-installation-7.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/2026-27/club-installation-10.jpg', alt: "4th Club Installation", w: 1600, h: 1067 },
+            { src: 'images/gallery/2026-27/club-installation-14.jpg', alt: "4th Club Installation", w: 1600, h: 1067 }
         ],
         'unakoti': [
-            { src: 'images/gallery/unakoti-1.jpeg', alt: "Trip to Unakoti", w: 963, h: 1280 },
-            { src: 'images/gallery/unakoti-2.jpeg', alt: "Trip to Unakoti", w: 1280, h: 960 },
-            { src: 'images/gallery/unakoti-3.jpeg', alt: "Trip to Unakoti", w: 1280, h: 960 }
+            { src: 'images/gallery/2026-27/unakoti-1.jpeg', alt: "Trip to Unakoti", w: 963, h: 1280 },
+            { src: 'images/gallery/2026-27/unakoti-2.jpeg', alt: "Trip to Unakoti", w: 1280, h: 960 },
+            { src: 'images/gallery/2026-27/unakoti-3.jpeg', alt: "Trip to Unakoti", w: 1280, h: 960 }
         ],
         'boier-desh': [
-            { src: 'images/gallery/boier-desh-1.jpeg', alt: "Boier Desh", w: 1280, h: 960 },
-            { src: 'images/gallery/boier-desh-4.jpeg', alt: "Boier Desh", w: 1280, h: 960 },
-            { src: 'images/gallery/boier-desh-7.jpeg', alt: "Boier Desh", w: 1600, h: 866 }
+            { src: 'images/gallery/2026-27/boier-desh-1.jpeg', alt: "Boier Desh", w: 1280, h: 960 },
+            { src: 'images/gallery/2026-27/boier-desh-4.jpeg', alt: "Boier Desh", w: 1280, h: 960 },
+            { src: 'images/gallery/2026-27/boier-desh-7.jpeg', alt: "Boier Desh", w: 1600, h: 866 }
         ],
         'soul-circle': [
-            { src: 'images/gallery/soul-circle-1.jpeg', alt: "Soul Circle", w: 1280, h: 960 },
-            { src: 'images/gallery/soul-circle-2.jpeg', alt: "Soul Circle", w: 1280, h: 960 }
+            { src: 'images/gallery/2026-27/soul-circle-1.jpeg', alt: "Soul Circle", w: 1280, h: 960 },
+            { src: 'images/gallery/2026-27/soul-circle-2.jpeg', alt: "Soul Circle", w: 1280, h: 960 }
         ],
         'triva': [
-            { src: 'images/gallery/triva-1.jpeg', alt: "TRIVA", w: 1600, h: 1200 },
-            { src: 'images/gallery/triva-2.jpeg', alt: "TRIVA", w: 1448, h: 1086 },
-            { src: 'images/gallery/triva-4.jpeg', alt: "TRIVA", w: 1600, h: 1204 },
-            { src: 'images/gallery/triva-7.jpeg', alt: "TRIVA", w: 1600, h: 1200 },
-            { src: 'images/gallery/triva-10.jpeg', alt: "TRIVA", w: 1280, h: 960 },
-            { src: 'images/gallery/triva-12.jpeg', alt: "TRIVA", w: 1200, h: 1600 },
-            { src: 'images/gallery/triva-23.jpeg', alt: "TRIVA", w: 1600, h: 1200 }
+            { src: 'images/gallery/2026-27/triva-1.jpeg', alt: "TRIVA", w: 1600, h: 1200 },
+            { src: 'images/gallery/2026-27/triva-2.jpeg', alt: "TRIVA", w: 1448, h: 1086 },
+            { src: 'images/gallery/2026-27/triva-4.jpeg', alt: "TRIVA", w: 1600, h: 1204 },
+            { src: 'images/gallery/2026-27/triva-7.jpeg', alt: "TRIVA", w: 1600, h: 1200 },
+            { src: 'images/gallery/2026-27/triva-10.jpeg', alt: "TRIVA", w: 1280, h: 960 },
+            { src: 'images/gallery/2026-27/triva-12.jpeg', alt: "TRIVA", w: 1200, h: 1600 },
+            { src: 'images/gallery/2026-27/triva-23.jpeg', alt: "TRIVA", w: 1600, h: 1200 }
         ],
         'she-inspires': [
-            { src: 'images/gallery/she-inspires.jpeg', alt: "She Inspires", w: 960, h: 1280 }
+            { src: 'images/gallery/2026-27/she-inspires.jpeg', alt: "She Inspires", w: 960, h: 1280 }
         ],
         'birthday-august': [
-            { src: 'images/gallery/birthday-august-1.jpeg', alt: "August Birthday Celebration", w: 1600, h: 1200 },
-            { src: 'images/gallery/birthday-august-2.jpeg', alt: "August Birthday Celebration", w: 1200, h: 1600 }
+            { src: 'images/gallery/2026-27/birthday-august-1.jpeg', alt: "August Birthday Celebration", w: 1600, h: 1200 },
+            { src: 'images/gallery/2026-27/birthday-august-2.jpeg', alt: "August Birthday Celebration", w: 1200, h: 1600 }
         ],
         'club-meetup': [
-            { src: 'images/gallery/club-meetup-1.jpeg', alt: "Club Meetup", w: 1599, h: 1200 },
-            { src: 'images/gallery/club-meetup-3.jpeg', alt: "Club Meetup", w: 1600, h: 1200 },
-            { src: 'images/gallery/club-meetup-5.jpeg', alt: "Club Meetup", w: 1280, h: 960 },
-            { src: 'images/gallery/club-meetup-7.jpeg', alt: "Club Meetup", w: 1280, h: 960 }
+            { src: 'images/gallery/2026-27/club-meetup-1.jpeg', alt: "Club Meetup", w: 1599, h: 1200 },
+            { src: 'images/gallery/2026-27/club-meetup-3.jpeg', alt: "Club Meetup", w: 1600, h: 1200 },
+            { src: 'images/gallery/2026-27/club-meetup-5.jpeg', alt: "Club Meetup", w: 1280, h: 960 },
+            { src: 'images/gallery/2026-27/club-meetup-7.jpeg', alt: "Club Meetup", w: 1280, h: 960 }
         ],
         '7-days-rotaract': [
-            { src: 'images/gallery/7-days-rotaract.jpeg', alt: "7 Days of Rotaract", w: 1600, h: 736 }
+            { src: 'images/gallery/2026-27/7-days-rotaract.jpeg', alt: "7 Days of Rotaract", w: 1600, h: 736 }
         ],
         'autism-workshop': [
-            { src: 'images/gallery/autism-workshop-1.png', alt: "Workshop on Autism Spectrum Disorder", w: 1600, h: 900 },
-            { src: 'images/gallery/autism-workshop-3.png', alt: "Workshop on Autism Spectrum Disorder", w: 1600, h: 900 }
+            { src: 'images/gallery/2026-27/autism-workshop-1.png', alt: "Workshop on Autism Spectrum Disorder", w: 1600, h: 900 },
+            { src: 'images/gallery/2026-27/autism-workshop-3.png', alt: "Workshop on Autism Spectrum Disorder", w: 1600, h: 900 }
         ],
         'food-distribution': [
-            { src: 'images/gallery/food-distribution-1.jpeg', alt: "Food Distribution Drive", w: 720, h: 1267 }
+            { src: 'images/gallery/2026-27/food-distribution.jpeg', alt: "Food Distribution Drive", w: 720, h: 1267 }
         ],
         'drr-visit': [
-            { src: 'images/gallery/drr-visit-1.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 },
-            { src: 'images/gallery/drr-visit-2.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 },
-            { src: 'images/gallery/drr-visit-3.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 },
-            { src: 'images/gallery/drr-visit-4.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 }
+            { src: 'images/gallery/2026-27/drr-visit-1.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 },
+            { src: 'images/gallery/2026-27/drr-visit-2.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 },
+            { src: 'images/gallery/2026-27/drr-visit-3.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 },
+            { src: 'images/gallery/2026-27/drr-visit-4.jpeg', alt: "DRR Connect - Official Club Visit", w: 1600, h: 1200 }
         ],
         'zonal-cricket': [
-            { src: 'images/gallery/zonal-cricket-1.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1500, h: 1125 },
-            { src: 'images/gallery/zonal-cricket-2.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1280, h: 960 },
-            { src: 'images/gallery/zonal-cricket-3.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1600, h: 1200 },
-            { src: 'images/gallery/zonal-cricket-4.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 960, h: 1280 },
-            { src: 'images/gallery/zonal-cricket-5.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1280, h: 960 },
-            { src: 'images/gallery/zonal-cricket-6.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 780, h: 1040 },
-            { src: 'images/gallery/zonal-cricket-7.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 780, h: 1040 },
-            { src: 'images/gallery/zonal-cricket-8.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1280, h: 960 }
+            { src: 'images/gallery/2026-27/zonal-cricket-1.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1500, h: 1125 },
+            { src: 'images/gallery/2026-27/zonal-cricket-2.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1280, h: 960 },
+            { src: 'images/gallery/2026-27/zonal-cricket-3.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1600, h: 1200 },
+            { src: 'images/gallery/2026-27/zonal-cricket-4.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 960, h: 1280 },
+            { src: 'images/gallery/2026-27/zonal-cricket-5.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1280, h: 960 },
+            { src: 'images/gallery/2026-27/zonal-cricket-6.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 780, h: 1040 },
+            { src: 'images/gallery/2026-27/zonal-cricket-7.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 780, h: 1040 },
+            { src: 'images/gallery/2026-27/zonal-cricket-8.jpeg', alt: "Zone 1 Zonal Cricket Tournament", w: 1280, h: 960 }
         ],
         'unmute': [
-            { src: 'images/gallery/unmute-1.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1599, h: 899 },
-            { src: 'images/gallery/unmute-2.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1599, h: 899 },
-            { src: 'images/gallery/unmute-3.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1280, h: 960 },
-            { src: 'images/gallery/unmute-4.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1599, h: 899 }
+            { src: 'images/gallery/2026-27/unmute-1.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1599, h: 899 },
+            { src: 'images/gallery/2026-27/unmute-2.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1599, h: 899 },
+            { src: 'images/gallery/2026-27/unmute-3.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1280, h: 960 },
+            { src: 'images/gallery/2026-27/unmute-4.jpeg', alt: "Unmute - Menstrual Hygiene Drive", w: 1599, h: 899 }
         ],
         'saradiya-sangam': [
-            { src: 'images/gallery/saradiya-sangam-1.jpeg', alt: "Saradiya Sangam", w: 1280, h: 960 },
-            { src: 'images/gallery/saradiya-sangam-2.jpeg', alt: "Saradiya Sangam", w: 1280, h: 960 },
-            { src: 'images/gallery/saradiya-sangam-3.jpeg', alt: "Saradiya Sangam", w: 1152, h: 864 }
+            { src: 'images/gallery/2026-27/saradiya-sangam-1.jpeg', alt: "Saradiya Sangam", w: 1280, h: 960 },
+            { src: 'images/gallery/2026-27/saradiya-sangam-2.jpeg', alt: "Saradiya Sangam", w: 1280, h: 960 },
+            { src: 'images/gallery/2026-27/saradiya-sangam-3.jpeg', alt: "Saradiya Sangam", w: 1152, h: 864 }
         ]
     };
 

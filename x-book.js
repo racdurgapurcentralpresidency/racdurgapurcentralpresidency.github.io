@@ -172,7 +172,7 @@ import * as THREE from './vendor/three.module.min.js';
         },
         s3r: function (g) {
             paper(g, 'right');
-            var shots = [['images/projects/soul-circle.webp', 'Soul Circle'], ['images/projects/unmute.webp', 'Unmute: menstrual health drive'], ['images/projects/triva.webp', 'TRIVA: Independence Day with children'], ['images/projects/food-distribution.webp', 'Food distribution drive']];
+            var shots = [['images/projects/2026-27/soul-circle.webp', 'Soul Circle'], ['images/projects/2026-27/unmute.webp', 'Unmute: menstrual health drive'], ['images/projects/2026-27/triva.webp', 'TRIVA: Independence Day with children'], ['images/projects/2026-27/food-distribution.webp', 'Food distribution drive']];
             var w = (PW - 190 * S) / 2, h = w * 1.05;
             shots.forEach(function (s, i) {
                 var x = 70 * S + (i % 2) * (w + 40 * S), y = 120 * S + Math.floor(i / 2) * (h + 120 * S);
