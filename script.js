@@ -1511,6 +1511,8 @@ function initWebsiteFeedback() {
             reference_id: "WFB-" + new Date().getFullYear() + "-" + Math.floor(1000 + Math.random() * 9000),
             formatted_date: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
             intent: "website_feedback",
+            target_sheet: "Website Feedback",
+            sheet_name: "Website Feedback",
             rating: String(currentRating),
             sentiment: sentiments[currentRating] || (currentRating + " Stars"),
             category: tagsVal,

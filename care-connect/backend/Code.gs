@@ -103,7 +103,17 @@ function doPost(e) {
     var ss = getTargetSpreadsheet();
 
     // Check if this submission is Website Feedback
-    if (data.intent === "website_feedback" || data.intent === "feedback") {
+    var isFeedback = (
+      data.intent === "website_feedback" ||
+      data.intent === "feedback" ||
+      data.target_sheet === "Website Feedback" ||
+      data.sheet_name === "Website Feedback" ||
+      data.sheet === "Website Feedback" ||
+      data.action === "feedback" ||
+      (data.reference_id && String(data.reference_id).indexOf("WFB-") === 0)
+    );
+
+    if (isFeedback) {
       return handleWebsiteFeedbackSubmission(ss, data);
     }
 

@@ -11224,6 +11224,168 @@ html.low-spec .floating-care-connect {
 }
 
 /* =========================================================
+   FLOATING WEBSITE FEEDBACK QUICK ACTION BUTTON
+   ========================================================= */
+
+.floating-feedback-btn {
+    position: fixed;
+    left: 28px;
+    bottom: 28px;
+    z-index: 1098;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 18px 10px 12px;
+    background: linear-gradient(135deg, #0b2e21 0%, #10b981 100%);
+    color: #ffffff !important;
+    border-radius: 9999px;
+    box-shadow: 0 10px 26px rgba(16, 185, 129, 0.38), 0 0 0 1.5px rgba(255, 255, 255, 0.22) inset;
+    text-decoration: none !important;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: floatFeedback 4s ease-in-out infinite;
+    transform-style: preserve-3d;
+    touch-action: manipulation;
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.floating-feedback-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 16px 36px rgba(16, 185, 129, 0.55), 0 0 20px rgba(245, 166, 35, 0.35);
+    color: #ffffff !important;
+}
+
+.floating-feedback-btn:active {
+    transform: translateY(-2px) scale(0.98);
+}
+
+@keyframes floatFeedback {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.ffb-icon-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.98rem;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.28) inset;
+}
+
+.ffb-label {
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+.ffb-badge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: #f5a623;
+    color: #ffffff;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    box-shadow: 0 2px 6px rgba(245, 166, 35, 0.4);
+    white-space: nowrap;
+}
+
+/* Dark Mode Tokens for Floating Feedback Button */
+[data-theme="dark"] .floating-feedback-btn {
+    background: linear-gradient(135deg, #0a261c 0%, #065f46 100%);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.65), 0 0 16px rgba(16, 185, 129, 0.25);
+    color: #f0fdf7 !important;
+}
+
+[data-theme="dark"] .floating-feedback-btn:hover {
+    background: linear-gradient(135deg, #0e3828 0%, #047857 100%);
+    border-color: rgba(52, 211, 153, 0.7);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 24px rgba(52, 211, 153, 0.4);
+}
+
+[data-theme="dark"] .ffb-icon-circle {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Low-Spec & Mobile Optimization */
+html.low-spec .floating-feedback-btn {
+    animation: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+@media (max-width: 768px) {
+    .floating-feedback-btn {
+        left: 16px;
+        bottom: 18px;
+        padding: 9px 13px;
+        font-size: 0.82rem;
+        gap: 6px;
+    }
+    .ffb-icon-circle {
+        width: 26px;
+        height: 26px;
+        font-size: 0.9rem;
+    }
+    .ffb-badge {
+        display: none;
+    }
+}
+
+@media (max-width: 420px) {
+    .floating-feedback-btn {
+        left: 12px;
+        bottom: 18px;
+        padding: 8px 11px;
+        font-size: 0.78rem;
+    }
+}
+
+/* Nav Link Feedback Styling */
+.nav-link-feedback {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.nav-link-feedback:hover {
+    color: var(--emerald-text) !important;
+}
+
+/* Section Flash Target */
+#feedback:target .feedback-form-card {
+    animation: feedbackCardTarget 1.5s ease-out;
+}
+
+@keyframes feedbackCardTarget {
+    0% {
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.7), 0 20px 48px rgba(16, 185, 129, 0.25);
+    }
+    100% {
+        box-shadow: var(--shadow-card, 0 10px 30px rgba(0, 0, 0, 0.08));
+    }
+}
+
+/* =========================================================
    COMPREHENSIVE LOW-SPEC DESKTOP & MOBILE ACCELERATION
    ========================================================= */
 
