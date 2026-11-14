@@ -31,7 +31,7 @@
     const CONFIG = {
         // Replace with your published Google Apps Script Web App URL once deployed.
         // If left empty or placeholder, the system runs safely in Staging / Demo mode.
-        BACKEND_URL: '', // e.g., 'https://script.google.com/macros/s/AKfycb.../exec'
+        BACKEND_URL: 'https://script.google.com/macros/s/AKfycbws2UTYy2IoMNSsWF-0BkC37E93SZF6yqwVGUfz1P5gbvp0N0Me9UnykHZ3VzF0AzUyGg/exec', // e.g., 'https://script.google.com/macros/s/AKfycb.../exec'
         CURRENT_YEAR: new Date().getFullYear() || 2026,
         MAX_HOURLY_SUBMISSIONS: 3,
         STORAGE_KEY_SUBMISSIONS: 'racdcp_cc_submissions',
@@ -787,7 +787,7 @@
                 score += 25;
                 flags.push('DUPLICATE_PHONE_AND_CATEGORY_LOGGED');
             }
-        } catch (e) {}
+        } catch (e) { }
 
         // Cap score between 0 and 100
         const finalScore = Math.min(Math.max(score, 0), 100);
