@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RAC DCP CARE CONNECT — Community Assistance & Collaboration Platform | RI District 3240</title>
+
+    <meta name="description"
+          content="RAC DCP CARE CONNECT: A bridge between those who need help and those who can help. Official community assistance, NGO collaboration, and CSR partnership platform by the Rotaract Club of Durgapur Central Presidency (RI District 3240).">
+    <link rel="canonical" href="https://racdurgapurcentralpresidency.github.io/care-connect/">
+    <meta name="theme-color" content="#0b1f3a">
+
+    <!-- Open Graph Sharing -->
+    <meta property="og:site_name" content="Rotaract Club of Durgapur Central Presidency">
+    <meta property="og:title" content="RAC DCP CARE CONNECT — Your Voice. Our Commitment.">
+    <meta property="og:description" content="A bridge between those who need help and those who can help. Community assistance, NGO collaboration, and CSR partnerships by RAC DCP.">
+    <meta property="og:image" content="https://racdurgapurcentralpresidency.github.io/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://racdurgapurcentralpresidency.github.io/care-connect/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_IN">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RAC DCP CARE CONNECT — Community Assistance & Collaboration">
+    <meta name="twitter:description" content="A bridge between those who need help and those who can help. Community assistance and collaboration platform.">
+    <meta name="twitter:image" content="https://racdurgapurcentralpresidency.github.io/og-image.jpg">
+
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/png" sizes="48x48" href="../favicon-48.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../favicon-96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../favicon-192.png">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "GovernmentService",
+      "name": "RAC DCP CARE CONNECT",
+      "serviceType": "Community Assistance and Collaboration Portal",
+      "provider": {
+        "@type": "NGO",
+        "name": "Rotaract Club of Durgapur Central Presidency",
+        "url": "https://racdurgapurcentralpresidency.github.io/",
+        "logo": "https://racdurgapurcentralpresidency.github.io/club-logo.png",
+        "email": "rcdurgapurpresidency.3240@gmail.com",
+        "parentOrganization": {
+          "@type": "Organization",
+          "name": "Rotary International District 3240"
+        }
+      },
+      "areaServed": {
+        "@type": "Place",
+        "name": "Durgapur, Paschim Bardhaman, West Bengal, India"
+      },
+      "description": "Public-facing community assistance, relief request, and institutional collaboration platform."
+    }
+    </script>
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Master Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Synchronous Theme Synchronization (shared key: 'racdcp-theme') -->
+    <script>
+    (function () {
+        try {
+            var savedTheme = localStorage.getItem('racdcp-theme');
+            if (!savedTheme) {
+                savedTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        } catch (e) {
+            // Graceful fallback
+        }
+    })();
+    </script>
+</head>
+<body>
+
+    <!-- =========================================================================
+         1. NAVBAR & HEADER
+         ========================================================================= -->
+    <header class="navbar" role="banner">
+        <div class="container nav-container">
+            <a href="../index.html" class="brand-link" title="Return to RAC DCP Home">
+                <img src="../club-logo.png" alt="RAC DCP Logo" class="brand-logo" width="44" height="44" loading="eager">
+                <div class="brand-text">
+                    <div class="brand-title-wrap">
+                        <span class="brand-title">CARE CONNECT</span>
+                        <span class="brand-tag">RAC DCP</span>
+                    </div>
+                    <span class="brand-sub">Rotaract Club of Durgapur Central Presidency</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Menu -->
+            <nav class="nav-menu-wrapper" aria-label="Main Navigation">
+                <ul class="nav-menu" id="primary-nav-menu">
+                    <li><a href="#about-cc" class="nav-link">About</a></li>
+                    <li><a href="#audiences" class="nav-link">Who Can Connect</a></li>
+                    <li><a href="#categories" class="nav-link">Focus Areas</a></li>
+                    <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+                    <li><a href="#request-system" class="nav-link">Request Portal</a></li>
+                    <li><a href="#faq" class="nav-link">FAQ</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <!-- Nav Actions & Toggles -->
+            <div class="nav-actions">
+                <a href="../index.html" class="main-site-btn" title="Go to main club portal">
+                    <span>&larr;</span>
+                    <span>Main Site</span>
+                </a>
+
+                <!-- Theme Toggle Button -->
+                <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle dark/light theme" title="Toggle Theme">
+                    <svg class="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+
+                <a href="#request-system" class="btn-nav-cta">
+                    <span>Connect Now</span>
+                    <span>&rarr;</span>
+                </a>
+
+                <!-- Mobile Hamburger Toggle -->
+                <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================================================
+         2. HERO SECTION
+         ========================================================================= -->
+    <section class="hero-section" id="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="hero-eyebrow-badge">
+                    <span class="pulse-dot" aria-hidden="true"></span>
+                    <span>Official Community Gateway &bull; RI District 3240</span>
+                </div>
+
+                <h1 class="hero-main-title">
+                    Your Voice.<br>
+                    <span>Our Commitment.</span>
+                </h1>
+
+                <h2 class="hero-subtitle">
+                    A Bridge Between Those Who Need Help and Those Who Can Help.
+                </h2>
+
+                <p class="hero-desc">
+                    Whether you are an individual seeking assistance, an organisation looking for collaboration, or someone willing to contribute to the community, RAC DCP CARE CONNECT provides a transparent, dedicated channel to reach out to us.
+                </p>
+
+                <div class="hero-cta-group">
+                    <button type="button" class="btn-hero-primary" id="hero-btn-assistance">
+                        <span>REQUEST ASSISTANCE</span>
+                        <span aria-hidden="true">&rarr;</span>
+                    </button>
+                    <button type="button" class="btn-hero-secondary" id="hero-btn-collab">
+                        <span>COLLABORATE WITH US</span>
+                        <span aria-hidden="true">&rarr;</span>
+                    </button>
+                </div>
+
+                <!-- Transparency & Verification Disclaimer Callout -->
+                <div class="hero-disclaimer-box" role="note">
+                    <span class="disclaimer-icon" aria-hidden="true">ℹ️</span>
+                    <div>
+                        <strong>Notice:</strong> RAC DCP is a volunteer-led youth community service organisation. All requests are subject to review, ground verification, and the availability of resources. Submission does not imply an automatic guarantee of financial or physical assistance.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Visual & Trust Bento -->
+            <div class="hero-visual-card">
+                <div class="hero-visual-header">
+                    <div class="hero-rotary-emblem" aria-hidden="true">
+                        &#9874;
+                    </div>
+                    <div>
+                        <h3 class="hero-visual-title">
+                            Rotaract Action Network
+                            <small>RI District 3240 &bull; Zone 1 &bull; Club ID 8825991</small>
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="hero-pillars-grid">
+                    <div class="pillar-item">
+                        <div class="pillar-icon" aria-hidden="true">🤝</div>
+                        <h4 class="pillar-name">Service Above Self</h4>
+                        <p class="pillar-text">Rooted in Rotary ideals of selfless, ethical community upliftment.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-icon" aria-hidden="true">🌱</div>
+                        <h4 class="pillar-name">Youth Leadership</h4>
+                        <p class="pillar-text">Passionate young leaders driving grassroot ground operations.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-icon" aria-hidden="true">🔍</div>
+                        <h4 class="pillar-name">Thorough Review</h4>
+                        <p class="pillar-text">Structured verification ensures genuine assistance reaches those in need.</p>
+                    </div>
+
+                    <div class="pillar-item">
+                        <div class="pillar-icon" aria-hidden="true">⚡</div>
+                        <h4 class="pillar-name">Resource Synergy</h4>
+                        <p class="pillar-text">Connecting donors, NGOs, institutions, and CSR partners seamlessly.</p>
+                    </div>
+                </div>
+
+                <div class="hero-quote-card">
+                    &ldquo;Together We Serve, Together We Succeed.&rdquo;<br>
+                    <span style="font-size: 0.78rem; font-weight: 700; opacity: 0.85;">&mdash; Rotaract Club of Durgapur Central Presidency</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         3. SECTION: WHO CAN CONNECT WITH US?
+         ========================================================================= -->
+    <section class="audiences-section" id="audiences">
+        <div class="container">
+            <header class="section-header">
+                <span class="section-eyebrow">Open For All</span>
+                <h2 class="section-title">Who Can <span>Connect With Us?</span></h2>
+                <p class="section-desc">
+                    Our platform welcomes citizens, grassroots nonprofits, academic institutions, and enterprise leaders who share our commitment to transformative social impact.
+                </p>
+            </header>
+
+            <div class="audience-grid">
+                <!-- Card 1: Individuals & Families -->
+                <article class="audience-card">
+                    <div class="audience-icon-wrap" aria-hidden="true">👨‍👩‍👧‍👦</div>
+                    <h3 class="audience-title">Individuals &amp; Families</h3>
+                    <p class="audience-desc">
+                        Underprivileged citizens, families facing temporary hardships, students seeking study aids, or patients needing guidance.
+                    </p>
+                    <ul class="audience-features">
+                        <li>Education &amp; book support</li>
+                        <li>Essential ration &amp; relief aid</li>
+                        <li>Medical camp coordination</li>
+                        <li>Assistive disability guidance</li>
+                    </ul>
+                    <button type="button" class="audience-cta-btn" data-intent="assistance" data-category="community-welfare">
+                        <span>Seek Support &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- Card 2: NGOs & Non-profits -->
+                <article class="audience-card">
+                    <div class="audience-icon-wrap" aria-hidden="true">🤝</div>
+                    <h3 class="audience-title">NGOs &amp; Non-Profits</h3>
+                    <p class="audience-desc">
+                        Charitable trusts, community groups, and registered NGOs looking for co-organized projects or youth volunteer deployment.
+                    </p>
+                    <ul class="audience-features">
+                        <li>Joint community drives</li>
+                        <li>Youth volunteer mobilization</li>
+                        <li>Awareness &amp; health rallies</li>
+                        <li>Shared logistics &amp; reach</li>
+                    </ul>
+                    <button type="button" class="audience-cta-btn" data-intent="collaboration" data-category="ngo-collab">
+                        <span>Partner With Us &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- Card 3: Schools & Institutions -->
+                <article class="audience-card">
+                    <div class="audience-icon-wrap" aria-hidden="true">🏫</div>
+                    <h3 class="audience-title">Schools &amp; Institutions</h3>
+                    <p class="audience-desc">
+                        Educational institutions, colleges, and vocational centers aiming to organize social awareness or student development initiatives.
+                    </p>
+                    <ul class="audience-features">
+                        <li>Career &amp; skill workshops</li>
+                        <li>Hygiene &amp; health checkups</li>
+                        <li>Environmental green drives</li>
+                        <li>Youth leadership seminars</li>
+                    </ul>
+                    <button type="button" class="audience-cta-btn" data-intent="collaboration" data-category="institutional-partnership">
+                        <span>Propose Tie-Up &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- Card 4: Companies & Businesses -->
+                <article class="audience-card">
+                    <div class="audience-icon-wrap" aria-hidden="true">🏢</div>
+                    <h3 class="audience-title">Companies &amp; Businesses</h3>
+                    <p class="audience-desc">
+                        Corporate entities, local businesses, and CSR directors seeking verified grassroots implementation of community funds.
+                    </p>
+                    <ul class="audience-features">
+                        <li>High-impact CSR projects</li>
+                        <li>Transparent execution logs</li>
+                        <li>Corporate volunteer days</li>
+                        <li>Sustainable local impact</li>
+                    </ul>
+                    <button type="button" class="audience-cta-btn" data-intent="collaboration" data-category="csr-partnership">
+                        <span>Explore CSR Synergy &rarr;</span>
+                    </button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         4. SECTION: WHAT CAN YOU APPROACH US FOR?
+         ========================================================================= -->
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <header class="section-header">
+                <span class="section-eyebrow">Avenues of Impact</span>
+                <h2 class="section-title">What Can You <span>Approach Us For?</span></h2>
+                <p class="section-desc">
+                    Explore our diverse community impact categories. Filter by your goal and select any area to begin your request.
+                </p>
+            </header>
+
+            <!-- Interactive Category Filter Tabs -->
+            <div class="categories-filter-bar" role="tablist">
+                <button type="button" class="category-tab-btn active" data-filter="all" role="tab" aria-selected="true">All 13 Focus Areas</button>
+                <button type="button" class="category-tab-btn" data-filter="assistance" role="tab" aria-selected="false">Direct Assistance</button>
+                <button type="button" class="category-tab-btn" data-filter="collaboration" role="tab" aria-selected="false">Collaborations &amp; Partnerships</button>
+            </div>
+
+            <div class="categories-grid" id="categories-grid">
+                <!-- 1. Education Support -->
+                <article class="category-card" data-group="assistance">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">📚</div>
+                        <span class="category-badge-pill">Assistance</span>
+                    </div>
+                    <h3 class="category-title">Education Support</h3>
+                    <p class="category-text">Assistance with study materials, school stationery, books, and financial scholarship guidance for students in need.</p>
+                    <button type="button" class="category-select-link" data-intent="assistance" data-category="education-support">
+                        <span>Select &amp; Apply &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 2. Food & Basic Essentials -->
+                <article class="category-card" data-group="assistance">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">🍲</div>
+                        <span class="category-badge-pill">Assistance</span>
+                    </div>
+                    <h3 class="category-title">Food &amp; Basic Essentials</h3>
+                    <p class="category-text">Emergency dry ration kits, clothing distribution, seasonal winter blanket drives, and calamity relief assistance.</p>
+                    <button type="button" class="category-select-link" data-intent="assistance" data-category="food-essentials">
+                        <span>Select &amp; Apply &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 3. Medical & Healthcare Support -->
+                <article class="category-card" data-group="assistance">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">🩺</div>
+                        <span class="category-badge-pill">Assistance</span>
+                    </div>
+                    <h3 class="category-title">Medical &amp; Healthcare Support</h3>
+                    <p class="category-text">Free health checkup facilitation, blood donation coordination, medical counseling, and eye checkup camps.</p>
+                    <button type="button" class="category-select-link" data-intent="assistance" data-category="medical-healthcare">
+                        <span>Select &amp; Apply &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 4. Community Welfare -->
+                <article class="category-card" data-group="assistance">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">🏘️</div>
+                        <span class="category-badge-pill">Assistance</span>
+                    </div>
+                    <h3 class="category-title">Community Welfare</h3>
+                    <p class="category-text">Locality improvement, sanitation awareness, clean drinking water access, elderly support, and women empowerment.</p>
+                    <button type="button" class="category-select-link" data-intent="assistance" data-category="community-welfare">
+                        <span>Select &amp; Apply &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 5. Disability & Special Needs -->
+                <article class="category-card" data-group="assistance">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">♿</div>
+                        <span class="category-badge-pill">Assistance</span>
+                    </div>
+                    <h3 class="category-title">Disability &amp; Special Needs</h3>
+                    <p class="category-text">Connecting differently-abled individuals with assistive aids, sensitization workshops, and inclusive community access.</p>
+                    <button type="button" class="category-select-link" data-intent="assistance" data-category="disability-support">
+                        <span>Select &amp; Apply &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 6. Environmental Initiatives -->
+                <article class="category-card" data-group="assistance">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">🌿</div>
+                        <span class="category-badge-pill">Assistance &amp; Action</span>
+                    </div>
+                    <h3 class="category-title">Environmental Initiatives</h3>
+                    <p class="category-text">Tree plantation drives, waste management drives, anti-plastic campaigns, and environmental sustainability workshops.</p>
+                    <button type="button" class="category-select-link" data-intent="assistance" data-category="environmental-support">
+                        <span>Select &amp; Apply &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 7. NGO Collaboration -->
+                <article class="category-card" data-group="collaboration">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">🤝</div>
+                        <span class="category-badge-pill">Collaboration</span>
+                    </div>
+                    <h3 class="category-title">NGO Collaboration</h3>
+                    <p class="category-text">Co-branded humanitarian projects, shared field volunteer teams, and joint community outreach initiatives with registered NGOs.</p>
+                    <button type="button" class="category-select-link" data-intent="collaboration" data-category="ngo-collab">
+                        <span>Propose Partnership &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 8. Institutional Partnerships -->
+                <article class="category-card" data-group="collaboration">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">🎓</div>
+                        <span class="category-badge-pill">Collaboration</span>
+                    </div>
+                    <h3 class="category-title">Institutional Partnerships</h3>
+                    <p class="category-text">School, college, and university alliances for student leadership development, social awareness sessions, and campus drives.</p>
+                    <button type="button" class="category-select-link" data-intent="collaboration" data-category="institutional-partnership">
+                        <span>Propose Partnership &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 9. CSR & Corporate Partnerships -->
+                <article class="category-card" data-group="collaboration">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">💼</div>
+                        <span class="category-badge-pill">Collaboration</span>
+                    </div>
+                    <h3 class="category-title">CSR &amp; Corporate Partnerships</h3>
+                    <p class="category-text">Turnkey Corporate Social Responsibility project execution, community sponsorship, transparent auditing, and reporting.</p>
+                    <button type="button" class="category-select-link" data-intent="collaboration" data-category="csr-partnership">
+                        <span>Explore CSR &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 10. Volunteering -->
+                <article class="category-card" data-group="collaboration">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">🙌</div>
+                        <span class="category-badge-pill">Collaboration</span>
+                    </div>
+                    <h3 class="category-title">Volunteering</h3>
+                    <p class="category-text">Join our active ground corps for health camps, tree plantations, event management, creative design, and field missions.</p>
+                    <button type="button" class="category-select-link" data-intent="collaboration" data-category="volunteering">
+                        <span>Join As Volunteer &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 11. Resource Contributions -->
+                <article class="category-card" data-group="collaboration">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">📦</div>
+                        <span class="category-badge-pill">Collaboration</span>
+                    </div>
+                    <h3 class="category-title">Resource Contributions</h3>
+                    <p class="category-text">Contribute books, stationery, computer hardware, medical kits, clothes, or logistics support for community projects.</p>
+                    <button type="button" class="category-select-link" data-intent="collaboration" data-category="resource-contribution">
+                        <span>Contribute Resources &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 12. Awareness Campaigns -->
+                <article class="category-card" data-group="collaboration">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">📢</div>
+                        <span class="category-badge-pill">Collaboration</span>
+                    </div>
+                    <h3 class="category-title">Awareness Campaigns</h3>
+                    <p class="category-text">Join forces to run impactful awareness campaigns on Thalassemia, mental wellness, road safety, and menstrual hygiene.</p>
+                    <button type="button" class="category-select-link" data-intent="collaboration" data-category="awareness-campaigns">
+                        <span>Plan Campaign &rarr;</span>
+                    </button>
+                </article>
+
+                <!-- 13. Other Requirements -->
+                <article class="category-card" data-group="assistance">
+                    <div class="category-top-row">
+                        <div class="category-icon-box" aria-hidden="true">✨</div>
+                        <span class="category-badge-pill">Flexible</span>
+                    </div>
+                    <h3 class="category-title">Other Requirements</h3>
+                    <p class="category-text">Have a special proposal or unique social need not covered above? We are all ears to assess any constructive community idea.</p>
+                    <button type="button" class="category-select-link" data-intent="assistance" data-category="other-assistance">
+                        <span>Describe Requirement &rarr;</span>
+                    </button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         5. SECTION: HOW IT WORKS
+         ========================================================================= -->
+    <section class="how-section" id="how-it-works">
+        <div class="container">
+            <header class="section-header">
+                <span class="section-eyebrow">Clear &amp; Transparent</span>
+                <h2 class="section-title">How <span>CARE CONNECT Works</span></h2>
+                <p class="section-desc">
+                    A clear, 4-step process designed to ensure fair verification, structured planning, and transparent community delivery.
+                </p>
+            </header>
+
+            <div class="how-steps-grid">
+                <div class="how-step-card">
+                    <div class="step-num-badge">1</div>
+                    <h3 class="step-title">Tell Us About Your Requirement</h3>
+                    <p class="step-desc">Fill out our structured multi-step form with your contact information, exact requirements, location, and relevant details.</p>
+                </div>
+
+                <div class="how-step-card">
+                    <div class="step-num-badge">2</div>
+                    <h3 class="step-title">Submit &amp; Receive Reference ID</h3>
+                    <p class="step-desc">Once submitted, your request is logged and you receive a unique Care Connect Reference ID (e.g. <code>CCD-2026-0001</code>) for future reference.</p>
+                </div>
+
+                <div class="how-step-card">
+                    <div class="step-num-badge">3</div>
+                    <h3 class="step-title">Our Team Reviews &amp; Verifies</h3>
+                    <p class="step-desc">The RAC DCP Community Service Directorate reviews the submission, verifies authenticity, and assesses feasibility and available resources.</p>
+                </div>
+
+                <div class="how-step-card">
+                    <div class="step-num-badge">4</div>
+                    <h3 class="step-title">We Connect &amp; Coordinate</h3>
+                    <p class="step-desc">If feasible, our directors contact you via phone or WhatsApp to coordinate direct assistance or structure an impactful partnership.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         6. SECTION: ABOUT RAC DCP
+         ========================================================================= -->
+    <section class="about-club-section" id="about-cc">
+        <div class="container">
+            <div class="about-club-card">
+                <div class="about-club-content">
+                    <span class="about-club-tag">Operating Organization</span>
+                    <h2 class="about-club-title">Rotaract Club of Durgapur Central Presidency</h2>
+                    <p class="about-club-desc">
+                        Chartered on 12th October 2023 under Rotary International District 3240, RAC DCP is a premier youth leadership and community welfare organisation in Durgapur, West Bengal. We believe in taking real, measurable action—from medical camps and environmental stewardship to youth empowerment and literacy drives. CARE CONNECT is our official public gateway to bridge grassroots needs with meaningful community action.
+                    </p>
+
+                    <div class="about-club-badges">
+                        <div class="about-club-badge">
+                            <span aria-hidden="true">🗓️</span>
+                            <span>Chartered: 12th October 2023</span>
+                        </div>
+                        <div class="about-club-badge">
+                            <span aria-hidden="true">🌐</span>
+                            <span>RI District 3240 &bull; Zone 1</span>
+                        </div>
+                        <div class="about-club-badge">
+                            <span aria-hidden="true">🆔</span>
+                            <span>Club ID: 8825991</span>
+                        </div>
+                        <div class="about-club-badge">
+                            <span aria-hidden="true">🎖️</span>
+                            <span>Sponsor: Rotary Club of Durgapur Central</span>
+                        </div>
+                    </div>
+
+                    <a href="../index.html" class="btn-visit-main">
+                        <span>Visit Main Club Website</span>
+                        <span aria-hidden="true">&rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         7. INTERACTIVE REQUEST SYSTEM (MULTI-STEP FORM WIZARD)
+         ========================================================================= -->
+    <section class="request-system-section" id="request-system">
+        <div class="container">
+            <header class="section-header">
+                <span class="section-eyebrow">Connect With Us</span>
+                <h2 class="section-title">Interactive <span>Request Portal</span></h2>
+                <p class="section-desc">
+                    Follow the guided steps below. Whether you require community assistance or wish to partner with us, our system adapts dynamically to your goal.
+                </p>
+            </header>
+
+            <div class="wizard-container" id="wizard-container">
+                <!-- Wizard Progress Header -->
+                <div class="wizard-header">
+                    <div class="wizard-progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        <div class="wizard-progress-fill" id="wizard-progress-fill"></div>
+                    </div>
+                    <nav class="wizard-steps-nav" aria-label="Form Steps Navigation">
+                        <div class="step-indicator active" id="step-ind-1">
+                            <span class="step-indicator-num">1</span>
+                            <span>Purpose</span>
+                        </div>
+                        <div class="step-indicator" id="step-ind-2">
+                            <span class="step-indicator-num">2</span>
+                            <span>Details</span>
+                        </div>
+                        <div class="step-indicator" id="step-ind-3">
+                            <span class="step-indicator-num">3</span>
+                            <span>Review &amp; Verify</span>
+                        </div>
+                        <div class="step-indicator" id="step-ind-4">
+                            <span class="step-indicator-num">4</span>
+                            <span>Confirmation</span>
+                        </div>
+                    </nav>
+                </div>
+
+                <!-- Form Wizard Form Body -->
+                <form id="care-connect-form" novalidate>
+                    <div class="wizard-body">
+
+                        <!-- =====================================================
+                             STEP 1: PURPOSE & CATEGORY SELECTION
+                             ===================================================== -->
+                        <div class="wizard-step-panel active" id="wizard-step-1">
+                            <div class="step-heading-group">
+                                <h3 class="step-panel-title">How would you like to connect with RAC DCP?</h3>
+                                <p class="step-panel-desc">Select whether you are seeking community assistance or proposing a collaboration or partnership.</p>
+                            </div>
+
+                            <div class="intent-choice-grid">
+                                <!-- Option A -->
+                                <div class="intent-card selected" id="intent-card-assistance" data-intent="assistance" tabindex="0" role="button" aria-pressed="true">
+                                    <div class="intent-selected-check" aria-hidden="true">&#10003;</div>
+                                    <div class="intent-icon-badge" aria-hidden="true">🆘</div>
+                                    <h4 class="intent-title">REQUEST ASSISTANCE</h4>
+                                    <p class="intent-sub">For individuals, families, students, or patients in need of educational, medical, relief, or disability aid.</p>
+                                </div>
+
+                                <!-- Option B -->
+                                <div class="intent-card" id="intent-card-collab" data-intent="collaboration" tabindex="0" role="button" aria-pressed="false">
+                                    <div class="intent-selected-check" aria-hidden="true">&#10003;</div>
+                                    <div class="intent-icon-badge" aria-hidden="true">🤝</div>
+                                    <h4 class="intent-title">COLLABORATE WITH US</h4>
+                                    <p class="intent-sub">For NGOs, schools, companies, volunteers, and donors proposing partnerships or offering resources.</p>
+                                </div>
+                            </div>
+
+                            <!-- Dynamic Category Radio Grid -->
+                            <div class="category-picker-group">
+                                <label class="form-label" id="category-picker-label">
+                                    Select the most appropriate category <span class="required-star">*</span>
+                                </label>
+
+                                <!-- Categories for Assistance -->
+                                <div class="category-radio-grid" id="category-grid-assistance">
+                                    <label class="category-radio-item selected">
+                                        <input type="radio" name="assistance_category" value="Education Support" checked class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Education Support (Books, Fees, Study Aids)</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="assistance_category" value="Food & Basic Essentials" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Food &amp; Basic Essentials (Ration, Clothes)</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="assistance_category" value="Medical & Healthcare Support" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Medical &amp; Healthcare Support</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="assistance_category" value="Community Welfare" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Community Welfare &amp; Sanitation</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="assistance_category" value="Disability & Special Needs" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Disability &amp; Special Needs Assistance</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="assistance_category" value="Environmental Support" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Environmental &amp; Tree Plantation Support</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="assistance_category" value="Other Assistance" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Other Community Assistance</span>
+                                    </label>
+                                </div>
+
+                                <!-- Categories for Collaboration -->
+                                <div class="category-radio-grid" id="category-grid-collab" style="display: none;">
+                                    <label class="category-radio-item selected">
+                                        <input type="radio" name="collab_category" value="NGO Collaboration" checked class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>NGO &amp; Non-Profit Collaboration</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="collab_category" value="Institutional Partnership" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>School / College Institutional Partnership</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="collab_category" value="CSR & Corporate Partnership" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>CSR &amp; Corporate Sponsorship Partnership</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="collab_category" value="Volunteering" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Volunteering (Individual / Group Corps)</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="collab_category" value="Resource Contribution" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Resource / In-kind Material Contribution</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="collab_category" value="Awareness Campaigns" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Joint Awareness Campaign / Drive</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="collab_category" value="Event & Project Collaboration" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Event &amp; Project Co-Hosting</span>
+                                    </label>
+                                    <label class="category-radio-item">
+                                        <input type="radio" name="collab_category" value="Other Collaboration" class="sr-only">
+                                        <span class="category-radio-dot"></span>
+                                        <span>Other Collaboration Proposal</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- =====================================================
+                             STEP 2: INTAKE INFORMATION
+                             ===================================================== -->
+                        <div class="wizard-step-panel" id="wizard-step-2">
+                            <!-- Branch A: Assistance Fields -->
+                            <div id="branch-assistance-fields">
+                                <div class="step-heading-group">
+                                    <h3 class="step-panel-title">Assistance Request Information</h3>
+                                    <p class="step-panel-desc">Please share accurate contact and requirement details so our team can assess and verify your request.</p>
+                                </div>
+
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label for="ast-name" class="form-label">Full Name <span class="required-star">*</span></label>
+                                        <input type="text" id="ast-name" class="form-input" placeholder="e.g. Rahul Sharma" autocomplete="name" required>
+                                        <span class="form-error-msg">Please enter your full name.</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ast-phone" class="form-label">Mobile Number <span class="required-star">*</span></label>
+                                        <input type="tel" id="ast-phone" class="form-input" placeholder="10-digit mobile number" maxlength="10" autocomplete="tel" required>
+                                        <span class="form-error-msg">Please provide a valid 10-digit mobile number.</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label for="ast-email" class="form-label">Email Address <small style="font-weight:400; color:var(--text-muted);">(Optional)</small></label>
+                                        <input type="email" id="ast-email" class="form-input" placeholder="e.g. name@example.com" autocomplete="email">
+                                        <span class="form-error-msg">Please enter a valid email address.</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ast-applicant-type" class="form-label">Applicant Type <span class="required-star">*</span></label>
+                                        <select id="ast-applicant-type" class="form-select" required>
+                                            <option value="Individual">Individual</option>
+                                            <option value="Family">Family Representative</option>
+                                            <option value="Community Group">Community Group / Locality</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label for="ast-city" class="form-label">City / Locality <span class="required-star">*</span></label>
+                                        <input type="text" id="ast-city" class="form-input" placeholder="e.g. Durgapur" required>
+                                        <span class="form-error-msg">Please specify city or locality.</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ast-district" class="form-label">District &amp; State <span class="required-star">*</span></label>
+                                        <input type="text" id="ast-district" class="form-input" placeholder="e.g. Paschim Bardhaman, West Bengal" value="Paschim Bardhaman, West Bengal" required>
+                                        <span class="form-error-msg">Please specify district and state.</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label for="ast-beneficiaries" class="form-label">Approximate People Benefited <small style="font-weight:400; color:var(--text-muted);">(Optional)</small></label>
+                                        <input type="number" id="ast-beneficiaries" class="form-input" placeholder="e.g. 1, 5, 50" min="1">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ast-timeline" class="form-label">Preferred Timeline / Urgency <span class="required-star">*</span></label>
+                                        <select id="ast-timeline" class="form-select" required>
+                                            <option value="Flexible (Within 30 days)">Flexible (Within 30 days)</option>
+                                            <option value="Within 2-3 weeks">Within 2-3 weeks</option>
+                                            <option value="Urgent (Within 7 days)">Urgent (Within 7 days)</option>
+                                            <option value="Critical (Medical/Essential)">Critical (Immediate medical / essential guidance)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="ast-description" class="form-label">Detailed Description of Requirement <span class="required-star">*</span></label>
+                                    <textarea id="ast-description" class="form-textarea" placeholder="Please provide specific details: what kind of assistance is required, the background situation, and any existing efforts made..." required></textarea>
+                                    <div class="form-hint">
+                                        <span>Minimum 20 characters required. Be as clear as possible.</span>
+                                        <span id="ast-char-count">0 chars</span>
+                                    </div>
+                                    <span class="form-error-msg">Please provide a descriptive explanation (at least 20 characters).</span>
+                                </div>
+                            </div>
+
+                            <!-- Branch B: Collaboration Fields -->
+                            <div id="branch-collab-fields" style="display: none;">
+                                <div class="step-heading-group">
+                                    <h3 class="step-panel-title">Collaboration &amp; Partnership Information</h3>
+                                    <p class="step-panel-desc">Tell us about your organisation, proposal, and how we can work together to create measurable impact.</p>
+                                </div>
+
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label for="col-org-name" class="form-label">Organisation / Initiative / Individual Name <span class="required-star">*</span></label>
+                                        <input type="text" id="col-org-name" class="form-input" placeholder="e.g. Hope Foundation / ABC Ltd." required>
+                                        <span class="form-error-msg">Please specify the organisation or applicant name.</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="col-org-type" class="form-label">Organisation Type <span class="required-star">*</span></label>
+                                        <select id="col-org-type" class="form-select" required>
+                                            <option value="Registered NGO / Trust">Registered NGO / Social Trust</option>
+                                            <option value="School / College / University">School / College / University</option>
+                                            <option value="Corporate / CSR Foundation">Corporate / CSR Foundation</option>
+                                            <option value="Local Business / Enterprise">Local Business / Commercial Enterprise</option>
+                                            <option value="Individual Volunteer / Mentor">Individual Volunteer / Professional Mentor</option>
+                                            <option value="Youth Club / Rotary Partner">Youth Club / Other Rotaract / Interact Club</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label for="col-contact-name" class="form-label">Contact Person Name &amp; Role <span class="required-star">*</span></label>
+                                        <input type="text" id="col-contact-name" class="form-input" placeholder="e.g. Dr. A. Roy (General Secretary)" required>
+                                        <span class="form-error-msg">Please enter contact person name and title.</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="col-phone" class="form-label">Mobile Number <span class="required-star">*</span></label>
+                                        <input type="tel" id="col-phone" class="form-input" placeholder="10-digit mobile number" maxlength="10" required>
+                                        <span class="form-error-msg">Please enter a valid 10-digit mobile number.</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label for="col-email" class="form-label">Official Email Address <span class="required-star">*</span></label>
+                                        <input type="email" id="col-email" class="form-input" placeholder="e.g. contact@organisation.org" required>
+                                        <span class="form-error-msg">Please provide a valid email address.</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="col-website" class="form-label">Website or Social Profile <small style="font-weight:400; color:var(--text-muted);">(Optional)</small></label>
+                                        <input type="url" id="col-website" class="form-input" placeholder="https://example.org or LinkedIn/Instagram">
+                                    </div>
+                                </div>
+
+                                <div class="form-grid-2">
+                                    <div class="form-group">
+                                        <label for="col-location" class="form-label">Headquarter / Operation Location <span class="required-star">*</span></label>
+                                        <input type="text" id="col-location" class="form-input" placeholder="e.g. Durgapur, West Bengal" required>
+                                        <span class="form-error-msg">Please specify operational location.</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="col-timeline" class="form-label">Proposed Timeline <span class="required-star">*</span></label>
+                                        <select id="col-timeline" class="form-select" required>
+                                            <option value="Immediate (This Month)">Immediate (Within next 30 days)</option>
+                                            <option value="Upcoming Quarter (1-3 months)">Upcoming Quarter (1-3 months)</option>
+                                            <option value="Annual / Long-term Partnership">Annual / Ongoing Long-term Partnership</option>
+                                            <option value="Exploratory Discussion">Exploratory Discussion First</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="col-description" class="form-label">Description of Proposed Collaboration <span class="required-star">*</span></label>
+                                    <textarea id="col-description" class="form-textarea" placeholder="Detail the objective of collaboration, proposed activities, target beneficiaries, and role envisioned for RAC DCP..." required></textarea>
+                                    <div class="form-hint">
+                                        <span>Minimum 20 characters required.</span>
+                                        <span id="col-char-count">0 chars</span>
+                                    </div>
+                                    <span class="form-error-msg">Please provide a descriptive overview (at least 20 characters).</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="col-resources" class="form-label">Resources or Support Offered <small style="font-weight:400; color:var(--text-muted);">(Optional)</small></label>
+                                    <input type="text" id="col-resources" class="form-input" placeholder="e.g. Event venue, educational materials, CSR sponsorship, volunteer staff, medical equipment">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- =====================================================
+                             STEP 3: REVIEW & SECURITY VERIFICATION
+                             ===================================================== -->
+                        <div class="wizard-step-panel" id="wizard-step-3">
+                            <div class="step-heading-group">
+                                <h3 class="step-panel-title">Review &amp; Verify Submission</h3>
+                                <p class="step-panel-desc">Please review your submitted details carefully before proceeding to official verification.</p>
+                            </div>
+
+                            <!-- Review Card -->
+                            <div class="review-card" id="review-card-summary">
+                                <!-- Populated dynamically by script.js -->
+                            </div>
+
+                            <!-- Security Challenge & Fraud Prevention Layer -->
+                            <div class="security-challenge-box">
+                                <div class="security-header">
+                                    <span aria-hidden="true">🛡️</span>
+                                    <span>Security Verification &bull; Anti-Bot Protection</span>
+                                </div>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 12px;">
+                                    To protect our community portal from automated spam, please solve the simple math challenge below:
+                                </p>
+
+                                <div class="math-challenge-row">
+                                    <label for="math-security-answer" class="math-question-label" id="math-challenge-text">7 + 5 = ?</label>
+                                    <input type="number" id="math-security-answer" class="form-input math-answer-input" placeholder="Answer" required>
+                                    <button type="button" class="math-refresh-btn" id="math-refresh-btn">Change question</button>
+                                </div>
+                                <span class="form-error-msg" id="math-error-msg">Incorrect answer. Please solve the calculation.</span>
+
+                                <!-- Honeypot hidden input (Spam bots populate this, humans do not) -->
+                                <div class="honey-field" aria-hidden="true">
+                                    <label for="cc_honeypot_field">Leave this field blank</label>
+                                    <input type="text" id="cc_honeypot_field" name="website_url_hp" tabindex="-1" autocomplete="off">
+                                </div>
+                            </div>
+
+                            <!-- Consent Checkbox -->
+                            <div class="consent-checkbox-wrap">
+                                <input type="checkbox" id="user-consent-check" required>
+                                <label for="user-consent-check">
+                                    I confirm that the details provided are true and accurate to the best of my knowledge. I understand that the Rotaract Club of Durgapur Central Presidency is a volunteer-led nonprofit and that submission does not guarantee financial or physical assistance.
+                                </label>
+                            </div>
+                            <span class="form-error-msg" id="consent-error-msg" style="margin-top:-18px; margin-bottom:20px;">You must acknowledge this confirmation before submitting.</span>
+                        </div>
+
+                        <!-- =====================================================
+                             STEP 4: SUBMISSION CONFIRMATION
+                             ===================================================== -->
+                        <div class="wizard-step-panel" id="wizard-step-4">
+                            <div class="confirmation-card">
+                                <div class="confirm-icon-circle" aria-hidden="true">&#10003;</div>
+                                <h3 class="confirm-title">Request Successfully Logged!</h3>
+                                <p class="confirm-desc">
+                                    Thank you for reaching out to the Rotaract Club of Durgapur Central Presidency. Your submission has been securely recorded.
+                                </p>
+
+                                <div class="reference-id-display-box">
+                                    <div>
+                                        <div class="ref-label">Your Reference ID</div>
+                                        <div class="ref-number" id="confirmation-ref-id">CCD-2026-0001</div>
+                                    </div>
+                                    <button type="button" class="ref-copy-btn" id="copy-ref-btn">Copy ID</button>
+                                </div>
+
+                                <div class="next-steps-list">
+                                    <h4>What Happens Next?</h4>
+                                    <ol>
+                                        <li><strong>Review &amp; Screening:</strong> Our Community Service Directorate screens requests weekly for urgency and scope.</li>
+                                        <li><strong>Ground Verification:</strong> For aid requests, our team conducts background verification with local contacts.</li>
+                                        <li><strong>Direct Contact:</strong> A representative will reach out to the contact number provided regarding feasibility.</li>
+                                        <li><strong>Record Tracking:</strong> Keep your Reference ID handy for any official communication or follow-ups.</li>
+                                    </ol>
+                                </div>
+
+                                <!-- Staging / Connected Notice -->
+                                <div class="staging-mode-banner" id="backend-status-banner">
+                                    <span aria-hidden="true">💡</span>
+                                    <span id="backend-status-text">Your request has been saved and logged into our official dispatch queue.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Wizard Navigation Buttons -->
+                    <div class="wizard-footer">
+                        <button type="button" class="btn-wizard-prev" id="btn-wizard-prev" style="display: none;">
+                            <span>&larr; Back</span>
+                        </button>
+
+                        <div style="margin-left: auto; display: flex; gap: 12px;">
+                            <button type="button" class="btn-wizard-next" id="btn-wizard-next">
+                                <span>Continue &rarr;</span>
+                            </button>
+                            <button type="submit" class="btn-wizard-submit" id="btn-wizard-submit" style="display: none;">
+                                <span>Confirm &amp; Submit Request &rarr;</span>
+                            </button>
+                            <button type="button" class="btn-wizard-restart" id="btn-wizard-restart" style="display: none;">
+                                <span>Submit Another Request</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         8. FREQUENTLY ASKED QUESTIONS (FAQ)
+         ========================================================================= -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <header class="section-header">
+                <span class="section-eyebrow">Got Questions?</span>
+                <h2 class="section-title">Frequently Asked <span>Questions</span></h2>
+                <p class="section-desc">
+                    Learn more about our review protocol, eligibility criteria, and operational standards.
+                </p>
+            </header>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button type="button" class="faq-question-btn">
+                        <span>Who is eligible to request community assistance?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Any individual, family, community representative, or social worker operating in or around Durgapur and Paschim Bardhaman (RI District 3240) who requires legitimate assistance in education, medical camp facilitation, emergency relief, or community welfare can apply. Every request undergoes non-discriminatory review.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button type="button" class="faq-question-btn">
+                        <span>Does RAC DCP charge any fee for processing requests?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p><strong>Never.</strong> The Rotaract Club of Durgapur Central Presidency is a non-profit humanitarian youth organisation under Rotary International. We never charge any processing fee, commission, or charge from applicants or partners. Beware of anyone claiming to represent RAC DCP who asks for money.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button type="button" class="faq-question-btn">
+                        <span>How long does it take for a submission to be reviewed?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Our Community Service and Collaboration Directorate reviews submissions on a weekly cycle (typically 3 to 7 working days). Urgent relief or medical requests are escalated immediately. Please note that timelines depend on volunteer availability and matching sponsor resources.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button type="button" class="faq-question-btn">
+                        <span>Can companies and institutions partner with RAC DCP for CSR?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! We actively collaborate with corporates, industrial units, educational institutes, and registered trusts for CSR drives, campus health programs, environmental plantations, and youth skill workshops. We provide structured execution plans, photo-documented reports, and volunteer mobilization.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button type="button" class="faq-question-btn">
+                        <span>What verification or proof is required for direct aid?</span>
+                        <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>To ensure aid reaches those genuinely in need, our directors may request basic documentation during phone screening—such as school fee slips, prescription copies for medical camps, or locality verification. We never ask for bank PINs, Aadhaar numbers, or passwords.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================================
+         9. FOOTER & COMPLIANCE
+         ========================================================================= -->
+    <footer class="site-footer" id="contact" role="contentinfo">
+        <div class="container">
+            <!-- Emergency Alert Banner -->
+            <div class="footer-emergency-alert" role="alert">
+                <span class="emergency-icon" aria-hidden="true">🚨</span>
+                <div>
+                    <strong>Emergency Notice:</strong> CARE CONNECT is not an emergency response service. In life-threatening medical situations or immediate crises, please call <strong>112 (National Emergency)</strong>, <strong>102 (Ambulance)</strong>, or visit your nearest hospital emergency ward immediately.
+                </div>
+            </div>
+
+            <div class="footer-top-grid">
+                <!-- Col 1: Identity -->
+                <div>
+                    <h3 class="footer-brand-title">RAC DCP CARE CONNECT</h3>
+                    <p class="footer-brand-desc">
+                        A bridge between those who need help and those who can help. Official community outreach platform of the Rotaract Club of Durgapur Central Presidency.
+                    </p>
+                    <div class="footer-contact-info">
+                        <div><strong>Email:</strong> <a href="mailto:rcdurgapurpresidency.3240@gmail.com" style="color:#60a5fa;">rcdurgapurpresidency.3240@gmail.com</a></div>
+                        <div><strong>Location:</strong> Durgapur, Paschim Bardhaman, West Bengal, India</div>
+                        <div><strong>Instagram:</strong> <a href="https://www.instagram.com/racdcp/" target="_blank" rel="noopener" style="color:#60a5fa;">@racdcp</a></div>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation -->
+                <div>
+                    <h4 class="footer-heading">Quick Navigation</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#hero">Portal Home</a></li>
+                        <li><a href="#about-cc">About RAC DCP</a></li>
+                        <li><a href="#audiences">Who Can Connect</a></li>
+                        <li><a href="#categories">Focus Areas</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#request-system">Submit Request</a></li>
+                        <li><a href="#faq">Frequently Asked Questions</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Community Areas -->
+                <div>
+                    <h4 class="footer-heading">Impact Areas</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#request-system">Education Support</a></li>
+                        <li><a href="#request-system">Medical &amp; Health Camps</a></li>
+                        <li><a href="#request-system">Food &amp; Winter Relief</a></li>
+                        <li><a href="#request-system">Tree Plantation Drives</a></li>
+                        <li><a href="#request-system">Disability Assistance</a></li>
+                        <li><a href="#request-system">NGO &amp; CSR Alliances</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Rotary Affiliation & Disclaimers -->
+                <div>
+                    <h4 class="footer-heading">Rotary International</h4>
+                    <p class="footer-brand-desc" style="font-size:0.85rem; line-height: 1.6;">
+                        Rotary International District 3240 &bull; Zone 1<br>
+                        Club ID: 8825991 &bull; Chartered: 12 Oct 2023<br>
+                        Sponsored by Rotary Club of Durgapur Central
+                    </p>
+                    <div style="margin-top: 14px;">
+                        <a href="../index.html" class="main-site-btn" style="color:#ffffff; border-color:rgba(255,255,255,0.2); background:rgba(255,255,255,0.08);">
+                            <span>&larr; Return to Main Website</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom-bar">
+                <div>
+                    &copy; 2026 Rotaract Club of Durgapur Central Presidency. All Rights Reserved.
+                </div>
+                <div style="display: flex; gap: 18px;">
+                    <a href="#" id="open-privacy-modal" style="color:#94a3b8; text-decoration:underline;">Privacy Policy</a>
+                    <a href="#" id="open-terms-modal" style="color:#94a3b8; text-decoration:underline;">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================================================================
+         10. PRIVACY POLICY MODAL
+         ========================================================================= -->
+    <div class="modal-overlay" id="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+        <div class="modal-content-card">
+            <div class="modal-header">
+                <h3 class="modal-title" id="privacy-modal-title">Privacy Policy &bull; CARE CONNECT</h3>
+                <button type="button" class="modal-close-btn" id="close-privacy-modal" aria-label="Close dialog">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Last Updated: November 2026</strong></p>
+                <p>The Rotaract Club of Durgapur Central Presidency (RI District 3240) values your personal privacy. This platform is operated purely for non-commercial community assistance and collaboration.</p>
+
+                <h4>1. Information We Collect</h4>
+                <p>We only collect the contact information (such as name, phone number, email address, locality) and requirement descriptions willingly submitted by you via this form. We never request or store sensitive financial passwords, bank account details, or government identity PINs.</p>
+
+                <h4>2. Purpose of Collection</h4>
+                <p>All data collected is used strictly by our authorized club leadership to review requests, verify community needs, and contact you regarding possible assistance or collaboration.</p>
+
+                <h4>3. Non-Disclosure &amp; Zero Monetization</h4>
+                <p>We do NOT sell, rent, or trade your personal information to any commercial third party or advertisers. Data is accessible solely to authorized members of the Board of Directors of RAC DCP.</p>
+
+                <h4>4. Data Retention</h4>
+                <p>Submission records are maintained for institutional audit, reporting to Rotary International District 3240, and verifying historical aid delivery.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         11. TERMS OF SERVICE MODAL
+         ========================================================================= -->
+    <div class="modal-overlay" id="terms-modal" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title">
+        <div class="modal-content-card">
+            <div class="modal-header">
+                <h3 class="modal-title" id="terms-modal-title">Terms of Service &bull; CARE CONNECT</h3>
+                <button type="button" class="modal-close-btn" id="close-terms-modal" aria-label="Close dialog">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>1. Voluntary Platform</h4>
+                <p>RAC DCP CARE CONNECT is a voluntary humanitarian bridge. Submission of a request or collaboration proposal does not constitute a legal contract, financial commitment, or guarantee of assistance from the Rotaract Club of Durgapur Central Presidency or Rotary International.</p>
+
+                <h4>2. Truthful Disclosures</h4>
+                <p>Applicants agree to provide authentic and truthful information. Submitting fraudulent claims, impersonating individuals, or deploying automated spam will lead to immediate blacklisting and reporting to appropriate civil authorities.</p>
+
+                <h4>3. Emergency Limitation</h4>
+                <p>This platform does not handle acute emergency services. Please contact local hospitals, fire, or police services directly for emergency assistance.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Master Interactive Controller -->
+    <script src="js/script.js" defer></script>
+</body>
+</html>
