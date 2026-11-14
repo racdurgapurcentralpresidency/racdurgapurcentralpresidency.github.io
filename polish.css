@@ -1632,3 +1632,30 @@ html.motion-on .scroll-top-dial .rotary-gear {
         transition: none !important;
     }
 }
+
+/* =========================================================
+   LOW-END HARDWARE & MOBILE PERFORMANCE OVERRIDES
+   ========================================================= */
+
+html.low-spec .pulse-beacon {
+    animation: none !important;
+    box-shadow: none !important;
+}
+
+html.low-spec .saksham-countdown-card,
+html.low-spec .achievements-section .achievement-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    transform: none !important;
+}
+
+/* Fast tap response and comfortable touch target sizes on all mobile screens */
+@media (hover: none) and (pointer: coarse) {
+    .icon-btn,
+    .nav-link,
+    .footer-links a,
+    .minimap-dot,
+    .category-radio-item {
+        touch-action: manipulation;
+    }
+}
+

@@ -11223,6 +11223,43 @@ html.low-spec .floating-care-connect {
     }
 }
 
+/* =========================================================
+   COMPREHENSIVE LOW-SPEC DESKTOP & MOBILE ACCELERATION
+   ========================================================= */
+
+html.low-spec .charter-pillar-card,
+html.low-spec .hero-stats-card,
+html.low-spec .notification-panel,
+html.low-spec .awards-pedestal-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+    will-change: auto !important;
+}
+
+html.low-spec .notification-button {
+    animation: none !important;
+    box-shadow: 0 6px 18px rgba(8, 118, 185, 0.3) !important;
+}
+
+html.low-spec * {
+    text-rendering: optimizeSpeed;
+}
+
+/* Defer layout and rendering of off-screen elements on all pages */
+@supports (content-visibility: auto) {
+    .charter-affiliation-showcase,
+    .publications-shelf-section,
+    .awards-hall-of-fame,
+    .board-members-grid,
+    .team-directors-grid {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 600px;
+    }
+}
+
+
 
 
 

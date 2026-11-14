@@ -2018,3 +2018,158 @@ img, svg {
         grid-template-columns: 1fr;
     }
 }
+
+/* =========================================================
+   13. PERFORMANCE ENGINE FOR LOW-END DESKTOPS & MOBILES
+   ========================================================= */
+
+/* Content-visibility: skips layout/paint of off-screen sections until scrolled */
+@supports (content-visibility: auto) {
+    .audiences-section,
+    .categories-section,
+    .how-section,
+    .about-club-section,
+    .request-system-section,
+    .faq-section,
+    .site-footer {
+        content-visibility: auto;
+        contain-intrinsic-size: 1px 700px;
+    }
+}
+
+/* Fast touch responsiveness: eliminates 300ms tap delay on mobile devices */
+a, button, input, select, textarea, .intent-card, .category-radio-item, .category-card {
+    touch-action: manipulation;
+}
+
+/* Low-Spec Hardware & Battery-Saver Overrides */
+html.low-spec .navbar {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+[data-theme="dark"] html.low-spec .navbar,
+html.low-spec [data-theme="dark"] .navbar {
+    background: rgba(11, 24, 43, 0.98) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+html.low-spec .modal-overlay {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(0, 0, 0, 0.88) !important;
+}
+
+html.low-spec .pulse-dot {
+    animation: none !important;
+    box-shadow: none !important;
+}
+
+html.low-spec .wizard-step-panel {
+    animation: none !important;
+}
+
+/* Flatten GPU layers & simplify shadows on low-end hardware */
+html.low-spec .hero-visual-card,
+html.low-spec .audience-card,
+html.low-spec .category-card,
+html.low-spec .how-step-card,
+html.low-spec .about-club-card,
+html.low-spec .wizard-container,
+html.low-spec .review-card,
+html.low-spec .modal-content-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    will-change: auto !important;
+    transform: none !important;
+}
+
+html.low-spec .about-club-card::after {
+    display: none !important;
+}
+
+html.low-spec .audience-card:hover,
+html.low-spec .category-card:hover,
+html.low-spec .how-step-card:hover,
+html.low-spec .intent-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Mobile Screen Typography & Touch Target Optimization */
+@media (max-width: 640px) {
+    .hero-section {
+        padding: 40px 0 50px;
+    }
+
+    .hero-main-title {
+        font-size: 2.35rem;
+        line-height: 1.15;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
+    }
+
+    .hero-desc {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 24px;
+    }
+
+    .hero-cta-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 20px;
+    }
+
+    .section-title {
+        font-size: 1.85rem;
+    }
+
+    .section-desc {
+        font-size: 0.95rem;
+    }
+
+    .categories-filter-bar {
+        gap: 8px;
+    }
+
+    .category-tab-btn {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+    }
+
+    .wizard-container {
+        border-radius: 14px;
+    }
+
+    .step-panel-title {
+        font-size: 1.35rem;
+    }
+
+    .intent-choice-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .review-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .review-label, .review-value {
+        width: 100%;
+        text-align: left;
+    }
+}
+

@@ -237,10 +237,11 @@
                     preselectCategoryByNameOrSlug(category);
                 }
 
-                // Scroll to request system wizard smoothly
+                // Scroll to request system wizard smoothly (instant jump on low-spec)
                 const wizardSection = document.getElementById('request-system');
                 if (wizardSection) {
-                    wizardSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const isLowEnd = document.documentElement.classList.contains('low-spec');
+                    wizardSection.scrollIntoView({ behavior: isLowEnd ? 'auto' : 'smooth', block: 'start' });
                 }
             });
         });
@@ -252,14 +253,16 @@
         if (heroAssistanceBtn) {
             heroAssistanceBtn.addEventListener('click', function () {
                 setIntent('assistance');
-                document.getElementById('request-system').scrollIntoView({ behavior: 'smooth' });
+                const isLowEnd = document.documentElement.classList.contains('low-spec');
+                document.getElementById('request-system').scrollIntoView({ behavior: isLowEnd ? 'auto' : 'smooth' });
             });
         }
 
         if (heroCollabBtn) {
             heroCollabBtn.addEventListener('click', function () {
                 setIntent('collaboration');
-                document.getElementById('request-system').scrollIntoView({ behavior: 'smooth' });
+                const isLowEnd = document.documentElement.classList.contains('low-spec');
+                document.getElementById('request-system').scrollIntoView({ behavior: isLowEnd ? 'auto' : 'smooth' });
             });
         }
     }
@@ -486,10 +489,11 @@
             DOM.btnRestart.style.display = 'inline-flex';
         }
 
-        // Scroll wizard into view smoothly
+        // Scroll wizard into view smoothly (instant on low-spec)
         const container = document.getElementById('wizard-container');
         if (container) {
-            container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            const isLowEnd = document.documentElement.classList.contains('low-spec');
+            container.scrollIntoView({ behavior: isLowEnd ? 'auto' : 'smooth', block: 'nearest' });
         }
     }
 
