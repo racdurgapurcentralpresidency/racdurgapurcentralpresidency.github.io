@@ -1106,7 +1106,7 @@
             'how.step2.title': 'Submit & Receive Reference ID',
             'how.step2.desc': 'Once submitted, your request is logged and you receive a unique Care Connect Reference ID (e.g. CCD-2026-0001) for future reference.',
             'how.step3.title': 'Our Team Reviews & Verifies',
-            'how.step3.desc': 'The RAC DCP Community Service Directorate reviews the submission, verifies authenticity, and assesses feasibility and available resources.',
+            'how.step3.desc': 'Our team will review your submission as soon as possible. The time required may vary depending on the nature of the request, verification requirements and volunteer availability.',
             'how.step4.title': 'We Connect & Coordinate',
             'how.step4.desc': 'If feasible, our directors contact you via phone or WhatsApp to coordinate direct assistance or structure an impactful partnership.',
             'about.tag': 'Operating Organization',
@@ -1126,7 +1126,17 @@
             'wizard.intentA.sub': 'For individuals, families, students, or patients in need of educational, medical, relief, or disability aid.',
             'wizard.intentB.title': 'COLLABORATE WITH US',
             'wizard.intentB.sub': 'For NGOs, schools, companies, volunteers, and donors proposing partnerships or offering resources.',
-            'wizard.catLabel': 'Select the most appropriate category <span class="required-star">*</span>'
+            'wizard.catLabel': 'Select the most appropriate category <span class="required-star">*</span>',
+            'faq.q1': 'Who is eligible to request community assistance?',
+            'faq.a1': 'Individuals, families, community representatives, NGOs, educational institutions, hospitals, companies and other organisations may approach RAC DCP. Requests will be assessed based on their nature, location, relevance, feasibility and available resources. Priority may be given to initiatives within our operational reach.',
+            'faq.q2': 'How long does it take for a submission to be reviewed?',
+            'faq.a2': 'Our team will review your submission as soon as possible. The time required may vary depending on the nature of the request, verification requirements and volunteer availability. Where feasible, our directors reach out directly to coordinate next steps or ground visits.',
+            'faq.q3': 'Does RAC DCP charge any fee for processing requests?',
+            'faq.a3': '<strong>Never.</strong> The Rotaract Club of Durgapur Central Presidency is a non-profit humanitarian youth organisation under Rotary International. We never charge any processing fee, commission, or charge from applicants or partners. Beware of anyone claiming to represent RAC DCP who asks for money.',
+            'faq.q4': 'Can companies and institutions partner with RAC DCP for CSR?',
+            'faq.a4': 'Yes! We actively collaborate with corporates, industrial units, educational institutes, and registered trusts for CSR drives, campus health programs, environmental plantations, and youth skill workshops. We provide structured execution plans, photo-documented reports, and volunteer mobilization.',
+            'faq.q5': 'What is RAC DCP\'s verification and anti-scam policy?',
+            'faq.a5': 'To protect our community and ensure genuine assistance reaches those in need, our directors conduct background screening. We never ask for bank PINs, passwords, or Aadhaar numbers. <strong>Submissions containing demonstrably false information, impersonation, malicious links or automated spam may be restricted, rejected or referred to the appropriate authorities where warranted.</strong>'
         },
         bn: {
             code: 'BN',
@@ -1181,7 +1191,7 @@
             'how.step2.title': '২. জমা দিন ও রেফারেন্স আইডি নিন',
             'how.step2.desc': 'জমা দেওয়ার সাথে সাথে আপনার আবেদন নথিভুক্ত হবে এবং ভবিষ্যতে যোগাযোগের জন্য একটি অনন্য রেফারেন্স আইডি (যেমন CCD-2026-0001) পাবেন।',
             'how.step3.title': '৩. পর্যালোচনা ও মাঠপর্যায়ে যাচাই',
-            'how.step3.desc': 'RAC DCP-র সমাজসেবা পরিদপ্তর আবেদনটির সত্যতা যাচাই করবে এবং উপলব্ধ সম্পদের ভিত্তিতে সম্ভাব্যতা পরীক্ষা করবে।',
+            'how.step3.desc': 'আমাদের দল যত দ্রুত সম্ভব আপনার আবেদনটি পর্যালোচনা করবে। অনুরোধের প্রকৃতি, যাচাইকরণের প্রয়োজনীয়তা এবং স্বেচ্ছাসেবকদের প্রাপ্যতার ওপর নির্ভর করে প্রয়োজনীয় সময় পরিবর্তিত হতে পারে।',
             'how.step4.title': '৪. যোগাযোগ ও সমন্বয়',
             'how.step4.desc': 'সম্ভব হলে, সরাসরি সাহায্য সমন্বয় বা অংশীদারিত্ব গড়ে তোলার জন্য আমাদের পরিচালকরা আপনার সাথে যোগাযোগ করবেন।',
             'about.tag': 'পরিচালনাকারী সংগঠন',
@@ -1201,7 +1211,17 @@
             'wizard.intentA.sub': 'শিক্ষাগত, চিকিৎসা, ত্রাণ বা প্রতিবন্ধী সহায়তার জন্য ব্যক্তি, পরিবার বা শিক্ষার্থীদের উদ্দেশ্যে।',
             'wizard.intentB.title': 'আমাদের সাথে সহযোগিতা',
             'wizard.intentB.sub': 'অংশীদারিত্ব প্রস্তাবকারী এনজিও, শিক্ষাপ্রতিষ্ঠান, কোম্পানি, স্বেচ্ছাসেবী ও দাতাদের উদ্দেশ্যে।',
-            'wizard.catLabel': 'উপযুক্ত বিভাগটি নির্বাচন করুন <span class="required-star">*</span>'
+            'wizard.catLabel': 'উপযুক্ত বিভাগটি নির্বাচন করুন <span class="required-star">*</span>',
+            'faq.q1': 'কারা সামাজিক সহায়তার জন্য আবেদন করতে পারেন?',
+            'faq.a1': 'ব্যক্তি, পরিবার, সামাজিক প্রতিনিধি, এনজিও, শিক্ষাপ্রতিষ্ঠান, হাসপাতাল, কোম্পানি এবং অন্যান্য প্রতিষ্ঠান RAC DCP-র সাথে যোগাযোগ করতে পারেন। অনুরোধগুলি তাদের প্রকৃতি, অবস্থান, প্রাসঙ্গিকতা, সম্ভাব্যতা এবং উপলব্ধ সম্পদের ভিত্তিতে মূল্যায়ন করা হবে। আমাদের পরিচালন এলাকার আওতাধীন উদ্যোগগুলিকে অগ্রাধিকার দেওয়া হতে পারে।',
+            'faq.q2': 'একটি আবেদন পর্যালোচনা করতে কত সময় লাগে?',
+            'faq.a2': 'আমাদের দল যত দ্রুত সম্ভব আপনার আবেদনটি পর্যালোচনা করবে। অনুরোধের প্রকৃতি, যাচাইকরণের প্রয়োজনীয়তা এবং স্বেচ্ছাসেবকদের প্রাপ্যতার ওপর নির্ভর করে প্রয়োজনীয় সময় পরিবর্তিত হতে পারে। সম্ভব হলে, আমাদের পরিচালকরা পরবর্তী পদক্ষেপ বা মাঠপর্যায়ে পরিদর্শনের জন্য সরাসরি যোগাযোগ করবেন।',
+            'faq.q3': 'RAC DCP কি অনুরোধ প্রক্রিয়াকরণের জন্য কোনো ফি নেয়?',
+            'faq.a3': '<strong>কখনোই নয়।</strong> রোটার‌্যাক্ট ক্লাব অব দুর্গাপুর সেন্ট্রাল প্রেসিডেন্সি রোটারি ইন্টারন্যাশনালের অধীনে একটি অলাভজনক মানবহিতৈষী যুব সংগঠন। আমরা আবেদনকারী বা অংশীদারদের কাছ থেকে কখনো কোনো প্রসেসিং ফি বা কমিশন নিই না। RAC DCP-র নামে কেউ অর্থ দাবি করলে সতর্ক থাকুন।',
+            'faq.q4': 'কোম্পানি বা প্রতিষ্ঠানগুলো কি CSR-এর জন্য RAC DCP-র সাথে যুক্ত হতে পারে?',
+            'faq.a4': 'হ্যাঁ! আমরা সিএসআর ড্রাইভ, ক্যাম্পাস স্বাস্থ্য কর্মসূচি, বৃক্ষরোপণ এবং যুব দক্ষতা কর্মশালার জন্য কর্পোরেট ও নিবন্ধিত ট্রাস্টের সাথে যৌথভাবে কাজ করি। আমরা সুসংগঠিত পরিকল্পনা এবং সচিত্র অডিট রিপোর্ট সরবরাহ করি।',
+            'faq.q5': 'RAC DCP-র যাচাইকরণ ও জালিয়াতি বিরোধী নীতি কী?',
+            'faq.a5': 'সমাজকে সুরক্ষিত রাখতে এবং প্রকৃত অভাবীদের কাছেই সহায়তা পৌঁছানো নিশ্চিত করতে সমস্ত আবেদনের পটভূমি যাচাই করা হয়। আমরা কখনো কোনো ফি, পাসওয়ার্ড, আধার নম্বর বা ব্যাংক বিশদ চাই না। <strong>প্রমাণযোগ্য মিথ্যা তথ্য, ছদ্মবেশ ধারণ, ক্ষতিকারক লিঙ্ক বা স্বয়ংক্রিয় স্প্যাম সংবলিত আবেদনগুলি সীমাবদ্ধ, প্রত্যাখ্যান বা ক্ষেত্রবিশেষে যথাযথ কর্তৃপক্ষের নিকট প্রেরণ করা হতে পারে।</strong>'
         },
         hi: {
             code: 'HI',
@@ -1256,9 +1276,9 @@
             'how.step2.title': '2. सबमिट करें और संदर्भ आईडी प्राप्त करें',
             'how.step2.desc': 'सबमिट करने पर आपका अनुरोध दर्ज हो जाएगा और भविष्य के संदर्भ के लिए आपको एक विशिष्ट रेफरेंस आईडी (जैसे CCD-2026-0001) मिलेगी।',
             'how.step3.title': '3. हमारी टीम समीक्षा और सत्यापन करेगी',
-            'how.step3.desc': 'RAC DCP सामुदायिक सेवा निदेशालय अनुरोध की प्रामाणिकता और संसाधनों की उपलब्धता की समीक्षा करता है।',
+            'how.step3.desc': 'हमारी टीम यथाशीघ्र आपके सबमिशन की समीक्षा करेगी। अनुरोध की प्रकृति, सत्यापन आवश्यकताओं और स्वयंसेवी उपलब्धता के आधार पर आवश्यक समय भिन्न हो सकता है।',
             'how.step4.title': '4. हम संपर्क और समन्वय करेंगे',
-            'how.step4.desc': 'संभव होने पर, हमारे निदेशक प्रत्यक्ष सहायता या साझेदारी के समन्वय हेतु फोन या व्हाट्सएप पर संपर्क करेंगे।',
+            'how.step4.desc': 'यदि संभव हो, तो हमारे निदेशक प्रत्यक्ष सहायता या साझेदारी के समन्वय हेतु फोन या व्हाट्सएप पर संपर्क करेंगे।',
             'about.tag': 'संचालक संगठन',
             'about.title': 'रोटारैक्ट क्लब ऑफ दुर्गापुर सेंट्रल प्रेसीडेंसी',
             'about.desc': '12 अक्टूबर 2023 को रोटरी इंटरनेशनल डिस्ट्रिक्ट 3240 के तहत चार्टर्ड, RAC DCP दुर्गापुर में एक अग्रणी युवा नेतृत्व और सामाजिक कल्याण संगठन है। हम वास्तविक और ठोस सेवा कार्यों में विश्वास करते हैं—चिकित्सा शिविरों और पर्यावरण संरक्षण से लेकर युवा सशक्तिकरण और साक्षरता तक। CARE CONNECT ज़रूरतमंदों और सेवाभावियों के बीच एक आधिकारिक माध्यम है।',
@@ -1276,7 +1296,17 @@
             'wizard.intentA.sub': 'शैक्षिक, चिकित्सा, भोजन, राहत या दिव्यांगता सहायता के लिए व्यक्तियों, परिवारों या छात्रों हेतु।',
             'wizard.intentB.title': 'हमारे साथ सहयोग करें',
             'wizard.intentB.sub': 'साझेदारी या संसाधन सहयोग का प्रस्ताव देने वाले एनजीओ, संस्थानों, कंपनियों और स्वयंसेवकों हेतु।',
-            'wizard.catLabel': 'सबसे उपयुक्त श्रेणी का चयन करें <span class="required-star">*</span>'
+            'wizard.catLabel': 'सबसे उपयुक्त श्रेणी का चयन करें <span class="required-star">*</span>',
+            'faq.q1': 'सामुदायिक सहायता के लिए कौन पात्र है?',
+            'faq.a1': 'व्यक्ति, परिवार, सामुदायिक प्रतिनिधि, एनजीओ, शैक्षणिक संस्थान, अस्पताल, कंपनियाँ और अन्य संगठन RAC DCP से संपर्क कर सकते हैं। अनुरोधों का मूल्यांकन उनकी प्रकृति, स्थान, प्रासंगिकता, साध्यता और उपलब्ध संसाधनों के आधार पर किया जाएगा। हमारी परिचालन पहुंच के भीतर की पहलों को प्राथमिकता दी जा सकती है।',
+            'faq.q2': 'अनुरोध की समीक्षा में कितना समय लगता है?',
+            'faq.a2': 'हमारी टीम यथाशीघ्र आपके सबमिशन की समीक्षा करेगी। अनुरोध की प्रकृति, सत्यापन आवश्यकताओं और स्वयंसेवी उपलब्धता के आधार पर आवश्यक समय भिन्न हो सकता है। जहाँ संभव हो, हमारे निदेशक अगले कदमों या ज़मीनी निरीक्षण के समन्वय हेतु सीधे संपर्क करेंगे।',
+            'faq.q3': 'क्या RAC DCP अनुरोध प्रसंस्करण के लिए कोई शुल्क लेता है?',
+            'faq.a3': '<strong>कभी नहीं।</strong> रोटारैक्ट क्लब ऑफ दुर्गापुर सेंट्रल प्रेसीडेंसी रोटरी इंटरनेशनल के तहत एक गैर-लाभकारी मानवीय युवा संगठन है। हम आवेदकों या भागीदारों से कभी भी कोई शुल्क या कमीशन नहीं लेते हैं। RAC DCP के नाम पर पैसे मांगने वालों से सावधान रहें।',
+            'faq.q4': 'क्या कंपनियाँ और संस्थान CSR के लिए RAC DCP के साथ साझेदारी कर सकते हैं?',
+            'faq.a4': 'हाँ! हम सीएसआर अभियानों, स्वास्थ्य कार्यक्रमों, वृक्षारोपण और युवा कौशल कार्यशालाओं के लिए कॉर्पोरेट्स और पंजीकृत ट्रस्टों के साथ सक्रिय रूप से सहयोग करते हैं। हम संरचित योजनाएँ और फोटो-दस्तावेजी रिपोर्ट प्रदान करते हैं।',
+            'faq.q5': 'RAC DCP की सत्यापन और धोखाधड़ी-रोधी नीति क्या है?',
+            'faq.a5': 'समुदाय की सुरक्षा और वास्तविक ज़रूरतमंदों तक मदद पहुंचाना सुनिश्चित करने के लिए सभी सबमिशन की जांच की जाती है। हम कभी भी कोई शुल्क, पासवर्ड, आधार संख्या या बैंक विवरण नहीं मांगते हैं। <strong>प्रमाणित रूप से गलत जानकारी, प्रतिरूपण, दुर्भावनापूर्ण लिंक या स्वचालित स्पैम वाले सबमिशन को प्रतिबंधित, अस्वीकार या आवश्यकतानुसार उचित अधिकारियों को संदर्भित किया जा सकता है।</strong>'
         }
     };
 
