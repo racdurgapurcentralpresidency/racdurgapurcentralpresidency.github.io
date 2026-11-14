@@ -337,6 +337,186 @@ img, svg {
 [data-theme="dark"] .theme-icon-sun { display: block; }
 [data-theme="dark"] .theme-icon-moon { display: none; }
 
+/* Language Selector Dropdown */
+.lang-selector-dropdown {
+    position: relative;
+}
+
+.lang-select-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-light);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.lang-select-btn:hover {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+.lang-globe-icon {
+    flex-shrink: 0;
+    color: var(--primary-blue);
+}
+
+.lang-arrow-icon {
+    flex-shrink: 0;
+    transition: transform var(--transition-fast);
+}
+
+.lang-selector-dropdown.open .lang-arrow-icon {
+    transform: rotate(180deg);
+}
+
+.lang-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 175px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: var(--shadow-lg);
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 1000;
+    animation: fadeInDown 0.18s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.lang-selector-dropdown.open .lang-menu {
+    display: flex;
+}
+
+.lang-menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.lang-menu-item:hover {
+    background: var(--primary-blue-light);
+    color: var(--primary-blue);
+}
+
+.lang-menu-item.active {
+    background: var(--primary-blue-light);
+    color: var(--primary-blue);
+    font-weight: 800;
+}
+
+.lang-menu-item .lang-sub {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    background: var(--bg-light);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.lang-menu-item.active .lang-sub {
+    background: var(--primary-blue);
+    color: #ffffff;
+    border-color: var(--primary-blue);
+}
+
+/* Mobile Language Bar inside drawer */
+.mobile-lang-item {
+    display: none;
+    list-style: none;
+    width: 100%;
+    padding: 0 0 10px;
+}
+
+.mobile-lang-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--bg-light);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.mobile-lang-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.mobile-lang-pills {
+    display: flex;
+    gap: 4px;
+}
+
+.mobile-lang-pill {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.mobile-lang-pill.active {
+    background: var(--primary-blue);
+    color: #ffffff;
+    border-color: var(--primary-blue);
+}
+
+/* Bengali & Hindi Typography Adjustments */
+html[lang="bn"],
+html[lang="bn"] body,
+html[lang="bn"] input,
+html[lang="bn"] select,
+html[lang="bn"] textarea,
+html[lang="bn"] button {
+    font-family: 'Noto Sans Bengali', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+}
+
+html[lang="hi"],
+html[lang="hi"] body,
+html[lang="hi"] input,
+html[lang="hi"] select,
+html[lang="hi"] textarea,
+html[lang="hi"] button {
+    font-family: 'Noto Sans Devanagari', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+}
+
+@media (max-width: 900px) {
+    .mobile-lang-item {
+        display: block;
+    }
+}
+
 .btn-nav-cta {
     display: inline-flex;
     align-items: center;

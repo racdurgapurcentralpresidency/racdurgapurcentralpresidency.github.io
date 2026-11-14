@@ -36,7 +36,8 @@
         MAX_HOURLY_SUBMISSIONS: 3,
         STORAGE_KEY_SUBMISSIONS: 'racdcp_cc_submissions',
         STORAGE_KEY_RATE_LIMIT: 'racdcp_cc_rate_limit',
-        STORAGE_THEME_KEY: 'racdcp-theme'
+        STORAGE_THEME_KEY: 'racdcp-theme',
+        STORAGE_LANG_KEY: 'racdcp_care_connect_lang'
     };
 
     /* =========================================================================
@@ -1049,6 +1050,310 @@
     }
 
     /* =========================================================================
+       8. MULTILINGUAL TRANSLATION SYSTEM (ENGLISH, BENGALI & HINDI)
+       ========================================================================= */
+    const TRANSLATIONS = {
+        en: {
+            code: 'EN',
+            label: 'English',
+            'nav.about': 'About Us',
+            'nav.who': 'Who Can Connect',
+            'nav.portal': 'Request Portal',
+            'nav.mainSite': 'Main Site',
+            'nav.connectNow': 'Connect Now',
+            'hero.badge': 'Official Community Gateway • RI District 3240',
+            'hero.title': 'Your Voice.<br><span>Our Commitment.</span>',
+            'hero.subtitle': 'A Bridge Between Those Who Need Help and Those Who Can Help.',
+            'hero.desc': 'Whether you are an individual seeking assistance, an organisation looking for collaboration, or someone willing to contribute to the community, RAC DCP CARE CONNECT provides a transparent, dedicated channel to reach out to us.',
+            'hero.btnAssistance': 'REQUEST ASSISTANCE',
+            'hero.btnCollab': 'COLLABORATE WITH US',
+            'hero.notice': '<strong>Notice:</strong> RAC DCP is a volunteer-led youth community service organisation. All requests are subject to review, ground verification, and the availability of resources. Submission does not imply an automatic guarantee of financial or physical assistance.',
+            'hero.networkTitle': 'Rotaract Action Network',
+            'hero.pillar1.title': 'Service Above Self',
+            'hero.pillar1.desc': 'Rooted in Rotary ideals of selfless, ethical community upliftment.',
+            'hero.pillar2.title': 'Youth Leadership',
+            'hero.pillar2.desc': 'Passionate young leaders driving grassroot ground operations.',
+            'hero.pillar3.title': 'Thorough Review',
+            'hero.pillar3.desc': 'Structured verification ensures genuine assistance reaches those in need.',
+            'hero.pillar4.title': 'Resource Synergy',
+            'hero.pillar4.desc': 'Connecting donors, NGOs, institutions, and CSR partners seamlessly.',
+            'audiences.eyebrow': 'Open For All',
+            'audiences.title': 'Who Can <span>Connect With Us?</span>',
+            'audiences.desc': 'Our platform welcomes citizens, grassroots nonprofits, academic institutions, and enterprise leaders who share our commitment to transformative social impact.',
+            'audiences.card1.title': 'Individuals & Families',
+            'audiences.card1.desc': 'Underprivileged citizens, families facing temporary hardships, students seeking study aids, or patients needing guidance.',
+            'audiences.card1.cta': 'Seek Support &rarr;',
+            'audiences.card2.title': 'NGOs & Non-Profits',
+            'audiences.card2.desc': 'Charitable trusts, community groups, and registered NGOs looking for co-organized projects or youth volunteer deployment.',
+            'audiences.card2.cta': 'Partner With Us &rarr;',
+            'audiences.card3.title': 'Schools & Institutions',
+            'audiences.card3.desc': 'Educational institutions, colleges, and vocational centers aiming to organize social awareness or student development initiatives.',
+            'audiences.card3.cta': 'Propose Tie-Up &rarr;',
+            'audiences.card4.title': 'Companies & Businesses',
+            'audiences.card4.desc': 'Corporate entities, local businesses, and CSR directors seeking verified grassroots implementation of community funds.',
+            'audiences.card4.cta': 'Explore CSR Synergy &rarr;',
+            'cat.eyebrow': 'Avenues of Impact',
+            'cat.title': 'What Can You <span>Approach Us For?</span>',
+            'cat.desc': 'Explore our diverse community impact categories. Filter by your goal and select any area to begin your request.',
+            'cat.filterAll': 'All 13 Focus Areas',
+            'cat.filterAssistance': 'Direct Assistance',
+            'cat.filterCollab': 'Collaborations & Partnerships',
+            'how.eyebrow': 'Clear & Transparent',
+            'how.title': 'How <span>CARE CONNECT Works</span>',
+            'how.desc': 'A clear, 4-step process designed to ensure fair verification, structured planning, and transparent community delivery.',
+            'how.step1.title': 'Tell Us About Your Requirement',
+            'how.step1.desc': 'Fill out our structured multi-step form with your contact information, exact requirements, location, and relevant details.',
+            'how.step2.title': 'Submit & Receive Reference ID',
+            'how.step2.desc': 'Once submitted, your request is logged and you receive a unique Care Connect Reference ID (e.g. CCD-2026-0001) for future reference.',
+            'how.step3.title': 'Our Team Reviews & Verifies',
+            'how.step3.desc': 'The RAC DCP Community Service Directorate reviews the submission, verifies authenticity, and assesses feasibility and available resources.',
+            'how.step4.title': 'We Connect & Coordinate',
+            'how.step4.desc': 'If feasible, our directors contact you via phone or WhatsApp to coordinate direct assistance or structure an impactful partnership.',
+            'about.tag': 'Operating Organization',
+            'about.title': 'Rotaract Club of Durgapur Central Presidency',
+            'about.desc': 'Chartered on 12th October 2023 under Rotary International District 3240, RAC DCP is a premier youth leadership and community welfare organisation in Durgapur, West Bengal. We believe in taking real, measurable action—from medical camps and environmental stewardship to youth empowerment and literacy drives. CARE CONNECT is our official public gateway to bridge grassroots needs with meaningful community action.',
+            'about.btnMain': 'Visit Main Club Website',
+            'wizard.eyebrow': 'Connect With Us',
+            'wizard.title': 'Interactive <span>Request Portal</span>',
+            'wizard.desc': 'Follow the guided steps below. Whether you require community assistance or wish to partner with us, our system adapts dynamically to your goal.',
+            'wizard.step1': 'Purpose',
+            'wizard.step2': 'Details',
+            'wizard.step3': 'Review & Verify',
+            'wizard.step4': 'Confirmation',
+            'wizard.q1': 'How would you like to connect with RAC DCP?',
+            'wizard.q1.sub': 'Select whether you are seeking community assistance or proposing a collaboration or partnership.',
+            'wizard.intentA.title': 'REQUEST ASSISTANCE',
+            'wizard.intentA.sub': 'For individuals, families, students, or patients in need of educational, medical, relief, or disability aid.',
+            'wizard.intentB.title': 'COLLABORATE WITH US',
+            'wizard.intentB.sub': 'For NGOs, schools, companies, volunteers, and donors proposing partnerships or offering resources.',
+            'wizard.catLabel': 'Select the most appropriate category <span class="required-star">*</span>'
+        },
+        bn: {
+            code: 'BN',
+            label: 'বাংলা',
+            'nav.about': 'আমাদের সম্পর্কে',
+            'nav.who': 'কারা যোগাযোগ করতে পারেন',
+            'nav.portal': 'অনুরোধ পোর্টাল',
+            'nav.mainSite': 'প্রধান ওয়েবসাইট',
+            'nav.connectNow': 'এখনই যুক্ত হন',
+            'hero.badge': 'অফিশিয়াল কমিউনিটি গেটওয়ে • রোটারি জেলা ৩২৪০',
+            'hero.title': 'আপনার কণ্ঠস্বর।<br><span>আমাদের অঙ্গীকার।</span>',
+            'hero.subtitle': 'যাদের সাহায্য প্রয়োজন এবং যারা সাহায্য করতে পারেন—তাদের মধ্যে এক বিশ্বস্ত সেতুবন্ধন।',
+            'hero.desc': 'আপনি যদি কোনো ব্যক্তি হন যার সাহায্যের প্রয়োজন, সহযোগিতার সন্ধানকারী কোনো সংগঠন, কিংবা সমাজে অবদান রাখতে ইচ্ছুক কোনো নাগরিক—RAC DCP CARE CONNECT আপনাকে আমাদের কাছে পৌঁছানোর একটি স্বচ্ছ ও নিবেদিত মাধ্যম প্রদান করে।',
+            'hero.btnAssistance': 'সাহায্যের আবেদন',
+            'hero.btnCollab': 'আমাদের সাথে সহযোগিতা করুন',
+            'hero.notice': '<strong>বিজ্ঞপ্তি:</strong> RAC DCP একটি যুব নেতৃত্বাধীন স্বেচ্ছাসেবী সমাজসেবা সংগঠন। সমস্ত অনুরোধ পুঙ্খানুপুঙ্খ পর্যালোচনা, ক্ষেত্র যাচাই এবং সম্পদের প্রাপ্যতার ওপর নির্ভরশীল। আবেদন জমা দেওয়া সরাসরি আর্থিক বা শারীরিক সহায়তার নিশ্চয়তা দেয় না।',
+            'hero.networkTitle': 'রোটার‌্যাক্ট অ্যাকশন নেটওয়ার্ক',
+            'hero.pillar1.title': 'স্বার্থের ঊর্ধ্বে সেবা',
+            'hero.pillar1.desc': 'নিঃস্বার্থ ও নীতিভিত্তিক সমাজকল্যাণে রোটারির মূল আদর্শে প্রতিষ্ঠিত।',
+            'hero.pillar2.title': 'যুব নেতৃত্ব',
+            'hero.pillar2.desc': 'উদ্যমী তরুণ নেতাদের পরিচালনায় তৃণমূল পর্যায়ের সমাজসেবামূলক কর্মকাণ্ড।',
+            'hero.pillar3.title': 'পুঙ্খানুপুঙ্খ যাচাইকরণ',
+            'hero.pillar3.desc': 'সুনির্দিষ্ট যাচাই পদ্ধতির মাধ্যমে নিশ্চিত করা হয় যাতে প্রকৃত অভাবীর কাছেই সাহায্য পৌঁছায়।',
+            'hero.pillar4.title': 'সমন্বিত সম্পদ ও সহযোগিতা',
+            'hero.pillar4.desc': 'দাতা, এনজিও, শিক্ষাপ্রতিষ্ঠান ও কর্পোরেট সিএসআর অংশীদারদের সুদৃঢ় সমন্বয়।',
+            'audiences.eyebrow': 'সবার জন্য উন্মুক্ত',
+            'audiences.title': 'কারা আমাদের সাথে <span>যোগাযোগ করতে পারেন?</span>',
+            'audiences.desc': 'আমাদের প্ল্যাটফর্ম সমাজের সকল স্তরের নাগরিক, তৃণমূলের অলাভজনক সংস্থা, শিক্ষাপ্রতিষ্ঠান ও সামাজিক দায়বদ্ধতাসম্পন্ন সংস্থাকে স্বাগত জানায়।',
+            'audiences.card1.title': 'ব্যক্তি ও পরিবারবর্গ',
+            'audiences.card1.desc': 'সুবিধাবঞ্চিত নাগরিক, আকস্মিক সংকটে পড়া পরিবার, পড়াশোনার সহায়তাপ্রার্থী শিক্ষার্থী বা স্বাস্থ্য সহায়তাপ্রার্থী মানুষ।',
+            'audiences.card1.cta': 'সাহায্যের আবেদন করুন &rarr;',
+            'audiences.card2.title': 'এনজিও ও অলাভজনক সংস্থা',
+            'audiences.card2.desc': 'যৌথ সমাজকল্যাণ প্রকল্প বা তরুণ স্বেচ্ছাসেবকদের সহযোগিতায় কাজ করতে আগ্রহী নিবন্ধিত দাতব্য সংস্থা ও ট্রাস্ট।',
+            'audiences.card2.cta': 'যৌথ উদ্যোগ প্রস্তাব করুন &rarr;',
+            'audiences.card3.title': 'বিদ্যালয় ও শিক্ষাপ্রতিষ্ঠান',
+            'audiences.card3.desc': 'ছাত্র-যুব নেতৃত্ব বিকাশ, স্বাস্থ্য ও সামাজিক সচেতনতামূলক কর্মশালা এবং ক্যাম্পাস ড্রাইভ আয়োজনে আগ্রহী প্রতিষ্ঠান।',
+            'audiences.card3.cta': 'ক্যাম্পাস উদ্যোগ যুক্ত করুন &rarr;',
+            'audiences.card4.title': 'কর্পোরেট ও সিএসআর অংশীদার',
+            'audiences.card4.desc': 'কর্পোরেট সামাজিক দায়বদ্ধতা (CSR) তহবিল ও সরাসরি কমিউনিটি উন্নয়ন প্রকল্প বাস্তবায়নে অংশীদারিত্ব।',
+            'audiences.card4.cta': 'সিএসআর উদ্যোগ আলোচনা করুন &rarr;',
+            'cat.eyebrow': 'বহুমুখী সমাজসেবা',
+            'cat.title': 'কোন কোন বিষয়ে <span>আমাদের কাছে আসতে পারেন?</span>',
+            'cat.desc': 'আমাদের প্রত্যক্ষ সমাজসেবামূলক সহায়তা এবং প্রাতিষ্ঠানিক সহযোগিতার বিভিন্ন ক্ষেত্র দেখে নিন।',
+            'cat.filterAll': 'সমস্ত ১৩টি কার্যক্ষেত্র',
+            'cat.filterAssistance': 'সরাসরি সাহায্য',
+            'cat.filterCollab': 'সহযোগিতা ও অংশীদারিত্ব',
+            'how.eyebrow': 'সহজ ও স্বচ্ছ প্রক্রিয়া',
+            'how.title': 'কীভাবে কাজ করে <span>CARE CONNECT</span>',
+            'how.desc': 'ন্যায্য যাচাইকরণ, সুশৃঙ্খল পরিকল্পনা এবং স্বচ্ছ সেবা প্রদান নিশ্চিত করতে ৪-ধাপের প্রক্রিয়া।',
+            'how.step1.title': '১. আপনার প্রয়োজনীয়তা জানান',
+            'how.step1.desc': 'আমাদের ইন্টারঅ্যাক্টিভ ফর্মের মাধ্যমে আপনার যোগাযোগের তথ্য, সুনির্দিষ্ট প্রয়োজন ও সংশ্লিষ্ট বিবরণ পূরণ করুন।',
+            'how.step2.title': '২. জমা দিন ও রেফারেন্স আইডি নিন',
+            'how.step2.desc': 'জমা দেওয়ার সাথে সাথে আপনার আবেদন নথিভুক্ত হবে এবং ভবিষ্যতে যোগাযোগের জন্য একটি অনন্য রেফারেন্স আইডি (যেমন CCD-2026-0001) পাবেন।',
+            'how.step3.title': '৩. পর্যালোচনা ও মাঠপর্যায়ে যাচাই',
+            'how.step3.desc': 'RAC DCP-র সমাজসেবা পরিদপ্তর আবেদনটির সত্যতা যাচাই করবে এবং উপলব্ধ সম্পদের ভিত্তিতে সম্ভাব্যতা পরীক্ষা করবে।',
+            'how.step4.title': '৪. যোগাযোগ ও সমন্বয়',
+            'how.step4.desc': 'সম্ভব হলে, সরাসরি সাহায্য সমন্বয় বা অংশীদারিত্ব গড়ে তোলার জন্য আমাদের পরিচালকরা আপনার সাথে যোগাযোগ করবেন।',
+            'about.tag': 'পরিচালনাকারী সংগঠন',
+            'about.title': 'রোটার‌্যাক্ট ক্লাব অব দুর্গাপুর সেন্ট্রাল প্রেসিডেন্সি',
+            'about.desc': '১২ই অক্টোবর ২০২৩ তারিখে রোটারি আন্তর্জাতিক জেলা ৩২৪০-এর অধীনে চার্টারপ্রাপ্ত, RAC DCP দুর্গাপুরের এক শীর্ষস্থানীয় যুব নেতৃত্ব ও সমাজকল্যাণমূলক সংস্থা। আমরা বাস্তব ও পরিমাপযোগ্য সমাজসেবায় বিশ্বাস করি—চিকিৎসা শিবির, পরিবেশ সংরক্ষণ থেকে শুরু করে যুব ক্ষমতায়ন ও সাক্ষরতা অভিযান পর্যন্ত। CARE CONNECT হলো সাধারণ মানুষের প্রয়োজন ও অর্থপূর্ণ সমাজসেবার মধ্যে এক মজবুত সেতুবন্ধন।',
+            'about.btnMain': 'মূল ক্লাবের ওয়েবসাইটে যান',
+            'wizard.eyebrow': 'যোগাযোগ করুন',
+            'wizard.title': 'ইন্টারঅ্যাক্টিভ <span>অনুরোধ পোর্টাল</span>',
+            'wizard.desc': 'নিচের ধাপগুলো অনুসরণ করুন। আপনার লক্ষ্য অনুযায়ী ফর্মটি স্বয়ংক্রিয়ভাবে পরিবর্তিত হবে।',
+            'wizard.step1': 'উদ্দেশ্য',
+            'wizard.step2': 'বিবরণ',
+            'wizard.step3': 'পুনর্বিবেচনা',
+            'wizard.step4': 'নিশ্চিতকরণ',
+            'wizard.q1': 'আপনি কীভাবে RAC DCP-র সাথে যোগাযোগ করতে চান?',
+            'wizard.q1.sub': 'আপনি কি সামাজিক সহায়তা খুঁজছেন নাকি কোনো সহযোগিতা বা অংশীদারিত্বের প্রস্তাব করছেন, তা নির্বাচন করুন।',
+            'wizard.intentA.title': 'সাহায্যের আবেদন',
+            'wizard.intentA.sub': 'শিক্ষাগত, চিকিৎসা, ত্রাণ বা প্রতিবন্ধী সহায়তার জন্য ব্যক্তি, পরিবার বা শিক্ষার্থীদের উদ্দেশ্যে।',
+            'wizard.intentB.title': 'আমাদের সাথে সহযোগিতা',
+            'wizard.intentB.sub': 'অংশীদারিত্ব প্রস্তাবকারী এনজিও, শিক্ষাপ্রতিষ্ঠান, কোম্পানি, স্বেচ্ছাসেবী ও দাতাদের উদ্দেশ্যে।',
+            'wizard.catLabel': 'উপযুক্ত বিভাগটি নির্বাচন করুন <span class="required-star">*</span>'
+        },
+        hi: {
+            code: 'HI',
+            label: 'हिन्दी',
+            'nav.about': 'हमारे बारे में',
+            'nav.who': 'कौन जुड़ सकता है',
+            'nav.portal': 'अनुरोध पोर्टल',
+            'nav.mainSite': 'मुख्य वेबसाइट',
+            'nav.connectNow': 'अभी जुड़ें',
+            'hero.badge': 'आधिकारिक समुदाय प्रवेशद्वार • रोटरी जिला 3240',
+            'hero.title': 'आपकी आवाज़।<br><span>हमारा संकल्प।</span>',
+            'hero.subtitle': 'जिन्हें मदद की ज़रूरत है और जो मदद कर सकते हैं—उनके बीच एक सेतु।',
+            'hero.desc': 'चाहे आप मदद चाहने वाले व्यक्ति हों, सहयोग की तलाश में कोई संस्था हों, या समाज में योगदान देने के इच्छुक नागरिक—RAC DCP CARE CONNECT हम तक पहुँचने का एक पारदर्शी और समर्पित माध्यम प्रदान करता है।',
+            'hero.btnAssistance': 'मदद के लिए अनुरोध',
+            'hero.btnCollab': 'हमारे साथ सहयोग करें',
+            'hero.notice': '<strong>सूचना:</strong> RAC DCP एक युवा नेतृत्व वाला स्वयंसेवी सामाजिक सेवा संगठन है। सभी अनुरोध समीक्षा, ज़मीनी सत्यापन और संसाधनों की उपलब्धता के अधीन हैं। सबमिशन से वित्तीय या प्रत्यक्ष सहायता की स्वतः गारंटी नहीं मिलती है।',
+            'hero.networkTitle': 'रोटारैक्ट एक्शन नेटवर्क',
+            'hero.pillar1.title': 'स्वार्थ से ऊपर सेवा',
+            'hero.pillar1.desc': 'निःस्वार्थ और नैतिक सामुदायिक उत्थान के रोटरी आदर्शों में निहित।',
+            'hero.pillar2.title': 'युवा नेतृत्व',
+            'hero.pillar2.desc': 'ज़मीनी स्तर पर सामाजिक बदलाव लाने वाले उत्साही युवा नेता।',
+            'hero.pillar3.title': 'गहन सत्यापन',
+            'hero.pillar3.desc': 'संरचित सत्यापन सुनिश्चित करता है कि वास्तविक मदद ज़रूरतमंदों तक ही पहुंचे।',
+            'hero.pillar4.title': 'संसाधन तालमेल',
+            'hero.pillar4.desc': 'दाताओं, एनजीओ, संस्थानों और कॉर्पोरेट सीएसआर भागीदारों को जोड़ना।',
+            'audiences.eyebrow': 'सभी के लिए खुला',
+            'audiences.title': 'हमसे <span>कौन जुड़ सकता है?</span>',
+            'audiences.desc': 'हमारा मंच नागरिकों, गैर-सरकारी संगठनों, शैक्षणिक संस्थानों और सामाजिक रूप से जागरूक व्यवसायों का स्वागत करता है।',
+            'audiences.card1.title': 'व्यक्ति और परिवार',
+            'audiences.card1.desc': 'ज़रूरतमंद नागरिक, संकटग्रस्त परिवार, शिक्षा में सहायता चाहने वाले छात्र या स्वास्थ्य मार्गदर्शन चाहने वाले लोग।',
+            'audiences.card1.cta': 'मदद के लिए संपर्क करें &rarr;',
+            'audiences.card2.title': 'एनजीओ और गैर-लाभकारी संगठन',
+            'audiences.card2.desc': 'संयुक्त सामुदायिक परियोजनाओं और युवा स्वयंसेवकों की सहायता चाहने वाले पंजीकृत ट्रस्ट और संस्थाएं।',
+            'audiences.card2.cta': 'संयुक्त परियोजना प्रस्तावित करें &rarr;',
+            'audiences.card3.title': 'विद्यालय और शैक्षणिक संस्थान',
+            'audiences.card3.desc': 'छात्र नेतृत्व विकास, स्वास्थ्य एवं सामाजिक जागरूकता सत्र आयोजित करने के इच्छुक स्कूल व कॉलेज।',
+            'audiences.card3.cta': 'कैंपस पहल जोड़ें &rarr;',
+            'audiences.card4.title': 'कंपनियाँ और सीएसआर भागीदार',
+            'audiences.card4.desc': 'कॉर्पोरेट सामाजिक दायित्व (CSR) परियोजनाओं को ज़मीनी स्तर पर प्रभावी ढंग से निष्पादित करने वाले भागीदार।',
+            'audiences.card4.cta': 'सीएसआर पहल पर चर्चा करें &rarr;',
+            'cat.eyebrow': 'विविध कार्यक्षेत्र',
+            'cat.title': 'आप किन विषयों के लिए <span>हमसे संपर्क कर सकते हैं?</span>',
+            'cat.desc': 'हमारे प्रत्यक्ष सामुदायिक सहायता कार्यक्रमों और संस्थागत सहयोग के अवसरों को देखें।',
+            'cat.filterAll': 'सभी 13 कार्यक्षेत्र',
+            'cat.filterAssistance': 'प्रत्यक्ष सहायता',
+            'cat.filterCollab': 'सहयोग और साझेदारी',
+            'how.eyebrow': 'सरल और पारदर्शी प्रक्रिया',
+            'how.title': 'कैसे काम करता है <span>CARE CONNECT</span>',
+            'how.desc': 'उचित सत्यापन, सुव्यवस्थित योजना और पारदर्शी सहायता सुनिश्चित करने वाली 4-चरणीय प्रक्रिया।',
+            'how.step1.title': '1. अपनी आवश्यकता बताएं',
+            'how.step1.desc': 'हमारे संरचित फॉर्म में अपनी संपर्क जानकारी, विशिष्ट आवश्यकता और विवरण भरें।',
+            'how.step2.title': '2. सबमिट करें और संदर्भ आईडी प्राप्त करें',
+            'how.step2.desc': 'सबमिट करने पर आपका अनुरोध दर्ज हो जाएगा और भविष्य के संदर्भ के लिए आपको एक विशिष्ट रेफरेंस आईडी (जैसे CCD-2026-0001) मिलेगी।',
+            'how.step3.title': '3. हमारी टीम समीक्षा और सत्यापन करेगी',
+            'how.step3.desc': 'RAC DCP सामुदायिक सेवा निदेशालय अनुरोध की प्रामाणिकता और संसाधनों की उपलब्धता की समीक्षा करता है।',
+            'how.step4.title': '4. हम संपर्क और समन्वय करेंगे',
+            'how.step4.desc': 'संभव होने पर, हमारे निदेशक प्रत्यक्ष सहायता या साझेदारी के समन्वय हेतु फोन या व्हाट्सएप पर संपर्क करेंगे।',
+            'about.tag': 'संचालक संगठन',
+            'about.title': 'रोटारैक्ट क्लब ऑफ दुर्गापुर सेंट्रल प्रेसीडेंसी',
+            'about.desc': '12 अक्टूबर 2023 को रोटरी इंटरनेशनल डिस्ट्रिक्ट 3240 के तहत चार्टर्ड, RAC DCP दुर्गापुर में एक अग्रणी युवा नेतृत्व और सामाजिक कल्याण संगठन है। हम वास्तविक और ठोस सेवा कार्यों में विश्वास करते हैं—चिकित्सा शिविरों और पर्यावरण संरक्षण से लेकर युवा सशक्तिकरण और साक्षरता तक। CARE CONNECT ज़रूरतमंदों और सेवाभावियों के बीच एक आधिकारिक माध्यम है।',
+            'about.btnMain': 'मुख्य क्लब वेबसाइट देखें',
+            'wizard.eyebrow': 'हमसे जुड़ें',
+            'wizard.title': 'इंटरैक्टिव <span>अनुरोध पोर्टल</span>',
+            'wizard.desc': 'नीचे दिए गए चरणों का पालन करें। आपकी आवश्यकता के अनुसार फॉर्म स्वतः अनुकूलित हो जाएगा।',
+            'wizard.step1': 'उद्देश्य',
+            'wizard.step2': 'विवरण',
+            'wizard.step3': 'समीक्षा',
+            'wizard.step4': 'पुष्टि',
+            'wizard.q1': 'आप RAC DCP से कैसे जुड़ना चाहते हैं?',
+            'wizard.q1.sub': 'चुनें कि क्या आप सहायता मांग रहे हैं या किसी सहयोग / साझेदारी का प्रस्ताव कर रहे हैं।',
+            'wizard.intentA.title': 'मदद के लिए अनुरोध',
+            'wizard.intentA.sub': 'शैक्षिक, चिकित्सा, भोजन, राहत या दिव्यांगता सहायता के लिए व्यक्तियों, परिवारों या छात्रों हेतु।',
+            'wizard.intentB.title': 'हमारे साथ सहयोग करें',
+            'wizard.intentB.sub': 'साझेदारी या संसाधन सहयोग का प्रस्ताव देने वाले एनजीओ, संस्थानों, कंपनियों और स्वयंसेवकों हेतु।',
+            'wizard.catLabel': 'सबसे उपयुक्त श्रेणी का चयन करें <span class="required-star">*</span>'
+        }
+    };
+
+    function applyLanguage(lang) {
+        if (!TRANSLATIONS[lang]) lang = 'en';
+        localStorage.setItem(CONFIG.STORAGE_LANG_KEY, lang);
+        document.documentElement.setAttribute('lang', lang);
+
+        // Update active indicators
+        var activeLangText = document.getElementById('activeLangText');
+        if (activeLangText) {
+            activeLangText.textContent = TRANSLATIONS[lang].code;
+        }
+
+        document.querySelectorAll('.lang-menu-item').forEach(function (item) {
+            if (item.dataset.lang === lang) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('.mobile-lang-pill').forEach(function (pill) {
+            if (pill.dataset.lang === lang) {
+                pill.classList.add('active');
+            } else {
+                pill.classList.remove('active');
+            }
+        });
+
+        // Translate data-i18n elements
+        var dict = TRANSLATIONS[lang];
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+            var key = el.getAttribute('data-i18n');
+            if (dict[key]) {
+                el.innerHTML = dict[key];
+            }
+        });
+    }
+
+    function initLanguage() {
+        var langDropdown = document.getElementById('langSelectorDropdown');
+        var langSelectBtn = document.getElementById('langSelectBtn');
+
+        if (langSelectBtn && langDropdown) {
+            langSelectBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var isOpen = langDropdown.classList.toggle('open');
+                langSelectBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!langDropdown.contains(e.target)) {
+                    langDropdown.classList.remove('open');
+                    langSelectBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        }
+
+        // Handle language option clicks
+        document.querySelectorAll('.lang-menu-item, .mobile-lang-pill').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var lang = btn.dataset.lang;
+                applyLanguage(lang);
+                if (langDropdown) {
+                    langDropdown.classList.remove('open');
+                    if (langSelectBtn) langSelectBtn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+        // Apply saved or default language
+        var saved = localStorage.getItem(CONFIG.STORAGE_LANG_KEY) || 'en';
+        applyLanguage(saved);
+    }
+
+    /* =========================================================================
        INITIALIZE ON DOM READY
        ========================================================================= */
     document.addEventListener('DOMContentLoaded', function () {
@@ -1058,6 +1363,7 @@
         initWizard();
         initFaq();
         initModals();
+        initLanguage();
     });
 
 })();

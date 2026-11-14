@@ -60,19 +60,26 @@
     }
     </script>
 
-    <!-- Google Fonts: Plus Jakarta Sans -->
+    <!-- Google Fonts: Plus Jakarta Sans, Noto Sans Bengali & Noto Sans Devanagari -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Master Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
 
-    <!-- Synchronous Pre-Paint Hardware & Theme Detection -->
+    <!-- Synchronous Pre-Paint Hardware, Theme & Language Detection -->
     <script>
     (function () {
         try {
-            // 1. Theme Synchronization (shared with main site)
+            // 1. Language Preference (English / বাংলা / हिन्दी)
+            var savedLang = localStorage.getItem('racdcp_care_connect_lang') || 'en';
+            if (savedLang === 'bn' || savedLang === 'hi') {
+                document.documentElement.setAttribute('lang', savedLang);
+            } else {
+                document.documentElement.setAttribute('lang', 'en');
+            }
+            // 2. Theme Synchronization (shared with main site)
             var savedTheme = localStorage.getItem('racdcp-theme');
             if (!savedTheme) {
                 savedTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -82,7 +89,7 @@
             } else {
                 document.documentElement.setAttribute('data-theme', 'light');
             }
-            // 2. Low-End Hardware & Mobile Optimization (Synchronous check to prevent layout shift)
+            // 3. Low-End Hardware & Mobile Optimization (Synchronous check to prevent layout shift)
             var prefersLessMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             var lowData = navigator.connection && (navigator.connection.saveData || /2g|3g/.test(navigator.connection.effectiveType));
             var isLowEnd = (navigator.deviceMemory && navigator.deviceMemory <= 4) ||
@@ -118,9 +125,19 @@
             <!-- Desktop Nav Menu -->
             <nav class="nav-menu-wrapper" aria-label="Main Navigation">
                 <ul class="nav-menu" id="primary-nav-menu">
-                    <li><a href="#about-cc" class="nav-link">About Us</a></li>
-                    <li><a href="#audiences" class="nav-link">Who Can Connect</a></li>
-                    <li><a href="#request-system" class="nav-link">Request Portal</a></li>
+                    <li class="mobile-lang-item">
+                        <div class="mobile-lang-bar">
+                            <span class="mobile-lang-label">🌐 Language:</span>
+                            <div class="mobile-lang-pills">
+                                <button type="button" class="mobile-lang-pill active" data-lang="en">EN</button>
+                                <button type="button" class="mobile-lang-pill" data-lang="bn">বাংলা</button>
+                                <button type="button" class="mobile-lang-pill" data-lang="hi">हिन्दी</button>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#about-cc" class="nav-link" data-i18n="nav.about">About Us</a></li>
+                    <li><a href="#audiences" class="nav-link" data-i18n="nav.who">Who Can Connect</a></li>
+                    <li><a href="#request-system" class="nav-link" data-i18n="nav.portal">Request Portal</a></li>
                 </ul>
             </nav>
 
@@ -128,7 +145,7 @@
             <div class="nav-actions">
                 <a href="../index.html" class="main-site-btn" title="Go to main club portal">
                     <span>&larr;</span>
-                    <span>Main Site</span>
+                    <span data-i18n="nav.mainSite">Main Site</span>
                 </a>
 
                 <!-- Theme Toggle Button -->
@@ -149,8 +166,37 @@
                     </svg>
                 </button>
 
+                <!-- Language Selector Dropdown -->
+                <div class="lang-selector-dropdown" id="langSelectorDropdown">
+                    <button type="button" class="lang-select-btn" id="langSelectBtn" aria-haspopup="true" aria-expanded="false" aria-label="Select Language / ভাষা / भाषा" title="Change Language / ভাষা পরিবর্তন / भाषा बदलें">
+                        <svg class="lang-globe-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                        <span class="active-lang-text" id="activeLangText">EN</span>
+                        <svg class="lang-arrow-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="lang-menu" id="langMenu" role="menu">
+                        <button type="button" class="lang-menu-item active" data-lang="en" role="menuitem">
+                            <span class="lang-name">English</span>
+                            <span class="lang-sub">EN</span>
+                        </button>
+                        <button type="button" class="lang-menu-item" data-lang="bn" role="menuitem">
+                            <span class="lang-name">বাংলা</span>
+                            <span class="lang-sub">BN</span>
+                        </button>
+                        <button type="button" class="lang-menu-item" data-lang="hi" role="menuitem">
+                            <span class="lang-name">हिन्दी</span>
+                            <span class="lang-sub">HI</span>
+                        </button>
+                    </div>
+                </div>
+
                 <a href="#request-system" class="btn-nav-cta">
-                    <span>Connect Now</span>
+                    <span data-i18n="nav.connectNow">Connect Now</span>
                     <span>&rarr;</span>
                 </a>
 
@@ -174,29 +220,29 @@
             <div class="hero-content">
                 <div class="hero-eyebrow-badge">
                     <span class="pulse-dot" aria-hidden="true"></span>
-                    <span>Official Community Gateway &bull; RI District 3240</span>
+                    <span data-i18n="hero.badge">Official Community Gateway &bull; RI District 3240</span>
                 </div>
 
-                <h1 class="hero-main-title">
+                <h1 class="hero-main-title" data-i18n="hero.title">
                     Your Voice.<br>
                     <span>Our Commitment.</span>
                 </h1>
 
-                <h2 class="hero-subtitle">
+                <h2 class="hero-subtitle" data-i18n="hero.subtitle">
                     A Bridge Between Those Who Need Help and Those Who Can Help.
                 </h2>
 
-                <p class="hero-desc">
+                <p class="hero-desc" data-i18n="hero.desc">
                     Whether you are an individual seeking assistance, an organisation looking for collaboration, or someone willing to contribute to the community, RAC DCP CARE CONNECT provides a transparent, dedicated channel to reach out to us.
                 </p>
 
                 <div class="hero-cta-group">
                     <button type="button" class="btn-hero-primary" id="hero-btn-assistance">
-                        <span>REQUEST ASSISTANCE</span>
+                        <span data-i18n="hero.btnAssistance">REQUEST ASSISTANCE</span>
                         <span aria-hidden="true">&rarr;</span>
                     </button>
                     <button type="button" class="btn-hero-secondary" id="hero-btn-collab">
-                        <span>COLLABORATE WITH US</span>
+                        <span data-i18n="hero.btnCollab">COLLABORATE WITH US</span>
                         <span aria-hidden="true">&rarr;</span>
                     </button>
                 </div>
@@ -204,7 +250,7 @@
                 <!-- Transparency & Verification Disclaimer Callout -->
                 <div class="hero-disclaimer-box" role="note">
                     <span class="disclaimer-icon" aria-hidden="true">ℹ️</span>
-                    <div>
+                    <div data-i18n="hero.notice">
                         <strong>Notice:</strong> RAC DCP is a volunteer-led youth community service organisation. All requests are subject to review, ground verification, and the availability of resources. Submission does not imply an automatic guarantee of financial or physical assistance.
                     </div>
                 </div>
@@ -218,7 +264,7 @@
                     </div>
                     <div>
                         <h3 class="hero-visual-title">
-                            Rotaract Action Network
+                            <span data-i18n="hero.networkTitle">Rotaract Action Network</span>
                             <small>RI District 3240 &bull; Zone 1 &bull; Club ID 8825991</small>
                         </h3>
                     </div>
@@ -227,26 +273,26 @@
                 <div class="hero-pillars-grid">
                     <div class="pillar-item">
                         <div class="pillar-icon" aria-hidden="true">🤝</div>
-                        <h4 class="pillar-name">Service Above Self</h4>
-                        <p class="pillar-text">Rooted in Rotary ideals of selfless, ethical community upliftment.</p>
+                        <h4 class="pillar-name" data-i18n="hero.pillar1.title">Service Above Self</h4>
+                        <p class="pillar-text" data-i18n="hero.pillar1.desc">Rooted in Rotary ideals of selfless, ethical community upliftment.</p>
                     </div>
 
                     <div class="pillar-item">
                         <div class="pillar-icon" aria-hidden="true">🌱</div>
-                        <h4 class="pillar-name">Youth Leadership</h4>
-                        <p class="pillar-text">Passionate young leaders driving grassroot ground operations.</p>
+                        <h4 class="pillar-name" data-i18n="hero.pillar2.title">Youth Leadership</h4>
+                        <p class="pillar-text" data-i18n="hero.pillar2.desc">Passionate young leaders driving grassroot ground operations.</p>
                     </div>
 
                     <div class="pillar-item">
                         <div class="pillar-icon" aria-hidden="true">🔍</div>
-                        <h4 class="pillar-name">Thorough Review</h4>
-                        <p class="pillar-text">Structured verification ensures genuine assistance reaches those in need.</p>
+                        <h4 class="pillar-name" data-i18n="hero.pillar3.title">Thorough Review</h4>
+                        <p class="pillar-text" data-i18n="hero.pillar3.desc">Structured verification ensures genuine assistance reaches those in need.</p>
                     </div>
 
                     <div class="pillar-item">
                         <div class="pillar-icon" aria-hidden="true">⚡</div>
-                        <h4 class="pillar-name">Resource Synergy</h4>
-                        <p class="pillar-text">Connecting donors, NGOs, institutions, and CSR partners seamlessly.</p>
+                        <h4 class="pillar-name" data-i18n="hero.pillar4.title">Resource Synergy</h4>
+                        <p class="pillar-text" data-i18n="hero.pillar4.desc">Connecting donors, NGOs, institutions, and CSR partners seamlessly.</p>
                     </div>
                 </div>
 
@@ -264,9 +310,9 @@
     <section class="audiences-section" id="audiences">
         <div class="container">
             <header class="section-header">
-                <span class="section-eyebrow">Open For All</span>
-                <h2 class="section-title">Who Can <span>Connect With Us?</span></h2>
-                <p class="section-desc">
+                <span class="section-eyebrow" data-i18n="audiences.eyebrow">Open For All</span>
+                <h2 class="section-title" data-i18n="audiences.title">Who Can <span>Connect With Us?</span></h2>
+                <p class="section-desc" data-i18n="audiences.desc">
                     Our platform welcomes citizens, grassroots nonprofits, academic institutions, and enterprise leaders who share our commitment to transformative social impact.
                 </p>
             </header>
@@ -275,8 +321,8 @@
                 <!-- Card 1: Individuals & Families -->
                 <article class="audience-card">
                     <div class="audience-icon-wrap" aria-hidden="true">👨‍👩‍👧‍👦</div>
-                    <h3 class="audience-title">Individuals &amp; Families</h3>
-                    <p class="audience-desc">
+                    <h3 class="audience-title" data-i18n="audiences.card1.title">Individuals &amp; Families</h3>
+                    <p class="audience-desc" data-i18n="audiences.card1.desc">
                         Underprivileged citizens, families facing temporary hardships, students seeking study aids, or patients needing guidance.
                     </p>
                     <ul class="audience-features">
@@ -286,15 +332,15 @@
                         <li>Assistive disability guidance</li>
                     </ul>
                     <button type="button" class="audience-cta-btn" data-intent="assistance" data-category="community-welfare">
-                        <span>Seek Support &rarr;</span>
+                        <span data-i18n="audiences.card1.cta">Seek Support &rarr;</span>
                     </button>
                 </article>
 
                 <!-- Card 2: NGOs & Non-profits -->
                 <article class="audience-card">
                     <div class="audience-icon-wrap" aria-hidden="true">🤝</div>
-                    <h3 class="audience-title">NGOs &amp; Non-Profits</h3>
-                    <p class="audience-desc">
+                    <h3 class="audience-title" data-i18n="audiences.card2.title">NGOs &amp; Non-Profits</h3>
+                    <p class="audience-desc" data-i18n="audiences.card2.desc">
                         Charitable trusts, community groups, and registered NGOs looking for co-organized projects or youth volunteer deployment.
                     </p>
                     <ul class="audience-features">
@@ -304,15 +350,15 @@
                         <li>Shared logistics &amp; reach</li>
                     </ul>
                     <button type="button" class="audience-cta-btn" data-intent="collaboration" data-category="ngo-collab">
-                        <span>Partner With Us &rarr;</span>
+                        <span data-i18n="audiences.card2.cta">Partner With Us &rarr;</span>
                     </button>
                 </article>
 
                 <!-- Card 3: Schools & Institutions -->
                 <article class="audience-card">
                     <div class="audience-icon-wrap" aria-hidden="true">🏫</div>
-                    <h3 class="audience-title">Schools &amp; Institutions</h3>
-                    <p class="audience-desc">
+                    <h3 class="audience-title" data-i18n="audiences.card3.title">Schools &amp; Institutions</h3>
+                    <p class="audience-desc" data-i18n="audiences.card3.desc">
                         Educational institutions, colleges, and vocational centers aiming to organize social awareness or student development initiatives.
                     </p>
                     <ul class="audience-features">
@@ -322,15 +368,15 @@
                         <li>Youth leadership seminars</li>
                     </ul>
                     <button type="button" class="audience-cta-btn" data-intent="collaboration" data-category="institutional-partnership">
-                        <span>Propose Tie-Up &rarr;</span>
+                        <span data-i18n="audiences.card3.cta">Propose Tie-Up &rarr;</span>
                     </button>
                 </article>
 
                 <!-- Card 4: Companies & Businesses -->
                 <article class="audience-card">
                     <div class="audience-icon-wrap" aria-hidden="true">🏢</div>
-                    <h3 class="audience-title">Companies &amp; Businesses</h3>
-                    <p class="audience-desc">
+                    <h3 class="audience-title" data-i18n="audiences.card4.title">Companies &amp; Businesses</h3>
+                    <p class="audience-desc" data-i18n="audiences.card4.desc">
                         Corporate entities, local businesses, and CSR directors seeking verified grassroots implementation of community funds.
                     </p>
                     <ul class="audience-features">
@@ -340,7 +386,7 @@
                         <li>Sustainable local impact</li>
                     </ul>
                     <button type="button" class="audience-cta-btn" data-intent="collaboration" data-category="csr-partnership">
-                        <span>Explore CSR Synergy &rarr;</span>
+                        <span data-i18n="audiences.card4.cta">Explore CSR Synergy &rarr;</span>
                     </button>
                 </article>
             </div>
@@ -353,18 +399,18 @@
     <section class="categories-section" id="categories">
         <div class="container">
             <header class="section-header">
-                <span class="section-eyebrow">Avenues of Impact</span>
-                <h2 class="section-title">What Can You <span>Approach Us For?</span></h2>
-                <p class="section-desc">
+                <span class="section-eyebrow" data-i18n="cat.eyebrow">Avenues of Impact</span>
+                <h2 class="section-title" data-i18n="cat.title">What Can You <span>Approach Us For?</span></h2>
+                <p class="section-desc" data-i18n="cat.desc">
                     Explore our diverse community impact categories. Filter by your goal and select any area to begin your request.
                 </p>
             </header>
 
             <!-- Interactive Category Filter Tabs -->
             <div class="categories-filter-bar" role="tablist">
-                <button type="button" class="category-tab-btn active" data-filter="all" role="tab" aria-selected="true">All 13 Focus Areas</button>
-                <button type="button" class="category-tab-btn" data-filter="assistance" role="tab" aria-selected="false">Direct Assistance</button>
-                <button type="button" class="category-tab-btn" data-filter="collaboration" role="tab" aria-selected="false">Collaborations &amp; Partnerships</button>
+                <button type="button" class="category-tab-btn active" data-filter="all" role="tab" aria-selected="true" data-i18n="cat.filterAll">All 13 Focus Areas</button>
+                <button type="button" class="category-tab-btn" data-filter="assistance" role="tab" aria-selected="false" data-i18n="cat.filterAssistance">Direct Assistance</button>
+                <button type="button" class="category-tab-btn" data-filter="collaboration" role="tab" aria-selected="false" data-i18n="cat.filterCollab">Collaborations &amp; Partnerships</button>
             </div>
 
             <div class="categories-grid" id="categories-grid">
@@ -546,9 +592,9 @@
     <section class="how-section" id="how-it-works">
         <div class="container">
             <header class="section-header">
-                <span class="section-eyebrow">Clear &amp; Transparent</span>
-                <h2 class="section-title">How <span>CARE CONNECT Works</span></h2>
-                <p class="section-desc">
+                <span class="section-eyebrow" data-i18n="how.eyebrow">Clear &amp; Transparent</span>
+                <h2 class="section-title" data-i18n="how.title">How <span>CARE CONNECT Works</span></h2>
+                <p class="section-desc" data-i18n="how.desc">
                     A clear, 4-step process designed to ensure fair verification, structured planning, and transparent community delivery.
                 </p>
             </header>
@@ -556,26 +602,26 @@
             <div class="how-steps-grid">
                 <div class="how-step-card">
                     <div class="step-num-badge">1</div>
-                    <h3 class="step-title">Tell Us About Your Requirement</h3>
-                    <p class="step-desc">Fill out our structured multi-step form with your contact information, exact requirements, location, and relevant details.</p>
+                    <h3 class="step-title" data-i18n="how.step1.title">Tell Us About Your Requirement</h3>
+                    <p class="step-desc" data-i18n="how.step1.desc">Fill out our structured multi-step form with your contact information, exact requirements, location, and relevant details.</p>
                 </div>
 
                 <div class="how-step-card">
                     <div class="step-num-badge">2</div>
-                    <h3 class="step-title">Submit &amp; Receive Reference ID</h3>
-                    <p class="step-desc">Once submitted, your request is logged and you receive a unique Care Connect Reference ID (e.g. <code>CCD-2026-0001</code>) for future reference.</p>
+                    <h3 class="step-title" data-i18n="how.step2.title">Submit &amp; Receive Reference ID</h3>
+                    <p class="step-desc" data-i18n="how.step2.desc">Once submitted, your request is logged and you receive a unique Care Connect Reference ID (e.g. <code>CCD-2026-0001</code>) for future reference.</p>
                 </div>
 
                 <div class="how-step-card">
                     <div class="step-num-badge">3</div>
-                    <h3 class="step-title">Our Team Reviews &amp; Verifies</h3>
-                    <p class="step-desc">The RAC DCP Community Service Directorate reviews the submission, verifies authenticity, and assesses feasibility and available resources.</p>
+                    <h3 class="step-title" data-i18n="how.step3.title">Our Team Reviews &amp; Verifies</h3>
+                    <p class="step-desc" data-i18n="how.step3.desc">The RAC DCP Community Service Directorate reviews the submission, verifies authenticity, and assesses feasibility and available resources.</p>
                 </div>
 
                 <div class="how-step-card">
                     <div class="step-num-badge">4</div>
-                    <h3 class="step-title">We Connect &amp; Coordinate</h3>
-                    <p class="step-desc">If feasible, our directors contact you via phone or WhatsApp to coordinate direct assistance or structure an impactful partnership.</p>
+                    <h3 class="step-title" data-i18n="how.step4.title">We Connect &amp; Coordinate</h3>
+                    <p class="step-desc" data-i18n="how.step4.desc">If feasible, our directors contact you via phone or WhatsApp to coordinate direct assistance or structure an impactful partnership.</p>
                 </div>
             </div>
         </div>
@@ -588,9 +634,9 @@
         <div class="container">
             <div class="about-club-card">
                 <div class="about-club-content">
-                    <span class="about-club-tag">Operating Organization</span>
-                    <h2 class="about-club-title">Rotaract Club of Durgapur Central Presidency</h2>
-                    <p class="about-club-desc">
+                    <span class="about-club-tag" data-i18n="about.tag">Operating Organization</span>
+                    <h2 class="about-club-title" data-i18n="about.title">Rotaract Club of Durgapur Central Presidency</h2>
+                    <p class="about-club-desc" data-i18n="about.desc">
                         Chartered on 12th October 2023 under Rotary International District 3240, RAC DCP is a premier youth leadership and community welfare organisation in Durgapur, West Bengal. We believe in taking real, measurable action—from medical camps and environmental stewardship to youth empowerment and literacy drives. CARE CONNECT is our official public gateway to bridge grassroots needs with meaningful community action.
                     </p>
 
@@ -614,7 +660,7 @@
                     </div>
 
                     <a href="../index.html" class="btn-visit-main">
-                        <span>Visit Main Club Website</span>
+                        <span data-i18n="about.btnMain">Visit Main Club Website</span>
                         <span aria-hidden="true">&rarr;</span>
                     </a>
                 </div>
@@ -628,9 +674,9 @@
     <section class="request-system-section" id="request-system">
         <div class="container">
             <header class="section-header">
-                <span class="section-eyebrow">Connect With Us</span>
-                <h2 class="section-title">Interactive <span>Request Portal</span></h2>
-                <p class="section-desc">
+                <span class="section-eyebrow" data-i18n="wizard.eyebrow">Connect With Us</span>
+                <h2 class="section-title" data-i18n="wizard.title">Interactive <span>Request Portal</span></h2>
+                <p class="section-desc" data-i18n="wizard.desc">
                     Follow the guided steps below. Whether you require community assistance or wish to partner with us, our system adapts dynamically to your goal.
                 </p>
             </header>
@@ -644,19 +690,19 @@
                     <nav class="wizard-steps-nav" aria-label="Form Steps Navigation">
                         <div class="step-indicator active" id="step-ind-1">
                             <span class="step-indicator-num">1</span>
-                            <span>Purpose</span>
+                            <span data-i18n="wizard.step1">Purpose</span>
                         </div>
                         <div class="step-indicator" id="step-ind-2">
                             <span class="step-indicator-num">2</span>
-                            <span>Details</span>
+                            <span data-i18n="wizard.step2">Details</span>
                         </div>
                         <div class="step-indicator" id="step-ind-3">
                             <span class="step-indicator-num">3</span>
-                            <span>Review &amp; Verify</span>
+                            <span data-i18n="wizard.step3">Review &amp; Verify</span>
                         </div>
                         <div class="step-indicator" id="step-ind-4">
                             <span class="step-indicator-num">4</span>
-                            <span>Confirmation</span>
+                            <span data-i18n="wizard.step4">Confirmation</span>
                         </div>
                     </nav>
                 </div>
@@ -670,8 +716,8 @@
                              ===================================================== -->
                         <div class="wizard-step-panel active" id="wizard-step-1">
                             <div class="step-heading-group">
-                                <h3 class="step-panel-title">How would you like to connect with RAC DCP?</h3>
-                                <p class="step-panel-desc">Select whether you are seeking community assistance or proposing a collaboration or partnership.</p>
+                                <h3 class="step-panel-title" data-i18n="wizard.q1">How would you like to connect with RAC DCP?</h3>
+                                <p class="step-panel-desc" data-i18n="wizard.q1.sub">Select whether you are seeking community assistance or proposing a collaboration or partnership.</p>
                             </div>
 
                             <div class="intent-choice-grid">
@@ -679,22 +725,22 @@
                                 <div class="intent-card selected" id="intent-card-assistance" data-intent="assistance" tabindex="0" role="button" aria-pressed="true">
                                     <div class="intent-selected-check" aria-hidden="true">&#10003;</div>
                                     <div class="intent-icon-badge" aria-hidden="true">🆘</div>
-                                    <h4 class="intent-title">REQUEST ASSISTANCE</h4>
-                                    <p class="intent-sub">For individuals, families, students, or patients in need of educational, medical, relief, or disability aid.</p>
+                                    <h4 class="intent-title" data-i18n="wizard.intentA.title">REQUEST ASSISTANCE</h4>
+                                    <p class="intent-sub" data-i18n="wizard.intentA.sub">For individuals, families, students, or patients in need of educational, medical, relief, or disability aid.</p>
                                 </div>
 
                                 <!-- Option B -->
                                 <div class="intent-card" id="intent-card-collab" data-intent="collaboration" tabindex="0" role="button" aria-pressed="false">
                                     <div class="intent-selected-check" aria-hidden="true">&#10003;</div>
                                     <div class="intent-icon-badge" aria-hidden="true">🤝</div>
-                                    <h4 class="intent-title">COLLABORATE WITH US</h4>
-                                    <p class="intent-sub">For NGOs, schools, companies, volunteers, and donors proposing partnerships or offering resources.</p>
+                                    <h4 class="intent-title" data-i18n="wizard.intentB.title">COLLABORATE WITH US</h4>
+                                    <p class="intent-sub" data-i18n="wizard.intentB.sub">For NGOs, schools, companies, volunteers, and donors proposing partnerships or offering resources.</p>
                                 </div>
                             </div>
 
                             <!-- Dynamic Category Radio Grid -->
                             <div class="category-picker-group">
-                                <label class="form-label" id="category-picker-label">
+                                <label class="form-label" id="category-picker-label" data-i18n="wizard.catLabel">
                                     Select the most appropriate category <span class="required-star">*</span>
                                 </label>
 
