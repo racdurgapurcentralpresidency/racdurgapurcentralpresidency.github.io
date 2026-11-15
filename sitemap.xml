@@ -49,84 +49,64 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- ====================================================================== -->
+  <!-- 3. OFFICIAL ANNUAL REPORT PUBLICATIONS (PDF)                           -->
+  <!-- ====================================================================== -->
   <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/care-connect/index.html</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/reports/report-book-2025-26.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
+  </url>
+  <url>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/reports/report-book-2024-25.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
+  </url>
+  <url>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/reports/report-book-2023-24.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
 
   <!-- ====================================================================== -->
-  <!-- 3. CARE CONNECT KEY FUNCTIONAL SECTIONS                                -->
+  <!-- 4. OFFICIAL CLUB BULLETINS — PRESIDENCY CHRONICLES (PDF)                -->
   <!-- ====================================================================== -->
   <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/care-connect/#request-system</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/bulletins/presidency-chronicles-edition-10.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/care-connect/#how-it-works</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/bulletins/presidency-chronicles-edition-9.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/care-connect/#categories</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/bulletins/presidency-chronicles-edition-8.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/care-connect/#audiences</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/bulletins/presidency-chronicles-edition-7.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/care-connect/#faq</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/bulletins/presidency-chronicles-edition-6.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/care-connect/#about-cc</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- ====================================================================== -->
-  <!-- 4. MAIN WEBSITE KEY FUNCTIONAL SECTIONS                                -->
-  <!-- ====================================================================== -->
-  <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/#feedback</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/bulletins/presidency-chronicles-edition-5.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/our-work.html#projects</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/bulletins/presidency-chronicles-edition-4.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/our-work.html#events</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/bulletins/presidency-chronicles-edition-3.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/recognition.html#achievements</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/bulletins/presidency-chronicles-edition-2.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
   <url>
-    <loc>https://racdurgapurcentralpresidency.github.io/recognition.html#publications</loc>
-    <lastmod>2026-11-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://racdurgapurcentralpresidency.github.io/publications/bulletins/presidency-chronicles-edition-1.pdf</loc>
+    <lastmod>2026-09-18</lastmod>
   </url>
 </urlset>
