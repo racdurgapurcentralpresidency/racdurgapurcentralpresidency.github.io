@@ -197,13 +197,21 @@ img, svg {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 76px;
+    height: 74px;
+    max-width: 1360px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 clamp(16px, 2.5vw, 32px);
+    box-sizing: border-box;
+    gap: 16px;
 }
 
 .brand-link {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
+    flex-shrink: 0;
+    text-decoration: none;
 }
 
 .brand-logo {
@@ -213,25 +221,29 @@ img, svg {
     object-fit: cover;
     background: #ffffff;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
 
 .brand-text {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .brand-title-wrap {
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
 }
 
 .brand-title {
-    font-size: 1.125rem;
+    font-size: 1.15rem;
     font-weight: 800;
     color: var(--navy);
     letter-spacing: -0.015em;
     line-height: 1.2;
+    white-space: nowrap;
 }
 
 [data-theme="dark"] .brand-title {
@@ -244,31 +256,49 @@ img, svg {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: #ffffff;
-    background: linear-gradient(135deg, var(--primary-blue), var(--navy));
+    background: linear-gradient(135deg, var(--primary-blue), #0b507d);
     padding: 2px 8px;
     border-radius: var(--radius-pill);
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .brand-sub {
     font-size: 0.72rem;
     font-weight: 600;
     color: var(--text-muted);
+    white-space: nowrap;
+    transition: opacity var(--transition-fast);
+}
+
+.nav-menu-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .nav-menu {
     display: flex;
     align-items: center;
-    gap: 32px;
+    gap: clamp(10px, 1.5vw, 22px);
     list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
 }
 
 .nav-link {
-    font-size: 0.94rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: var(--text-secondary);
     position: relative;
-    padding: 8px 14px;
+    padding: 7px 12px;
     border-radius: var(--radius-pill);
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-block;
     transition: color var(--transition-fast), background var(--transition-fast);
 }
 
@@ -289,21 +319,25 @@ img, svg {
 .nav-actions {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: clamp(8px, 1vw, 12px);
+    flex-shrink: 0;
 }
 
 .main-site-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 700;
     color: var(--primary-blue);
     background: var(--primary-blue-light);
-    padding: 8px 14px;
+    padding: 7px 12px;
     border-radius: var(--radius-pill);
     border: 1px solid rgba(8, 118, 185, 0.25);
-    transition: background var(--transition-fast), transform var(--transition-fast);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background var(--transition-fast), transform var(--transition-fast), color var(--transition-fast);
 }
 
 .main-site-btn:hover {
@@ -312,13 +346,27 @@ img, svg {
     transform: translateY(-1px);
 }
 
+[data-theme="dark"] .main-site-btn {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border-color: rgba(56, 189, 248, 0.28);
+}
+
+[data-theme="dark"] .main-site-btn:hover {
+    background: var(--primary-blue);
+    color: #ffffff;
+    border-color: var(--primary-blue);
+}
+
 /* Theme Toggle Button */
 .theme-toggle-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
     border-radius: 50%;
     background: var(--bg-light);
     border: 1px solid var(--border-color);
@@ -569,7 +617,7 @@ html[lang="hi"] button {
     font-family: 'Noto Sans Devanagari', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 991px) {
     .mobile-lang-item {
         display: block;
     }
@@ -578,14 +626,17 @@ html[lang="hi"] button {
 .btn-nav-cta {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.88rem;
+    gap: 7px;
+    font-size: 0.85rem;
     font-weight: 700;
     color: #ffffff;
     background: linear-gradient(135deg, var(--primary-blue), #0b507d);
-    padding: 10px 20px;
+    padding: 8px 16px;
     border-radius: var(--radius-pill);
     box-shadow: 0 4px 14px rgba(8, 118, 185, 0.3);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
     transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -2359,10 +2410,16 @@ html[lang="hi"] button {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
+    .brand-sub {
+        display: none !important;
+    }
+}
+
+@media (max-width: 991px) {
     .nav-container {
         height: 64px;
-        padding: 0 16px;
+        padding: 0 clamp(12px, 3vw, 20px);
         gap: 8px;
     }
 
@@ -2392,17 +2449,24 @@ html[lang="hi"] button {
     .brand-tag {
         font-size: 0.62rem;
         padding: 2px 6px;
+        white-space: nowrap;
     }
 
-    /* Clean mobile header: hide the 46-character secondary subtitle to prevent jumbled lines */
+    /* Clean mobile header: hide subtitle to save horizontal space */
     .brand-sub {
         display: none !important;
+    }
+
+    /* CRITICAL FIX: nav-menu-wrapper must have display: contents so it takes 0px in mobile topbar */
+    .nav-menu-wrapper {
+        display: contents !important;
     }
 
     /* Actions bar on mobile */
     .nav-actions {
         gap: 8px;
         flex-shrink: 0;
+        margin-left: auto;
     }
 
     /* Hide desktop navigation items from mobile top bar (fully accessible inside drawer) */
@@ -2435,6 +2499,9 @@ html[lang="hi"] button {
     .theme-toggle-btn {
         width: 38px;
         height: 38px;
+        min-width: 38px;
+        min-height: 38px;
+        flex-shrink: 0;
     }
 
     /* Mobile Drawer Menu */
@@ -2472,6 +2539,7 @@ html[lang="hi"] button {
         padding: 10px 14px;
         font-size: 0.95rem;
         border-radius: var(--radius-md);
+        display: block;
     }
 
     .nav-link:hover {
@@ -2547,6 +2615,8 @@ html[lang="hi"] button {
     .theme-toggle-btn {
         width: 36px;
         height: 36px;
+        min-width: 36px;
+        min-height: 36px;
     }
     .mobile-menu-btn {
         width: 38px;
@@ -2580,12 +2650,14 @@ a, button, input, select, textarea, .intent-card, .category-radio-item, .categor
 }
 
 /* Low-Spec Hardware & Battery-Saver Overrides */
-html.low-spec .navbar {
+html.low-spec:not([data-theme="dark"]) .navbar {
     background: #ffffff !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
 
+[data-theme="dark"] .navbar,
+html[data-theme="dark"] .navbar,
 html[data-theme="dark"].low-spec .navbar,
 html.low-spec[data-theme="dark"] .navbar {
     background: #0b182b !important;
