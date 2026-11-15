@@ -39,6 +39,54 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
 
+    <!-- Structured Data: Upcoming Flagship Event (Saksham) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "Saksham – Free Prosthetic Hand / Leg Camp",
+      "description": "A transformative community healthcare initiative providing free prosthetic hands and legs to empower individuals with mobility, self-reliance, and dignity.",
+      "image": "https://racdurgapurcentralpresidency.github.io/images/saksham.jpg",
+      "startDate": "2026-12-04T12:00:00+05:30",
+      "endDate": "2026-12-06T18:00:00+05:30",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "isAccessibleForFree": true,
+      "location": {
+        "@type": "Place",
+        "name": "Anand Amusement Park (formerly Troika Park)",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Near Srijani Hall, City Centre",
+          "addressLocality": "Durgapur",
+          "addressRegion": "West Bengal",
+          "postalCode": "713216",
+          "addressCountry": "IN"
+        }
+      },
+      "organizer": [
+        {
+          "@type": "Organization",
+          "name": "Rotary Club of Durgapur Central"
+        },
+        {
+          "@type": "Organization",
+          "name": "Rotary Club of Calcutta Presidency"
+        },
+        {
+          "@type": "NGO",
+          "name": "Rotaract Club of Durgapur Central Presidency",
+          "url": "https://racdurgapurcentralpresidency.github.io/"
+        }
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      }
+    }
+    </script>
+
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -530,12 +578,15 @@
             <article class="project-card" data-project="club-installation">
 
                 <div class="project-image">
-                    <img src="images/projects/2026-27/club-installation.jpg"
-                         decoding="async"
-                         loading="lazy"
-                         height="533"
-                         width="800"
-                         alt="4th Club Installation">
+                    <picture>
+                        <source srcset="images/projects/2026-27/club-installation.webp" type="image/webp">
+                        <img src="images/projects/2026-27/club-installation.jpg"
+                             decoding="async"
+                             loading="lazy"
+                             height="533"
+                             width="800"
+                             alt="4th Club Installation">
+                    </picture>
                 </div>
 
                 <div class="project-content">
@@ -1292,7 +1343,7 @@
                         </div>
                         <div class="meta-badge-item">
                             <svg class="meta-badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            <span><strong>Location:</strong> Durgapur, West Bengal</span>
+                            <span><strong>Location:</strong> Anand Amusement Park, City Centre, Durgapur</span>
                         </div>
                     </div>
 
