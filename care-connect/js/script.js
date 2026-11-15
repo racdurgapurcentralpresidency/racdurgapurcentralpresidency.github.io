@@ -1206,7 +1206,7 @@
             'how.step4.desc': 'If feasible, our directors contact you via phone or WhatsApp to coordinate direct assistance or structure an impactful partnership.',
             'about.tag': 'Operating Organization',
             'about.title': 'Rotaract Club of Durgapur Central Presidency',
-            'about.desc': 'Chartered on 12th October 2023 under Rotary International District 3240, RAC DCP is a premier youth leadership and community welfare organisation in Durgapur, West Bengal. We believe in taking real, measurable action—from medical camps and environmental stewardship to youth empowerment and literacy drives. CARE CONNECT is our official public gateway to bridge grassroots needs with meaningful community action.',
+            'about.desc': 'Chartered on 12th October 2023 under Rotary International District 3240, RAC DCP is a youth leadership and community service organisation based in Durgapur, West Bengal. We believe in taking real, measurable action—from medical camps and environmental stewardship to youth empowerment and literacy drives. CARE CONNECT is our official public gateway, connecting grassroots community needs with meaningful assistance and NGO collaboration.',
             'about.btnMain': 'Visit Main Club Website',
             'wizard.eyebrow': 'Connect With Us',
             'wizard.title': 'Interactive <span>Request Portal</span>',
