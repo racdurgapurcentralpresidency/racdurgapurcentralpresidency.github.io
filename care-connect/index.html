@@ -111,6 +111,28 @@
     }
     </script>
 
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://racdurgapurcentralpresidency.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "CARE CONNECT",
+          "item": "https://racdurgapurcentralpresidency.github.io/care-connect/"
+        }
+      ]
+    }
+    </script>
+
     <!-- Google Fonts: Plus Jakarta Sans, Noto Sans Bengali & Noto Sans Devanagari -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -293,6 +315,12 @@
     <section class="hero-section" id="hero">
         <div class="container hero-grid">
             <div class="hero-content">
+                <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+                    <ol class="breadcrumb-list">
+                        <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+                        <li class="breadcrumb-item" aria-current="page">CARE CONNECT</li>
+                    </ol>
+                </nav>
                 <div class="hero-eyebrow-badge">
                     <span class="pulse-dot" aria-hidden="true"></span>
                     <span data-i18n="hero.badge">Official Community Gateway &bull; RI District 3240</span>

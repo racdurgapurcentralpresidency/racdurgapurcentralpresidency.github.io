@@ -38,6 +38,34 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
 
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://racdurgapurcentralpresidency.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Our Records",
+          "item": "https://racdurgapurcentralpresidency.github.io/recognition.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Rotary Year 2023–24",
+          "item": "https://racdurgapurcentralpresidency.github.io/ry-2023-24.html"
+        }
+      ]
+    }
+    </script>
+
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -256,6 +284,13 @@
             </div>
 
             <div class="section-container page-banner-inner">
+                <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+                    <ol class="breadcrumb-list">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="recognition.html#publications">Our Records</a></li>
+                        <li class="breadcrumb-item" aria-current="page">Rotary Year 2023–24</li>
+                    </ol>
+                </nav>
                 <p class="section-label">FOUNDATION &amp; CHARTER YEAR</p>
                 <h1>Rotary Year 2023&ndash;24</h1>
                 <p class="page-banner-line">

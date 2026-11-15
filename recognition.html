@@ -39,6 +39,28 @@
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest">
 
+    <!-- BreadcrumbList Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://racdurgapurcentralpresidency.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Our Records",
+          "item": "https://racdurgapurcentralpresidency.github.io/recognition.html"
+        }
+      ]
+    }
+    </script>
+
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -272,6 +294,12 @@
     </div>
 
     <div class="section-container page-banner-inner">
+        <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+            <ol class="breadcrumb-list">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item" aria-current="page">Our Records</li>
+            </ol>
+        </nav>
         <p class="section-label">OUR RECORD</p>
         <h1>Achievements &amp; Publications</h1>
         <p class="page-banner-line">Awards, citations, bulletins and annual reports.</p>
