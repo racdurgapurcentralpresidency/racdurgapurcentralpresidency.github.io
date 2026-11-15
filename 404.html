@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Page Not Found (404) — Rotaract Club of Durgapur Central Presidency</title>
+    <meta name="theme-color" content="#0b2e21">
+
+    <!-- Favicon & Search Engine Branding Icons (All Root-Relative) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"></noscript>
+
+    <!-- Main Stylesheet (Root-Relative) -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Page-Specific Scoped Styles (404 Error & Recovery Layout) -->
+    <style>
+        .error-nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .header-home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            border-radius: 9999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--navy, #0b2e21);
+            background: rgba(11, 46, 33, 0.05);
+            border: 1px solid rgba(11, 46, 33, 0.22);
+            text-decoration: none;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .header-home-btn:hover,
+        .header-home-btn:focus-visible {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: #047857;
+            color: #0b2e21;
+            transform: translateY(-1px);
+        }
+
+        .header-home-btn:focus-visible {
+            outline: 2px solid #047857;
+            outline-offset: 2px;
+        }
+
+        .error-banner {
+            min-height: 380px;
+            padding: 130px 0 64px;
+        }
+
+        .error-cta-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+            margin-top: 28px;
+        }
+
+        .error-recovery-section {
+            padding: 64px 0 80px;
+            background: var(--light, #f7faf8);
+        }
+
+        .recovery-section-header {
+            margin-bottom: 32px;
+        }
+
+        .recovery-heading {
+            font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+            font-weight: 800;
+            color: var(--navy, #0b2e21);
+            margin: 8px 0 0;
+            letter-spacing: -0.02em;
+        }
+
+        .recovery-subtitle {
+            color: var(--muted, #536b60);
+            max-width: 620px;
+            margin: 8px 0 0;
+            font-size: 0.98rem;
+            line-height: 1.55;
+        }
+
+        .recovery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .recovery-card {
+            display: flex;
+            flex-direction: column;
+            padding: 26px 22px;
+            background: #ffffff;
+            border: 1px solid #e1ede5;
+            border-radius: 16px;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 4px 18px rgba(11, 46, 33, 0.05);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+
+        .recovery-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(11, 46, 33, 0.12);
+            border-color: #10b981;
+        }
+
+        .recovery-card:focus-visible {
+            outline: 2px solid #047857;
+            outline-offset: 3px;
+            transform: translateY(-4px);
+        }
+
+        .recovery-card-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .recovery-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .recovery-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #067a52;
+        }
+
+        .recovery-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0b2e21;
+            margin: 0 0 8px;
+            line-height: 1.3;
+        }
+
+        .recovery-desc {
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: #536b60;
+            margin: 0 0 16px;
+            flex-grow: 1;
+        }
+
+        .recovery-link {
+            font-size: 0.86rem;
+            font-weight: 700;
+            color: #047857;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: gap 0.2s ease;
+        }
+
+        .recovery-card:hover .recovery-link {
+            gap: 8px;
+            color: #036847;
+        }
+
+        /* Tablet & Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .recovery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .error-banner {
+                min-height: 320px;
+                padding: 110px 0 44px;
+            }
+
+            .recovery-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .error-cta-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .error-cta-group .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .error-nav-container .brand-full {
+                display: none;
+            }
+        }
+
+        /* Dark Theme Compatibility */
+        [data-theme="dark"] .header-home-btn,
+        html.dark-theme .header-home-btn {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        [data-theme="dark"] .header-home-btn:hover,
+        [data-theme="dark"] .header-home-btn:focus-visible,
+        html.dark-theme .header-home-btn:hover,
+        html.dark-theme .header-home-btn:focus-visible {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: #34d399;
+            color: #ffffff;
+        }
+
+        [data-theme="dark"] .header-home-btn:focus-visible,
+        html.dark-theme .header-home-btn:focus-visible {
+            outline: 2px solid #34d399;
+            outline-offset: 2px;
+        }
+
+        [data-theme="dark"] .error-recovery-section {
+            background: #09110e;
+        }
+
+        [data-theme="dark"] .recovery-heading {
+            color: #f0fbf5 !important;
+        }
+
+        [data-theme="dark"] .recovery-subtitle {
+            color: #c4d7cd !important;
+        }
+
+        [data-theme="dark"] .recovery-card {
+            background: #0e1e17;
+            border-color: rgba(52, 211, 153, 0.18);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        [data-theme="dark"] .recovery-card:hover,
+        [data-theme="dark"] .recovery-card:focus-visible {
+            background: #132a20;
+            border-color: #34d399;
+        }
+
+        [data-theme="dark"] .recovery-title {
+            color: #f0fbf5;
+        }
+
+        [data-theme="dark"] .recovery-badge {
+            color: #34d399;
+        }
+
+        [data-theme="dark"] .recovery-desc {
+            color: #c4d7cd;
+        }
+
+        [data-theme="dark"] .recovery-link {
+            color: #6ee7b7;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <!-- =========================================================
+         LIGHTWEIGHT BRANDED HEADER
+         ========================================================= -->
+    <header class="navbar" role="banner">
+        <div class="nav-container error-nav-container">
+            <a href="/" class="brand" aria-label="Rotaract Club of Durgapur Central Presidency — Homepage">
+                <img src="/club-logo.png" height="256" width="256" alt="RAC DCP Logo" class="brand-logo">
+                <span class="brand-text">
+                    <span class="brand-short">RAC DCP</span>
+                    <span class="brand-full">Rotaract Club of Durgapur Central Presidency</span>
+                </span>
+            </a>
+
+            <a href="/" class="header-home-btn" aria-label="Return to Homepage">
+                <span aria-hidden="true">&larr;</span> Return Home
+            </a>
+        </div>
+    </header>
+
+    <!-- =========================================================
+         MAIN CONTENT AREA
+         ========================================================= -->
+    <main id="main" tabindex="-1">
+
+        <!-- Error Hero Banner -->
+        <section class="page-banner error-banner">
+            <div class="page-banner-backdrop" aria-hidden="true">
+                <div class="page-banner-overlay"></div>
+            </div>
+
+            <div class="section-container page-banner-inner">
+                <p class="section-label">ERROR 404 &bull; PAGE NOT FOUND</p>
+                <h1>Page Not Found</h1>
+                <p class="page-banner-line">
+                    The page or resource you are looking for may have moved, been removed, or the web address was entered incorrectly.
+                </p>
+                <div class="error-cta-group">
+                    <a href="/" class="btn btn-rebel-primary">Return to Homepage &rarr;</a>
+                    <a href="/our-work.html" class="btn btn-rebel-outline">Explore Our Efforts</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recovery Navigation Destinations -->
+        <section class="section error-recovery-section" aria-labelledby="recovery-heading">
+            <div class="section-container">
+                <div class="recovery-section-header">
+                    <p class="section-label">POPULAR DESTINATIONS</p>
+                    <h2 id="recovery-heading" class="recovery-heading">Looking for Something Specific?</h2>
+                    <p class="recovery-subtitle">
+                        Explore these key sections to discover our community projects, official publications, assistance portal, and club history.
+                    </p>
+                </div>
+
+                <div class="recovery-grid">
+                    <!-- Card 1: Our Efforts & Projects -->
+                    <a href="/our-work.html" class="recovery-card">
+                        <div class="recovery-card-top">
+                            <span class="recovery-icon" aria-hidden="true">🌱</span>
+                            <span class="recovery-badge">Projects &amp; Activities</span>
+                        </div>
+                        <h3 class="recovery-title">Our Efforts &amp; Projects</h3>
+                        <p class="recovery-desc">Community health camps, environmental drives, fellowship events, and youth empowerment initiatives.</p>
+                        <span class="recovery-link">Explore projects <span aria-hidden="true">&rarr;</span></span>
+                    </a>
+
+                    <!-- Card 2: Recognition & Publications -->
+                    <a href="/recognition.html" class="recovery-card">
+                        <div class="recovery-card-top">
+                            <span class="recovery-icon" aria-hidden="true">🏆</span>
+                            <span class="recovery-badge">Awards &amp; Bulletins</span>
+                        </div>
+                        <h3 class="recovery-title">Recognition &amp; Publications</h3>
+                        <p class="recovery-desc">District 3240 awards, official annual report books, and all 10 digital editions of <em>Presidency Chronicles</em>.</p>
+                        <span class="recovery-link">View records <span aria-hidden="true">&rarr;</span></span>
+                    </a>
+
+                    <!-- Card 3: CARE CONNECT -->
+                    <a href="/care-connect/" class="recovery-card">
+                        <div class="recovery-card-top">
+                            <span class="recovery-icon" aria-hidden="true">🤝</span>
+                            <span class="recovery-badge">Community Gateway</span>
+                        </div>
+                        <h3 class="recovery-title">CARE CONNECT</h3>
+                        <p class="recovery-desc">Public assistance requests, NGO collaborations, CSR partnerships, and volunteer coordination portal.</p>
+                        <span class="recovery-link">Open portal <span aria-hidden="true">&rarr;</span></span>
+                    </a>
+
+                    <!-- Card 4: Club Archives -->
+                    <a href="/ry-2025-26.html" class="recovery-card">
+                        <div class="recovery-card-top">
+                            <span class="recovery-icon" aria-hidden="true">📚</span>
+                            <span class="recovery-badge">Club Archives</span>
+                        </div>
+                        <h3 class="recovery-title">Historical Records</h3>
+                        <p class="recovery-desc">Permanent archives of past leadership boards, charter milestones, parent rotarians, and yearly service projects.</p>
+                        <span class="recovery-link">Browse archives <span aria-hidden="true">&rarr;</span></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================================================
+         BRANDED FOOTER
+         ========================================================= -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <img src="/club-logo.png" height="256" width="256" alt="RAC DCP Logo" loading="lazy" decoding="async" class="footer-logo">
+                    <div>
+                        <h3>RAC DCP</h3>
+                        <p>Rotaract Club of Durgapur Central Presidency</p>
+                    </div>
+                </div>
+
+                <p class="footer-tagline">Together We Serve, Together We Succeed.</p>
+
+                <nav class="footer-links" aria-label="Footer Navigation">
+                    <a href="/">Home</a>
+                    <a href="/our-work.html">Our Efforts</a>
+                    <a href="/recognition.html">Recognition &amp; Publications</a>
+                    <a href="/care-connect/" style="color: var(--emerald-text, #10b981); font-weight: 700;">CARE CONNECT</a>
+                    <a href="/ry-2025-26.html">RY 2025–26</a>
+                    <a href="/ry-2024-25.html">RY 2024–25</a>
+                    <a href="/ry-2023-24.html">RY 2023–24</a>
+                    <a href="mailto:rcdurgapurpresidency.3240@gmail.com">Contact Us</a>
+                </nav>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Rotaract Club of Durgapur Central Presidency. All rights reserved.</p>
+                <p>Rotary International District 3240 &bull; Zone 1 &bull; Club ID: 8825991</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
