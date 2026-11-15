@@ -229,6 +229,19 @@ a, button, input, select, textarea,
     color: var(--emerald-text);
 }
 
+.section-heading .section-subtitle {
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--muted);
+    margin-top: 14px;
+    letter-spacing: -0.01em;
+}
+
+.section-heading .section-subtitle span {
+    color: var(--emerald-text);
+}
+
 .section-intro {
     color: var(--muted);
     max-width: 650px;
@@ -549,7 +562,8 @@ a, button, input, select, textarea,
 .hero-eyebrow {
     display: inline-block;
 
-    margin-bottom: 22px;
+    margin: 0 0 8px;
+    line-height: inherit;
     padding: 8px 16px;
 
     border: 1px solid rgba(52, 211, 153, 0.35);
@@ -1215,8 +1229,10 @@ a, button, input, select, textarea,
     color: rgba(255, 255, 255, 0.93);
 }
 
-.location-info h3 {
+.location-info h3,
+.location-info .location-title {
     margin: 0;
+    font-weight: 700;
 
     font-size: 1.7rem;
     line-height: 1.2;
@@ -1303,7 +1319,8 @@ a, button, input, select, textarea,
         padding-left: 0;
     }
 
-    .location-info h3 {
+    .location-info h3,
+    .location-info .location-title {
         font-size: 1.45rem;
     }
 
@@ -2132,7 +2149,10 @@ a, button, input, select, textarea,
     letter-spacing: 0.13em;
 }
 
-.people-category h3 {
+.people-category h3,
+.people-category .category-name {
+    display: block;
+    font-weight: 700;
     margin: 0 0 8px;
 
     color: var(--navy);
@@ -4078,11 +4098,14 @@ body.lightbox-open {
     flex-shrink: 0;
 }
 
-.footer-brand h3 {
+.footer-brand h3,
+.footer-brand .footer-brand-title {
     color: var(--white);
     font-size: 1.1rem;
     font-weight: 800;
     margin-bottom: 4px;
+    margin-top: 0;
+    line-height: 1.2;
 }
 
 .footer-brand p {
@@ -8695,7 +8718,8 @@ html.theme-transitioning *::after {
 [data-theme="dark"] h1 span,
 [data-theme="dark"] h2 span,
 [data-theme="dark"] h3 span,
-[data-theme="dark"] h4 span {
+[data-theme="dark"] h4 span,
+[data-theme="dark"] .section-heading .section-subtitle span {
     color: #34d399 !important;
 }
 
@@ -8936,7 +8960,8 @@ html.theme-transitioning *::after {
     border-color: rgba(52, 211, 153, 0.35) !important;
 }
 
-[data-theme="dark"] .location-info h3 {
+[data-theme="dark"] .location-info h3,
+[data-theme="dark"] .location-info .location-title {
     color: #f0fbf5 !important;
 }
 
@@ -9112,7 +9137,8 @@ html.theme-transitioning *::after {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.25) !important;
 }
 
-[data-theme="dark"] .people-category h3 {
+[data-theme="dark"] .people-category h3,
+[data-theme="dark"] .people-category .category-name {
     color: #f0fbf5 !important;
 }
 
@@ -9510,7 +9536,8 @@ html.theme-transitioning *::after {
     border-top: 1px solid rgba(52, 211, 153, 0.12) !important;
 }
 
-[data-theme="dark"] .footer-brand h3 {
+[data-theme="dark"] .footer-brand h3,
+[data-theme="dark"] .footer-brand .footer-brand-title {
     color: #f0fbf5 !important;
 }
 
