@@ -72,7 +72,30 @@ function createWebsiteRequestsTable() {
 }
 
 /**
+ * Formula Injection (CSV / Sheets Injection) Sanitizer:
+ * Any cell value starting with '=', '+', '-', or '@' can execute as a dynamic formula
+ * in Google Sheets or Excel. Prefixing with a single quote (') forces Google Sheets
+ * to interpret and store the content strictly as literal plain text.
+ */
+function sanitizeFormulaInjection(val) {
+  if (val === null || val === undefined) return "N/A";
+  var str = String(val);
+  var trimmed = str.trim();
+  if (trimmed.length > 0) {
+    var firstChar = trimmed.charAt(0);
+    if (firstChar === "=" || firstChar === "+" || firstChar === "-" || firstChar === "@") {
+      // If it doesn't already start with a single quote, prefix it
+      if (str.charAt(0) !== "'") {
+        return "'" + str;
+      }
+    }
+  }
+  return str;
+}
+
+/**
  * Handle HTTP GET requests (Health Check & API status)
+ * Note: Sensitive details like spreadsheet_id are strictly excluded to protect internal assets.
  */
 function doGet(e) {
   var response = {
@@ -80,8 +103,6 @@ function doGet(e) {
     "service": "RAC DCP CARE CONNECT Dispatcher",
     "club": "Rotaract Club of Durgapur Central Presidency",
     "district": "Rotary International District 3240",
-    "spreadsheet_id": TARGET_SPREADSHEET_ID,
-    "sheet_tab": TARGET_SHEET_NAME,
     "timestamp": new Date().toISOString()
   };
   return ContentService.createTextOutput(JSON.stringify(response))
@@ -261,23 +282,24 @@ function doPost(e) {
       setupTableColumnsAndFormatting(sheet);
     }
 
-    // Extract payload fields
-    var refId = data.reference_id || ("CCD-" + new Date().getFullYear() + "-" + Math.floor(1000 + Math.random() * 9000));
-    var submissionDate = data.formatted_date || new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-    var intent = data.intent === "assistance" ? "Request Assistance" : "Collaborate With Us";
-    var category = data.category || "General";
-    var name = data.name || "N/A";
-    var orgName = data.org_name || "N/A";
-    var phone = "'" + (data.phone || "N/A"); // Prefix with ' to preserve plain-text 10-digit mobile number
-    var email = data.email || "N/A";
-    var location = data.location || "N/A";
-    var type = data.applicant_type || data.org_type || "N/A";
-    var beneficiaries = data.beneficiaries || "N/A";
-    var timeline = data.timeline || "N/A";
-    var description = data.description || "N/A";
-    var resourcesOffered = data.resources_offered || "N/A";
+    // Extract & sanitize payload fields (Formula Injection Defense)
+    var refId = sanitizeFormulaInjection(data.reference_id || ("CCD-" + new Date().getFullYear() + "-" + Math.floor(1000 + Math.random() * 9000)));
+    var submissionDate = sanitizeFormulaInjection(data.formatted_date || new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }));
+    var intent = sanitizeFormulaInjection(data.intent === "assistance" ? "Request Assistance" : "Collaborate With Us");
+    var category = sanitizeFormulaInjection(data.category || "General");
+    var name = sanitizeFormulaInjection(data.name || "N/A");
+    var orgName = sanitizeFormulaInjection(data.org_name || "N/A");
+    var rawPhone = String(data.phone || "N/A").trim();
+    var phone = rawPhone.charAt(0) === "'" ? rawPhone : ("'" + rawPhone); // Prefix with ' to preserve plain-text and neutralize leading +
+    var email = sanitizeFormulaInjection(data.email || "N/A");
+    var location = sanitizeFormulaInjection(data.location || "N/A");
+    var type = sanitizeFormulaInjection(data.applicant_type || data.org_type || "N/A");
+    var beneficiaries = sanitizeFormulaInjection(data.beneficiaries || "N/A");
+    var timeline = sanitizeFormulaInjection(data.timeline || "N/A");
+    var description = sanitizeFormulaInjection(data.description || "N/A");
+    var resourcesOffered = sanitizeFormulaInjection(data.resources_offered || "N/A");
     var riskScore = data.risk_score !== undefined ? data.risk_score : 0;
-    var riskFlags = data.risk_flags || "CLEAN";
+    var riskFlags = sanitizeFormulaInjection(data.risk_flags || "CLEAN");
     var status = "Pending Review";
     var boardRemarks = "";
 
@@ -597,17 +619,18 @@ function handleWebsiteFeedbackSubmission(ss, data) {
     setupFeedbackTableColumnsAndFormatting(sheet);
   }
 
-  var refId = data.reference_id || ("WFB-" + new Date().getFullYear() + "-" + Math.floor(1000 + Math.random() * 9000));
-  var submissionDate = data.formatted_date || new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+  // Extract & sanitize payload fields (Formula Injection Defense)
+  var refId = sanitizeFormulaInjection(data.reference_id || ("WFB-" + new Date().getFullYear() + "-" + Math.floor(1000 + Math.random() * 9000)));
+  var submissionDate = sanitizeFormulaInjection(data.formatted_date || new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }));
   var rating = data.rating || "5";
-  var starsDisplay = rating + " " + "★".repeat(parseInt(rating, 10) || 5);
-  var sentiment = data.sentiment || "Exceptional & Inspiring!";
-  var focusTags = data.tags || data.category || "General Feedback";
-  var visitorName = data.name || "Anonymous Visitor";
-  var visitorRole = data.role || "Community Guest";
-  var visitorEmail = data.email || "N/A";
-  var message = data.message || data.description || "N/A";
-  var deviceInfo = data.device_info || "Desktop / Mobile Web";
+  var starsDisplay = sanitizeFormulaInjection(rating + " " + "★".repeat(parseInt(rating, 10) || 5));
+  var sentiment = sanitizeFormulaInjection(data.sentiment || "Exceptional & Inspiring!");
+  var focusTags = sanitizeFormulaInjection(data.tags || data.category || "General Feedback");
+  var visitorName = sanitizeFormulaInjection(data.name || "Anonymous Visitor");
+  var visitorRole = sanitizeFormulaInjection(data.role || "Community Guest");
+  var visitorEmail = sanitizeFormulaInjection(data.email || "N/A");
+  var message = sanitizeFormulaInjection(data.message || data.description || "N/A");
+  var deviceInfo = sanitizeFormulaInjection(data.device_info || "Desktop / Mobile Web");
   var reviewStatus = "New Feedback";
 
   // Run Enhanced Multilingual Spam & Abuse Inspection (English, Hindi, Bengali)
@@ -630,7 +653,7 @@ function handleWebsiteFeedbackSubmission(ss, data) {
     mod.flags.forEach(function (f) {
       if (detectedFlags.indexOf(f) === -1) detectedFlags.push(f);
     });
-    focusTags = "[FLAGGED: " + (detectedFlags.join(", ") || "SPAM_OR_ABUSE") + "] " + focusTags;
+    focusTags = sanitizeFormulaInjection("[FLAGGED: " + (detectedFlags.join(", ") || "SPAM_OR_ABUSE") + "] " + focusTags);
   }
 
   // Append row (DO NOT DELETE: stored safely for manual review)
