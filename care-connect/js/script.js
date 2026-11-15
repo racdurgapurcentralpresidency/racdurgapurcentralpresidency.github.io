@@ -745,15 +745,22 @@
     }
 
     /**
-     * Client-side Heuristic Risk-Scoring Engine
+     * Enhanced Client-side Heuristic Risk-Scoring & Multilingual Content Moderation Engine
      * Assigns a score from 0 (very safe) to 100 (high risk of spam/abuse)
-     * and compiles actionable risk flags for the club review board.
+     * Detects bad words and slangs across English, Hindi (Devanagari + Hinglish), and Bengali (Bengali + Banglish).
+     * Per policy: Submissions are NEVER dropped or deleted; they are preserved and flagged for manual review.
      */
-    function computeRiskScore(payload) {
+    function computeRiskScore(payload, isHoneypotTriggered) {
         let score = 0;
         const flags = [];
 
-        // 1. Time-to-submit check (bots fill in < 3 seconds)
+        // 1. Honeypot check (preserves bot requests marked as spam)
+        if (isHoneypotTriggered) {
+            score += 95;
+            flags.push('HONEYPOT_BOT_TRAP_TRIGGERED');
+        }
+
+        // 2. Time-to-submit check (bots fill in < 4 seconds)
         const secondsElapsed = (Date.now() - state.formStartTime) / 1000;
         if (secondsElapsed < 4) {
             score += 40;
@@ -762,29 +769,108 @@
             flags.push('GENUINE_HUMAN_PACE');
         }
 
-        // 2. Keyword check for typical spam / SEO solicitation
+        const combinedText = ((payload.description || '') + ' ' + (payload.org_name || '') + ' ' + (payload.name || '') + ' ' + (payload.resources_offered || '')).toLowerCase();
+
+        // 3. Multilingual Bad Words & Slangs Filter
+        // A. English Profanity & Harassment
+        const enAbusiveRegexes = [
+            /\b(fuck|fucking|fucked|fucker|fck|f\*ck|f\*\*k)\b/i,
+            /\b(bitch|bitches|b\*tch|b\!tch)\b/i,
+            /\b(shit|bullshit|sh\*t)\b/i,
+            /\b(asshole|arsehole|bastard|cunt|dick|dickhead|pussy|motherfucker|motherfucking)\b/i,
+            /\b(cock|cocksucker|wanker|prick|whore|slut|faggot|fag|nigger|nigga|retard)\b/i,
+            /\b(kill\s+yourself|go\s+die)\b/i
+        ];
+        enAbusiveRegexes.forEach(rx => {
+            if (rx.test(combinedText)) {
+                score += 85;
+                if (!flags.includes('ABUSIVE_LANG_EN')) flags.push('ABUSIVE_LANG_EN');
+            }
+        });
+
+        // B. Hindi Profanity (Devanagari Script & Hinglish Transliteration)
+        const hiDevWords = [
+            'मादरचोद', 'मादरचোদ', 'भोसड़ी', 'भोसडी', 'भोसड़ीके', 'भोसडीके', 'गांडू', 'गांडु',
+            'चूतिया', 'चूतिये', 'चूत', 'लौड़ा', 'लौडे', 'लौड़े', 'लौडा', 'रांड', 'रंडी',
+            'हरामी', 'कमीने', 'कमीना', 'दल्ले', 'दल्ला', 'छिछोरे', 'टट्टी', 'झांट', 'झाटू',
+            'कुतिया', 'बहनचोद', 'बेटीचोद', 'लंड', 'बकचोद', 'मादरजात'
+        ];
+        hiDevWords.forEach(w => {
+            if (combinedText.includes(w)) {
+                score += 90;
+                if (!flags.includes('ABUSIVE_LANG_HI_DEV')) flags.push('ABUSIVE_LANG_HI_DEV');
+            }
+        });
+        if (/(?:^|[^\u0900-\u097F])(गांड|कुत्ता|साले|साला)(?:$|[^\u0900-\u097F])/i.test(combinedText)) {
+            score += 80;
+            if (!flags.includes('ABUSIVE_LANG_HI_DEV')) flags.push('ABUSIVE_LANG_HI_DEV');
+        }
+
+        const hiHinglishRegexes = [
+            /\b(madarchod|madarchot|bhosdike|bhosadike|bhosdi|bhosada|bhenchod|behenchod|banchod)\b/i,
+            /\b(gaand|gandu|gaandu|chutiya|chutiye|chutya|lauda|loda|lavda|chut|choot|randi|raand)\b/i,
+            /\b(harami|kamine|kamina|dalle|dalla|tatti|jhaant|jhant|bakchod|madarjaat|bkl|mkc|bsdk|tmkc)\b/i,
+            /\b(teri\s+maa\s+ki|tere\s+baap\s+ka|maa\s+ki\s+chut|chod\s+dunga)\b/i
+        ];
+        hiHinglishRegexes.forEach(rx => {
+            if (rx.test(combinedText)) {
+                score += 85;
+                if (!flags.includes('ABUSIVE_LANG_HI_ROMAN')) flags.push('ABUSIVE_LANG_HI_ROMAN');
+            }
+        });
+
+        // C. Bengali Profanity (Bengali Script & Banglish Transliteration)
+        const bnScriptWords = [
+            'মাদারচোদ', 'মাডারচোদ', 'বোকাচোদা', 'চোদা', 'চোদনা', 'চুদি', 'চুদা',
+            'খানকি', 'খানকির', 'মাগী', 'মাগির', 'ভোদাই', 'বালছাল', 'গাঁড়ু', 'গাঁড়',
+            'গাড়মারানি', 'হারামজাদা', 'হারামখোর', 'শুয়োরের বাচ্চা', 'বেশ্যা', 'নটী',
+            'লেবড়া', 'কুত্তার বাচ্চা', 'পোদমারানি', 'বেজন্মা', 'চোদানির'
+        ];
+        bnScriptWords.forEach(w => {
+            if (combinedText.includes(w)) {
+                score += 90;
+                if (!flags.includes('ABUSIVE_LANG_BN_SCRIPT')) flags.push('ABUSIVE_LANG_BN_SCRIPT');
+            }
+        });
+        if (/(?:^|[^\u0980-\u09FF])(বাল|কুত্তা|কুত্তি|শালা|শালি|পোদ|খচ্চর)(?:$|[^\u0980-\u09FF])/i.test(combinedText)) {
+            score += 80;
+            if (!flags.includes('ABUSIVE_LANG_BN_SCRIPT')) flags.push('ABUSIVE_LANG_BN_SCRIPT');
+        }
+
+        const bnBanglishRegexes = [
+            /\b(madarchod|bokachoda|boka\s+choda|choda|chudi|chodna|khanki|khankir\s+pola|khankir\s+chele)\b/i,
+            /\b(magir\s+pola|bhodai|balchal|bal\s+chhal|gaadmarani|haramzada|haramkhor)\b/i,
+            /\b(shukorer\s+bachha|suorer\s+baccha|kuttar\s+bachha|podmarani|bejonma|chodanir)\b/i
+        ];
+        bnBanglishRegexes.forEach(rx => {
+            if (rx.test(combinedText)) {
+                score += 85;
+                if (!flags.includes('ABUSIVE_LANG_BN_ROMAN')) flags.push('ABUSIVE_LANG_BN_ROMAN');
+            }
+        });
+
+        // 4. Commercial spam / SEO / Casino solicitation
         const spamKeywords = [
             'seo', 'ranking', 'guest post', 'casino', 'viagra', 'crypto',
-            'forex', 'backlink', 'traffic boost', 'earn money fast', 'loan without collateral'
+            'forex', 'backlink', 'traffic boost', 'earn money fast', 'loan without collateral',
+            'free bitcoin', 'escort service', 'call girls', 'sex video'
         ];
-        const combinedText = (payload.description + ' ' + (payload.org_name || '')).toLowerCase();
         let keywordHits = 0;
         spamKeywords.forEach(kw => {
             if (combinedText.includes(kw)) keywordHits++;
         });
-
         if (keywordHits > 0) {
-            score += (keywordHits * 30);
+            score += (keywordHits * 25);
             flags.push('SPAM_SOLICITATION_KEYWORDS');
         }
 
-        // 3. Repeated character sequences (e.g. "asdfasdfasdf", "aaaaaaaaaa")
-        if (/(.)\1{5,}/.test(payload.description)) {
+        // 5. Repeated character sequences (e.g. "asdfasdfasdf", "aaaaaaaaaa")
+        if (/(.)\1{5,}/.test(payload.description || '')) {
             score += 35;
             flags.push('REPETITIVE_CHAR_SEQUENCE');
         }
 
-        // 4. Duplicate phone/email in local storage cache
+        // 6. Duplicate phone/email in local storage cache
         try {
             const priorSubmissions = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY_SUBMISSIONS) || '[]');
             const duplicate = priorSubmissions.find(sub => sub.phone === payload.phone && sub.category === payload.category);
@@ -812,11 +898,10 @@
     async function handleFormSubmit(e) {
         e.preventDefault();
 
-        // 1. Check honeypot
-        if (!checkHoneypot()) {
-            console.warn('[CARE CONNECT] Honeypot triggered. Request dropped silently.');
-            showConfirmationScreen(generateReferenceId(), true);
-            return;
+        // 1. Check honeypot (Preserves suspected bot submissions flagged for manual review)
+        const isHoneypotTriggered = !checkHoneypot();
+        if (isHoneypotTriggered) {
+            console.warn('[CARE CONNECT] Honeypot triggered. Preserving submission as flagged bot spam for manual review.');
         }
 
         // 2. Verify Math Security Challenge
@@ -864,15 +949,25 @@
             status: 'Pending Review'
         };
 
-        // 6. Compute Risk Assessment
-        const riskAnalysis = computeRiskScore(payload);
+        // 6. Compute Risk Assessment & Multilingual Moderation
+        const riskAnalysis = computeRiskScore(payload, isHoneypotTriggered);
         payload.risk_score = riskAnalysis.score;
         payload.risk_flags = riskAnalysis.flags.join(', ') || 'CLEAN';
+
+        // If flagged as abusive or bot/spam, quarantine for manual review without deleting
+        const isFlagged = (
+            riskAnalysis.score >= 60 ||
+            riskAnalysis.flags.some(f => f.includes('ABUSIVE') || f.includes('HONEYPOT') || f.includes('SPAM'))
+        );
+        if (isFlagged) {
+            payload.status = 'Flagged: Spam / Abusive';
+            payload.review_status = 'Flagged: Spam / Abusive';
+        }
 
         // 7. Store payload in client-side persistence registry
         storeLocalSubmission(payload);
 
-        // 8. Dispatch to Google Apps Script Backend (if configured)
+        // 8. Dispatch to Google Apps Script Backend
         dispatchSubmission(payload, refId);
     }
 

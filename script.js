@@ -1327,6 +1327,133 @@ if (document.readyState === "loading") {
 /* ==========================================================================
    13. INTERACTIVE WEBSITE FEEDBACK & DEVELOPER NOTE CONTROLLER
    ========================================================================== */
+/**
+ * Multilingual Content Moderation & Spam Inspection Engine (Client-side)
+ * Languages: English, Hindi (Devanagari & Hinglish), Bengali (Bengali script & Banglish)
+ * Policy: Never delete comments; preserve and quarantine as "Flagged: Spam / Abusive"
+ */
+function inspectFeedbackModeration(content) {
+    if (!content) return { isAbusive: false, isSpam: false, isFlagged: false, flags: [], score: 0 };
+    var text = String(content).toLowerCase();
+    var flags = [];
+    var isAbusive = false;
+    var isSpam = false;
+    var score = 0;
+
+    // 1. English Profanity & Abuse
+    var enProfanities = [
+        /\b(fuck|fucking|fucked|fucker|fck|f\*ck|f\*\*k)\b/i,
+        /\b(bitch|bitches|b\*tch|b\!tch)\b/i,
+        /\b(shit|bullshit|sh\*t)\b/i,
+        /\b(asshole|arsehole|bastard|cunt|dick|dickhead|pussy|motherfucker|motherfucking)\b/i,
+        /\b(cock|cocksucker|wanker|prick|whore|slut|faggot|fag|nigger|nigga|retard)\b/i,
+        /\b(kill\s+yourself|go\s+die)\b/i
+    ];
+    for (var i = 0; i < enProfanities.length; i++) {
+        if (enProfanities[i].test(text)) {
+            isAbusive = true;
+            if (flags.indexOf("ABUSIVE_LANG_EN") === -1) flags.push("ABUSIVE_LANG_EN");
+            score = Math.max(score, 90);
+        }
+    }
+
+    // 2. Hindi Profanity (Devanagari Script & Hinglish Transliteration)
+    var hiDevWords = [
+        "मादरचोद", "मादरचোদ", "भोसड़ी", "भोसडी", "भोसड़ीके", "भोसडीके", "गांडू", "गांडु",
+        "चूतिया", "चूतिये", "चूत", "लौड़ा", "लौडे", "लौड़े", "लौडा", "रांड", "रंडी",
+        "हरामी", "कमीने", "कमीना", "दल्ले", "दल्ला", "छिछोरे", "टट्टी", "झांट", "झाटू",
+        "कुतिया", "बहनचोद", "बेटीचोद", "लंड", "बकचोद", "मादरजात"
+    ];
+    for (var j = 0; j < hiDevWords.length; j++) {
+        if (text.indexOf(hiDevWords[j]) !== -1) {
+            isAbusive = true;
+            if (flags.indexOf("ABUSIVE_LANG_HI_DEV") === -1) flags.push("ABUSIVE_LANG_HI_DEV");
+            score = Math.max(score, 95);
+        }
+    }
+    if (/(?:^|[^\u0900-\u097F])(गांड|कुत्ता|साले|साला)(?:$|[^\u0900-\u097F])/i.test(text)) {
+        isAbusive = true;
+        if (flags.indexOf("ABUSIVE_LANG_HI_DEV") === -1) flags.push("ABUSIVE_LANG_HI_DEV");
+        score = Math.max(score, 85);
+    }
+
+    var hiHinglishRegexes = [
+        /\b(madarchod|madarchot|bhosdike|bhosadike|bhosdi|bhosada|bhenchod|behenchod|banchod)\b/i,
+        /\b(gaand|gandu|gaandu|chutiya|chutiye|chutya|lauda|loda|lavda|chut|choot|randi|raand)\b/i,
+        /\b(harami|kamine|kamina|dalle|dalla|tatti|jhaant|jhant|bakchod|madarjaat|bkl|mkc|bsdk|tmkc)\b/i,
+        /\b(teri\s+maa\s+ki|tere\s+baap\s+ka|maa\s+ki\s+chut|chod\s+dunga)\b/i
+    ];
+    for (var k = 0; k < hiHinglishRegexes.length; k++) {
+        if (hiHinglishRegexes[k].test(text)) {
+            isAbusive = true;
+            if (flags.indexOf("ABUSIVE_LANG_HI_ROMAN") === -1) flags.push("ABUSIVE_LANG_HI_ROMAN");
+            score = Math.max(score, 95);
+        }
+    }
+
+    // 3. Bengali Profanity (Bengali Script & Banglish Transliteration)
+    var bnScriptWords = [
+        "মাদারচোদ", "মাডারচোদ", "বোকাচোদা", "চোদা", "চোদনা", "চুদি", "চুদা",
+        "খানকি", "খানকির", "মাগী", "মাগির", "ভোদাই", "বালছাল", "গাঁড়ু", "গাঁড়",
+        "গাড়মারানি", "হারামজাদা", "হারামখোর", "শুয়োরের বাচ্চা", "বেশ্যা", "নটী",
+        "লেবড়া", "কুত্তার বাচ্চা", "পোদমারানি", "বেজন্মা", "চোদানির"
+    ];
+    for (var m = 0; m < bnScriptWords.length; m++) {
+        if (text.indexOf(bnScriptWords[m]) !== -1) {
+            isAbusive = true;
+            if (flags.indexOf("ABUSIVE_LANG_BN_SCRIPT") === -1) flags.push("ABUSIVE_LANG_BN_SCRIPT");
+            score = Math.max(score, 95);
+        }
+    }
+    if (/(?:^|[^\u0980-\u09FF])(বাল|কুত্তা|কুত্তি|শালা|শালি|পোদ|খচ্চর)(?:$|[^\u0980-\u09FF])/i.test(text)) {
+        isAbusive = true;
+        if (flags.indexOf("ABUSIVE_LANG_BN_SCRIPT") === -1) flags.push("ABUSIVE_LANG_BN_SCRIPT");
+        score = Math.max(score, 85);
+    }
+
+    var bnBanglishRegexes = [
+        /\b(madarchod|bokachoda|boka\s+choda|choda|chudi|chodna|khanki|khankir\s+pola|khankir\s+chele)\b/i,
+        /\b(magir\s+pola|bhodai|balchal|bal\s+chhal|gaadmarani|haramzada|haramkhor)\b/i,
+        /\b(shukorer\s+bachha|suorer\s+baccha|kuttar\s+bachha|podmarani|bejonma|chodanir)\b/i
+    ];
+    for (var n = 0; n < bnBanglishRegexes.length; n++) {
+        if (bnBanglishRegexes[n].test(text)) {
+            isAbusive = true;
+            if (flags.indexOf("ABUSIVE_LANG_BN_ROMAN") === -1) flags.push("ABUSIVE_LANG_BN_ROMAN");
+            score = Math.max(score, 95);
+        }
+    }
+
+    // 4. Commercial Spam, Casino & Scams
+    var spamPatterns = [
+        /\b(casino|viagra|crypto|free\s+bitcoin|forex\s+trading|escort\s+service|call\s+girls|porn|xxx)\b/i,
+        /\b(backlink|seo\s+ranking|guest\s+post|buy\s+followers|guaranteed\s+profit|earn\s+money\s+fast)\b/i,
+        /\b(loan\s+without\s+cibil|telegram\s+@|whatsapp\s+\+)/i
+    ];
+    for (var p = 0; p < spamPatterns.length; p++) {
+        if (spamPatterns[p].test(text)) {
+            isSpam = true;
+            if (flags.indexOf("SPAM_SOLICITATION_KEYWORDS") === -1) flags.push("SPAM_SOLICITATION_KEYWORDS");
+            score = Math.max(score, 75);
+        }
+    }
+
+    // 5. Repetitive Gibberish
+    if (/(.)\1{6,}/.test(text)) {
+        isSpam = true;
+        if (flags.indexOf("REPETITIVE_CHAR_SEQUENCE") === -1) flags.push("REPETITIVE_CHAR_SEQUENCE");
+        score = Math.max(score, 60);
+    }
+
+    return {
+        isAbusive: isAbusive,
+        isSpam: isSpam,
+        isFlagged: (isAbusive || isSpam),
+        flags: flags,
+        score: score
+    };
+}
+
 function initWebsiteFeedback() {
     var form = document.getElementById("websiteFeedbackForm");
     if (!form) return;
@@ -1483,12 +1610,8 @@ function initWebsiteFeedback() {
     form.addEventListener("submit", function (e) {
         e.preventDefault();
 
-        // Anti-spam check
-        if (honeypot && honeypot.value.trim() !== "") {
-            // Fake success for bots
-            showSuccessState(currentRating, "General Feedback");
-            return;
-        }
+        // Anti-spam check (Preserves bot submissions flagged as spam for manual review)
+        var isHoneypotTriggered = (honeypot && honeypot.value.trim() !== "");
 
         var messageVal = messageTextarea ? messageTextarea.value.trim() : "";
         if (!messageVal) {
@@ -1507,6 +1630,22 @@ function initWebsiteFeedback() {
         var emailVal = emailInput ? emailInput.value.trim() : "";
         var tagsVal = selectedTagsInput ? selectedTagsInput.value : "General Feedback";
 
+        // Enhanced Multilingual Spam & Abuse Inspection (English, Hindi, Bengali)
+        var scanText = [nameVal, emailVal, messageVal].join(" ");
+        var mod = inspectFeedbackModeration(scanText);
+
+        var isFlaggedFeedback = isHoneypotTriggered || mod.isFlagged;
+        var detectedFlags = [];
+        if (isHoneypotTriggered) detectedFlags.push("HONEYPOT_BOT_TRAP");
+        mod.flags.forEach(function (f) {
+            if (detectedFlags.indexOf(f) === -1) detectedFlags.push(f);
+        });
+
+        var riskFlags = isFlaggedFeedback ? (detectedFlags.join(", ") || "SUSPECTED_ABUSE") : "CLEAN_FEEDBACK";
+        var riskScore = isFlaggedFeedback ? Math.max(mod.score, 90) : 0;
+        var reviewStatus = isFlaggedFeedback ? "Flagged: Spam / Abusive" : "New Feedback";
+        var displayTags = isFlaggedFeedback ? ("[FLAGGED: " + riskFlags + "] " + tagsVal) : tagsVal;
+
         var payload = {
             reference_id: "WFB-" + new Date().getFullYear() + "-" + Math.floor(1000 + Math.random() * 9000),
             formatted_date: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
@@ -1515,8 +1654,8 @@ function initWebsiteFeedback() {
             sheet_name: "Website Feedback",
             rating: String(currentRating),
             sentiment: sentiments[currentRating] || (currentRating + " Stars"),
-            category: tagsVal,
-            tags: tagsVal,
+            category: displayTags,
+            tags: displayTags,
             name: nameVal || "Anonymous Visitor",
             org_name: roleVal,
             role: roleVal,
@@ -1530,8 +1669,9 @@ function initWebsiteFeedback() {
             beneficiaries: currentRating + " Stars",
             timeline: "Website Feedback",
             resources_offered: "Focus: " + tagsVal,
-            risk_score: 0,
-            risk_flags: "CLEAN_FEEDBACK"
+            risk_score: riskScore,
+            risk_flags: riskFlags,
+            review_status: reviewStatus
         };
 
         // Cache submission locally in browser
