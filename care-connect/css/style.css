@@ -1377,6 +1377,24 @@ html[lang="hi"] button {
     margin-bottom: 18px;
 }
 
+.category-text a {
+    color: var(--primary-blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 600;
+    transition: color var(--transition-fast);
+}
+
+.category-text a:hover {
+    color: var(--primary-blue-hover);
+}
+
+.category-text a:focus-visible {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
 .category-select-link {
     margin-top: auto;
     display: inline-flex;
