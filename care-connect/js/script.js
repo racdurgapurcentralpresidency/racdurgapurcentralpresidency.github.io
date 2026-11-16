@@ -1232,7 +1232,7 @@
             'faq.a4': 'Yes! We actively collaborate with corporates, industrial units, educational institutes, and registered trusts for CSR drives, campus health programs, environmental plantations, and youth skill workshops. We provide structured execution plans, photo-documented reports, and volunteer mobilization.',
             'faq.q5': 'What is RAC DCP\'s verification and anti-scam policy?',
             'faq.a5': 'To protect our community and ensure genuine assistance reaches those in need, our directors conduct background screening. We never ask for bank PINs, passwords, or Aadhaar numbers. <strong>Submissions containing demonstrably false information, impersonation, malicious links or automated spam may be restricted, rejected or referred to the appropriate authorities where warranted.</strong>',
-            'footer.location': '<strong>Location:</strong> Durgapur, Kolkata, Naihati, West Bengal, India'
+            'footer.location': '<div><strong>Headquarters:</strong> Durgapur, West Bengal, India</div><div><strong>Documented outreach locations:</strong> Kolkata and Naihati, West Bengal, India</div>'
         },
         bn: {
             code: 'BN',
@@ -1318,7 +1318,7 @@
             'faq.a4': 'হ্যাঁ! আমরা সিএসআর ড্রাইভ, ক্যাম্পাস স্বাস্থ্য কর্মসূচি, বৃক্ষরোপণ এবং যুব দক্ষতা কর্মশালার জন্য কর্পোরেট ও নিবন্ধিত ট্রাস্টের সাথে যৌথভাবে কাজ করি। আমরা সুসংগঠিত পরিকল্পনা এবং সচিত্র অডিট রিপোর্ট সরবরাহ করি।',
             'faq.q5': 'RAC DCP-র যাচাইকরণ ও জালিয়াতি বিরোধী নীতি কী?',
             'faq.a5': 'সমাজকে সুরক্ষিত রাখতে এবং প্রকৃত অভাবীদের কাছেই সহায়তা পৌঁছানো নিশ্চিত করতে সমস্ত আবেদনের পটভূমি যাচাই করা হয়। আমরা কখনো কোনো ফি, পাসওয়ার্ড, আধার নম্বর বা ব্যাংক বিশদ চাই না। <strong>প্রমাণযোগ্য মিথ্যা তথ্য, ছদ্মবেশ ধারণ, ক্ষতিকারক লিঙ্ক বা স্বয়ংক্রিয় স্প্যাম সংবলিত আবেদনগুলি সীমাবদ্ধ, প্রত্যাখ্যান বা ক্ষেত্রবিশেষে যথাযথ কর্তৃপক্ষের নিকট প্রেরণ করা হতে পারে।</strong>',
-            'footer.location': '<strong>অবস্থান:</strong> দুর্গাপুর, কলকাতা, নৈহাটি, পশ্চিমবঙ্গ, ভারত'
+            'footer.location': '<div><strong>সদর দপ্তর:</strong> দুর্গাপুর, পশ্চিমবঙ্গ, ভারত</div><div><strong>নথিভুক্ত কার্যক্রমের স্থান:</strong> কলকাতা ও নৈহাটি, পশ্চিমবঙ্গ, ভারত</div>'
         },
         hi: {
             code: 'HI',
@@ -1404,7 +1404,7 @@
             'faq.a4': 'हाँ! हम सीएसआर अभियानों, स्वास्थ्य कार्यक्रमों, वृक्षारोपण और युवा कौशल कार्यशालाओं के लिए कॉर्पोरेट्स और पंजीकृत ट्रस्टों के साथ सक्रिय रूप से सहयोग करते हैं। हम संरचित योजनाएँ और फोटो-दस्तावेजी रिपोर्ट प्रदान करते हैं।',
             'faq.q5': 'RAC DCP की सत्यापन और धोखाधड़ी-रोधी नीति क्या है?',
             'faq.a5': 'समुदाय की सुरक्षा और वास्तविक ज़रूरतमंदों तक मदद पहुंचाना सुनिश्चित करने के लिए सभी सबमिशन की जांच की जाती है। हम कभी भी कोई शुल्क, पासवर्ड, आधार संख्या या बैंक विवरण नहीं मांगते हैं। <strong>प्रमाणित रूप से गलत जानकारी, प्रतिरूपण, दुर्भावनापूर्ण लिंक या स्वचालित स्पैम वाले सबमिशन को प्रतिबंधित, अस्वीकार या आवश्यकतानुसार उचित अधिकारियों को संदर्भित किया जा सकता है।</strong>',
-            'footer.location': '<strong>स्थान:</strong> दुर्गापुर, कोलकाता, नैहाटी, पश्चिम बंगाल, भारत'
+            'footer.location': '<div><strong>मुख्यालय:</strong> दुर्गापुर, पश्चिम बंगाल, भारत</div><div><strong>दर्ज की गई सेवा-गतिविधियों के स्थान:</strong> कोलकाता और नैहाटी, पश्चिम बंगाल, भारत</div>'
         }
     };
 
