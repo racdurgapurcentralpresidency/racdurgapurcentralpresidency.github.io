@@ -1249,7 +1249,7 @@ a, button, input, select, textarea,
 }
 
 
-/* OUR PRESENCE */
+/* DOCUMENTED OUTREACH */
 
 .location-presence {
     display: flex;
@@ -1269,14 +1269,32 @@ a, button, input, select, textarea,
 }
 
 .presence-location {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 10px;
+    width: fit-content;
 
     font-size: 0.95rem;
     font-weight: 600;
 
     color: #ffffff;
+    text-decoration: none;
+    padding: 3px 6px;
+    margin-left: -6px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease, opacity 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.presence-location:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.presence-location:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 .location-dot {
