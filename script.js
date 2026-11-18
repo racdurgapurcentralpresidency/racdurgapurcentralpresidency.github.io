@@ -735,49 +735,146 @@ if (document.querySelector(".gallery-item")) {
 // 8. ACHIEVEMENT & AWARD LIGHTBOX
 // ============================================================================
 // Displays awards and certificates in a clean, full-screen view upon clicking.
+// Uses lazy DOM creation so that an empty image placeholder is not inserted
+// into the DOM on initial page load, and enforces accessible modal focus trapping.
 // ============================================================================
 
 const achievementImages = document.querySelectorAll(".achievement-image img");
-const achievementLightbox = document.createElement("div");
-achievementLightbox.className = "achievement-lightbox";
-achievementLightbox.innerHTML = `
-    <button class="achievement-lightbox-close" type="button" aria-label="Close">&times;</button>
-    <div class="achievement-lightbox-content"><img src="" alt=""></div>
-`;
-document.body.appendChild(achievementLightbox);
 
-const achievementLightboxImage = achievementLightbox.querySelector(".achievement-lightbox-content img");
-const achievementLightboxClose = achievementLightbox.querySelector(".achievement-lightbox-close");
+if (achievementImages.length > 0) {
+    let achievementLightbox = null;
+    let achievementLightboxImage = null;
+    let achievementLightboxClose = null;
+    let lastFocusedElement = null;
 
-achievementImages.forEach(function (image) {
-    image.addEventListener("click", function () {
+    function buildAchievementLightbox() {
+        if (achievementLightbox) return;
+
+        achievementLightbox = document.createElement("div");
+        achievementLightbox.className = "achievement-lightbox";
+        achievementLightbox.setAttribute("role", "dialog");
+        achievementLightbox.setAttribute("aria-modal", "true");
+        achievementLightbox.setAttribute("aria-label", "Award certificate preview");
+        achievementLightbox.setAttribute("tabindex", "-1");
+        achievementLightbox.innerHTML = `
+            <button class="achievement-lightbox-close" type="button" aria-label="Close award preview">&times;</button>
+            <div class="achievement-lightbox-content"></div>
+        `;
+        document.body.appendChild(achievementLightbox);
+
+        achievementLightboxClose = achievementLightbox.querySelector(".achievement-lightbox-close");
+
+        achievementLightboxClose.addEventListener("click", function (event) {
+            event.stopPropagation();
+            closeAchievementLightbox();
+        });
+
+        achievementLightbox.addEventListener("click", function (event) {
+            if (event.target === achievementLightbox) {
+                closeAchievementLightbox();
+            }
+        });
+    }
+
+    function openAchievementLightbox(image) {
+        if (achievementLightbox && achievementLightbox.classList.contains("active")) return;
+        lastFocusedElement = image.closest(".achievement-image") || document.activeElement;
+        buildAchievementLightbox();
+
+        const content = achievementLightbox.querySelector(".achievement-lightbox-content");
+        if (!achievementLightboxImage) {
+            achievementLightboxImage = document.createElement("img");
+            content.appendChild(achievementLightboxImage);
+        }
+
         achievementLightboxImage.src = image.src;
-        achievementLightboxImage.alt = image.alt;
+        achievementLightboxImage.alt = image.alt || "Award certificate";
+
         achievementLightbox.classList.add("active");
         document.body.classList.add("lightbox-open");
+
+        if (achievementLightboxClose) {
+            achievementLightboxClose.focus();
+        }
+    }
+
+    function closeAchievementLightbox() {
+        if (!achievementLightbox || !achievementLightbox.classList.contains("active")) return;
+        achievementLightbox.classList.remove("active");
+        document.body.classList.remove("lightbox-open");
+
+        if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+            lastFocusedElement.focus();
+        }
+    }
+
+    achievementImages.forEach(function (image) {
+        const parent = image.closest(".achievement-image");
+
+        function triggerOpen(ev) {
+            if (ev) {
+                ev.preventDefault();
+                ev.stopPropagation();
+            }
+            openAchievementLightbox(image);
+        }
+
+        image.addEventListener("click", triggerOpen);
+
+        if (parent) {
+            if (!parent.getAttribute("tabindex")) {
+                parent.setAttribute("tabindex", "0");
+                parent.setAttribute("role", "button");
+                parent.setAttribute("aria-label", (image.alt ? "View certificate: " + image.alt : "View award certificate"));
+            }
+            parent.addEventListener("click", function (ev) {
+                if (ev.target === parent) {
+                    triggerOpen(ev);
+                }
+            });
+            parent.addEventListener("keydown", function (event) {
+                if (event.key === "Enter" || event.key === " ") {
+                    triggerOpen(event);
+                }
+            });
+        }
     });
-});
 
-achievementLightboxClose.addEventListener("click", function (event) {
-    event.stopPropagation();
-    achievementLightbox.classList.remove("active");
-    document.body.classList.remove("lightbox-open");
-});
+    document.addEventListener("keydown", function (event) {
+        if (!achievementLightbox || !achievementLightbox.classList.contains("active")) return;
 
-achievementLightbox.addEventListener("click", function (event) {
-    if (event.target === achievementLightbox) {
-        achievementLightbox.classList.remove("active");
-        document.body.classList.remove("lightbox-open");
-    }
-});
+        if (event.key === "Escape") {
+            event.preventDefault();
+            closeAchievementLightbox();
+            return;
+        }
 
-document.addEventListener("keydown", function (event) {
-    if (!achievementLightbox.classList.contains("active")) return;
-    if (event.key === "Escape") {
-        achievementLightbox.classList.remove("active");
-        document.body.classList.remove("lightbox-open");
-    }
-});
+        if (event.key === "Tab") {
+            const focusables = achievementLightbox.querySelectorAll(
+                'button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            );
+            if (focusables.length === 0) {
+                event.preventDefault();
+                return;
+            }
+
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+
+            if (event.shiftKey) {
+                if (document.activeElement === first || !achievementLightbox.contains(document.activeElement)) {
+                    event.preventDefault();
+                    last.focus();
+                }
+            } else {
+                if (document.activeElement === last || !achievementLightbox.contains(document.activeElement)) {
+                    event.preventDefault();
+                    first.focus();
+                }
+            }
+        }
+    });
+}
 
 
 // ============================================================================
